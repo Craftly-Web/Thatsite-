@@ -1,8 +1,8 @@
 // Vercel-Funktion: nimmt das Kontaktformular entgegen und verschickt es über Resend.
 // Benötigte Umgebungsvariablen (Vercel → Project → Settings → Environment Variables):
 //   RESEND_API_KEY  – API-Schlüssel aus dem Resend-Dashboard (Pflicht)
-//   CONTACT_TO      – Empfänger, Standard: thatsite@mail.de
-//   CONTACT_FROM    – Absender; muss eine in Resend verifizierte Domain nutzen,
+//   MAIL_TO         – Empfänger (mehrere mit Komma trennen), Standard: thatsite@mail.de
+//   MAIL_FROM       – Absender; muss eine in Resend verifizierte Domain nutzen,
 //                     z. B. "Thatsite! Website <formular@thatsite.de>".
 //                     Ohne verifizierte Domain: "Thatsite! <onboarding@resend.dev>"
 //                     (Resend liefert dann nur an die E-Mail-Adresse deines Resend-Kontos).
@@ -33,6 +33,9 @@ module.exports = async (req, res) => {
   const key = process.env.RESEND_API_KEY;
   if (!key) return res.status(500).json({ ok: false, error: 'E-Mail-Versand ist noch nicht eingerichtet.' });
 
+  const FROM = (process.env.MAIL_FROM || process.env.CONTACT_FROM || 'Thatsite! Website <onboarding@resend.dev>').trim();
+  const TO = (process.env.MAIL_TO || process.env.CONTACT_TO || 'thatsite@mail.de').split(',').map(s => s.trim()).filter(Boolean);
+
   const subject = 'Projektanfrage' + (d.paket ? ' – ' + d.paket : '') + ' – ' + d.name;
   const rows = [['Name', d.name], ['E-Mail', d.email], ['Paket / Thema', d.paket || '–'], ['Rabattcode', d.code || '–']];
   const html =
@@ -49,8 +52,8 @@ module.exports = async (req, res) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: process.env.CONTACT_FROM || 'Thatsite! Website <onboarding@resend.dev>',
-        to: [process.env.CONTACT_TO || 'thatsite@mail.de'],
+        from: FROM,
+        to: TO,
         reply_to: d.email,
         subject, html, text
       })
