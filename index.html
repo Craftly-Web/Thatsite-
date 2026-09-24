@@ -13,7 +13,11 @@
 <meta property="og:site_name" content="Thatsite!">
 <meta property="og:title" content="Webdesign aus Zittau – Thatsite!">
 <meta property="og:description" content="Individuelle Websites, Online-Shops und SEO für Unternehmen in Zittau und der Oberlausitz.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23070707'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23ff6b1a'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -29,7 +33,7 @@
 </script>
 <meta name="theme-color" content="#070707">
 <style>
-:root{--bg:#070707;--panel:#111;--line:#292929;--text:#fff;--muted:#9a9a9a;--accent:#ff6b1a;--accent2:#ff8c42;--accentdark:#7a3a12}
+:root{--bg:#070707;--panel:#111;--line:#292929;--text:#fff;--muted:#9a9a9a;--accent:#ff7003;--accent2:#ffad08;--accentdark:#7a3a12}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
@@ -44,8 +48,11 @@ section[id],header[id]{scroll-margin-top:74px}
 
 nav{position:fixed;z-index:50;top:0;left:0;width:100%;height:74px;padding:0 3vw;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#070707,transparent);backdrop-filter:blur(7px);transition:background .3s}
 nav.scrolled{background:rgba(7,7,7,.92)}
-.logo{position:relative;z-index:60;font-size:20px;font-weight:900;letter-spacing:-.08em;display:flex;align-items:center;gap:8px}
-.logo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+.logo{position:relative;z-index:60;display:flex;align-items:center}
+.logo img{display:block;height:46px;width:auto;transition:transform .35s}
+.logo:hover img{transform:scale(1.05) rotate(-2deg)}
+footer .logo img{height:64px}
+.grad{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .navlinks{display:flex;gap:28px;font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:#ccc}
 .navlinks a{position:relative;padding-bottom:3px;transition:color .3s}
 .navlinks a:after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:.35s}
@@ -61,7 +68,7 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 
 .hero{min-height:820px;height:100svh;position:relative;overflow:hidden;padding:150px 3vw 70px;background:radial-gradient(circle at 75% 43%,#232323 0,#101010 20%,#070707 53%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070707 0%,transparent 55%,rgba(0,0,0,.5)),linear-gradient(0deg,#070707 0%,transparent 30%);pointer-events:none}
-.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,26,.14),transparent 70%);top:-150px;right:-100px;animation:drift 10s ease-in-out infinite;pointer-events:none}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,112,3,.14),transparent 70%);top:-150px;right:-100px;animation:drift 10s ease-in-out infinite;pointer-events:none}
 .hero h1{font-size:clamp(80px,15.5vw,230px);line-height:.78;letter-spacing:-.095em;font-weight:900;position:relative;z-index:2;max-width:700px}
 .hero h1 span{display:block;animation:rise 1s cubic-bezier(.2,.8,.2,1) both}
 .hero h1 span:nth-child(2){animation-delay:.15s}
@@ -100,7 +107,7 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:45px}
 .card{background:linear-gradient(150deg,#151515,#0e0e0e);border:1px solid #272727;padding:26px;min-height:280px;position:relative;overflow:hidden;transition:.45s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-8px);border-color:var(--accentdark)}
-.card:before{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,107,26,.08);right:-55px;top:-55px;transition:.5s}
+.card:before{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,112,3,.08);right:-55px;top:-55px;transition:.5s}
 .card:hover:before{transform:scale(1.4)}
 .icon{font-size:26px;color:#c9c9c9;transition:.4s}
 .card:hover .icon{color:var(--accent);transform:rotate(12deg) scale(1.1)}
@@ -175,7 +182,7 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .mock.type-c .mock-grid div{aspect-ratio:1;border-radius:3px}
 .mock.type-c .mock-grid div:nth-child(1){background:linear-gradient(160deg,#ffb27a,#a8420a)}
 .mock.type-c .mock-grid div:nth-child(2){background:linear-gradient(160deg,#555,#1c1c1c)}
-.mock.type-c .mock-grid div:nth-child(3){background:linear-gradient(160deg,#ff6b1a,#4a1c05)}
+.mock.type-c .mock-grid div:nth-child(3){background:linear-gradient(160deg,#ff7003,#4a1c05)}
 
 .values{display:grid;grid-template-columns:1fr 2fr;gap:70px}
 .valuegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px}
@@ -194,7 +201,7 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .prices{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:45px}
 .price{border:1px solid #2b2b2b;background:#101010;padding:24px;min-height:460px;position:relative;transition:.4s;display:flex;flex-direction:column}
 .price:hover{border-color:var(--accentdark);transform:translateY(-6px)}
-.price.featured{background:linear-gradient(160deg,#ff8c42,#e0560c);color:#111;transform:translateY(-18px)}
+.price.featured{background:linear-gradient(160deg,#ffad08,#ff7003);color:#111;transform:translateY(-18px)}
 .price.featured:hover{transform:translateY(-24px)}
 .price .badge{position:absolute;top:-11px;right:20px;background:#fff;color:#111;font-size:8px;text-transform:uppercase;letter-spacing:.1em;padding:5px 10px}
 .price h3{font-size:22px}
@@ -240,7 +247,7 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .discount p{color:#999;font-size:12px;line-height:1.65;max-width:430px}
 .discount ul{margin-top:18px;font-size:10px;color:#999;line-height:2;list-style:none}
 .discount ul li:before{content:"◆ ";color:var(--accent)}
-.coupon{margin-top:25px;width:min(480px,100%);height:170px;border:1px solid var(--accent);background:linear-gradient(135deg,#e0560c,#ff8c42);color:#111;position:relative;display:grid;place-items:center;overflow:hidden;box-shadow:0 0 45px rgba(255,107,26,.15)}
+.coupon{margin-top:25px;width:min(480px,100%);height:170px;border:1px solid var(--accent);background:linear-gradient(135deg,#ff7003,#ffad08);color:#111;position:relative;display:grid;place-items:center;overflow:hidden;box-shadow:0 0 45px rgba(255,112,3,.15)}
 .coupon:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(255,255,255,.16) 13px 15px);mix-blend-mode:overlay;pointer-events:none}
 .coupon b{font-size:72px;letter-spacing:-.08em}
 .coupon small{position:absolute;left:15px;top:12px;font-size:8px;letter-spacing:.15em}
@@ -320,7 +327,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="noise"></div><div class="cursor"></div><div class="progress" id="progress"></div>
 
 <nav id="nav">
-<a class="logo" href="#top"><span class="dot"></span>THATSITE!</a>
+<a class="logo" href="#top" aria-label="Thatsite! – zum Seitenanfang"><img src="assets/logo.png" alt="Thatsite!" width="91" height="46"></a>
 <div class="navlinks" id="navlinks"><a href="#work">Work</a><a href="#leistungen">Leistungen</a><a href="#preise">Preise</a><a href="#ueber">Über uns</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
 <a class="navcta" href="#kontakt">Projekt starten →</a>
 <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
@@ -330,7 +337,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="hero-glow"></div>
 <div class="laptop" aria-hidden="true"><div class="laptop-frame"><div class="laptop-screen"><div class="screen-brand">NOVA</div><div class="screen-title">BUILDING<br>DIGITAL<br>EXPERIENCES.</div></div></div><div class="laptop-base"></div></div>
 <div class="rock"></div><a class="scrollbadge" href="#leistungen">Scroll<br>entdecken</a>
-<h1><span>THATSITE!</span><span class="outline" aria-hidden="true">THATSITE!</span><span class="sr-only"> – Webdesign aus Zittau</span></h1>
+<h1><span>THAT<em class="grad">SITE!</em></span><span class="outline" aria-hidden="true">THATSITE!</span><span class="sr-only"> – Webdesign aus Zittau</span></h1>
 <div class="hero-copy"><h2>WEBDESIGN, DAS BEEINDRUCKT.<br>ERLEBNISSE, DIE BLEIBEN.</h2><p>Thatsite! ist deine Webdesign-Agentur aus Zittau. Wir gestalten digitale Markenauftritte, die nicht nur gut aussehen, sondern messbare Ergebnisse liefern. Von der ersten Idee bis zum fertigen Launch begleiten wir dich mit Strategie, Design und sauberem Code.</p><div class="hero-buttons"><a class="solidbtn" href="#kontakt">Projekt anfragen →</a><a class="ghostbtn" href="#work">Mehr ansehen ◉</a></div></div>
 <div class="stats"><div class="clients"><span>NOVA</span><span>◈ PULSE</span><span>◆ VERTEX</span><span>◇ LUMEN</span><span>△ APEX</span><span>✦ NEBULA</span></div><div class="stat"><b>50+</b><small>Abgeschlossene<br>Projekte</small></div><div class="stat"><b>98%</b><small>Zufriedene<br>Kunden</small></div><div class="stat"><b>4+</b><small>Jahre<br>Erfahrung</small></div><div class="stat"><b>24/7</b><small>Support &amp;<br>Betreuung</small></div></div>
 </header>
@@ -450,7 +457,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 
 <footer>
 <div class="footgrid">
-<div><div class="logo"><span class="dot"></span>THATSITE!</div><p style="margin-top:15px">Wir sind eine kreative Webdesign-Agentur aus Zittau in der Oberlausitz, mit Fokus auf Design, Technologie und Ergebnisse. Lass uns gemeinsam etwas Großartiges erschaffen, das deine Marke wirklich repräsentiert.</p>
+<div><div class="logo"><img src="assets/logo.png" alt="Thatsite! Webdesign Zittau" width="126" height="64" loading="lazy"></div><p style="margin-top:15px">Wir sind eine kreative Webdesign-Agentur aus Zittau in der Oberlausitz, mit Fokus auf Design, Technologie und Ergebnisse. Lass uns gemeinsam etwas Großartiges erschaffen, das deine Marke wirklich repräsentiert.</p>
 <a class="solidbtn" href="#kontakt">Projekt anfragen →</a></div>
 <div><h4>Navigation</h4><a href="#top">Home</a><a href="#work">Work</a><a href="#leistungen">Leistungen</a><a href="#preise">Preise</a><a href="#ueber">Über uns</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
 <div><h4>Leistungen</h4><a href="#leistungen">Webdesign</a><a href="#leistungen">Website Entwicklung</a><a href="#leistungen">Shop &amp; E-Commerce</a><a href="#leistungen">SEO &amp; Performance</a><a href="#preise">Wartung &amp; Support</a></div>
