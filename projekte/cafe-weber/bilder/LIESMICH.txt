@@ -1,0 +1,2 @@
+Hierhin gehören die Fotos. Welche Datei wohin gehört, steht in ../LIESMICH.md.
+Fehlt eine Datei, zeigt die Seite an ihrer Stelle eine Zeichnung aus platzhalter/.

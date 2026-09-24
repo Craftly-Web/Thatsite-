@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke="#9A7440" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M26 172h148"/>
+<path d="M84 172l6 12h20l6-12"/>
+<rect x="44" y="128" width="112" height="44" rx="4"/>
+<rect x="60" y="93" width="80" height="35" rx="4"/>
+<rect x="76" y="64" width="48" height="29" rx="4"/>
+<path d="M44 139q7 8 14 0t14 0 14 0 14 0 14 0 14 0 14 0 14 0"/>
+<path d="M60 103q5 7 10 0t10 0 10 0 10 0 10 0 10 0 10 0 10 0"/>
+<path d="M76 73q4 6 8 0t8 0 8 0 8 0 8 0 8 0"/>
+<g fill="#9A7440" stroke="none"><circle cx="56" cy="160" r="2"/><circle cx="72" cy="160" r="2"/><circle cx="88" cy="160" r="2"/><circle cx="104" cy="160" r="2"/><circle cx="120" cy="160" r="2"/><circle cx="136" cy="160" r="2"/><circle cx="148" cy="160" r="2"/><circle cx="72" cy="118" r="2"/><circle cx="88" cy="118" r="2"/><circle cx="104" cy="118" r="2"/><circle cx="120" cy="118" r="2"/><circle cx="132" cy="118" r="2"/></g>
+<path d="M100 58c-9-6-12-14-6-17 3-1.5 5 .5 6 3 1-2.5 3-4.5 6-3 6 3 3 11-6 17z" fill="#A3304C" fill-opacity=".18" stroke="#A3304C"/>
+</svg>
