@@ -119,7 +119,8 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .process{display:grid;grid-template-columns:1fr 2fr;gap:70px}
 .timeline{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:16px}
 .timeline:before{content:"";height:1px;background:var(--accentdark);position:absolute;left:0;right:0;top:20px}
-.timeline:after{content:"";position:absolute;left:0;top:19px;height:3px;width:0;background:var(--accent);animation:fillline 2.4s ease-out .3s forwards;box-shadow:0 0 8px var(--accent)}
+.timeline:after{content:"";position:absolute;left:0;top:19px;height:3px;width:0;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.timeline.show:after{animation:fillline 2.4s ease-out .2s forwards}
 .step{position:relative;padding-top:38px}
 .step i{position:absolute;top:15px;left:0;width:11px;height:11px;border:2px solid var(--accent);background:#070707;border-radius:50%;transition:.4s}
 .step:hover i{transform:scale(1.5);box-shadow:0 0 12px var(--accent)}
@@ -300,6 +301,28 @@ footer{padding:60px 3vw 25px;border-top:1px solid #202020;background:#0b0b0b}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .reveal{opacity:0;transform:translateY(50px);transition:1s cubic-bezier(.2,.8,.2,1)}
 .reveal.show{opacity:1;transform:none}
+/* ===== Scroll-Animationen ===== */
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding:.14em .02em .08em;margin:-.14em -.02em -.08em}
+.split .w>span{display:inline-block;transform:translateY(115%) rotate(5deg);transform-origin:left bottom;transition:transform 1.1s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0)*60ms)}
+.split.show .w>span{transform:none}
+.eyebrow{opacity:0;transform:translateX(-14px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.eyebrow:before{width:0;transition:width .8s cubic-bezier(.2,.8,.2,1) .25s}
+.eyebrow.show{opacity:1;transform:none}.eyebrow.show:before{width:18px}
+.lead .lw{color:#3a3a3a;transition:color .35s}
+.lead .lw.on{color:#c8c8c8}
+.marquee{overflow:hidden;border-bottom:1px solid #202020;padding:26px 0;background:#090909;position:relative}
+.marquee-move{display:flex;width:max-content;will-change:translate;margin-left:-600px}
+.marquee-track{display:flex;flex-shrink:0;animation:marquee 38s linear infinite}
+.marquee.rev .marquee-track{animation-direction:reverse}
+.marquee-track span{font-size:clamp(30px,4.6vw,64px);font-weight:900;letter-spacing:-.06em;white-space:nowrap;padding-right:.5em;line-height:1}
+.marquee-track span.o{color:transparent;-webkit-text-stroke:1px #555}
+.marquee-track span.a{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.spot:after{content:"";position:absolute;inset:0;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(255,112,3,.13),transparent 65%);opacity:0;transition:opacity .4s;pointer-events:none;z-index:0}
+.spot:hover:after{opacity:1}
+.spot>*{position:relative;z-index:1}
+.price .badge{z-index:2}
+@keyframes marquee{to{transform:translateX(-100%)}}
+
 .cursor{position:fixed;width:16px;height:16px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:100;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:transform .08s;opacity:0}
 .cursor.on{opacity:1}
 @media(hover:none),(pointer:coarse){.cursor{display:none}}
@@ -320,7 +343,7 @@ footer{padding:60px 3vw 25px;border-top:1px solid #202020;background:#0b0b0b}
 nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 .hero{min-height:850px}.laptop{width:75vw;top:34%;right:-7%}.stats{grid-template-columns:repeat(4,1fr)}.clients{display:none}.cards,.prices{grid-template-columns:1fr 1fr}.two,.process,.values,.discount,.contact{grid-template-columns:1fr}.projects{grid-template-columns:1fr}.project,.project.center{height:390px}.mock.type-b .mock-body{flex-direction:column}.valuegrid{grid-template-columns:1fr 1fr}.benefits{grid-template-columns:1fr 1fr}.footgrid{grid-template-columns:1fr 1fr}.maintenance{grid-template-columns:1fr}.m-right{border-left:none;padding-left:0;text-align:left}.contact{gap:40px}}
 @media(max-width:600px){.hero{padding-top:120px;min-height:960px}.hero h1{font-size:20.5vw}.laptop{top:auto;bottom:70px;right:-6%;width:92vw}.scrollbadge{bottom:40px}.stats{display:none}.section{padding:80px 5vw}.cards,.prices,.valuegrid,.benefits{grid-template-columns:1fr}.price.featured{transform:none}.price.featured:hover{transform:translateY(-6px)}.timeline{grid-template-columns:1fr 1fr}.discount{margin-left:5vw;margin-right:5vw}.form{grid-template-columns:1fr}.footgrid{grid-template-columns:1fr}.copyright{display:block}.copyright span{display:block;margin-bottom:8px}.modal-box{padding:28px 22px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.timeline:after{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.timeline:after{width:100%}.split .w>span{transform:none}.eyebrow{opacity:1;transform:none}.eyebrow:before{width:18px}.lead .lw{color:inherit}}
 </style>
 </head>
 <body>
@@ -342,6 +365,8 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="stats"><div class="clients"><span>NOVA</span><span>◈ PULSE</span><span>◆ VERTEX</span><span>◇ LUMEN</span><span>△ APEX</span><span>✦ NEBULA</span></div><div class="stat"><b>50+</b><small>Abgeschlossene<br>Projekte</small></div><div class="stat"><b>98%</b><small>Zufriedene<br>Kunden</small></div><div class="stat"><b>4+</b><small>Jahre<br>Erfahrung</small></div><div class="stat"><b>24/7</b><small>Support &amp;<br>Betreuung</small></div></div>
 </header>
 
+<div class="marquee" aria-hidden="true"><div class="marquee-move" data-speed="-.35"><div class="marquee-track"><span>WEBDESIGN</span><span class="a">✦</span><span class="o">ENTWICKLUNG</span><span class="a">✦</span><span>ONLINE-SHOPS</span><span class="a">✦</span><span class="o">SEO</span><span class="a">✦</span><span>AUS ZITTAU</span><span class="a">✦</span></div><div class="marquee-track"><span>WEBDESIGN</span><span class="a">✦</span><span class="o">ENTWICKLUNG</span><span class="a">✦</span><span>ONLINE-SHOPS</span><span class="a">✦</span><span class="o">SEO</span><span class="a">✦</span><span>AUS ZITTAU</span><span class="a">✦</span></div></div></div>
+
 <main>
 <section class="section" id="leistungen">
 <div class="two"><div><div class="eyebrow">Was wir tun</div><h2>DIGITALE LÖSUNGEN.<br>PERFEKT UMGESETZT.</h2><p class="lead">Wir vereinen Design, Technologie und Strategie, um Websites zu schaffen, die überzeugen – visuell, funktional und nachhaltig. Jedes Projekt beginnt mit einer ehrlichen Analyse deiner Marke und endet mit einer Website, auf die du stolz sein kannst – für Unternehmen in Zittau, der Oberlausitz und darüber hinaus.</p></div><div class="cards">
@@ -354,7 +379,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 
 <section class="section" id="prozess">
 <div class="process"><div><div class="eyebrow">Unser Prozess</div><h2>KLAR.<br>STRUKTURIERT.<br>TRANSPARENT.</h2><p class="lead">In 4 Schritten zu einer Website, die begeistert und Ergebnisse liefert. Wir halten dich während des gesamten Prozesses auf dem Laufenden – keine Blackbox, sondern klare Kommunikation von Tag eins an.</p></div>
-<div class="timeline">
+<div class="timeline reveal-line">
 <div class="step reveal"><i></i><b>01</b><h4>Analyse</h4><p>Wir hören zu, analysieren deine Ziele, deine Zielgruppe und deinen Wettbewerb und definieren gemeinsam die perfekte Strategie für dein Projekt.</p></div>
 <div class="step reveal"><i></i><b>02</b><h4>Design</h4><p>Wir gestalten ein einzigartiges, auf deine Marke zugeschnittenes Design und stimmen jedes Detail mit dir ab, bevor es in die Umsetzung geht.</p></div>
 <div class="step reveal"><i></i><b>03</b><h4>Entwicklung</h4><p>Wir setzen das Design mit sauberem Code und modernsten Technologien um – performant, responsiv und technisch einwandfrei.</p></div>
@@ -439,6 +464,8 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div><div class="coupon" id="coupon"><button class="scratch" id="scratch" aria-label="Gutschein freirubbeln"><span>✦ Hier freirubbeln ✦</span></button><small>THATSITE! / SPECIAL OFFER</small><b>10%</b><span class="code">CODE: THATSITE10</span></div></div>
 </section>
 
+<div class="marquee rev" aria-hidden="true"><div class="marquee-move" data-speed=".35"><div class="marquee-track"><span class="o">PROJEKT STARTEN</span><span class="a">✦</span><span>THATSITE!</span><span class="a">✦</span><span class="o">LASS UNS REDEN</span><span class="a">✦</span><span>THATSITE!</span><span class="a">✦</span></div><div class="marquee-track"><span class="o">PROJEKT STARTEN</span><span class="a">✦</span><span>THATSITE!</span><span class="a">✦</span><span class="o">LASS UNS REDEN</span><span class="a">✦</span><span>THATSITE!</span><span class="a">✦</span></div></div></div>
+
 <section class="section" id="kontakt">
 <div class="contact"><div><div class="eyebrow">Kontakt</div><h2>LASS UNS<br>STARTEN.</h2><p class="lead">Erzähl uns von deinem Projekt. Wir melden uns persönlich bei dir und besprechen gemeinsam die nächsten Schritte – unverbindlich und kostenlos.</p>
 <div class="contact-info"><div><span>E-Mail</span><a href="mailto:hello@craftly.design">hello@craftly.design</a></div><div><span>Telefon</span><em class="ph" style="font-style:normal">[Telefonnummer]</em></div><div><span>Standort</span>Zittau, Landkreis Görlitz (Sachsen)</div></div></div>
@@ -511,9 +538,62 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 </div>
 
 <script>
-// Einblenden beim Scrollen
-const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(x=>observer.observe(x));
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Überschriften in Wörter zerlegen (Masken-Animation)
+document.querySelectorAll('.section h2,.discount h2').forEach(h=>{
+  let i=0;const out=document.createDocumentFragment();
+  [...h.childNodes].forEach(n=>{
+    if(n.nodeType!==3){out.appendChild(n);return}
+    n.textContent.split(/(\s+)/).forEach(t=>{
+      if(!t)return;
+      if(/^\s+$/.test(t)){out.appendChild(document.createTextNode(' '));return}
+      const w=document.createElement('span');w.className='w';
+      const inner=document.createElement('span');inner.textContent=t;inner.style.setProperty('--i',i++);
+      w.appendChild(inner);out.appendChild(w);
+    });
+  });
+  h.textContent='';h.appendChild(out);h.classList.add('split');
+});
+
+// Lead-Texte: Wörter leuchten beim Scrollen nacheinander auf
+const leads=[...document.querySelectorAll('.section p.lead')].map(p=>{
+  const words=p.textContent.trim().split(/\s+/);
+  p.innerHTML=words.map(w=>'<span class="lw">'+w.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>').join(' ');
+  return {el:p,words:[...p.querySelectorAll('.lw')]};
+});
+function scrubLeads(){
+  const vh=innerHeight;
+  leads.forEach(({el,words})=>{
+    const r=el.getBoundingClientRect();
+    const p=reduced?1:Math.max(0,Math.min(1,(vh*.95-r.top)/(vh*.5)));
+    const n=Math.round(p*words.length);
+    words.forEach((w,i)=>w.classList.toggle('on',i<n));
+  });
+}
+
+// Einblenden beim Scrollen, Geschwister gestaffelt
+document.querySelectorAll('.reveal').forEach(el=>{
+  const sibs=[...el.parentElement.children].filter(c=>c.classList.contains('reveal'));
+  const i=sibs.indexOf(el);
+  if(i>0){el.style.transitionDelay=(i*.1)+'s';el.addEventListener('transitionend',()=>el.style.transitionDelay='',{once:true})}
+});
+const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.reveal,.split,.eyebrow,.reveal-line').forEach(x=>observer.observe(x));
+
+// Zahlen hochzählen
+document.querySelectorAll('.stat b').forEach(b=>{
+  const m=b.textContent.match(/^(\d+)(\D*)$/);if(!m||reduced)return;
+  const target=+m[1],suf=m[2],t0=performance.now()+700,dur=1600;
+  b.textContent='0'+suf;
+  (function tick(now){const k=Math.max(0,Math.min(1,(now-t0)/dur));b.textContent=Math.round(target*(1-Math.pow(1-k,3)))+suf;if(k<1)requestAnimationFrame(tick)})(performance.now());
+});
+
+// Lichtkegel auf Karten folgt der Maus
+document.querySelectorAll('.card,.price:not(.featured),.maintenance,.project').forEach(c=>{
+  c.classList.add('spot');
+  c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')});
+});
 
 // Cursor (nur mit Maus)
 const cursor=document.querySelector('.cursor');
@@ -539,16 +619,33 @@ function markActive(){
   navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
 }
 
-// Scroll: Parallax, Fortschritt, Nav-Hintergrund
-window.addEventListener('scroll',()=>{
-  document.querySelectorAll('.project').forEach(p=>{const r=p.getBoundingClientRect();const offset=(window.innerHeight/2-r.top)*.025;p.style.transform=`translateY(${Math.max(-15,Math.min(15,offset))}px)`});
-  const h=document.documentElement;
-  const pct=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
-  document.getElementById('progress').style.width=pct+'%';
-  nav.classList.toggle('scrolled',h.scrollTop>40);
+// Scroll: Parallax, Laufband, Hero, Fortschritt, Nav-Hintergrund
+const heroLines=document.querySelectorAll('.hero h1>span:not(.sr-only)'),heroCopy=document.querySelector('.hero-copy'),laptop=document.querySelector('.laptop');
+const projects=[...document.querySelectorAll('.project')],marquees=[...document.querySelectorAll('.marquee-move')];
+heroCopy.addEventListener('animationend',()=>{heroCopy.style.animation='none'},{once:true});
+marquees.forEach(m=>{const t=m.querySelector('.marquee-track');let guard=0;while(m.children.length*t.offsetWidth<t.offsetWidth+innerWidth+1600&&guard++<8)m.appendChild(t.cloneNode(true))});
+let ticking=false;
+function onScroll(){
+  ticking=false;
+  const h=document.documentElement,y=h.scrollTop,vh=innerHeight;
+  if(!reduced){
+    if(y<vh*1.2){
+      heroLines[0].style.translate=(-y*.35)+'px 0';
+      heroLines[1].style.translate=(y*.35)+'px 0';
+      laptop.style.translate='0 '+(y*.18)+'px';
+      heroCopy.style.opacity=Math.max(0,1-y/(vh*.7));
+    }
+    projects.forEach(p=>{const r=p.getBoundingClientRect();const o=(vh/2-r.top-r.height/2)*.04;p.style.translate='0 '+Math.max(-18,Math.min(18,o))+'px'});
+    marquees.forEach(m=>{const r=m.getBoundingClientRect();if(r.bottom<-50||r.top>vh+50)return;m.style.translate=((r.top-vh)*+m.dataset.speed)+'px 0'});
+  }
+  scrubLeads();
+  document.getElementById('progress').style.width=(y/(h.scrollHeight-h.clientHeight)*100)+'%';
+  nav.classList.toggle('scrolled',y>40);
   markActive();
-},{passive:true});
-markActive();
+}
+window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
+window.addEventListener('resize',onScroll);
+onScroll();
 
 // FAQ-Akkordeon
 document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
