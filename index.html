@@ -24,8 +24,10 @@
   "@type":"ProfessionalService",
   "name":"Thatsite!",
   "description":"Webdesign-Agentur aus Zittau für individuelle Websites, Online-Shops und SEO.",
-  "email":"hello@craftly.design",
-  "address":{"@type":"PostalAddress","addressLocality":"Zittau","addressRegion":"Sachsen","addressCountry":"DE"},
+  "email":"thatsite@mail.de",
+  "telephone":"+49 157 33202692",
+  "founder":{"@type":"Person","name":"Florian Hackenschmidt"},
+  "address":{"@type":"PostalAddress","streetAddress":"Grüne Straße 5","postalCode":"02763","addressLocality":"Zittau","addressRegion":"Sachsen","addressCountry":"DE"},
   "areaServed":[{"@type":"City","name":"Zittau"},{"@type":"AdministrativeArea","name":"Landkreis Görlitz"},{"@type":"Place","name":"Oberlausitz"}],
   "priceRange":"€€",
   "knowsAbout":["Webdesign","Website-Entwicklung","Online-Shops","Suchmaschinenoptimierung"]
@@ -222,13 +224,14 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .price .buy:hover{background:var(--accent);border-color:var(--accent);color:#111}
 .featured .buy:hover{background:#111;border-color:#111;color:#fff}
 
+.pricenote{font-size:10px;color:#777;margin:30px 0 18px;letter-spacing:.02em}
 .maintenance{margin-top:12px;border:1px solid #2b2b2b;background:linear-gradient(150deg,#151515,#0e0e0e);padding:34px;display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:center;transition:.4s}
 .maintenance:hover{border-color:var(--accentdark)}
 .maintenance h3{font-size:20px;letter-spacing:-.03em;margin-top:12px;line-height:1.15}
 .maintenance p{font-size:11px;color:var(--muted);line-height:1.65;margin-top:12px;max-width:520px}
 .m-right{text-align:right;border-left:1px solid #272727;padding-left:40px}
 .m-amount{font-size:38px;font-weight:800;letter-spacing:-.05em;color:var(--accent)}
-.m-amount span{font-size:11px;font-weight:400;color:#8f8f8f;letter-spacing:0}
+.m-amount span{font-size:11px;font-weight:400;color:#8f8f8f;letter-spacing:0;margin-left:5px}
 .m-desc{font-size:9px;color:#8f8f8f;margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
 
 /* FAQ */
@@ -443,6 +446,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <article class="price reveal"><h3>PREMIUM</h3><div class="sub">Für große Projekte &amp; Shops</div><div class="amount">3.499€<span> einmalig</span></div><div class="desc">Die volle Ausstattung für Online-Shops und komplexe Projekte mit hohem Anspruch.</div><ul><li>Individuelles Webdesign</li><li>Responsive Design</li><li>Bis zu 20 Seiten</li><li>E-Commerce Funktion</li><li>SEO &amp; Performance</li><li>Unbegrenzte Korrekturen</li><li>Prioritärer Support</li></ul><a class="buy" href="#kontakt" data-paket="Premium">Auswählen →</a></article>
 <article class="price reveal"><h3>IMMER INKLUSIVE</h3><div class="sub">Bei jedem Projekt, ganz ohne Aufpreis</div><div class="desc">Diese Leistungen sind fester Bestandteil jedes Pakets – ganz gleich, für welches du dich entscheidest.</div><ul><li>Persönlicher Ansprechpartner</li><li>Modernes &amp; einzigartiges Design</li><li>Technisch einwandfreie Umsetzung</li><li>Grundlegende SEO Optimierung</li><li>Sicherheit beim Launch</li></ul><a class="buy" href="#kontakt" data-paket="Individuelles Angebot">Kontakt aufnehmen →</a></article>
 </div>
+<p class="pricenote">Alle Preise sind Endpreise. Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine Umsatzsteuer berechnet.</p>
 <div class="maintenance reveal"><div class="m-left"><div class="eyebrow">Nach dem Launch</div><h3>LAUFENDER SUPPORT<br>&amp; WARTUNG</h3><p>Nach Fertigstellung deiner Website betreuen wir sie auf Wunsch dauerhaft weiter: regelmäßige Updates, Sicherheits-Checks, kleinere Textänderungen und ein direkter Ansprechpartner bei Fragen oder Problemen.</p></div><div class="m-right"><div class="m-amount">99€<span>/ Monat</span></div><div class="m-desc">Monatlich kündbar, keine Mindestlaufzeit</div><a class="ghostbtn" href="#kontakt" data-paket="Wartung & Support" style="display:inline-block;margin-top:14px">Anfragen →</a></div></div>
 </section>
 
@@ -468,7 +472,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 
 <section class="section" id="kontakt">
 <div class="contact"><div><div class="eyebrow">Kontakt</div><h2>LASS UNS<br>STARTEN.</h2><p class="lead">Erzähl uns von deinem Projekt. Wir melden uns persönlich bei dir und besprechen gemeinsam die nächsten Schritte – unverbindlich und kostenlos.</p>
-<div class="contact-info"><div><span>E-Mail</span><a href="mailto:hello@craftly.design">hello@craftly.design</a></div><div><span>Telefon</span><em class="ph" style="font-style:normal">[Telefonnummer]</em></div><div><span>Standort</span>Zittau, Landkreis Görlitz (Sachsen)</div></div></div>
+<div class="contact-info"><div><span>E-Mail</span><a href="mailto:thatsite@mail.de">thatsite@mail.de</a></div><div><span>Telefon</span><a href="tel:+4915733202692">0157 33202692</a></div><div><span>Adresse</span>Grüne Straße 5, 02763 Zittau</div></div></div>
 <form class="form" id="contactform" novalidate>
 <div class="field"><label for="f-name">Name *</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
 <div class="field"><label for="f-mail">E-Mail *</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
@@ -488,25 +492,25 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <a class="solidbtn" href="#kontakt">Projekt anfragen →</a></div>
 <div><h4>Navigation</h4><a href="#top">Home</a><a href="#work">Work</a><a href="#leistungen">Leistungen</a><a href="#preise">Preise</a><a href="#ueber">Über uns</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
 <div><h4>Leistungen</h4><a href="#leistungen">Webdesign</a><a href="#leistungen">Website Entwicklung</a><a href="#leistungen">Shop &amp; E-Commerce</a><a href="#leistungen">SEO &amp; Performance</a><a href="#preise">Wartung &amp; Support</a></div>
-<div><h4>Rechtliches</h4><a href="#impressum" data-modal="impressum">Impressum</a><a href="#datenschutz" data-modal="datenschutz">Datenschutz</a><h4 style="margin-top:24px">Kontakt</h4><a href="mailto:hello@craftly.design">hello@craftly.design</a><p>Zittau, Sachsen</p></div>
+<div><h4>Rechtliches</h4><a href="#impressum" data-modal="impressum">Impressum</a><a href="#datenschutz" data-modal="datenschutz">Datenschutz</a><h4 style="margin-top:24px">Kontakt</h4><a href="mailto:thatsite@mail.de">thatsite@mail.de</a><a href="tel:+4915733202692">0157 33202692</a><p>Grüne Straße 5<br>02763 Zittau</p></div>
 </div>
 <div class="copyright"><span>© 2026 Thatsite! Alle Rechte vorbehalten.</span><a href="#top">↑ Nach oben</a></div>
 </footer>
 
-<!-- Impressum: Platzhalter in [eckigen Klammern] vor dem Livegang ausfüllen -->
+<!-- Impressum -->
 <div class="modal" id="modal-impressum" role="dialog" aria-modal="true" aria-labelledby="imp-title">
 <div class="modal-box">
 <button class="modal-close" aria-label="Schließen">✕</button>
 <div class="eyebrow">Rechtliches</div>
 <h2 id="imp-title">IMPRESSUM</h2>
 <h3>Angaben gemäß § 5 DDG</h3>
-<p>Thatsite!<br><span class="ph">[Vor- und Nachname bzw. Firmenname mit Rechtsform]</span><br><span class="ph">[Straße Hausnummer]</span><br><span class="ph">[PLZ]</span> Zittau<br>Deutschland</p>
+<p>Florian Hackenschmidt<br>Thatsite!<br>Grüne Straße 5<br>02763 Zittau<br>Deutschland</p>
 <h3>Kontakt</h3>
-<p>Telefon: <span class="ph">[Telefonnummer]</span><br>E-Mail: <a href="mailto:hello@craftly.design">hello@craftly.design</a></p>
+<p>Telefon: <a href="tel:+4915733202692">0157 33202692</a><br>E-Mail: <a href="mailto:thatsite@mail.de">thatsite@mail.de</a></p>
 <h3>Umsatzsteuer</h3>
-<p><span class="ph">[Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE… – oder Zeile entfernen, falls keine vorhanden]</span></p>
+<p>Kleinunternehmer gemäß § 19 UStG. Es wird keine Umsatzsteuer berechnet und daher keine Umsatzsteuer-Identifikationsnummer ausgewiesen.</p>
 <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
-<p><span class="ph">[Vor- und Nachname]</span><br><span class="ph">[Anschrift wie oben]</span></p>
+<p>Florian Hackenschmidt<br>Grüne Straße 5, 02763 Zittau</p>
 <h3>Verbraucherstreitbeilegung</h3>
 <p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
 <h3>Haftung für Inhalte</h3>
@@ -518,18 +522,19 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 </div>
 </div>
 
-<!-- Datenschutz: Grundgerüst, vor dem Livegang prüfen und Platzhalter ausfüllen -->
+<!-- Datenschutz -->
 <div class="modal" id="modal-datenschutz" role="dialog" aria-modal="true" aria-labelledby="ds-title">
 <div class="modal-box">
 <button class="modal-close" aria-label="Schließen">✕</button>
 <div class="eyebrow">Rechtliches</div>
 <h2 id="ds-title">DATENSCHUTZ</h2>
 <h3>1. Verantwortlicher</h3>
-<p><span class="ph">[Vor- und Nachname bzw. Firmenname]</span><br><span class="ph">[Straße Hausnummer]</span>, <span class="ph">[PLZ]</span> Zittau<br>E-Mail: <a href="mailto:hello@craftly.design">hello@craftly.design</a></p>
+<p>Florian Hackenschmidt – Thatsite!<br>Grüne Straße 5, 02763 Zittau<br>Telefon: <a href="tel:+4915733202692">0157 33202692</a><br>E-Mail: <a href="mailto:thatsite@mail.de">thatsite@mail.de</a></p>
 <h3>2. Hosting &amp; Server-Logfiles</h3>
-<p>Diese Website wird bei <span class="ph">[Name und Anschrift des Hosting-Anbieters]</span> gehostet. Beim Aufruf der Seite werden technisch notwendige Daten (z.&nbsp;B. IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browsertyp) in Server-Logfiles verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt im sicheren und stabilen Betrieb der Website.</p>
+<p>Diese Website wird bei Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA, gehostet. Beim Aufruf der Seite werden technisch notwendige Daten (z.&nbsp;B. IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browsertyp) in Server-Logfiles verarbeitet und über das weltweite Servernetz von Vercel ausgeliefert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt im sicheren, schnellen und stabilen Betrieb der Website. Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung (Art. 28 DSGVO). Eine Übermittlung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework, unter dem Vercel zertifiziert ist, sowie der EU-Standardvertragsklauseln.</p>
+<p style="margin-top:10px">Die Domain dieser Website ist bei der IONOS SE, Elgendorfer Str. 57, 56410 Montabaur, registriert.</p>
 <h3>3. Kontaktaufnahme</h3>
-<p>Wenn du uns per E-Mail oder über das Anfrageformular (das dein eigenes E-Mail-Programm öffnet) kontaktierst, verarbeiten wir deine Angaben zur Bearbeitung deiner Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+<p>Wenn du uns per E-Mail oder über das Anfrageformular (das dein eigenes E-Mail-Programm öffnet) kontaktierst, verarbeiten wir deine Angaben zur Bearbeitung deiner Anfrage. E-Mails werden über unseren E-Mail-Anbieter mail.de empfangen und gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
 <h3>4. Cookies &amp; Tracking</h3>
 <p>Diese Website verwendet keine Cookies, keine Analyse- oder Tracking-Tools und lädt keine externen Schriftarten oder Skripte.</p>
 <h3>5. Deine Rechte</h3>
@@ -672,7 +677,7 @@ form.addEventListener('submit',e=>{
   if(!d.name.trim()||!d.nachricht.trim()||!form.email.checkValidity()||!d.email.trim()){status.textContent='Bitte fülle Name, eine gültige E-Mail-Adresse und deine Nachricht aus.';return}
   const subject='Projektanfrage'+(d.paket?' – '+d.paket:'')+' – '+d.name;
   const body=`Name: ${d.name}\nE-Mail: ${d.email}\nPaket/Thema: ${d.paket||'-'}\nRabattcode: ${d.code||'-'}\n\n${d.nachricht}`;
-  location.href='mailto:hello@craftly.design?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  location.href='mailto:thatsite@mail.de?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   status.textContent='Dein E-Mail-Programm wurde geöffnet – bitte sende die Nachricht dort ab.';
 });
 
