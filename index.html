@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRAFTLY — Webdesign, das beeindruckt.</title>
+<meta name="description" content="CRAFTLY – Webdesign-Agentur aus Zittau, Sachsen. Individuelle Websites, Online-Shops und SEO mit transparenten Preisen.">
+<meta name="theme-color" content="#070707">
+<style>
+:root{--bg:#070707;--panel:#111;--line:#292929;--text:#fff;--muted:#9a9a9a;--accent:#ff6b1a;--accent2:#ff8c42;--accentdark:#7a3a12}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+body.locked{overflow:hidden}
+a{color:inherit;text-decoration:none} button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
+::selection{background:var(--accent);color:#111}
+section[id],header[id]{scroll-margin-top:74px}
+.noise{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* progress bar */
+.progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:120;width:0%;transition:width .1s linear}
+
+nav{position:fixed;z-index:50;top:0;left:0;width:100%;height:74px;padding:0 3vw;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#070707,transparent);backdrop-filter:blur(7px);transition:background .3s}
+nav.scrolled{background:rgba(7,7,7,.92)}
+.logo{position:relative;z-index:60;font-size:20px;font-weight:900;letter-spacing:-.08em;display:flex;align-items:center;gap:8px}
+.logo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+.navlinks{display:flex;gap:28px;font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:#ccc}
+.navlinks a{position:relative;padding-bottom:3px;transition:color .3s}
+.navlinks a:after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:.35s}
+.navlinks a:hover,.navlinks a.active{color:var(--accent2)}.navlinks a:hover:after,.navlinks a.active:after{width:100%}
+.navcta,.outlinebtn{border:1px solid var(--accentdark);padding:12px 17px;text-transform:uppercase;letter-spacing:.1em;font-size:9px;transition:.3s;position:relative;overflow:hidden}
+.navcta:hover,.outlinebtn:hover{background:var(--accent);border-color:var(--accent);color:#111}
+.burger{display:none;width:40px;height:40px;position:relative;z-index:60}
+.burger span{position:absolute;left:9px;width:22px;height:2px;background:#fff;transition:.35s}
+.burger span:nth-child(1){top:14px}.burger span:nth-child(2){top:20px}.burger span:nth-child(3){top:26px}
+nav.open .burger span:nth-child(1){top:20px;transform:rotate(45deg)}
+nav.open .burger span:nth-child(2){opacity:0}
+nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
+
+.hero{min-height:820px;height:100svh;position:relative;overflow:hidden;padding:150px 3vw 70px;background:radial-gradient(circle at 75% 43%,#232323 0,#101010 20%,#070707 53%)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070707 0%,transparent 55%,rgba(0,0,0,.5)),linear-gradient(0deg,#070707 0%,transparent 30%);pointer-events:none}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,26,.14),transparent 70%);top:-150px;right:-100px;animation:drift 10s ease-in-out infinite;pointer-events:none}
+.hero h1{font-size:clamp(80px,15.5vw,230px);line-height:.78;letter-spacing:-.095em;font-weight:900;position:relative;z-index:2;max-width:700px}
+.hero h1 span{display:block;animation:rise 1s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 span:nth-child(2){animation-delay:.15s}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:1px var(--accent)}
+.hero-copy{position:relative;z-index:3;margin-top:30px;max-width:560px;animation:rise 1s cubic-bezier(.2,.8,.2,1) .3s both}
+.hero-copy h2{font-size:clamp(22px,3vw,40px);line-height:.98;letter-spacing:-.05em}
+.hero-copy p{color:#aaa;margin:14px 0 20px;line-height:1.55;font-size:13px}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.solidbtn{background:var(--accent);color:#111;padding:13px 20px;text-transform:uppercase;font-size:9px;letter-spacing:.12em;transition:.3s;display:inline-block;font-weight:700}
+.solidbtn:hover{background:#fff;transform:translateY(-2px)}
+.ghostbtn{border:1px solid #555;padding:13px 20px;text-transform:uppercase;font-size:9px;letter-spacing:.12em;transition:.3s}
+.ghostbtn:hover{border-color:var(--accent);color:var(--accent2);transform:translateY(-2px)}
+.laptop{position:absolute;z-index:2;width:min(58vw,820px);right:3%;top:13%;transform:rotate(-7deg);animation:float 7s ease-in-out infinite}
+.laptop-frame{background:#0c0c0c;border:2px solid #333;border-radius:18px;padding:12px;box-shadow:0 50px 130px #000}
+.laptop-screen{aspect-ratio:1.55;border-radius:9px;overflow:hidden;background:linear-gradient(135deg,#151515,#2e2e2e);padding:5%;position:relative}
+.laptop-screen:after{content:"";position:absolute;width:38%;height:80%;right:0;top:5%;background:linear-gradient(120deg,var(--accent),#1a1a1a);clip-path:polygon(30% 0,100% 15%,75% 100%,0 75%);opacity:.75;animation:shift 6s ease-in-out infinite}
+.screen-brand{font-size:16px;font-weight:800;letter-spacing:-.06em}
+.screen-title{font-size:clamp(28px,5vw,70px);line-height:.8;font-weight:900;letter-spacing:-.08em;max-width:70%;margin-top:18%}
+.laptop-base{height:24px;background:linear-gradient(#555,#171717);clip-path:polygon(3% 0,97% 0,100% 100%,0 100%);margin:0 -4%}
+.rock{position:absolute;right:-3%;bottom:-13%;width:62%;height:46%;background:radial-gradient(ellipse at 45% 30%,#474747,#131313 60%);clip-path:polygon(0 70%,12% 30%,35% 25%,49% 0,70% 18%,100% 7%,100% 100%,0 100%);z-index:1;filter:drop-shadow(0 30px 50px #000)}
+.scrollbadge{position:absolute;right:5%;bottom:24%;z-index:4;border:1px solid #777;width:70px;height:70px;border-radius:50%;display:grid;place-items:center;font-size:8px;text-transform:uppercase;letter-spacing:.1em;animation:spin 12s linear infinite;text-align:center}
+.stats{position:absolute;z-index:5;bottom:0;left:0;width:100%;padding:22px 3vw;display:grid;grid-template-columns:2fr repeat(4,1fr);border-top:1px solid #303030;background:rgba(7,7,7,.78);backdrop-filter:blur(12px)}
+.clients{display:flex;gap:28px;align-items:center;font-weight:800;color:#d4d4d4;font-size:14px;overflow:hidden}
+.clients span{transition:.3s} .clients span:hover{color:var(--accent)}
+.stat{border-left:1px solid #333;padding-left:24px}
+.stat b{font-size:28px;display:inline-block}
+.stat small{display:block;color:#8c8c8c;font-size:9px;margin-top:5px}
+
+.section{padding:110px 3vw;border-bottom:1px solid #202020;position:relative}
+.two{display:grid;grid-template-columns:1fr 2fr;gap:70px}
+.eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:.17em;color:#858585;display:flex;align-items:center;gap:8px}
+.eyebrow:before{content:"";width:18px;height:1px;background:var(--accent)}
+.section h2{font-size:clamp(42px,6vw,84px);line-height:.88;letter-spacing:-.07em;margin-top:16px}
+.section p.lead{color:var(--muted);max-width:650px;line-height:1.6;margin-top:22px;font-size:14px}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:45px}
+.card{background:linear-gradient(150deg,#151515,#0e0e0e);border:1px solid #272727;padding:26px;min-height:280px;position:relative;overflow:hidden;transition:.45s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-8px);border-color:var(--accentdark)}
+.card:before{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,107,26,.08);right:-55px;top:-55px;transition:.5s}
+.card:hover:before{transform:scale(1.4)}
+.icon{font-size:26px;color:#c9c9c9;transition:.4s}
+.card:hover .icon{color:var(--accent);transform:rotate(12deg) scale(1.1)}
+.card h3{font-size:22px;letter-spacing:-.05em;margin-top:28px}
+.card p{font-size:11px;line-height:1.65;color:#8f8f8f;margin-top:12px;flex:1}
+.more{font-size:9px;text-transform:uppercase;letter-spacing:.12em;margin-top:16px;display:inline-block;transition:.3s}
+.card:hover .more{color:var(--accent2);transform:translateX(4px)}
+
+.process{display:grid;grid-template-columns:1fr 2fr;gap:70px}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:16px}
+.timeline:before{content:"";height:1px;background:var(--accentdark);position:absolute;left:0;right:0;top:20px}
+.timeline:after{content:"";position:absolute;left:0;top:19px;height:3px;width:0;background:var(--accent);animation:fillline 2.4s ease-out .3s forwards;box-shadow:0 0 8px var(--accent)}
+.step{position:relative;padding-top:38px}
+.step i{position:absolute;top:15px;left:0;width:11px;height:11px;border:2px solid var(--accent);background:#070707;border-radius:50%;transition:.4s}
+.step:hover i{transform:scale(1.5);box-shadow:0 0 12px var(--accent)}
+.step b{font-size:24px;color:#5a5a5a}
+.step h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin:9px 0}
+.step p{font-size:10px;color:#8d8d8d;line-height:1.65}
+
+.projects{position:relative;margin-top:55px;display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:10px;align-items:center}
+.project{height:430px;border:1px solid #292929;background:#141414;position:relative;transition:.6s;padding:14px;display:flex;flex-direction:column}
+.project.center{height:490px;z-index:2;box-shadow:0 35px 80px #000}
+.project:hover{transform:translateY(-12px)}
+.project .mockwrap{flex:1;position:relative;border-radius:6px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.project .caption{padding-top:16px;position:relative}
+.project .tag{font-size:8px;text-transform:uppercase;letter-spacing:.14em;color:#8f8f8f}
+.project h3{font-size:20px;letter-spacing:-.04em;line-height:1.05;margin-top:8px}
+.project.center h3{font-family:Georgia,serif;font-weight:400;font-size:23px}
+.project p.desc{font-size:10px;line-height:1.55;opacity:.75;margin-top:8px;max-width:95%}
+.project small.client{display:block;margin-top:10px;color:#aaa;font-size:8px;text-transform:uppercase;letter-spacing:.12em}
+
+/* browser-style website mockups — 3 distinct design variants */
+.mock{position:absolute;inset:0;display:flex;flex-direction:column;font-family:Arial,Helvetica,sans-serif}
+.mock-bar{height:20px;display:flex;align-items:center;gap:5px;padding:0 9px;flex-shrink:0}
+.mock-dot{width:5px;height:5px;border-radius:50%}
+.mock-body{flex:1;position:relative;padding:15px;display:flex;flex-direction:column;overflow:hidden}
+
+/* Variante A — PULSE: dunkel, bold, sportlich */
+.mock.type-a{background:#0b0b0b}
+.mock.type-a .mock-bar{background:#161616}
+.mock.type-a .mock-dot{background:#333}
+.mock.type-a .mock-nav{display:flex;justify-content:space-between;align-items:center}
+.mock.type-a .mock-logo{font-weight:900;font-size:10px;color:#fff;letter-spacing:-.03em}
+.mock.type-a .mock-navitems{display:flex;gap:6px}
+.mock.type-a .mock-navitems span{width:12px;height:2px;background:#3a3a3a;border-radius:1px}
+.mock.type-a .mock-h{font-size:21px;font-weight:900;color:#fff;line-height:.92;letter-spacing:-.03em;margin-top:16px}
+.mock.type-a .mock-h em{color:#e2542d;font-style:normal}
+.mock.type-a .mock-line{height:3px;background:#2b2b2b;border-radius:2px;margin-top:7px}
+.mock.type-a .mock-line.w1{width:75%}.mock.type-a .mock-line.w2{width:55%}
+.mock.type-a .mock-cta{margin-top:12px;width:58px;height:13px;background:#e2542d;border-radius:2px}
+.mock.type-a .mock-photo{position:absolute;right:-15%;bottom:-18%;width:70%;height:75%;background:linear-gradient(160deg,#e2542d,#3a1208);clip-path:polygon(22% 0,100% 12%,100% 100%,0 100%);opacity:.92}
+
+/* Variante B — NOVA: hell, editorial, serif */
+.mock.type-b{background:#ece8de}
+.mock.type-b .mock-bar{background:#dfd9c9}
+.mock.type-b .mock-dot{background:#c5bda8}
+.mock.type-b .mock-body{flex-direction:row;gap:12px;align-items:stretch}
+.mock.type-b .mock-col{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.mock.type-b .mock-logo{font-family:Georgia,serif;font-size:9px;letter-spacing:.12em;color:#333;text-transform:uppercase}
+.mock.type-b .mock-h{font-family:Georgia,serif;font-weight:400;font-size:19px;color:#1c1c1c;line-height:1.02;margin-top:12px}
+.mock.type-b .mock-line{height:2px;background:#c7bfa9;border-radius:2px;margin-top:8px}
+.mock.type-b .mock-line.w1{width:90%}.mock.type-b .mock-line.w2{width:65%}
+.mock.type-b .mock-photo{flex:.9;align-self:stretch;background:linear-gradient(160deg,#b9b2a0,#54606b);border-radius:2px}
+
+/* Variante C — LUMEN: warmes Gradient-Portfolio mit Produktraster */
+.mock.type-c{background:linear-gradient(160deg,#1b1b1b,#3a2a20)}
+.mock.type-c .mock-bar{background:#1f1f1f}
+.mock.type-c .mock-dot{background:#454545}
+.mock.type-c .mock-logo{font-size:9px;color:var(--accent2);letter-spacing:.08em;font-weight:700}
+.mock.type-c .mock-h{font-size:16px;color:#fff;margin-top:12px;line-height:1.08;letter-spacing:-.02em;max-width:80%}
+.mock.type-c .mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:auto}
+.mock.type-c .mock-grid div{aspect-ratio:1;border-radius:3px}
+.mock.type-c .mock-grid div:nth-child(1){background:linear-gradient(160deg,#ffb27a,#a8420a)}
+.mock.type-c .mock-grid div:nth-child(2){background:linear-gradient(160deg,#555,#1c1c1c)}
+.mock.type-c .mock-grid div:nth-child(3){background:linear-gradient(160deg,#ff6b1a,#4a1c05)}
+
+.values{display:grid;grid-template-columns:1fr 2fr;gap:70px}
+.valuegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px}
+.value{text-align:center;transition:.4s}
+.value:hover{transform:translateY(-6px)}
+.value .vicon{font-size:28px;color:var(--accent);transition:.4s}
+.value:hover .vicon{transform:scale(1.2) rotate(-8deg)}
+.value h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin:15px 0 8px}
+.value p{font-size:9px;color:#858585;line-height:1.6}
+.benefits{margin-top:45px;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #272727;border-bottom:1px solid #272727}
+.benefit{padding:18px 14px;border-right:1px solid #272727;font-size:9px;color:#aaa;line-height:1.6;transition:.3s}
+.benefit:hover{background:#101010}
+.benefit b{display:block;color:#ddd;margin-bottom:5px;font-size:10px}
+.benefit b span{color:var(--accent)}
+
+.prices{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:45px}
+.price{border:1px solid #2b2b2b;background:#101010;padding:24px;min-height:460px;position:relative;transition:.4s;display:flex;flex-direction:column}
+.price:hover{border-color:var(--accentdark);transform:translateY(-6px)}
+.price.featured{background:linear-gradient(160deg,#ff8c42,#e0560c);color:#111;transform:translateY(-18px)}
+.price.featured:hover{transform:translateY(-24px)}
+.price .badge{position:absolute;top:-11px;right:20px;background:#fff;color:#111;font-size:8px;text-transform:uppercase;letter-spacing:.1em;padding:5px 10px}
+.price h3{font-size:22px}
+.price .sub{font-size:9px;color:#8f8f8f;margin:7px 0 16px;line-height:1.5}
+.featured .sub{color:#3a1a05}
+.price .amount{font-size:40px;font-weight:800;letter-spacing:-.06em;margin-bottom:6px}
+.price .amount span{font-size:11px;font-weight:400;color:#777;letter-spacing:0;margin-left:5px}
+.featured .amount span{color:#3a1a05}
+.price .desc{font-size:10px;color:#8f8f8f;line-height:1.5;margin-bottom:16px}
+.featured .desc{color:#2a1204}
+.price ul{list-style:none;border-top:1px solid #292929;padding-top:13px;flex:1}
+.featured ul{border-color:#a8420a}
+.price li{font-size:9.5px;padding:6px 0;line-height:1.4}
+.price li:before{content:"✓ ";color:var(--accent)}
+.featured li:before{color:#1a0c03}
+.price .buy{margin-top:20px;padding:12px;border:1px solid currentColor;text-transform:uppercase;font-size:9px;letter-spacing:.1em;transition:.3s;text-align:center;display:block}
+.price .buy:hover{background:var(--accent);border-color:var(--accent);color:#111}
+.featured .buy:hover{background:#111;border-color:#111;color:#fff}
+
+.maintenance{margin-top:12px;border:1px solid #2b2b2b;background:linear-gradient(150deg,#151515,#0e0e0e);padding:34px;display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:center;transition:.4s}
+.maintenance:hover{border-color:var(--accentdark)}
+.maintenance h3{font-size:20px;letter-spacing:-.03em;margin-top:12px;line-height:1.15}
+.maintenance p{font-size:11px;color:var(--muted);line-height:1.65;margin-top:12px;max-width:520px}
+.m-right{text-align:right;border-left:1px solid #272727;padding-left:40px}
+.m-amount{font-size:38px;font-weight:800;letter-spacing:-.05em;color:var(--accent)}
+.m-amount span{font-size:11px;font-weight:400;color:#8f8f8f;letter-spacing:0}
+.m-desc{font-size:9px;color:#8f8f8f;margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
+
+/* FAQ */
+.faqlist{border-top:1px solid #272727}
+.faq-item{border-bottom:1px solid #272727}
+.faq-q{width:100%;text-align:left;padding:22px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:15px;letter-spacing:-.02em;font-weight:700;transition:color .3s}
+.faq-q:hover{color:var(--accent2)}
+.faq-q i{font-style:normal;flex-shrink:0;width:26px;height:26px;border:1px solid #444;border-radius:50%;display:grid;place-items:center;font-size:14px;color:var(--accent);transition:.35s}
+.faq-item.open .faq-q i{transform:rotate(45deg);border-color:var(--accent)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a>div{overflow:hidden}
+.faq-a p{font-size:12px;line-height:1.7;color:var(--muted);padding-bottom:22px;max-width:620px}
+
+.discount{margin:0 3vw;border-bottom:1px solid #252525;padding:90px 0;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.discount h2{font-size:clamp(48px,7vw,90px);line-height:.82;letter-spacing:-.08em;margin-top:16px}
+.discount p{color:#999;font-size:12px;line-height:1.65;max-width:430px}
+.discount ul{margin-top:18px;font-size:10px;color:#999;line-height:2;list-style:none}
+.discount ul li:before{content:"◆ ";color:var(--accent)}
+.coupon{margin-top:25px;width:min(480px,100%);height:170px;border:1px solid var(--accent);background:linear-gradient(135deg,#e0560c,#ff8c42);color:#111;position:relative;display:grid;place-items:center;overflow:hidden;box-shadow:0 0 45px rgba(255,107,26,.15)}
+.coupon:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(255,255,255,.16) 13px 15px);mix-blend-mode:overlay;pointer-events:none}
+.coupon b{font-size:72px;letter-spacing:-.08em}
+.coupon small{position:absolute;left:15px;top:12px;font-size:8px;letter-spacing:.15em}
+.coupon .code{position:absolute;bottom:12px;font-size:9px;letter-spacing:.2em}
+.scratch{position:absolute;inset:0;z-index:3;background:#111;display:grid;place-items:center;cursor:pointer;transition:1s cubic-bezier(.2,.8,.2,1)}
+.scratch span{color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:.18em;animation:pulse 1.8s ease-in-out infinite}
+.scratch.open{transform:translateY(-105%);opacity:0;pointer-events:none}
+
+/* Kontakt */
+.contact{display:grid;grid-template-columns:1fr 1.3fr;gap:70px}
+.contact-info{margin-top:30px;display:grid;gap:14px;font-size:12px;color:#ccc}
+.contact-info a:hover{color:var(--accent2)}
+.contact-info span{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.15em;color:#777;margin-bottom:3px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-size:8px;text-transform:uppercase;letter-spacing:.15em;color:#888}
+.field input,.field select,.field textarea{background:#101010;border:1px solid #2b2b2b;color:#fff;padding:13px;font:inherit;font-size:12px;transition:border-color .3s;border-radius:0;width:100%}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.field textarea{min-height:150px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+.form .note{grid-column:1/-1;font-size:9px;color:#777;line-height:1.6}
+.form .note a{color:#aaa;text-decoration:underline}
+.form button.solidbtn{grid-column:1/-1;justify-self:start;border:none}
+.form-status{grid-column:1/-1;font-size:11px;color:var(--accent2);min-height:1em}
+
+footer{padding:60px 3vw 25px;border-top:1px solid #202020;background:#0b0b0b}
+.footgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px}
+.footgrid h4{font-size:9px;text-transform:uppercase;letter-spacing:.15em;margin-bottom:18px;color:var(--accent)}
+.footgrid p,.footgrid a{display:block;color:#8b8b8b;font-size:10px;line-height:1.9;transition:.3s}
+.footgrid a:hover{color:#fff;transform:translateX(3px)}
+.footgrid .solidbtn{display:inline-block;color:#111;margin-top:20px;line-height:1}
+.footgrid .solidbtn:hover{color:#111;transform:translateY(-2px)}
+.copyright{border-top:1px solid #242424;margin-top:50px;padding-top:18px;display:flex;justify-content:space-between;color:#666;font-size:8px;text-transform:uppercase;letter-spacing:.12em}
+.copyright a:hover{color:var(--accent)}
+
+/* Impressum / Datenschutz */
+.modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:.35s}
+.modal.open{opacity:1;visibility:visible}
+.modal-box{background:#0e0e0e;border:1px solid #2b2b2b;border-top:2px solid var(--accent);width:min(720px,100%);max-height:88vh;overflow-y:auto;padding:40px;position:relative;transform:translateY(30px);transition:.45s cubic-bezier(.2,.8,.2,1)}
+.modal.open .modal-box{transform:none}
+.modal-close{position:sticky;top:0;float:right;width:36px;height:36px;border:1px solid #444;border-radius:50%;font-size:16px;transition:.3s;background:#0e0e0e}
+.modal-close:hover{border-color:var(--accent);color:var(--accent)}
+.modal-box h2{font-size:clamp(32px,5vw,52px);line-height:.9;letter-spacing:-.06em;margin:14px 0 26px}
+.modal-box h3{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);margin:26px 0 8px}
+.modal-box p{font-size:12px;line-height:1.75;color:#bbb}
+.modal-box a{color:#fff;text-decoration:underline}
+.ph{color:var(--accent2);border-bottom:1px dashed var(--accent)}
+
+.reveal{opacity:0;transform:translateY(50px);transition:1s cubic-bezier(.2,.8,.2,1)}
+.reveal.show{opacity:1;transform:none}
+.cursor{position:fixed;width:16px;height:16px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:100;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:transform .08s;opacity:0}
+.cursor.on{opacity:1}
+@media(hover:none),(pointer:coarse){.cursor{display:none}}
+
+@keyframes float{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-25px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes shift{0%,100%{transform:translateX(0)}50%{transform:translateX(-8px)}}
+@keyframes fillline{to{width:100%}}
+
+@media(max-width:950px){
+.burger{display:block}
+.navcta{display:none}
+.navlinks{position:fixed;inset:0;height:100svh;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;padding:0 8vw;background:rgba(7,7,7,.97);font-size:30px;letter-spacing:-.04em;font-weight:900;color:#fff;opacity:0;visibility:hidden;transform:translateY(-12px);transition:.4s}
+.navlinks a{padding:8px 0}
+nav.open .navlinks{opacity:1;visibility:visible;transform:none}
+.hero{min-height:850px}.laptop{width:75vw;top:34%;right:-7%}.stats{grid-template-columns:repeat(4,1fr)}.clients{display:none}.cards,.prices{grid-template-columns:1fr 1fr}.two,.process,.values,.discount,.contact{grid-template-columns:1fr}.projects{grid-template-columns:1fr}.project,.project.center{height:390px}.mock.type-b .mock-body{flex-direction:column}.valuegrid{grid-template-columns:1fr 1fr}.benefits{grid-template-columns:1fr 1fr}.footgrid{grid-template-columns:1fr 1fr}.maintenance{grid-template-columns:1fr}.m-right{border-left:none;padding-left:0;text-align:left}.contact{gap:40px}}
+@media(max-width:600px){.hero{padding-top:120px;min-height:960px}.hero h1{font-size:23vw}.laptop{top:auto;bottom:70px;right:-6%;width:92vw}.scrollbadge{bottom:40px}.stats{display:none}.section{padding:80px 5vw}.cards,.prices,.valuegrid,.benefits{grid-template-columns:1fr}.price.featured{transform:none}.price.featured:hover{transform:translateY(-6px)}.timeline{grid-template-columns:1fr 1fr}.discount{margin-left:5vw;margin-right:5vw}.form{grid-template-columns:1fr}.footgrid{grid-template-columns:1fr}.copyright{display:block}.copyright span{display:block;margin-bottom:8px}.modal-box{padding:28px 22px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.timeline:after{width:100%}}
+</style>
+</head>
+<body>
+<div class="noise"></div><div class="cursor"></div><div class="progress" id="progress"></div>
+
+<nav id="nav">
+<a class="logo" href="#top"><span class="dot"></span>CRAFTLY</a>
+<div class="navlinks" id="navlinks"><a href="#work">Work</a><a href="#leistungen">Leistungen</a><a href="#preise">Preise</a><a href="#ueber">Über uns</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
+<a class="navcta" href="#kontakt">Projekt starten →</a>
+<button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
+</nav>
+
+<header class="hero" id="top">
+<div class="hero-glow"></div>
+<div class="laptop" aria-hidden="true"><div class="laptop-frame"><div class="laptop-screen"><div class="screen-brand">NOVA</div><div class="screen-title">BUILDING<br>DIGITAL<br>EXPERIENCES.</div></div></div><div class="laptop-base"></div></div>
+<div class="rock"></div><a class="scrollbadge" href="#leistungen">Scroll<br>entdecken</a>
+<h1><span>CRAFTLY</span><span class="outline" aria-hidden="true">CRAFTLY</span></h1>
+<div class="hero-copy"><h2>WEBDESIGN, DAS BEEINDRUCKT.<br>ERLEBNISSE, DIE BLEIBEN.</h2><p>Wir sind eine Webdesign-Agentur aus Zittau, Sachsen, und gestalten digitale Markenauftritte, die nicht nur gut aussehen, sondern messbare Ergebnisse liefern. Von der ersten Idee bis zum fertigen Launch begleiten wir dich mit Strategie, Design und sauberem Code.</p><div class="hero-buttons"><a class="solidbtn" href="#kontakt">Projekt anfragen →</a><a class="ghostbtn" href="#work">Mehr ansehen ◉</a></div></div>
+<div class="stats"><div class="clients"><span>NOVA</span><span>◈ PULSE</span><span>◆ VERTEX</span><span>◇ LUMEN</span><span>△ APEX</span><span>✦ NEBULA</span></div><div class="stat"><b>50+</b><small>Abgeschlossene<br>Projekte</small></div><div class="stat"><b>98%</b><small>Zufriedene<br>Kunden</small></div><div class="stat"><b>4+</b><small>Jahre<br>Erfahrung</small></div><div class="stat"><b>24/7</b><small>Support &amp;<br>Betreuung</small></div></div>
+</header>
+
+<main>
+<section class="section" id="leistungen">
+<div class="two"><div><div class="eyebrow">Was wir tun</div><h2>DIGITALE LÖSUNGEN.<br>PERFEKT UMGESETZT.</h2><p class="lead">Wir vereinen Design, Technologie und Strategie, um Websites zu schaffen, die überzeugen – visuell, funktional und nachhaltig. Jedes Projekt beginnt mit einer ehrlichen Analyse deiner Marke und endet mit einer Website, auf die du stolz sein kannst.</p></div><div class="cards">
+<article class="card reveal"><div class="icon">◉</div><h3>WEBDESIGN</h3><p>Individuelles Design, das deine Marke einzigartig macht. Wir entwickeln ein visuelles Konzept, das exakt zu deiner Zielgruppe und deinen Zielen passt – keine Vorlage, sondern echte Handarbeit.</p><a class="more" href="#kontakt" data-thema="Webdesign">Anfragen →</a></article>
+<article class="card reveal"><div class="icon">&lt;/&gt;</div><h3>WEBSITE ENTWICKLUNG</h3><p>Saubere, schnelle und skalierbare Websites mit moderner Technologie. Wir achten auf sauberen Code, kurze Ladezeiten und eine Struktur, die mit deinem Unternehmen mitwächst.</p><a class="more" href="#kontakt" data-thema="Website-Entwicklung">Anfragen →</a></article>
+<article class="card reveal"><div class="icon">⌑</div><h3>SHOP &amp; E-COMMERCE</h3><p>Verkaufe erfolgreich mit hochkonvertierenden Online-Shops. Von der Produktseite bis zum Checkout gestalten wir jeden Schritt so, dass aus Besuchern Käufer werden.</p><a class="more" href="#kontakt" data-thema="Online-Shop">Anfragen →</a></article>
+<article class="card reveal"><div class="icon">↗</div><h3>SEO &amp; PERFORMANCE</h3><p>Bessere Rankings, mehr Besucher und messbare Performance. Wir optimieren technisches SEO, Ladezeiten und Inhalte, damit deine Website auch gefunden wird.</p><a class="more" href="#kontakt" data-thema="SEO & Performance">Anfragen →</a></article>
+</div></div>
+</section>
+
+<section class="section" id="prozess">
+<div class="process"><div><div class="eyebrow">Unser Prozess</div><h2>KLAR.<br>STRUKTURIERT.<br>TRANSPARENT.</h2><p class="lead">In 4 Schritten zu einer Website, die begeistert und Ergebnisse liefert. Wir halten dich während des gesamten Prozesses auf dem Laufenden – keine Blackbox, sondern klare Kommunikation von Tag eins an.</p></div>
+<div class="timeline">
+<div class="step reveal"><i></i><b>01</b><h4>Analyse</h4><p>Wir hören zu, analysieren deine Ziele, deine Zielgruppe und deinen Wettbewerb und definieren gemeinsam die perfekte Strategie für dein Projekt.</p></div>
+<div class="step reveal"><i></i><b>02</b><h4>Design</h4><p>Wir gestalten ein einzigartiges, auf deine Marke zugeschnittenes Design und stimmen jedes Detail mit dir ab, bevor es in die Umsetzung geht.</p></div>
+<div class="step reveal"><i></i><b>03</b><h4>Entwicklung</h4><p>Wir setzen das Design mit sauberem Code und modernsten Technologien um – performant, responsiv und technisch einwandfrei.</p></div>
+<div class="step reveal"><i></i><b>04</b><h4>Launch &amp; Support</h4><p>Nach dem Launch sind wir weiterhin für dich da, kümmern uns um Updates, Sicherheit und stehen dir bei Fragen jederzeit zur Seite.</p></div>
+</div></div>
+</section>
+
+<section class="section" id="work">
+<div class="two"><div><div class="eyebrow">Ausgewählte Projekte</div><h2>DESIGN, DAS<br>WIRKUNG ZEIGT.</h2><p class="lead">Jedes Projekt erzählt seine eigene Geschichte. Hier sind einige unserer Lieblingsstücke – ausgewählt, weil sie zeigen, wie unterschiedlich gutes Webdesign aussehen kann.</p></div><div></div></div>
+<div class="projects">
+<article class="project reveal">
+<div class="mockwrap"><div class="mock type-a">
+<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span></div>
+<div class="mock-body">
+<div class="mock-nav"><span class="mock-logo">PULSE</span><div class="mock-navitems"><span></span><span></span><span></span></div></div>
+<div class="mock-h">TRAINIERE<br>HÄRTER.<br><em>WERDE STÄRKER.</em></div>
+<div class="mock-line w1"></div><div class="mock-line w2"></div>
+<div class="mock-cta"></div>
+<div class="mock-photo"></div>
+</div></div></div>
+<div class="caption"><div class="tag">Fitness · Bold &amp; Dunkel</div><h3>Dein Körper.<br>Deine Energie.</h3><p class="desc">Ein dynamisches Redesign für ein Fitnessstudio mit Fokus auf Mitgliedschaften und Online-Buchung. Kräftige Typografie und ein High-Contrast-Look sollen Energie und Antrieb vermitteln.</p><small class="client">PULSE</small></div>
+</article>
+<article class="project center reveal">
+<div class="mockwrap"><div class="mock type-b">
+<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span></div>
+<div class="mock-body">
+<div class="mock-col"><span class="mock-logo">Nova Studio</span><div class="mock-h">Architektur<br>neu gedacht.</div><div class="mock-line w1"></div><div class="mock-line w2"></div></div>
+<div class="mock-photo"></div>
+</div></div></div>
+<div class="caption"><div class="tag">Architektur · Editorial &amp; Hell</div><h3>Architektur neu<br>erleben.</h3><p class="desc">Modernes Webdesign für ein Architekturbüro mit großformatiger Bildsprache, ruhiger Serifen-Typografie und viel Weißraum für eine edle, reduzierte Wirkung.</p><small class="client">NOVA</small></div>
+</article>
+<article class="project reveal">
+<div class="mockwrap"><div class="mock type-c">
+<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span></div>
+<div class="mock-body">
+<span class="mock-logo">LUMEN</span>
+<div class="mock-h">Licht, das Räume verändert.</div>
+<div class="mock-grid"><div></div><div></div><div></div></div>
+</div></div></div>
+<div class="caption"><div class="tag">Interior · Warmes Gradient-Portfolio</div><h3>Licht, das Räume<br>verändert.</h3><p class="desc">Eine warme Portfolio-Seite für einen Lichtdesigner mit Farbverläufen und einem Produktraster, das jede Lampenkollektion einzeln in Szene setzt.</p><small class="client">LUMEN</small></div>
+</article>
+</div>
+</section>
+
+<section class="section" id="ueber">
+<div class="values"><div><div class="eyebrow">Warum CRAFTLY?</div><h2>MEHR ALS NUR<br>SCHÖNES DESIGN.</h2><p class="lead">Wir kombinieren Kreativität mit Strategie und Technologie, um digitale Erlebnisse zu schaffen, die wirklich etwas bewegen. Als kleines Team aus Zittau kennen wir jedes Projekt persönlich und behandeln es auch so.</p></div>
+<div class="valuegrid">
+<div class="value reveal"><div class="vicon">⬡</div><h3>Individuell</h3><p>Jedes Projekt wird maßgeschneidert für deine Marke entwickelt, keine Baukasten-Lösung.</p></div>
+<div class="value reveal"><div class="vicon">✣</div><h3>Performance</h3><p>Schnelle Ladezeiten, saubere Code-Basis und beste SEO-Score von Anfang an.</p></div>
+<div class="value reveal"><div class="vicon">♡</div><h3>Kommunikation</h3><p>Transparente Abläufe, feste Ansprechpartner und regelmäßige Updates zum Projektstand.</p></div>
+<div class="value reveal"><div class="vicon">✧</div><h3>Zuverlässig</h3><p>Deadlines werden eingehalten – ohne Kompromisse bei Qualität oder Umfang.</p></div>
+</div></div>
+<div class="benefits"><div class="benefit"><b><span>▣</span> 100% Responsive</b>Für alle Geräte optimiert, vom Smartphone bis zum großen Desktop-Monitor</div><div class="benefit"><b><span>◈</span> DSGVO Konform</b>Sicher, datenschutzfreundlich und rechtlich auf der sicheren Seite</div><div class="benefit"><b><span>⚙</span> Modernste Technologien</b>Immer auf dem neuesten Stand der Webentwicklung</div><div class="benefit"><b><span>♧</span> Nachhaltig &amp; Zukunftssicher</b>Für langfristigen Erfolg entwickelt und einfach erweiterbar</div></div>
+</section>
+
+<section class="section" id="preise">
+<div class="eyebrow">Transparente Preise</div><h2>FAIRE PREISE.<br>ECHTER MEHRWERT.</h2><p class="lead">Keine versteckten Kosten, keine Überraschungen. Wähle das Paket, das zu deinem Projekt passt – oder sprich uns für ein individuelles Angebot an.</p>
+<div class="prices">
+<article class="price reveal"><h3>STARTER</h3><div class="sub">Für kleine Projekte &amp; Startups</div><div class="amount">899€<span> einmalig</span></div><div class="desc">Ideal für den professionellen Einstieg mit einer schlanken, wirkungsvollen Website.</div><ul><li>Individuelles Webdesign</li><li>Responsive Design</li><li>Bis zu 5 Seiten</li><li>Kontaktformular</li><li>Basis-SEO</li><li>2 Korrekturschleifen</li></ul><a class="buy" href="#kontakt" data-paket="Starter">Auswählen →</a></article>
+<article class="price featured reveal"><div class="badge">Beliebt</div><h3>BUSINESS</h3><div class="sub">Für Unternehmen &amp; wachsende Brands</div><div class="amount">1.999€<span> einmalig</span></div><div class="desc">Unser meistgebuchtes Paket für Unternehmen, die online sichtbar wachsen wollen.</div><ul><li>Individuelles Webdesign</li><li>Responsive Design</li><li>Bis zu 10 Seiten</li><li>Kontaktformular</li><li>SEO optimiert</li><li>5 Korrekturschleifen</li><li>Performance optimiert</li></ul><a class="buy" href="#kontakt" data-paket="Business">Auswählen →</a></article>
+<article class="price reveal"><h3>PREMIUM</h3><div class="sub">Für große Projekte &amp; Shops</div><div class="amount">3.499€<span> einmalig</span></div><div class="desc">Die volle Ausstattung für Online-Shops und komplexe Projekte mit hohem Anspruch.</div><ul><li>Individuelles Webdesign</li><li>Responsive Design</li><li>Bis zu 20 Seiten</li><li>E-Commerce Funktion</li><li>SEO &amp; Performance</li><li>Unbegrenzte Korrekturen</li><li>Prioritärer Support</li></ul><a class="buy" href="#kontakt" data-paket="Premium">Auswählen →</a></article>
+<article class="price reveal"><h3>IMMER INKLUSIVE</h3><div class="sub">Bei jedem Projekt, ganz ohne Aufpreis</div><div class="desc">Diese Leistungen sind fester Bestandteil jedes Pakets – ganz gleich, für welches du dich entscheidest.</div><ul><li>Persönlicher Ansprechpartner</li><li>Modernes &amp; einzigartiges Design</li><li>Technisch einwandfreie Umsetzung</li><li>Grundlegende SEO Optimierung</li><li>Sicherheit beim Launch</li></ul><a class="buy" href="#kontakt" data-paket="Individuelles Angebot">Kontakt aufnehmen →</a></article>
+</div>
+<div class="maintenance reveal"><div class="m-left"><div class="eyebrow">Nach dem Launch</div><h3>LAUFENDER SUPPORT<br>&amp; WARTUNG</h3><p>Nach Fertigstellung deiner Website betreuen wir sie auf Wunsch dauerhaft weiter: regelmäßige Updates, Sicherheits-Checks, kleinere Textänderungen und ein direkter Ansprechpartner bei Fragen oder Problemen.</p></div><div class="m-right"><div class="m-amount">99€<span>/ Monat</span></div><div class="m-desc">Monatlich kündbar, keine Mindestlaufzeit</div><a class="ghostbtn" href="#kontakt" data-paket="Wartung & Support" style="display:inline-block;margin-top:14px">Anfragen →</a></div></div>
+</section>
+
+<section class="section" id="faq">
+<div class="two"><div><div class="eyebrow">Häufige Fragen</div><h2>GUT ZU<br>WISSEN.</h2><p class="lead">Die wichtigsten Antworten rund um dein Projekt. Deine Frage ist nicht dabei? Schreib uns einfach.</p></div>
+<div class="faqlist">
+<div class="faq-item"><button class="faq-q" aria-expanded="false">Was kostet eine Website bei CRAFTLY?<i>+</i></button><div class="faq-a"><div><p>Unsere Pakete starten bei 899 € (Starter), 1.999 € (Business) und 3.499 € (Premium) – jeweils einmalig. Passt keins davon, erstellen wir dir gern ein individuelles Angebot.</p></div></div></div>
+<div class="faq-item"><button class="faq-q" aria-expanded="false">Wie lange dauert ein Projekt?<i>+</i></button><div class="faq-a"><div><p>Das hängt vom Umfang ab. Nach dem Erstgespräch bekommst du von uns einen klaren Zeitplan mit allen Meilensteinen – und daran halten wir uns.</p></div></div></div>
+<div class="faq-item"><button class="faq-q" aria-expanded="false">Was brauche ich für den Start?<i>+</i></button><div class="faq-a"><div><p>Idealerweise dein Logo, erste Texte und Bilder. Fehlt noch etwas, ist das kein Problem – wir klären gemeinsam, was du brauchst, und unterstützen dich dabei.</p></div></div></div>
+<div class="faq-item"><button class="faq-q" aria-expanded="false">Was passiert nach dem Launch?<i>+</i></button><div class="faq-a"><div><p>Auf Wunsch betreuen wir deine Website weiter: Updates, Sicherheits-Checks und kleinere Änderungen für 99 € im Monat – monatlich kündbar, ohne Mindestlaufzeit.</p></div></div></div>
+<div class="faq-item"><button class="faq-q" aria-expanded="false">Ist meine Website mobiloptimiert und DSGVO-konform?<i>+</i></button><div class="faq-a"><div><p>Ja. Jede Website wird für alle Bildschirmgrößen optimiert und datenschutzfreundlich umgesetzt.</p></div></div></div>
+<div class="faq-item"><button class="faq-q" aria-expanded="false">Wie löse ich den Rabattcode ein?<i>+</i></button><div class="faq-a"><div><p>Rubbel den Gutschein unten auf der Seite frei – der Code wird automatisch in dein Anfrageformular übernommen. Alternativ gibst du ihn einfach in deiner Nachricht an.</p></div></div></div>
+</div></div>
+</section>
+
+<section class="discount" id="rabatt">
+<div><div class="eyebrow">Nur für kurze Zeit</div><h2>10% RABATT<br>SICHERN!</h2><p style="margin-top:20px">Rubbel dein Glück frei und erhalte 10% Rabatt auf dein nächstes Projekt bei CRAFTLY. Die Aktion gilt für alle neuen Anfragen, die in diesem Monat bei uns eingehen.</p><ul><li>Gültig auf alle Pakete</li><li>Keine Mindestbestellmenge</li><li>Einlösbar bei Projektstart</li></ul><a class="solidbtn" style="margin-top:22px" href="#coupon" id="scratchlink">Jetzt freirubbeln →</a></div>
+<div><div class="coupon" id="coupon"><button class="scratch" id="scratch" aria-label="Gutschein freirubbeln"><span>✦ Hier freirubbeln ✦</span></button><small>CRAFTLY / SPECIAL OFFER</small><b>10%</b><span class="code">CODE: CRAFTLY10</span></div></div>
+</section>
+
+<section class="section" id="kontakt">
+<div class="contact"><div><div class="eyebrow">Kontakt</div><h2>LASS UNS<br>STARTEN.</h2><p class="lead">Erzähl uns von deinem Projekt. Wir melden uns persönlich bei dir und besprechen gemeinsam die nächsten Schritte – unverbindlich und kostenlos.</p>
+<div class="contact-info"><div><span>E-Mail</span><a href="mailto:hello@craftly.design">hello@craftly.design</a></div><div><span>Telefon</span><em class="ph" style="font-style:normal">[Telefonnummer]</em></div><div><span>Standort</span>Zittau, Sachsen</div></div></div>
+<form class="form" id="contactform" novalidate>
+<div class="field"><label for="f-name">Name *</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+<div class="field"><label for="f-mail">E-Mail *</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+<div class="field"><label for="f-paket">Paket / Thema</label><select id="f-paket" name="paket"><option value="">Bitte wählen</option><option>Starter</option><option>Business</option><option>Premium</option><option>Wartung &amp; Support</option><option>Webdesign</option><option>Website-Entwicklung</option><option>Online-Shop</option><option>SEO &amp; Performance</option><option>Individuelles Angebot</option></select></div>
+<div class="field"><label for="f-code">Rabattcode</label><input id="f-code" name="code" type="text" placeholder="optional"></div>
+<div class="field full"><label for="f-msg">Nachricht *</label><textarea id="f-msg" name="nachricht" required placeholder="Worum geht es in deinem Projekt?"></textarea></div>
+<p class="note">Beim Absenden öffnet sich dein E-Mail-Programm mit deiner vorausgefüllten Anfrage. Hinweise zur Verarbeitung deiner Daten findest du in der <a href="#datenschutz" data-modal="datenschutz">Datenschutzerklärung</a>.</p>
+<button class="solidbtn" type="submit">Anfrage senden →</button>
+<p class="form-status" id="formstatus" role="status"></p>
+</form></div>
+</section>
+</main>
+
+<footer>
+<div class="footgrid">
+<div><div class="logo"><span class="dot"></span>CRAFTLY</div><p style="margin-top:15px">Wir sind eine kreative Webdesign-Agentur aus Zittau, Sachsen, mit Fokus auf Design, Technologie und Ergebnisse. Lass uns gemeinsam etwas Großartiges erschaffen, das deine Marke wirklich repräsentiert.</p>
+<a class="solidbtn" href="#kontakt">Projekt anfragen →</a></div>
+<div><h4>Navigation</h4><a href="#top">Home</a><a href="#work">Work</a><a href="#leistungen">Leistungen</a><a href="#preise">Preise</a><a href="#ueber">Über uns</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
+<div><h4>Leistungen</h4><a href="#leistungen">Webdesign</a><a href="#leistungen">Website Entwicklung</a><a href="#leistungen">Shop &amp; E-Commerce</a><a href="#leistungen">SEO &amp; Performance</a><a href="#preise">Wartung &amp; Support</a></div>
+<div><h4>Rechtliches</h4><a href="#impressum" data-modal="impressum">Impressum</a><a href="#datenschutz" data-modal="datenschutz">Datenschutz</a><h4 style="margin-top:24px">Kontakt</h4><a href="mailto:hello@craftly.design">hello@craftly.design</a><p>Zittau, Sachsen</p></div>
+</div>
+<div class="copyright"><span>© 2026 CRAFTLY. Alle Rechte vorbehalten.</span><a href="#top">↑ Nach oben</a></div>
+</footer>
+
+<!-- Impressum: Platzhalter in [eckigen Klammern] vor dem Livegang ausfüllen -->
+<div class="modal" id="modal-impressum" role="dialog" aria-modal="true" aria-labelledby="imp-title">
+<div class="modal-box">
+<button class="modal-close" aria-label="Schließen">✕</button>
+<div class="eyebrow">Rechtliches</div>
+<h2 id="imp-title">IMPRESSUM</h2>
+<h3>Angaben gemäß § 5 DDG</h3>
+<p>CRAFTLY<br><span class="ph">[Vor- und Nachname bzw. Firmenname mit Rechtsform]</span><br><span class="ph">[Straße Hausnummer]</span><br><span class="ph">[PLZ]</span> Zittau<br>Deutschland</p>
+<h3>Kontakt</h3>
+<p>Telefon: <span class="ph">[Telefonnummer]</span><br>E-Mail: <a href="mailto:hello@craftly.design">hello@craftly.design</a></p>
+<h3>Umsatzsteuer</h3>
+<p><span class="ph">[Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE… – oder Zeile entfernen, falls keine vorhanden]</span></p>
+<h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
+<p><span class="ph">[Vor- und Nachname]</span><br><span class="ph">[Anschrift wie oben]</span></p>
+<h3>Verbraucherstreitbeilegung</h3>
+<p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+<h3>Haftung für Inhalte</h3>
+<p>Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
+<h3>Haftung für Links</h3>
+<p>Unser Angebot kann Links zu externen Websites Dritter enthalten, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+<h3>Urheberrecht</h3>
+<p>Die durch uns erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung von CRAFTLY.</p>
+</div>
+</div>
+
+<!-- Datenschutz: Grundgerüst, vor dem Livegang prüfen und Platzhalter ausfüllen -->
+<div class="modal" id="modal-datenschutz" role="dialog" aria-modal="true" aria-labelledby="ds-title">
+<div class="modal-box">
+<button class="modal-close" aria-label="Schließen">✕</button>
+<div class="eyebrow">Rechtliches</div>
+<h2 id="ds-title">DATENSCHUTZ</h2>
+<h3>1. Verantwortlicher</h3>
+<p><span class="ph">[Vor- und Nachname bzw. Firmenname]</span><br><span class="ph">[Straße Hausnummer]</span>, <span class="ph">[PLZ]</span> Zittau<br>E-Mail: <a href="mailto:hello@craftly.design">hello@craftly.design</a></p>
+<h3>2. Hosting &amp; Server-Logfiles</h3>
+<p>Diese Website wird bei <span class="ph">[Name und Anschrift des Hosting-Anbieters]</span> gehostet. Beim Aufruf der Seite werden technisch notwendige Daten (z.&nbsp;B. IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browsertyp) in Server-Logfiles verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt im sicheren und stabilen Betrieb der Website.</p>
+<h3>3. Kontaktaufnahme</h3>
+<p>Wenn du uns per E-Mail oder über das Anfrageformular (das dein eigenes E-Mail-Programm öffnet) kontaktierst, verarbeiten wir deine Angaben zur Bearbeitung deiner Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+<h3>4. Cookies &amp; Tracking</h3>
+<p>Diese Website verwendet keine Cookies, keine Analyse- oder Tracking-Tools und lädt keine externen Schriftarten oder Skripte.</p>
+<h3>5. Deine Rechte</h3>
+<p>Du hast das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21 DSGVO). Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren, z.&nbsp;B. bei der Sächsischen Datenschutz- und Transparenzbeauftragten.</p>
+</div>
+</div>
+
+<script>
+// Einblenden beim Scrollen
+const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(x=>observer.observe(x));
+
+// Cursor (nur mit Maus)
+const cursor=document.querySelector('.cursor');
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+  window.addEventListener('pointermove',e=>{cursor.classList.add('on');cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+  document.addEventListener('mouseleave',()=>cursor.classList.remove('on'));
+  document.querySelectorAll('a,button,.card,.project,.price').forEach(x=>{x.addEventListener('mouseenter',()=>cursor.style.transform='translate(-50%,-50%) scale(3)');x.addEventListener('mouseleave',()=>cursor.style.transform='translate(-50%,-50%) scale(1)')});
+}
+
+// Navigation: Mobile-Menü
+const nav=document.getElementById('nav'),burger=document.getElementById('burger');
+function setMenu(open){nav.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);burger.setAttribute('aria-label',open?'Menü schließen':'Menü öffnen');document.body.classList.toggle('locked',open)}
+burger.addEventListener('click',()=>setMenu(!nav.classList.contains('open')));
+document.querySelectorAll('#navlinks a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+
+// Navigation: aktiven Reiter markieren
+const navLinks=[...document.querySelectorAll('#navlinks a')];
+const tracked=navLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function markActive(){
+  const y=window.innerHeight*.35;let current=null;
+  tracked.forEach(s=>{const r=s.getBoundingClientRect();if(r.top<=y&&r.bottom>y)current=s.id});
+  if(current==='rabatt')current='faq';
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+}
+
+// Scroll: Parallax, Fortschritt, Nav-Hintergrund
+window.addEventListener('scroll',()=>{
+  document.querySelectorAll('.project').forEach(p=>{const r=p.getBoundingClientRect();const offset=(window.innerHeight/2-r.top)*.025;p.style.transform=`translateY(${Math.max(-15,Math.min(15,offset))}px)`});
+  const h=document.documentElement;
+  const pct=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('progress').style.width=pct+'%';
+  nav.classList.toggle('scrolled',h.scrollTop>40);
+  markActive();
+},{passive:true});
+markActive();
+
+// FAQ-Akkordeon
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+  const item=q.parentElement,open=!item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-q').setAttribute('aria-expanded','false')});
+  item.classList.toggle('open',open);q.setAttribute('aria-expanded',open);
+}));
+
+// Gutschein freirubbeln -> Code ins Formular
+const scratch=document.getElementById('scratch'),codeField=document.getElementById('f-code');
+function reveal(){scratch.classList.add('open');if(!codeField.value)codeField.value='CRAFTLY10'}
+scratch.addEventListener('click',reveal);
+document.getElementById('scratchlink').addEventListener('click',()=>setTimeout(reveal,600));
+
+// Paket-/Leistungs-Buttons füllen das Formular vor
+const paketField=document.getElementById('f-paket');
+document.querySelectorAll('[data-paket],[data-thema]').forEach(b=>b.addEventListener('click',()=>{paketField.value=b.dataset.paket||b.dataset.thema}));
+
+// Kontaktformular -> E-Mail-Programm
+const form=document.getElementById('contactform'),status=document.getElementById('formstatus');
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=Object.fromEntries(new FormData(form));
+  if(!d.name.trim()||!d.nachricht.trim()||!form.email.checkValidity()||!d.email.trim()){status.textContent='Bitte fülle Name, eine gültige E-Mail-Adresse und deine Nachricht aus.';return}
+  const subject='Projektanfrage'+(d.paket?' – '+d.paket:'')+' – '+d.name;
+  const body=`Name: ${d.name}\nE-Mail: ${d.email}\nPaket/Thema: ${d.paket||'-'}\nRabattcode: ${d.code||'-'}\n\n${d.nachricht}`;
+  location.href='mailto:hello@craftly.design?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  status.textContent='Dein E-Mail-Programm wurde geöffnet – bitte sende die Nachricht dort ab.';
+});
+
+// Impressum / Datenschutz
+let lastFocus=null;
+function openModal(name){const m=document.getElementById('modal-'+name);if(!m)return;lastFocus=document.activeElement;m.classList.add('open');document.body.classList.add('locked');m.querySelector('.modal-close').focus()}
+function closeModals(){const open=document.querySelector('.modal.open');if(!open)return;open.classList.remove('open');document.body.classList.remove('locked');if(location.hash==='#impressum'||location.hash==='#datenschutz')history.replaceState(null,'',location.pathname+location.search);if(lastFocus)lastFocus.focus()}
+document.querySelectorAll('[data-modal]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();closeModals();openModal(a.dataset.modal);history.replaceState(null,'','#'+a.dataset.modal)}));
+document.querySelectorAll('.modal').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeModals()});m.querySelector('.modal-close').addEventListener('click',closeModals)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModals();setMenu(false)}});
+if(location.hash==='#impressum'||location.hash==='#datenschutz')openModal(location.hash.slice(1));
+</script>
+</body>
+</html>
