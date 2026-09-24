@@ -418,6 +418,8 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .form .note{grid-column:1/-1;font-size:9px;color:#777;line-height:1.6}
 .form .note a{color:#aaa;text-decoration:underline}
 .form button.solidbtn{grid-column:1/-1;justify-self:start;border:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-status.ok{color:#3ddc84}.form-status.err{color:#ff6b5a}
 .form-status{grid-column:1/-1;font-size:11px;color:var(--accent2);min-height:1em}
 
 footer{padding:60px 3vw 25px;border-top:1px solid #202020;background:#0b0b0b}
@@ -681,8 +683,9 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="field"><label for="f-paket">Paket / Thema</label><select id="f-paket" name="paket"><option value="">Bitte wählen</option><option>Starter</option><option>Business</option><option>Premium</option><option>Wartung &amp; Support</option><option>Webdesign</option><option>Website-Entwicklung</option><option>Online-Shop</option><option>SEO &amp; Performance</option><option>Individuelles Angebot</option></select></div>
 <div class="field"><label for="f-code">Rabattcode</label><input id="f-code" name="code" type="text" placeholder="optional"></div>
 <div class="field full"><label for="f-msg">Nachricht *</label><textarea id="f-msg" name="nachricht" required placeholder="Worum geht es in deinem Projekt?"></textarea></div>
-<p class="note">Beim Absenden öffnet sich dein E-Mail-Programm mit deiner vorausgefüllten Anfrage. Hinweise zur Verarbeitung deiner Daten findest du in der <a href="#datenschutz" data-modal="datenschutz">Datenschutzerklärung</a>.</p>
-<button class="solidbtn" type="submit">Anfrage senden →</button>
+<div class="hp" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+<p class="note">Deine Anfrage wird direkt an uns gesendet – wir melden uns in der Regel innerhalb von 24 Stunden. Hinweise zur Verarbeitung deiner Daten findest du in der <a href="#datenschutz" data-modal="datenschutz">Datenschutzerklärung</a>.</p>
+<button class="solidbtn" type="submit" id="sendbtn">Anfrage senden →</button>
 <p class="form-status" id="formstatus" role="status"></p>
 </form></div>
 </section>
@@ -736,7 +739,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <p>Diese Website wird bei Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA, gehostet. Beim Aufruf der Seite werden technisch notwendige Daten (z.&nbsp;B. IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browsertyp) in Server-Logfiles verarbeitet und über das weltweite Servernetz von Vercel ausgeliefert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt im sicheren, schnellen und stabilen Betrieb der Website. Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung (Art. 28 DSGVO). Eine Übermittlung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework, unter dem Vercel zertifiziert ist, sowie der EU-Standardvertragsklauseln.</p>
 <p style="margin-top:10px">Die Domain dieser Website ist bei der IONOS SE, Elgendorfer Str. 57, 56410 Montabaur, registriert.</p>
 <h3>3. Kontaktaufnahme</h3>
-<p>Wenn du uns per E-Mail oder über das Anfrageformular (das dein eigenes E-Mail-Programm öffnet) kontaktierst, verarbeiten wir deine Angaben zur Bearbeitung deiner Anfrage. E-Mails werden über unseren E-Mail-Anbieter mail.de empfangen und gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+<p>Wenn du uns per E-Mail oder über das Kontaktformular kontaktierst, verarbeiten wir deine Angaben zur Bearbeitung deiner Anfrage. Nachrichten aus dem Kontaktformular werden über den E-Mail-Dienst Resend (Resend Inc., USA) an uns zugestellt; mit Resend besteht ein Vertrag zur Auftragsverarbeitung, die Übermittlung in die USA erfolgt auf Grundlage der EU-Standardvertragsklauseln. E-Mails werden über unseren E-Mail-Anbieter mail.de empfangen und gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
 <h3>4. Cookies &amp; Tracking</h3>
 <p>Diese Website verwendet keine Cookies, keine Analyse- oder Tracking-Tools und lädt keine externen Schriftarten oder Skripte.</p>
 <h3>5. Deine Rechte</h3>
@@ -871,16 +874,22 @@ document.getElementById('scratchlink').addEventListener('click',()=>setTimeout(r
 const paketField=document.getElementById('f-paket');
 document.querySelectorAll('[data-paket],[data-thema]').forEach(b=>b.addEventListener('click',()=>{paketField.value=b.dataset.paket||b.dataset.thema}));
 
-// Kontaktformular -> E-Mail-Programm
-const form=document.getElementById('contactform'),status=document.getElementById('formstatus');
-form.addEventListener('submit',e=>{
+// Kontaktformular -> Versand über /api/contact (Resend)
+const form=document.getElementById('contactform'),status=document.getElementById('formstatus'),sendbtn=document.getElementById('sendbtn');
+function setStatus(msg,type){status.textContent=msg;status.className='form-status'+(type?' '+type:'')}
+form.addEventListener('submit',async e=>{
   e.preventDefault();
   const d=Object.fromEntries(new FormData(form));
-  if(!d.name.trim()||!d.nachricht.trim()||!form.email.checkValidity()||!d.email.trim()){status.textContent='Bitte fülle Name, eine gültige E-Mail-Adresse und deine Nachricht aus.';return}
-  const subject='Projektanfrage'+(d.paket?' – '+d.paket:'')+' – '+d.name;
-  const body=`Name: ${d.name}\nE-Mail: ${d.email}\nPaket/Thema: ${d.paket||'-'}\nRabattcode: ${d.code||'-'}\n\n${d.nachricht}`;
-  location.href='mailto:thatsite@mail.de?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-  status.textContent='Dein E-Mail-Programm wurde geöffnet – bitte sende die Nachricht dort ab.';
+  if(!d.name.trim()||!d.nachricht.trim()||!form.email.checkValidity()||!d.email.trim()){setStatus('Bitte fülle Name, eine gültige E-Mail-Adresse und deine Nachricht aus.','err');return}
+  sendbtn.disabled=true;sendbtn.textContent='Wird gesendet …';setStatus('');
+  try{
+    const r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok)throw new Error(j.error||'Fehler');
+    form.reset();setStatus('Danke! Deine Anfrage ist bei uns angekommen – wir melden uns bald bei dir.','ok');
+  }catch(err){
+    setStatus((err.message&&err.message!=='Fehler'&&err.message!=='Failed to fetch'?err.message+' ':'Die Nachricht konnte gerade nicht gesendet werden. ')+'Schreib uns gern direkt an thatsite@mail.de.','err');
+  }finally{sendbtn.disabled=false;sendbtn.textContent='Anfrage senden →'}
 });
 
 // Impressum / Datenschutz
