@@ -169,6 +169,128 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .mock-dot{width:5px;height:5px;border-radius:50%}
 .mock-body{flex:1;position:relative;padding:15px;display:flex;flex-direction:column;overflow:hidden}
 
+
+/* ===== Detaillierte Mini-Websites in den Projekt-Karten (1200px Designbreite, skaliert) ===== */
+.mock-url{margin-left:10px;flex:1;max-width:60%;height:11px;border-radius:6px;font-size:6.5px;line-height:11px;padding:0 8px;letter-spacing:.04em;white-space:nowrap;overflow:hidden}
+.type-a .mock-url{background:#0b0b0b;color:#777}.type-b .mock-url{background:#f4f1ec;color:#888}.type-c .mock-url{background:#15110e;color:#8a7a6a}
+.mview{flex:1;position:relative;overflow:hidden}
+.ms{position:absolute;left:0;top:0;width:1200px;transform-origin:0 0;transform:scale(var(--s,.3));transition:transform 1.4s cubic-bezier(.4,0,.2,1);font-family:Arial,Helvetica,sans-serif}
+.project:hover .ms,.project.auto .ms{transform:scale(var(--s,.3)) translateY(calc(var(--vh,1000) * 1px - 100%));transition-duration:8s}
+.ms *{box-sizing:border-box}
+.ms .logo{display:block;position:static}
+.ms-nav{display:flex;justify-content:space-between;align-items:center;padding:30px 60px}
+.ms-links{display:flex;gap:34px;font-size:16px}
+.ms-btn{display:inline-block;padding:16px 28px;font-size:16px;font-weight:700;border-radius:8px}
+
+/* PULSE – Fitnessstudio */
+.ms-pulse{background:#0b0b0b;color:#fff}
+.ms-pulse .ms-nav{border-bottom:1px solid #1f1f1f}
+.ms-pulse .logo{font-size:32px;font-weight:900;font-style:italic;letter-spacing:-.03em}
+.ms-pulse .logo i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#e2542d;margin-left:3px}
+.ms-pulse .ms-links{color:#b5b5b5}
+.ms-pulse .red{background:#e2542d;color:#fff}
+.ms-pulse .ghost{border:2px solid #3a3a3a;color:#fff}
+.p-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;padding:70px 60px 80px;position:relative}
+.p-tag{display:inline-flex;align-items:center;gap:10px;border:1px solid #3a1a10;background:#1a0f0b;color:#ff8a6a;padding:10px 16px;border-radius:99px;font-size:14px;font-weight:700;letter-spacing:.08em}
+.p-tag:before{content:"";width:8px;height:8px;border-radius:50%;background:#e2542d}
+.p-hero h1{font-size:104px;line-height:.88;font-weight:900;letter-spacing:-.045em;text-transform:uppercase;margin-top:28px}
+.p-hero h1 em{font-style:normal;color:#e2542d}
+.p-hero p{font-size:19px;line-height:1.6;color:#a9a9a9;margin-top:26px;max-width:470px}
+.p-btns{display:flex;gap:14px;margin-top:32px}
+.p-stats{display:flex;gap:44px;margin-top:48px;border-top:1px solid #222;padding-top:28px}
+.p-stats b{display:block;font-size:40px;font-weight:900;letter-spacing:-.03em}
+.p-stats span{font-size:14px;color:#888}
+.p-vis{position:relative;height:620px}
+.p-panel{position:absolute;inset:0 0 40px 30px;background:linear-gradient(150deg,#ff6a3d,#e2542d 40%,#5a1a0a);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);border-radius:18px}
+.p-panel:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-60deg,transparent 0 40px,rgba(255,255,255,.06) 40px 42px)}
+.p-kb{position:absolute;left:150px;top:120px;width:300px}
+.p-w{position:absolute;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;border-radius:18px;padding:20px 22px;box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.p-w small{display:block;font-size:13px;color:#8a8a8a;letter-spacing:.06em}
+.p-w b{display:block;font-size:30px;font-weight:900;margin-top:4px}
+.p-w1{left:-10px;top:70px;width:240px}.p-w1 svg{margin-top:10px;width:100%;height:44px}
+.p-w2{right:-10px;top:250px;width:210px;display:flex;gap:16px;align-items:center}.p-w2 svg{width:70px;height:70px;flex:none}
+.p-w3{left:40px;bottom:0;width:320px}
+.p-av{display:flex;margin-top:12px}.p-av i{width:34px;height:34px;border-radius:50%;border:3px solid #111;margin-right:-8px;background:linear-gradient(135deg,#777,#333)}.p-av i:nth-child(2){background:linear-gradient(135deg,#e2542d,#6a1d0b)}.p-av i:nth-child(3){background:linear-gradient(135deg,#bbb,#555)}
+.p-av em{font-style:normal;font-size:14px;color:#aaa;margin-left:20px;align-self:center}
+.p-sec{padding:70px 60px;border-top:1px solid #1d1d1d}
+.p-sec h2{font-size:52px;font-weight:900;letter-spacing:-.04em;text-transform:uppercase}
+.p-head{display:flex;justify-content:space-between;align-items:end}
+.p-days{display:flex;gap:8px}.p-days span{padding:12px 18px;border-radius:8px;background:#161616;color:#999;font-size:15px;font-weight:700}.p-days .on{background:#e2542d;color:#fff}
+.p-classes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+.p-class{background:#131313;border:1px solid #232323;border-radius:16px;padding:24px}
+.p-class time{font-size:15px;color:#e2542d;font-weight:700}
+.p-class h4{font-size:26px;font-weight:900;margin-top:10px}
+.p-class p{font-size:14px;color:#888;margin-top:6px}
+.p-lvl{display:flex;gap:4px;margin-top:18px}.p-lvl i{flex:1;height:5px;border-radius:3px;background:#2a2a2a}.p-lvl i.f{background:#e2542d}
+.p-class .ms-btn{margin-top:20px;width:100%;text-align:center;padding:13px;font-size:14px}
+.p-class.full{opacity:.55}.p-class.full .ms-btn{background:#222;color:#888}
+.p-prices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.p-price{background:#131313;border:1px solid #232323;border-radius:16px;padding:32px}
+.p-price.hot{background:linear-gradient(160deg,#e2542d,#8a2a10);border:none}
+.p-price h4{font-size:18px;letter-spacing:.1em}
+.p-price b{display:block;font-size:54px;font-weight:900;margin-top:14px;letter-spacing:-.03em}.p-price b small{font-size:16px;font-weight:400;opacity:.7}
+.p-price ul{list-style:none;margin-top:18px;font-size:15px;line-height:2;color:#bbb}.p-price.hot ul{color:#fff}
+.p-foot{padding:36px 60px;display:flex;justify-content:space-between;color:#666;font-size:14px;border-top:1px solid #1d1d1d}
+
+/* NOVA – Architekturbüro */
+.ms-nova{background:#f4f1ec;color:#1b1b1b}
+.ms-nova .logo{font-family:Georgia,serif;font-size:28px}
+.ms-nova .logo .sub{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.3em;color:#8a8478;margin-top:4px;text-transform:uppercase}
+.ms-nova .ms-links{color:#555}
+.ms-nova .lang{font-size:14px;letter-spacing:.14em;color:#8a8478}
+.n-hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:50px;padding:50px 60px 70px;align-items:end}
+.n-kick{font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:#8a8478}
+.n-hero h1{font-family:Georgia,serif;font-weight:400;font-size:86px;line-height:1;letter-spacing:-.03em;margin-top:24px}
+.n-hero h1 em{color:#7a6a55}
+.n-hero p{font-size:18px;line-height:1.7;color:#5a5650;margin-top:26px;max-width:420px}
+.n-link{display:inline-block;margin-top:30px;font-size:16px;font-weight:700;border-bottom:2px solid #1b1b1b;padding-bottom:6px}
+.n-count{margin-top:60px;font-family:Georgia,serif;font-size:18px;color:#8a8478}.n-count b{color:#1b1b1b;font-weight:400}
+.n-img{height:620px;border-radius:4px;overflow:hidden}
+.n-img svg,.n-tile svg{width:100%;height:100%;display:block}
+.n-sec{padding:70px 60px;border-top:1px solid #e0dbd2}
+.n-sec h2{font-family:Georgia,serif;font-weight:400;font-size:52px;letter-spacing:-.02em}
+.n-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:24px;margin-top:36px}
+.n-tile .im{height:360px;overflow:hidden;border-radius:4px}
+.n-tile h4{font-family:Georgia,serif;font-weight:400;font-size:24px;margin-top:18px}
+.n-tile p{font-size:14px;color:#8a8478;margin-top:6px;letter-spacing:.06em}
+.n-quote{padding:90px 160px;text-align:center;font-family:Georgia,serif;font-size:46px;line-height:1.25;border-top:1px solid #e0dbd2}
+.n-quote small{display:block;font-family:Arial,sans-serif;font-size:14px;letter-spacing:.3em;color:#8a8478;margin-top:26px}
+.n-foot{padding:36px 60px;display:flex;justify-content:space-between;color:#8a8478;font-size:14px;border-top:1px solid #e0dbd2}
+
+/* LUMEN – Leuchten-Shop */
+.ms-lumen{background:radial-gradient(ellipse at 50% 0%,#3a2a1e 0%,#15110e 60%);color:#f3e7d7}
+.ms-lumen .logo{font-size:26px;letter-spacing:.45em;font-weight:700}
+.ms-lumen .ms-links{color:#b9a894}
+.ms-lumen .cart{font-size:15px;color:#f3e7d7;border:1px solid #4a3a2c;border-radius:99px;padding:12px 20px}
+.ms-lumen .cart b{background:#d98a4e;color:#15110e;border-radius:99px;padding:2px 8px;margin-left:6px;font-size:13px}
+.l-hero{position:relative;height:640px;text-align:center;padding-top:300px;overflow:hidden}
+.l-lamps{position:absolute;left:0;right:0;top:0;height:420px}
+.l-hero .kick{font-size:14px;letter-spacing:.35em;color:#d98a4e;font-weight:700;position:relative}
+.l-hero h1{font-family:Georgia,serif;font-weight:400;font-size:74px;line-height:1.05;margin-top:18px;position:relative}
+.l-hero p{font-size:18px;color:#b9a894;margin-top:18px;position:relative}
+.l-btns{display:flex;gap:14px;justify-content:center;margin-top:30px;position:relative}
+.l-btns .cop{background:#d98a4e;color:#15110e;border-radius:99px}
+.l-btns .out{border:1px solid #6a5440;color:#f3e7d7;border-radius:99px}
+.l-sec{padding:60px 60px 70px}
+.l-head{display:flex;justify-content:space-between;align-items:end}
+.l-head h2{font-family:Georgia,serif;font-weight:400;font-size:46px}
+.l-chips{display:flex;gap:8px}.l-chips span{padding:10px 18px;border-radius:99px;border:1px solid #4a3a2c;font-size:14px;color:#b9a894}.l-chips .on{background:#f3e7d7;color:#15110e;border-color:#f3e7d7}
+.l-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px}
+.l-card{background:rgba(255,255,255,.035);border:1px solid #33271e;border-radius:18px;overflow:hidden}
+.l-card .im{height:250px;position:relative;background:radial-gradient(circle at 50% 70%,#4a3526,#1e1712 70%)}
+.l-card .im svg{position:absolute;inset:0;width:100%;height:100%}
+.l-card .new{position:absolute;left:14px;top:14px;background:#d98a4e;color:#15110e;font-size:12px;font-weight:700;letter-spacing:.1em;padding:6px 10px;border-radius:99px}
+.l-card .txt{padding:20px}
+.l-card h4{font-family:Georgia,serif;font-weight:400;font-size:24px}
+.l-card p{font-size:14px;color:#9c8b78;margin-top:4px}
+.l-card .stars{color:#d98a4e;font-size:14px;margin-top:10px;letter-spacing:2px}.l-card .stars span{color:#7a6a58;letter-spacing:0;margin-left:6px}
+.l-card .row{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.l-card .row b{font-size:22px}
+.l-card .row i{font-style:normal;width:42px;height:42px;border-radius:50%;background:#f3e7d7;color:#15110e;display:grid;place-items:center;font-size:22px;font-weight:700}
+.l-usp{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #33271e;border-bottom:1px solid #33271e}
+.l-usp div{padding:30px 60px;font-size:16px;color:#b9a894}.l-usp b{display:block;color:#f3e7d7;font-size:18px;margin-bottom:6px}
+.l-foot{padding:36px 60px;display:flex;justify-content:space-between;color:#7a6a58;font-size:14px}
+
 /* Variante A — PULSE: dunkel, bold, sportlich */
 .mock.type-a{background:#0b0b0b}
 .mock.type-a .mock-bar{background:#161616}
@@ -198,7 +320,7 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 
 /* Variante C — LUMEN: warmes Gradient-Portfolio mit Produktraster */
 .mock.type-c{background:linear-gradient(160deg,#1b1b1b,#3a2a20)}
-.mock.type-c .mock-bar{background:#1f1f1f}
+.mock.type-c .mock-bar{background:#201a15}
 .mock.type-c .mock-dot{background:#454545}
 .mock.type-c .mock-logo{font-size:9px;color:var(--accent2);letter-spacing:.08em;font-weight:700}
 .mock.type-c .mock-h{font-size:16px;color:#fff;margin-top:12px;line-height:1.08;letter-spacing:-.02em;max-width:80%}
@@ -435,34 +557,74 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="projects">
 <article class="project reveal">
 <div class="mockwrap"><div class="mock type-a">
-<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span></div>
-<div class="mock-body">
-<div class="mock-nav"><span class="mock-logo">PULSE</span><div class="mock-navitems"><span></span><span></span><span></span></div></div>
-<div class="mock-h">TRAINIERE<br>HÄRTER.<br><em>WERDE STÄRKER.</em></div>
-<div class="mock-line w1"></div><div class="mock-line w2"></div>
-<div class="mock-cta"></div>
-<div class="mock-photo"></div>
-</div></div></div>
+<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 pulse-fitness.de</span></div>
+<div class="mview"><div class="ms ms-pulse">
+<div class="ms-nav"><span class="logo">PULSE<i></i></span><div class="ms-links"><span>Kurse</span><span>Trainer</span><span>Preise</span><span>App</span><span>Standorte</span></div><span class="ms-btn red">Probetraining</span></div>
+<div class="p-hero"><div><span class="p-tag">JETZT 1 MONAT GRATIS TRAINIEREN</span><h1>Trainiere<br>härter.<br><em>Werde stärker.</em></h1><p>Modernste Geräte, über 60 Kurse pro Woche und Trainer, die dich wirklich weiterbringen – rund um die Uhr.</p><div class="p-btns"><span class="ms-btn red">Mitglied werden →</span><span class="ms-btn ghost">Kursplan ansehen</span></div><div class="p-stats"><div><b>24/7</b><span>Geöffnet</span></div><div><b>60+</b><span>Kurse pro Woche</span></div><div><b>1.200 m²</b><span>Trainingsfläche</span></div></div></div>
+<div class="p-vis"><div class="p-panel"></div><svg class="p-kb" viewBox="0 0 300 330"><defs><radialGradient id="kbg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#4a4a4a"/><stop offset=".55" stop-color="#1c1c1c"/><stop offset="1" stop-color="#080808"/></radialGradient></defs><path d="M85 130 C60 20 240 20 215 130" fill="none" stroke="#1a1a1a" stroke-width="34" stroke-linecap="round"/><path d="M85 130 C60 20 240 20 215 130" fill="none" stroke="#3a3a3a" stroke-width="6" stroke-linecap="round" transform="translate(-6 -6)"/><ellipse cx="150" cy="215" rx="125" ry="112" fill="url(#kbg)"/><ellipse cx="150" cy="322" rx="90" ry="8" fill="#000" opacity=".4"/><rect x="104" y="195" width="92" height="42" rx="8" fill="#e2542d"/><text x="150" y="224" text-anchor="middle" font-family="Arial" font-weight="900" font-size="24" fill="#fff">24 KG</text></svg>
+<div class="p-w p-w1"><small>♥ HERZFREQUENZ</small><b>142 bpm</b><svg viewBox="0 0 200 44"><polyline points="0,30 30,30 40,30 48,8 58,40 66,22 76,30 110,30 120,30 128,4 138,42 146,24 156,30 200,30" fill="none" stroke="#e2542d" stroke-width="3" stroke-linejoin="round"/></svg></div>
+<div class="p-w p-w2"><svg viewBox="0 0 70 70"><circle cx="35" cy="35" r="28" fill="none" stroke="#2a2a2a" stroke-width="8"/><circle cx="35" cy="35" r="28" fill="none" stroke="#e2542d" stroke-width="8" stroke-dasharray="132 176" stroke-linecap="round" transform="rotate(-90 35 35)"/></svg><div><small>TAGESZIEL</small><b>540</b><small>kcal</small></div></div>
+<div class="p-w p-w3"><small>NÄCHSTER KURS · 18:30</small><b>HIIT Power</b><div class="p-av"><i></i><i></i><i></i><em>+14 angemeldet</em></div></div>
+</div></div>
+<div class="p-sec"><div class="p-head"><h2>Kurse heute</h2><div class="p-days"><span>Mo</span><span>Di</span><span class="on">Mi</span><span>Do</span><span>Fr</span><span>Sa</span></div></div>
+<div class="p-classes">
+<div class="p-class"><time>07:00 – 07:45</time><h4>Morning Burn</h4><p>mit Lena · Raum 1</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i></i></div><span class="ms-btn red">Buchen</span></div>
+<div class="p-class"><time>12:15 – 13:00</time><h4>Spinning</h4><p>mit Max · Cycling-Studio</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i class="f"></i></div><span class="ms-btn red">Buchen</span></div>
+<div class="p-class full"><time>17:00 – 18:00</time><h4>Boxen</h4><p>mit Deniz · Ring</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i class="f"></i></div><span class="ms-btn">Ausgebucht</span></div>
+<div class="p-class"><time>18:30 – 19:15</time><h4>HIIT Power</h4><p>mit Sarah · Raum 2</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i></i></div><span class="ms-btn red">Buchen</span></div>
+</div></div>
+<div class="p-sec"><h2>Mitgliedschaften</h2><div class="p-prices">
+<div class="p-price"><h4>FLEX</h4><b>9,90 € <small>/ Besuch</small></b><ul><li>✓ Alle Geräte</li><li>✓ Keine Vertragslaufzeit</li></ul></div>
+<div class="p-price hot"><h4>PREMIUM</h4><b>49,90 € <small>/ Monat</small></b><ul><li>✓ Alle Kurse inklusive</li><li>✓ Personal-Training-Check</li><li>✓ Sauna &amp; Getränke</li></ul></div>
+<div class="p-price"><h4>BASIC</h4><b>29,90 € <small>/ Monat</small></b><ul><li>✓ Geräte 24/7</li><li>✓ PULSE-App</li></ul></div>
+</div></div>
+<div class="p-foot"><span>© PULSE Fitness</span><span>Impressum · Datenschutz · Kontakt</span></div>
+</div></div></div></div>
 <div class="caption"><div class="tag">Fitness · Bold &amp; Dunkel</div><h3>Dein Körper.<br>Deine Energie.</h3><p class="desc">Ein dynamisches Redesign für ein Fitnessstudio mit Fokus auf Mitgliedschaften und Online-Buchung. Kräftige Typografie und ein High-Contrast-Look sollen Energie und Antrieb vermitteln.</p><small class="client">PULSE</small></div>
 </article>
 <article class="project center reveal">
 <div class="mockwrap"><div class="mock type-b">
-<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span></div>
-<div class="mock-body">
-<div class="mock-col"><span class="mock-logo">Nova Studio</span><div class="mock-h">Architektur<br>neu gedacht.</div><div class="mock-line w1"></div><div class="mock-line w2"></div></div>
-<div class="mock-photo"></div>
-</div></div></div>
+<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 nova-studio.de</span></div>
+<div class="mview"><div class="ms ms-nova">
+<div class="ms-nav"><div class="logo">Nova Studio<div class="sub">Architektur &amp; Innenraum</div></div><div class="ms-links"><span>Projekte</span><span>Studio</span><span>Journal</span><span>Kontakt</span></div><span class="lang">DE / EN</span></div>
+<div class="n-hero"><div><div class="n-kick">Architekturbüro · Dresden</div><h1>Architektur<br><em>neu gedacht.</em></h1><p>Wir entwerfen Häuser und Räume, die sich ihrer Umgebung anpassen – klar in der Form, warm im Material, gebaut für Jahrzehnte.</p><span class="n-link">Projekte ansehen →</span><div class="n-count"><b>01</b> / 06 &nbsp; Haus am Hang, 2024</div></div>
+<div class="n-img"><svg viewBox="0 0 700 620" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="nsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfd9de"/><stop offset="1" stop-color="#eeebe4"/></linearGradient><linearGradient id="ngl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9cad3"/><stop offset=".5" stop-color="#7f97a3"/><stop offset="1" stop-color="#4f6570"/></linearGradient></defs>
+<rect width="700" height="620" fill="url(#nsky)"/><path d="M0 470 H700 V620 H0Z" fill="#cfc8bb"/><path d="M0 470 Q350 455 700 470 V500 H0Z" fill="#a9b09a"/>
+<g fill="#9aa592"><circle cx="70" cy="380" r="48"/><circle cx="110" cy="350" r="40"/><circle cx="640" cy="390" r="44"/></g><g stroke="#6b6358" stroke-width="5"><path d="M95 470 V380 M640 470 V410"/></g>
+<rect x="140" y="330" width="380" height="140" fill="#e7e2d9"/><rect x="160" y="352" width="160" height="118" fill="url(#ngl)"/><rect x="340" y="352" width="160" height="96" fill="url(#ngl)"/><g stroke="#e7e2d9" stroke-width="4"><path d="M240 352 V470 M420 352 V448"/></g>
+<rect x="240" y="226" width="400" height="104" fill="#2a2a2a"/><rect x="262" y="246" width="356" height="62" fill="url(#ngl)" opacity=".95"/><g stroke="#2a2a2a" stroke-width="4"><path d="M351 246 V308 M440 246 V308 M529 246 V308"/></g>
+<path d="M240 330 H640 V338 H240Z" fill="#000" opacity=".25"/><path d="M262 246 L330 246 L290 308 L262 308Z" fill="#fff" opacity=".18"/><path d="M160 352 L215 352 L180 410 L160 410Z" fill="#fff" opacity=".15"/>
+<rect x="100" y="468" width="560" height="6" fill="#b8b0a2"/><g fill="#3a3a3a"><circle cx="560" cy="440" r="6"/><rect x="555" y="446" width="10" height="24" rx="4"/></g></svg></div></div>
+<div class="n-sec"><h2>Ausgewählte Projekte</h2><div class="n-grid">
+<div class="n-tile"><div class="im"><svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><rect width="400" height="400" fill="url(#nsky)"/><rect y="346" width="400" height="54" fill="#cfc8bb"/><rect x="40" y="220" width="320" height="16" fill="#2a2a2a"/><rect x="70" y="236" width="260" height="110" fill="url(#ngl)"/><g stroke="#2a2a2a" stroke-width="3"><path d="M135 236 V346 M200 236 V346 M265 236 V346"/></g><circle cx="330" cy="200" r="50" fill="#9aa592"/></svg></div><h4>Pavillon am See</h4><p>KULTURBAU · 2023</p></div>
+<div class="n-tile"><div class="im"><svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><rect width="400" height="400" fill="url(#nsky)"/><rect y="346" width="400" height="54" fill="#cfc8bb"/><rect x="130" y="60" width="140" height="300" fill="#d8d2c7"/><g fill="#8fa3ad"><rect x="146" y="80" width="20" height="22"/><rect x="176" y="80" width="20" height="22"/><rect x="206" y="80" width="20" height="22"/><rect x="236" y="80" width="20" height="22"/><rect x="146" y="114" width="20" height="22"/><rect x="176" y="114" width="20" height="22"/><rect x="206" y="114" width="20" height="22"/><rect x="236" y="114" width="20" height="22"/><rect x="146" y="148" width="20" height="22"/><rect x="176" y="148" width="20" height="22"/><rect x="206" y="148" width="20" height="22"/><rect x="236" y="148" width="20" height="22"/><rect x="146" y="182" width="20" height="22"/><rect x="176" y="182" width="20" height="22"/><rect x="206" y="182" width="20" height="22"/><rect x="236" y="182" width="20" height="22"/><rect x="146" y="216" width="20" height="22"/><rect x="176" y="216" width="20" height="22"/><rect x="206" y="216" width="20" height="22"/><rect x="236" y="216" width="20" height="22"/><rect x="146" y="250" width="20" height="22"/><rect x="176" y="250" width="20" height="22"/><rect x="206" y="250" width="20" height="22"/><rect x="236" y="250" width="20" height="22"/><rect x="146" y="284" width="20" height="22"/><rect x="176" y="284" width="20" height="22"/><rect x="206" y="284" width="20" height="22"/><rect x="236" y="284" width="20" height="22"/><rect x="146" y="318" width="20" height="22"/><rect x="176" y="318" width="20" height="22"/><rect x="206" y="318" width="20" height="22"/><rect x="236" y="318" width="20" height="22"/></g><rect x="270" y="140" width="60" height="220" fill="#bdb5a8"/></svg></div><h4>Wohnturm Elbufer</h4><p>WOHNBAU · 2022</p></div>
+<div class="n-tile"><div class="im"><svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><rect width="400" height="400" fill="url(#nsky)"/><rect y="346" width="400" height="54" fill="#cfc8bb"/><rect x="70" y="210" width="200" height="140" fill="#ebe6dd"/><rect x="150" y="140" width="190" height="80" fill="#6a5a48"/><rect x="170" y="158" width="150" height="44" fill="url(#ngl)"/><rect x="90" y="236" width="80" height="114" fill="url(#ngl)"/></svg></div><h4>Villa Weinberg</h4><p>PRIVATHAUS · 2024</p></div>
+</div></div>
+<div class="n-quote">„Gute Architektur ist leise –<br>aber man vergisst sie nie.“<small>NOVA STUDIO</small></div>
+<div class="n-foot"><span>© Nova Studio Architekten</span><span>Instagram · LinkedIn · Impressum</span></div>
+</div></div></div></div>
 <div class="caption"><div class="tag">Architektur · Editorial &amp; Hell</div><h3>Architektur neu<br>erleben.</h3><p class="desc">Modernes Webdesign für ein Architekturbüro mit großformatiger Bildsprache, ruhiger Serifen-Typografie und viel Weißraum für eine edle, reduzierte Wirkung.</p><small class="client">NOVA</small></div>
 </article>
 <article class="project reveal">
 <div class="mockwrap"><div class="mock type-c">
-<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span></div>
-<div class="mock-body">
-<span class="mock-logo">LUMEN</span>
-<div class="mock-h">Licht, das Räume verändert.</div>
-<div class="mock-grid"><div></div><div></div><div></div></div>
-</div></div></div>
-<div class="caption"><div class="tag">Interior · Warmes Gradient-Portfolio</div><h3>Licht, das Räume<br>verändert.</h3><p class="desc">Eine warme Portfolio-Seite für einen Lichtdesigner mit Farbverläufen und einem Produktraster, das jede Lampenkollektion einzeln in Szene setzt.</p><small class="client">LUMEN</small></div>
+<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 lumen-leuchten.de</span></div>
+<div class="mview"><div class="ms ms-lumen">
+<div class="ms-nav"><span class="logo">LUMEN</span><div class="ms-links"><span>Kollektion</span><span>Projekte</span><span>Manufaktur</span><span>Journal</span></div><span class="cart">♡ &nbsp;Warenkorb<b>2</b></span></div>
+<div class="l-hero"><svg class="l-lamps" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMin slice"><defs><radialGradient id="lcone" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#ffc58f" stop-opacity=".55"/><stop offset=".6" stop-color="#ffb070" stop-opacity=".08"/><stop offset="1" stop-color="#ffb070" stop-opacity="0"/></radialGradient><linearGradient id="ldome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0a26e"/><stop offset="1" stop-color="#8a5530"/></linearGradient></defs>
+<g><path d="M600 0 V110" stroke="#6a5440" stroke-width="2"/><path d="M470 420 L560 175 H640 L730 420Z" fill="url(#lcone)"/><path d="M530 175 Q530 110 600 110 Q670 110 670 175Z" fill="url(#ldome)"/><ellipse cx="600" cy="176" rx="70" ry="10" fill="#ffd9b0"/></g>
+<g><path d="M330 0 V60" stroke="#6a5440" stroke-width="2"/><path d="M250 420 L310 115 H350 L410 420Z" fill="url(#lcone)" opacity=".7"/><path d="M290 115 Q290 60 330 60 Q370 60 370 115Z" fill="url(#ldome)"/><ellipse cx="330" cy="116" rx="40" ry="7" fill="#ffd9b0"/></g>
+<g><path d="M870 0 V70" stroke="#6a5440" stroke-width="2"/><path d="M790 420 L850 125 H890 L950 420Z" fill="url(#lcone)" opacity=".7"/><path d="M830 125 Q830 70 870 70 Q910 70 910 125Z" fill="url(#ldome)"/><ellipse cx="870" cy="126" rx="40" ry="7" fill="#ffd9b0"/></g></svg><div class="kick">NEUE KOLLEKTION 2026</div><h1>Licht, das Räume<br>verändert.</h1><p>Handgefertigte Leuchten aus Messing, Glas und Keramik.</p><div class="l-btns"><span class="ms-btn cop">Kollektion entdecken</span><span class="ms-btn out">Lichtberatung buchen</span></div></div>
+<div class="l-sec"><div class="l-head"><h2>Bestseller</h2><div class="l-chips"><span class="on">Alle</span><span>Pendel</span><span>Steh</span><span>Tisch</span><span>Wand</span></div></div>
+<div class="l-grid">
+<div class="l-card"><div class="im"><svg viewBox="0 0 300 250"><path d="M150 0 V90" stroke="#8a7a68" stroke-width="2"/><path d="M95 150 Q95 90 150 90 Q205 90 205 150Z" fill="url(#ldome)"/><ellipse cx="150" cy="151" rx="55" ry="8" fill="#ffd9b0"/><ellipse cx="150" cy="200" rx="80" ry="40" fill="#ffc58f" opacity=".18"/></svg><span class="new">NEU</span></div><div class="txt"><h4>Orbit</h4><p>Pendelleuchte · Messing</p><div class="stars">★★★★★<span>(48)</span></div><div class="row"><b>349 €</b><i>+</i></div></div></div>
+<div class="l-card"><div class="im"><svg viewBox="0 0 300 250"><path d="M90 220 V120 Q90 50 170 50 Q210 50 215 80" fill="none" stroke="#c9b8a4" stroke-width="5"/><path d="M190 80 Q215 60 240 80 L245 100 H185Z" fill="url(#ldome)"/><ellipse cx="215" cy="101" rx="30" ry="5" fill="#ffd9b0"/><rect x="70" y="218" width="40" height="8" rx="4" fill="#c9b8a4"/><ellipse cx="215" cy="170" rx="50" ry="40" fill="#ffc58f" opacity=".15"/></svg></div><div class="txt"><h4>Arc</h4><p>Stehleuchte · Travertin</p><div class="stars">★★★★★<span>(31)</span></div><div class="row"><b>489 €</b><i>+</i></div></div></div>
+<div class="l-card"><div class="im"><svg viewBox="0 0 300 250"><path d="M100 130 Q100 70 150 70 Q200 70 200 130Z" fill="#f0e2cf"/><rect x="146" y="130" width="8" height="70" fill="#c9b8a4"/><ellipse cx="150" cy="204" rx="40" ry="9" fill="#c9b8a4"/><ellipse cx="150" cy="130" rx="60" ry="12" fill="#ffc58f" opacity=".4"/></svg></div><div class="txt"><h4>Dune</h4><p>Tischleuchte · Keramik</p><div class="stars">★★★★☆<span>(22)</span></div><div class="row"><b>219 €</b><i>+</i></div></div></div>
+<div class="l-card"><div class="im"><svg viewBox="0 0 300 250"><rect x="138" y="70" width="24" height="110" rx="6" fill="#8a7a68"/><circle cx="150" cy="125" r="38" fill="#ffe3c4"/><circle cx="150" cy="125" r="70" fill="#ffc58f" opacity=".16"/></svg></div><div class="txt"><h4>Halo</h4><p>Wandleuchte · Opalglas</p><div class="stars">★★★★★<span>(17)</span></div><div class="row"><b>189 €</b><i>+</i></div></div></div>
+</div></div>
+<div class="l-usp"><div><b>Kostenloser Versand</b>ab 100 € Bestellwert</div><div><b>30 Tage Rückgabe</b>ohne Wenn und Aber</div><div><b>Handgefertigt</b>in unserer Manufaktur</div></div>
+<div class="l-foot"><span>© LUMEN Leuchten</span><span>Versand · Rückgabe · Impressum</span></div>
+</div></div></div></div>
+<div class="caption"><div class="tag">Online-Shop · Warm &amp; Edel</div><h3>Licht, das Räume<br>verändert.</h3><p class="desc">Ein Online-Shop für eine Leuchten-Manufaktur mit warmem Lichtdesign und einem Produktraster, das jede Leuchte einzeln in Szene setzt.</p><small class="client">LUMEN</small></div>
 </article>
 </div>
 </section>
@@ -745,6 +907,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModals();setMe
   });
   chaps.forEach((c,i)=>c.addEventListener('click',()=>{v.currentTime=starts[i];play()}));
 })();
+
+// Mini-Websites in den Projekt-Karten skalieren; auf Touch-Geräten automatisch durchscrollen
+function fitMinis(){document.querySelectorAll('.mview').forEach(v=>{const s=v.clientWidth/1200;v.style.setProperty('--s',s);v.style.setProperty('--vh',v.clientHeight/s)})}
+fitMinis();addEventListener('resize',fitMinis);
+if(!matchMedia('(hover:hover)').matches&&!reduced){const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('auto',e.isIntersecting)),{threshold:.6});document.querySelectorAll('.project').forEach(p=>io.observe(p))}
 
 if(location.hash==='#impressum'||location.hash==='#datenschutz')openModal(location.hash.slice(1));
 </script>
