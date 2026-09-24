@@ -33,7 +33,7 @@ const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'reel-'));
   // Virtuelle Uhr: Timer, requestAnimationFrame & Co. laufen nur, wenn wir sie vorspulen
   await page.clock.install({ time: 0 });
   await page.goto('file://' + path.resolve(__dirname, 'reel.html') + '?wait&speed=' + speed);
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => Promise.all([document.fonts.ready, window.imagesReady]));   // Schriften & Fotos geladen
   await page.clock.pauseAt(1000);                    // Uhr anhalten – ab jetzt läuft sie nur per runFor()
 
   // CSS-Animationen/Übergänge an die virtuelle Uhr koppeln
