@@ -58,47 +58,15 @@
   <!-- Hausschatten und Grund -->
   <rect x="0" y="420" width="800" height="100" fill="#879b6c"/>
 
-  <!-- Dach: großes Schieferdach, links abgewalmt, rechts Krüppelwalm -->
-  <!-- Giebelseite rechts: Hauswand und verschalter Giebel, leicht über Eck gesehen -->
-  <path d="M690 344L764 318V408L690 434Z" fill="url(#putz)"/>
-  <path d="M690 344L764 318V408L690 434Z" fill="#000" opacity=".07"/>
-  <path d="M712 356L736 348V376L712 384Z" fill="#f6f3ec"/>
-  <path d="M715 358.5L733 352V373.5L715 380Z" fill="#9fb0b5"/>
-  <path d="M724 355V382M715 369.5L733 363" stroke="#f6f3ec" stroke-width="1.6"/>
-  <clipPath id="giebel"><path d="M700 340L730 96L766 314Z"/></clipPath>
-  <path d="M700 340L730 96L766 314Z" fill="#2f251d"/>
-  <path d="M703 90V344M709 90V344M715 90V344M721 90V344M727 90V344M733 90V344M739 90V344M745 90V344M751 90V344M757 90V344M763 90V344" stroke="#3e3128" stroke-width="1.5" clip-path="url(#giebel)"/>
-  <path d="M700 340L766 314" stroke="#3a2a1f" stroke-width="4"/>
-  <path d="M720 238L740 231V255L720 262Z" fill="#f6f3ec"/>
-  <path d="M722.5 240.5L737.5 235V252.5L722.5 258Z" fill="#9fb0b5"/>
-  <path d="M730 236V259M722.5 249L737.5 243.5" stroke="#f6f3ec" stroke-width="1.5"/>
-  <path d="M730 96L767 316" stroke="#39414a" stroke-width="5" stroke-linecap="round"/>
-
-  <!-- Dach: großes Schieferdach, links abgewalmt, rechts Krüppelwalm -->
-  <!-- Giebelseite rechts: Hauswand und verschalter Giebel, leicht über Eck gesehen -->
-  <path d="M690 344L748 322V414L690 434Z" fill="url(#putz)"/>
-  <path d="M690 344L748 322V414L690 434Z" fill="#000" opacity=".06"/>
-  <path d="M708 356L728 349V376L708 383Z" fill="#f6f3ec"/>
-  <path d="M711 358.5L725 353.5V373.5L711 378.5Z" fill="#9fb0b5"/>
-  <path d="M718 356V381M711 368.5L725 363.5" stroke="#f6f3ec" stroke-width="1.6"/>
-  <clipPath id="giebel"><path d="M700 340L724 96L752 318Z"/></clipPath>
-  <path d="M700 340L724 96L752 318Z" fill="#2f251d"/>
-  <path d="M703 90V344M708 90V344M713 90V344M718 90V344M723 90V344M728 90V344M733 90V344M738 90V344M743 90V344M748 90V344" stroke="#3d3027" stroke-width="1.4" clip-path="url(#giebel)"/>
-  <path d="M716 236L732 230V252L716 258Z" fill="#f6f3ec"/>
-  <path d="M718.5 238.5L729.5 234.5V249.5L718.5 253.5Z" fill="#9fb0b5"/>
-  <path d="M724 234V256" stroke="#f6f3ec" stroke-width="1.5"/>
-  <path d="M724 96L754 320" stroke="#39414a" stroke-width="5" stroke-linecap="round"/>
-
-  <!-- Dach: großes Schieferdach, links abgewalmt, rechts Giebel -->
-  <path d="M72 338Q114 330 138 298L262 98H730L706 338Z" fill="url(#schiefer)"/>
-  <path d="M72 338Q114 330 138 298L262 98H730L706 338Z" fill="url(#dachlicht)"/>
-  <path d="M72 338Q114 330 138 298L262 98" fill="none" stroke="#2c3238" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M73 336Q113 328 136 297L261 97" fill="none" stroke="#8e979e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M253.1 112.3l3 2M244.3 126.6l3 2M235.4 140.9l3 2M226.6 155.1l3 2M217.7 169.4l3 2M208.9 183.7l3 2M200.0 198.0l3 2M191.1 212.3l3 2M182.3 226.6l3 2M173.4 240.9l3 2M164.6 255.1l3 2M155.7 269.4l3 2M146.9 283.7l3 2" stroke="#6b747c" stroke-width="1.5"/>
-  <path d="M730 96L706 338" stroke="#2c3238" stroke-width="4"/>
-  <path d="M258 97H731" stroke="#2c3238" stroke-width="6" stroke-linecap="round"/>
-  <path d="M260 96.5H731" stroke="#8e979e" stroke-width="4" stroke-linecap="round"/>
-  <path d="M320 96V74M640 96V70" stroke="#6b737a" stroke-width="1.5"/>
+  <!-- Dach: großes Schieferdach, beidseitig abgewalmt, gerade Kanten /___\ -->
+  <path d="M72 338L250 98H540L718 338Z" fill="url(#schiefer)"/>
+  <path d="M72 338L250 98H540L718 338Z" fill="url(#dachlicht)"/>
+  <path d="M72 338L250 98M718 338L540 98" fill="none" stroke="#2c3238" stroke-width="7" stroke-linecap="round"/>
+  <path d="M73 336L249.5 97.5M717 336L540.5 97.5" fill="none" stroke="#8e979e" stroke-width="4" stroke-linecap="round"/>
+  <path d="M237.3 115.1l3 2M552.7 115.1l-3 2M224.6 132.3l3 2M565.4 132.3l-3 2M211.9 149.4l3 2M578.1 149.4l-3 2M199.1 166.6l3 2M590.9 166.6l-3 2M186.4 183.7l3 2M603.6 183.7l-3 2M173.7 200.9l3 2M616.3 200.9l-3 2M161.0 218.0l3 2M629.0 218.0l-3 2M148.3 235.1l3 2M641.7 235.1l-3 2M135.6 252.3l3 2M654.4 252.3l-3 2M122.9 269.4l3 2M667.1 269.4l-3 2M110.1 286.6l3 2M679.9 286.6l-3 2M97.4 303.7l3 2M692.6 303.7l-3 2M84.7 320.9l3 2M705.3 320.9l-3 2" stroke="#6b747c" stroke-width="1.5"/>
+  <path d="M248 97H542" stroke="#2c3238" stroke-width="6" stroke-linecap="round"/>
+  <path d="M250 96.5H540" stroke="#8e979e" stroke-width="4" stroke-linecap="round"/>
+  <path d="M320 96V74M480 96V70" stroke="#6b737a" stroke-width="1.5"/>
   
   <g>
     <rect x="220" y="200" width="60" height="64" fill="#2c221b"/>
@@ -149,8 +117,8 @@
   </g>
 
   <!-- Traufe mit Dachrinne -->
-  <rect x="70" y="334" width="638" height="8" fill="#3a2a1f"/>
-  <rect x="70" y="341" width="636" height="3" fill="#5d4535"/>
+  <rect x="68" y="334" width="654" height="8" fill="#3a2a1f"/>
+  <rect x="70" y="341" width="650" height="3" fill="#5d4535"/>
 
   <!-- Erdgeschoss: weißer Putz -->
   <rect x="100" y="344" width="590" height="90" fill="url(#putz)"/>
@@ -240,7 +208,7 @@
 
   <!-- Große Thujen an den Seiten -->
   <path d="M46 238C28.4 289.04 12.399999999999999 365.6 17.2 470H74.8C79.6 365.6 63.6 289.04 46 238Z" fill="#46633f"/><path d="M46 238C63.6 289.04 79.6 365.6 74.8 470H50.8C57.2 365.6 55.6 284.4 46 238Z" fill="#39532f"/><path d="M26.8 284.4q5.8 -7.0 11.5 0M42.8 301.8q5.8 -7.0 11.5 0M58.8 319.2q5.8 -7.0 11.5 0M26.8 336.6q5.8 -7.0 11.5 0M42.8 354.0q5.8 -7.0 11.5 0M58.8 371.4q5.8 -7.0 11.5 0M26.8 388.8q5.8 -7.0 11.5 0M42.8 406.2q5.8 -7.0 11.5 0M58.8 423.6q5.8 -7.0 11.5 0M26.8 441.0q5.8 -7.0 11.5 0" fill="none" stroke="#39532f" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-  <path d="M780 268C766.25 312.44 753.75 379.1 757.5 470H802.5C806.25 379.1 793.75 312.44 780 268Z" fill="#46633f"/><path d="M780 268C793.75 312.44 806.25 379.1 802.5 470H783.75C788.75 379.1 787.5 308.4 780 268Z" fill="#39532f"/><path d="M765.0 308.4q4.5 -6.1 9.0 0M777.5 323.6q4.5 -6.1 9.0 0M790.0 338.7q4.5 -6.1 9.0 0M765.0 353.9q4.5 -6.1 9.0 0M777.5 369.0q4.5 -6.1 9.0 0M790.0 384.1q4.5 -6.1 9.0 0M765.0 399.3q4.5 -6.1 9.0 0M777.5 414.5q4.5 -6.1 9.0 0M790.0 429.6q4.5 -6.1 9.0 0M765.0 444.8q4.5 -6.1 9.0 0" fill="none" stroke="#39532f" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+  <path d="M764 250C746.4 298.4 730.4 371.0 735.2 470H792.8C797.6 371.0 781.6 298.4 764 250Z" fill="#46633f"/><path d="M764 250C781.6 298.4 797.6 371.0 792.8 470H768.8C775.2 371.0 773.6 294.0 764 250Z" fill="#39532f"/><path d="M744.8 294.0q5.8 -6.6 11.5 0M760.8 310.5q5.8 -6.6 11.5 0M776.8 327.0q5.8 -6.6 11.5 0M744.8 343.5q5.8 -6.6 11.5 0M760.8 360.0q5.8 -6.6 11.5 0M776.8 376.5q5.8 -6.6 11.5 0M744.8 393.0q5.8 -6.6 11.5 0M760.8 409.5q5.8 -6.6 11.5 0M776.8 426.0q5.8 -6.6 11.5 0M744.8 442.5q5.8 -6.6 11.5 0" fill="none" stroke="#39532f" stroke-width="2" stroke-linecap="round" opacity=".7"/>
 
   <!-- Pflasterweg zum Eingang -->
   <path d="M332 442H402L452 520H270Z" fill="url(#pflaster)"/>

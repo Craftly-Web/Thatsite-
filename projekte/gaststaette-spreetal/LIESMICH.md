@@ -59,8 +59,8 @@ HTML nichts). Bildnachweis im Impressum ergänzen.
 
 - Eingangsschild „Original Oberlausitzer Gaststätte Spreetal“: cremegelb mit rostroter
   Schrift – aufgegriffen im Schild unter der Illustration und am Wirtshausschild darin.
-- Die Zeichnung im Kopfbereich zeigt das echte Haus von der Straße aus: großes Schieferdach
-  mit drei Holzgauben, weißes Erdgeschoss, Tür mit Vordach und Laternen, die Holzschilder
+- Die Zeichnung im Kopfbereich zeigt das echte Haus von der Straße aus: großes, beidseitig
+  abgewalmtes Schieferdach mit drei Holzgauben, weißes Erdgeschoss, Tür mit Vordach und Laternen, die Holzschilder
   „Gaststätte / Spreetal“ (Schrift als Pfad, Vollkorn), Sprossenfenster mit Blumenkasten,
   Laube mit Bogen, Granitpfeiler, Tor mit Hausnummer 30, Jägerzaun und Thujen.
 - Die getäfelten Wände der Gaststube (graubraune Felder mit hellen Rahmen) bilden den
