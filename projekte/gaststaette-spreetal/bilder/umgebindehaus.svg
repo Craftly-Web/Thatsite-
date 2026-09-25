@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <!-- Illustration: Oberlausitzer Umgebindehaus im Spreetal. Handgezeichnet als SVG, frei verwendbar. -->
+  <defs>
+    <linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eadcc1"/>
+      <stop offset="1" stop-color="#f7efe0"/>
+    </linearGradient>
+    <!-- Schieferbehang im Giebel: Fischschuppen -->
+    <pattern id="schiefer" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#4a5660"/>
+      <path d="M-8 0A8 8 0 0 0 8 0M8 0A8 8 0 0 0 24 0M0 8A8 8 0 0 0 16 8" fill="none" stroke="#303a42" stroke-width="1.4"/>
+    </pattern>
+    <!-- Blockstube: liegende Balken -->
+    <pattern id="block" width="12" height="11" patternUnits="userSpaceOnUse" y="356">
+      <rect width="12" height="11" fill="#6f4d35"/>
+      <rect y="0" width="12" height="1.2" fill="#835c40"/>
+      <rect y="9" width="12" height="2" fill="#4b3223"/>
+    </pattern>
+  </defs>
+
+  <!-- Himmel, Sonne, Wolken -->
+  <rect width="800" height="520" fill="url(#himmel)"/>
+  <circle cx="628" cy="112" r="46" fill="#f0c784" opacity=".7"/>
+  <g fill="#fbf7ee" opacity=".95">
+    <ellipse cx="168" cy="112" rx="50" ry="13"/>
+    <ellipse cx="198" cy="102" rx="30" ry="13"/>
+    <ellipse cx="522" cy="78" rx="40" ry="10"/>
+    <ellipse cx="546" cy="70" rx="24" ry="10"/>
+  </g>
+  <path d="M574 150q6-6 12 0q6-6 12 0M604 136q5-5 10 0q5-5 10 0" fill="none" stroke="#6b5a4c" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Berge und Hügel des Oberlausitzer Berglands -->
+  <path d="M0 292C70 262 130 250 190 262C250 274 290 236 350 228C410 220 450 252 520 246C590 240 640 210 700 222C750 232 780 250 800 256V520H0Z" fill="#c4caa9"/>
+  <path d="M0 340C90 312 170 300 250 312C330 324 380 298 470 292C560 286 640 316 720 312C760 310 790 318 800 322V520H0Z" fill="#a0af86"/>
+  <g fill="#7f9270">
+    <path d="M36 318l8-18 8 18zM52 316l7-15 7 15zM482 296l8-18 8 18zM498 297l7-15 7 15zM514 299l6-13 6 13z"/>
+  </g>
+  <path d="M0 420C160 404 300 412 420 410C560 408 680 400 800 408V520H0Z" fill="#879b6c"/>
+
+  <!-- Bäume links -->
+  <rect x="88" y="428" width="8" height="18" fill="#5a4030"/>
+  <path d="M92 328L70 366H114ZM92 348L64 398H120ZM92 372L58 432H126Z" fill="#46604a"/>
+  <path d="M92 328L114 366H92ZM92 348L120 398H92ZM92 372L126 432H92Z" fill="#3a5140"/>
+  <rect x="145" y="426" width="10" height="24" fill="#5a4030"/>
+  <path d="M150 282L118 338H182ZM150 310L108 382H192ZM150 344L96 430H204Z" fill="#3e5641"/>
+  <path d="M150 282L182 338H150ZM150 310L192 382H150ZM150 344L204 430H150Z" fill="#324734"/>
+
+  <!-- Bäume rechts -->
+  <rect x="748" y="428" width="9" height="20" fill="#5a4030"/>
+  <path d="M752 300L728 344H776ZM752 326L720 384H784ZM752 356L712 432H792Z" fill="#3e5641"/>
+  <path d="M752 300L776 344H752ZM752 326L784 384H752ZM752 356L792 432H752Z" fill="#324734"/>
+  <rect x="684" y="366" width="12" height="80" fill="#5a4030"/>
+  <g fill="#5b7552">
+    <circle cx="690" cy="338" r="42"/>
+    <circle cx="660" cy="362" r="28"/>
+    <circle cx="722" cy="364" r="30"/>
+    <circle cx="690" cy="376" r="30"/>
+  </g>
+  <g fill="#6f8a63">
+    <circle cx="676" cy="326" r="18"/>
+    <circle cx="656" cy="356" r="12"/>
+  </g>
+
+  <!-- Schornstein mit Rauch -->
+  <path d="M463 146c-10-12 8-18-2-30c-8-10 6-18 0-26" fill="none" stroke="#d6cdbf" stroke-width="6" stroke-linecap="round" opacity=".8"/>
+  <rect x="452" y="158" width="22" height="50" fill="#8a7b6c"/>
+  <rect x="448" y="152" width="30" height="8" fill="#6d6155"/>
+
+  <!-- Giebel mit Schieferbehang und Fenster -->
+  <polygon points="400,146 548,290 252,290" fill="url(#schiefer)"/>
+  <rect x="384" y="214" width="32" height="40" fill="#efe6d2"/>
+  <rect x="388" y="218" width="24" height="32" fill="#2e3a40"/>
+  <rect x="398.5" y="218" width="3" height="32" fill="#efe6d2"/>
+  <rect x="388" y="232" width="24" height="3" fill="#efe6d2"/>
+  <circle cx="400" cy="184" r="8" fill="#efe6d2"/>
+  <circle cx="400" cy="184" r="5" fill="#2e3a40"/>
+
+  <!-- Dach -->
+  <polygon points="400,118 590,302 570,310 400,145 230,310 210,302" fill="#2f363c"/>
+  <polyline points="210,302 400,118 590,302" fill="none" stroke="#5a6670" stroke-width="3" stroke-linejoin="round"/>
+
+  <!-- Gesims -->
+  <rect x="240" y="286" width="320" height="8" fill="#33251b"/>
+
+  <!-- Obergeschoss in Fachwerk -->
+  <rect x="252" y="294" width="296" height="52" fill="#f3ecdf"/>
+  <g fill="#3a2a1f">
+    <rect x="252" y="294" width="7" height="52"/>
+    <rect x="311" y="294" width="6" height="52"/>
+    <rect x="396" y="294" width="8" height="52"/>
+    <rect x="483" y="294" width="6" height="52"/>
+    <rect x="541" y="294" width="7" height="52"/>
+  </g>
+  <path d="M259 346L311 300M541 346L489 300" stroke="#3a2a1f" stroke-width="6"/>
+  <!-- Fenster mit Läden oben -->
+  <g>
+    <rect x="326" y="303" width="10" height="34" fill="#4d6a4f"/>
+    <rect x="378" y="303" width="10" height="34" fill="#4d6a4f"/>
+    <rect x="337" y="301" width="40" height="38" fill="#efe6d2" stroke="#3a2a1f" stroke-width="2"/>
+    <rect x="341" y="305" width="15" height="14" fill="#34444b"/>
+    <rect x="358" y="305" width="15" height="14" fill="#34444b"/>
+    <rect x="341" y="321" width="15" height="14" fill="#34444b"/>
+    <rect x="358" y="321" width="15" height="14" fill="#34444b"/>
+    <rect x="413" y="303" width="10" height="34" fill="#4d6a4f"/>
+    <rect x="465" y="303" width="10" height="34" fill="#4d6a4f"/>
+    <rect x="424" y="301" width="40" height="38" fill="#efe6d2" stroke="#3a2a1f" stroke-width="2"/>
+    <rect x="428" y="305" width="15" height="14" fill="#34444b"/>
+    <rect x="445" y="305" width="15" height="14" fill="#34444b"/>
+    <rect x="428" y="321" width="15" height="14" fill="#34444b"/>
+    <rect x="445" y="321" width="15" height="14" fill="#34444b"/>
+  </g>
+  <g stroke="#3f5a41" stroke-width="1.2">
+    <path d="M328 310h6M328 316h6M328 322h6M328 328h6M380 310h6M380 316h6M380 322h6M380 328h6M415 310h6M415 316h6M415 322h6M415 328h6M467 310h6M467 316h6M467 322h6M467 328h6"/>
+  </g>
+
+  <!-- Rähm: der Balken, auf dem das Obergeschoss ruht -->
+  <rect x="244" y="344" width="312" height="12" fill="#2e2118"/>
+
+  <!-- Blockstube im Erdgeschoss -->
+  <rect x="262" y="356" width="276" height="88" fill="url(#block)"/>
+  <!-- Fenster unten mit Blumenkästen -->
+  <rect x="280" y="372" width="40" height="36" fill="#efe6d2"/>
+  <rect x="284" y="376" width="15" height="13" fill="#2d3a40"/>
+  <rect x="301" y="376" width="15" height="13" fill="#2d3a40"/>
+  <rect x="284" y="391" width="15" height="13" fill="#2d3a40"/>
+  <rect x="301" y="391" width="15" height="13" fill="#2d3a40"/>
+  <rect x="480" y="372" width="40" height="36" fill="#efe6d2"/>
+  <rect x="484" y="376" width="15" height="13" fill="#2d3a40"/>
+  <rect x="501" y="376" width="15" height="13" fill="#2d3a40"/>
+  <rect x="484" y="391" width="15" height="13" fill="#2d3a40"/>
+  <rect x="501" y="391" width="15" height="13" fill="#2d3a40"/>
+  <g fill="#5d7a4c">
+    <circle cx="279" cy="407" r="3.5"/><circle cx="321" cy="407" r="3.5"/>
+    <circle cx="479" cy="407" r="3.5"/><circle cx="521" cy="407" r="3.5"/>
+  </g>
+  <g fill="#c8423a">
+    <circle cx="284" cy="405" r="3.4"/><circle cx="292" cy="404" r="3.4"/><circle cx="300" cy="405" r="3.4"/><circle cx="308" cy="404" r="3.4"/><circle cx="316" cy="405" r="3.4"/>
+    <circle cx="484" cy="405" r="3.4"/><circle cx="492" cy="404" r="3.4"/><circle cx="500" cy="405" r="3.4"/><circle cx="508" cy="404" r="3.4"/><circle cx="516" cy="405" r="3.4"/>
+  </g>
+  <rect x="276" y="408" width="48" height="7" fill="#7a2c20"/>
+  <rect x="476" y="408" width="48" height="7" fill="#7a2c20"/>
+  <!-- Tür -->
+  <path d="M381 444V397Q400 381 419 397V444Z" fill="#efe6d2"/>
+  <path d="M385 444V399Q400 387 415 399V444Z" fill="#8a3324"/>
+  <path d="M391 404Q400 396 409 404V414H391Z" fill="#2d3a40"/>
+  <path d="M391 422h18M391 432h18" stroke="#6e271b" stroke-width="1.5"/>
+  <circle cx="410" cy="426" r="1.8" fill="#e2c07a"/>
+
+  <!-- Umgebinde: Säulen und Bögen -->
+  <g fill="#2e2118">
+    <rect x="246" y="356" width="14" height="88"/>
+    <rect x="336" y="356" width="12" height="88"/>
+    <rect x="452" y="356" width="12" height="88"/>
+    <rect x="540" y="356" width="14" height="88"/>
+    <path d="M260 356H336V392C336 372 320 364 298 364C276 364 260 372 260 392Z"/>
+    <path d="M348 356H452V388C452 370 430 364 400 364C370 364 348 370 348 388Z"/>
+    <path d="M464 356H540V392C540 372 524 364 502 364C480 364 464 372 464 392Z"/>
+  </g>
+
+  <!-- Wirtshausschild -->
+  <path d="M246 370H202M246 388L224 370" stroke="#2e2118" stroke-width="4" fill="none"/>
+  <path d="M206 370V380M236 370V380" stroke="#2e2118" stroke-width="2"/>
+  <rect x="194" y="380" width="48" height="32" rx="3" fill="#8a3324" stroke="#2e2118" stroke-width="2"/>
+  <rect x="209" y="389" width="14" height="17" rx="2" fill="#f3ecdf"/>
+  <path d="M223 392h3.5a3.5 3.5 0 0 1 3.5 3.5v4a3.5 3.5 0 0 1-3.5 3.5H223" fill="none" stroke="#f3ecdf" stroke-width="2.2"/>
+  <g fill="#fbf7ee"><circle cx="211" cy="389" r="3"/><circle cx="216" cy="387.5" r="3.4"/><circle cx="221" cy="389" r="3"/></g>
+
+  <!-- Sockel und Stufe -->
+  <rect x="238" y="442" width="324" height="10" fill="#9b9285"/>
+  <rect x="376" y="440" width="48" height="6" fill="#b3aa9c"/>
+
+  <!-- Biergarten -->
+  <rect x="608" y="394" width="4" height="52" fill="#5a4030"/>
+  <path d="M570 402Q610 372 650 402Z" fill="#8a3324"/>
+  <path d="M570 402Q610 392 650 402" fill="none" stroke="#6e271b" stroke-width="2"/>
+  <rect x="586" y="426" width="48" height="5" fill="#7a5a3e"/>
+  <path d="M592 431V446M628 431V446" stroke="#5a4030" stroke-width="4"/>
+  <rect x="574" y="436" width="20" height="4" fill="#7a5a3e"/>
+  <rect x="626" y="436" width="20" height="4" fill="#7a5a3e"/>
+  <path d="M578 440V447M590 440V447M630 440V447M642 440V447" stroke="#5a4030" stroke-width="3"/>
+
+  <!-- Weg, junge Spree und Brücke -->
+  <path d="M386 452L414 452L456 520H344Z" fill="#d6c4a0"/>
+  <path d="M0 478C120 466 220 490 330 482C440 474 520 462 640 474C720 482 770 480 800 474V496C760 504 700 500 620 494C520 486 440 500 330 504C220 508 110 488 0 500Z" fill="#8fb1b5"/>
+  <path d="M60 486h26M190 490h20M560 480h24M700 488h22" stroke="#e9f1f1" stroke-width="2.5" stroke-linecap="round" opacity=".9"/>
+  <path d="M356 476H446L450 506H352Z" fill="#9a7552"/>
+  <path d="M356 476H446" stroke="#6f4d35" stroke-width="3"/>
+  <path d="M372 477V505M388 477V505M404 477V505M420 477V505M436 477V505" stroke="#7d5c3f" stroke-width="1.5"/>
+
+  <!-- Gräser -->
+  <path d="M40 462l4-10 4 10M232 460l3-9 3 9M520 458l4-10 4 10M270 510l4-10 4 10M620 512l3-9 3 9M740 460l4-10 4 10" fill="none" stroke="#5f7550" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
