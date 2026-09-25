@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://thatsite.de/sitemap.xml
+Sitemap: https://www.thatsite.de/sitemap.xml

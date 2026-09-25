@@ -1,5 +1,0 @@
-{
-  "redirects": [
-    { "source": "/:path*", "has": [{ "type": "host", "value": "www.thatsite.de" }], "destination": "https://thatsite.de/:path*", "permanent": true }
-  ]
-}
