@@ -542,9 +542,9 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 </div></div>
 <div class="reel">
 <div class="reel-media reveal"><div class="phone paused" id="phone">
-<video id="showreel" muted loop playsinline preload="none" poster="assets/video/showreel-poster.jpg" aria-label="Animation: Wie aus einer Idee eine Website entsteht">
-<source src="assets/video/showreel.webm" type="video/webm">
-<source src="assets/video/showreel.mp4" type="video/mp4"></video>
+<video id="showreel" muted loop playsinline preload="metadata" poster="assets/video/showreel-poster.jpg" aria-label="Animation: Wie aus einer Idee eine Website entsteht">
+<source src="assets/video/showreel.mp4" type="video/mp4">
+<source src="assets/video/showreel.webm" type="video/webm"></video>
 <button class="play" id="reelplay" aria-label="Video abspielen"><span>▶</span></button>
 </div></div>
 <div><div class="eyebrow">Showreel · 20 Sekunden</div>
@@ -944,11 +944,24 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModals();setMe
 (function(){
   const v=document.getElementById('showreel'),phone=document.getElementById('phone'),chaps=[...document.querySelectorAll('.chapter')];
   const starts=chaps.map(c=>+c.dataset.t);
-  const play=()=>{v.play().then(()=>phone.classList.remove('paused')).catch(()=>phone.classList.add('paused'))};
-  if(!reduced) new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){v.preload='auto';play()}else v.pause()}),{threshold:.35}).observe(phone);
+  v.muted=true;v.defaultMuted=true;            // manche Browser verlangen das zusätzlich per JS
+  let wanted=false,blocked=false;
+  const play=()=>{const p=v.play();if(p)p.then(()=>{blocked=false;phone.classList.remove('paused')}).catch(err=>{
+    if(err&&err.name==='NotAllowedError'){blocked=true;phone.classList.add('paused')}   // Autoplay vom Browser gesperrt
+    // AbortError u. ä. (Laden unterbrochen): beim nächsten 'canplay' erneut versuchen
+  })};
+  const tryPlay=()=>{if(wanted&&v.paused&&!blocked)play()};
+  if(!reduced){
+    new IntersectionObserver(es=>es.forEach(e=>{wanted=e.isIntersecting;if(wanted){v.preload='auto';play()}else if(!v.paused)v.pause()}),{threshold:.3}).observe(phone);
+    ['loadeddata','canplay','canplaythrough'].forEach(ev=>v.addEventListener(ev,tryPlay));
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)tryPlay()});
+    // Wurde Autoplay gesperrt (z. B. Stromsparmodus), startet das Video bei der ersten Berührung/Scrollgeste
+    const unlock=()=>{if(blocked&&wanted){blocked=false;play()}};
+    ['touchstart','pointerdown','keydown'].forEach(ev=>document.addEventListener(ev,unlock,{passive:true}));
+  }
   v.addEventListener('pause',()=>phone.classList.add('paused'));
   v.addEventListener('play',()=>phone.classList.remove('paused'));
-  document.getElementById('reelplay').addEventListener('click',play);
+  document.getElementById('reelplay').addEventListener('click',()=>{blocked=false;wanted=true;play()});
   v.addEventListener('click',()=>v.paused?play():v.pause());
   v.addEventListener('timeupdate',()=>{
     const t=v.currentTime,d=v.duration||20;
