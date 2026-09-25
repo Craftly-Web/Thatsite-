@@ -17,7 +17,7 @@ datenschutz.html      Datenschutzerklärung, Entwurf mit markierten Lücken
 css/schriften.css     Selbst gehostete Schriften (Vollkorn, Source Sans 3; SIL OFL 1.1)
 css/stil.css          Gesamtes Design
 js/seite.js           „Jetzt geöffnet“-Anzeige und Markierung des heutigen Tages
-bilder/umgebindehaus.svg      Illustration im Kopfbereich (selbst gezeichnet)
+bilder/haus.svg               Zeichnung der Gaststätte im Kopfbereich, nach Fotos des Hauses
 bilder/bogenfries.svg         Bogenfries unter dem Kopf: die Bögen des Umgebindes
 bilder/bogenfries-unten.svg   Gespiegeltes Zierbrett über dem Reservieren-Bereich
 fonts/                Schriftdateien (woff2) und Lizenztexte
@@ -40,6 +40,10 @@ die Gäste in Google-Rezensionen veröffentlicht haben – darunter zwei Seiten 
   markiert: Preis des kleinen Salattellers (auf der Karte von Hand geändert, 3,50 oder
   3,90 €) und der angeschnittene Name „…urger Schnitzel“ (eingetragen als Hamburger Schnitzel).
   Getränke- und Nachtischkarte lagen nicht vor.
+- **Umgebindehaus?** Auf den Fotos ist das Haus weiß verputzt, ein Umgebinde ist von außen
+  nicht zu sehen (höchstens verkleidet). Das Schild zeigt ein gemaltes Umgebindehaus. Vor dem
+  Livegang klären, ob die Überschrift „Hausmannskost im Umgebindehaus“ stimmt – sonst z. B.
+  „Original Oberlausitzer Hausmannskost“.
 - **Gästestimmen:** Die ersten beiden Zitate sind wörtlich aus Google-Rezensionen, das dritte
   stammt aus einem Suchergebnis-Auszug und muss noch abgeglichen werden.
 
@@ -55,7 +59,10 @@ HTML nichts). Bildnachweis im Impressum ergänzen.
 
 - Eingangsschild „Original Oberlausitzer Gaststätte Spreetal“: cremegelb mit rostroter
   Schrift – aufgegriffen im Schild unter der Illustration und am Wirtshausschild darin.
-- Wagenrad und Jägerzaun vom Eingang stehen jetzt in der Illustration.
+- Die Zeichnung im Kopfbereich zeigt das echte Haus von der Straße aus: großes Schieferdach
+  mit drei Holzgauben, weißes Erdgeschoss, Tür mit Vordach und Laternen, die Holzschilder
+  „Gaststätte / Spreetal“ (Schrift als Pfad, Vollkorn), Sprossenfenster mit Blumenkasten,
+  Laube mit Bogen, Granitpfeiler, Tor mit Hausnummer 30, Jägerzaun und Thujen.
 - Die getäfelten Wände der Gaststube (graubraune Felder mit hellen Rahmen) bilden den
   Hintergrund der Gästestimmen (`bilder/taefelung.svg`), die dunklen Deckenbalken den Rahmen.
 - Herzmotiv der Stühle im Abschnitt „Ein Familienbetrieb mit Herz“.
