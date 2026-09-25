@@ -6,13 +6,13 @@
 
   // Schlüssel: 0 = Sonntag … 6 = Samstag. Jeder Eintrag: [von, bis] in Minuten ab Mitternacht.
   var OEFFNUNGSZEITEN = {
-    0: [[11 * 60, 14 * 60], [17 * 60, 20 * 60]],
+    0: [[11 * 60, 13 * 60 + 30], [17 * 60, 20 * 60]],
     1: [],
     2: [],
     3: [[17 * 60, 20 * 60]],
     4: [[17 * 60, 20 * 60]],
-    5: [[11 * 60, 14 * 60], [17 * 60, 20 * 60]],
-    6: [[11 * 60, 14 * 60], [17 * 60, 20 * 60]]
+    5: [[11 * 60, 13 * 60], [17 * 60, 20 * 60]],
+    6: [[11 * 60, 13 * 60 + 30], [17 * 60, 20 * 60]]
   };
 
   var TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];

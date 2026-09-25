@@ -21,38 +21,45 @@ bilder/umgebindehaus.svg      Illustration im Kopfbereich (selbst gezeichnet)
 bilder/bogenfries.svg         Bogenfries unter dem Kopf: die Bögen des Umgebindes
 bilder/bogenfries-unten.svg   Gespiegeltes Zierbrett über dem Reservieren-Bereich
 fonts/                Schriftdateien (woff2) und Lizenztexte
+bilder/fotos/         Fotos (WebP + JPG), siehe unten
+bilder/taefelung.svg  Wandtäfelung wie in der Gaststube
 ```
 
 Die Symbole stammen aus Lucide (ISC-Lizenz) und stehen als `<symbol>` am Anfang jeder Seite.
 
 ## Stand der Inhalte
 
-Grundlage ist eine Online-Recherche vom September 2026. Belegt aus mehreren Quellen:
-Anschrift, Telefon, Öffnungszeiten, gutbürgerliche Küche, Familienbetrieb, Biergarten
-hinter dem Haus, kostenlose Parkplätze, nur Barzahlung, Google-Bewertung 4,7 bei über
-200 Bewertungen, PlusBus 50 (Haltestelle August-Weise-Siedlung).
+Grundlage: Online-Recherche, das Google-Unternehmensprofil (September 2026) und Fotos,
+die Gäste in Google-Rezensionen veröffentlicht haben – darunter zwei Seiten der Speisekarte.
 
-**Mit der Inhaberin zu klären, bevor die Seite live geht:**
+- **Öffnungszeiten** laut Google-Profil: Mi–Do 17–20, Fr 11–13 und 17–20,
+  Sa–So 11–13:30 und 17–20 Uhr, Mo–Di Ruhetag. Branchenbücher nennen mittags 11–14 Uhr –
+  mit der Inhaberin klären.
+- **Speisekarte** vollständig nach den Kartenfotos, inklusive Preisen und Seniorenportion
+  (gekennzeichnete Gerichte 1,50 € günstiger). Unsicher und im Quelltext mit `PRÜFEN`
+  markiert: Preis des kleinen Salattellers (auf der Karte von Hand geändert, 3,50 oder
+  3,90 €) und der angeschnittene Name „…urger Schnitzel“ (eingetragen als Hamburger Schnitzel).
+  Getränke- und Nachtischkarte lagen nicht vor.
+- **Gästestimmen:** Die ersten beiden Zitate sind wörtlich aus Google-Rezensionen, das dritte
+  stammt aus einem Suchergebnis-Auszug und muss noch abgeglichen werden.
 
-1. **Speisekarte.** Online war nur ein Teil der rund neun Gerichte zu finden: Soljanka,
-   Schnitzel, Amerikanisches Filet, ein Wurstgericht, Bratkartoffeln, Kroketten,
-   etwas Vegetarisches. Alle Preise fehlen (`–,– €`), die Beschreibungen sind Vorschläge.
-2. **Fotos.** Zwei Plätze sind vorbereitet und im Quelltext mit `FOTO:` markiert:
-   Gaststube (Hochformat 4:5), Biergarten (Querformat 4:3). Eigene Fotos der Gaststätte
-   verwenden – Fotos aus Google Maps gehören den jeweiligen Urhebern und dürfen nicht
-   ohne deren Zustimmung übernommen werden. Als WebP mit JPG als Rückfallebene in zwei
-   Größen ablegen und per `<picture>` mit `srcset` einbinden. Ein gutes Außenfoto des
-   Hauses kann später auch die Illustration im Kopfbereich ersetzen.
-3. **Umgebindehaus.** Ein Verzeichnis beschreibt das Haus so, ein anderes nennt den
-   gleichen Satz bei der Pension Spreeeck. Vor Ort bestätigen lassen, bevor die
-   Überschrift „Hausmannskost im Umgebindehaus“ online geht.
-4. **Einzelne Aussagen prüfen:** Hunde willkommen, Kinder willkommen, Platz für größere
-   Gruppen und Feiern, Nähe zum Spreeradweg bzw. zu den Spreequellen, Name der Inhaberin
-   (Christina Bitterlich laut Branchenbuch).
-5. **Gästestimmen.** Die drei Zitate stammen aus Auszügen von Bewertungsportalen. Mit den
-   Original-Bewertungen bei Google abgleichen und wörtlich übernehmen.
-6. **Tafel „Von der Tafel“.** Nur behalten, wenn die Gaststätte Tagesgerichte oder
-   Saisonkarten anbietet und jemand sie hier aktuell hält.
+## Fotos
+
+`bilder/fotos/` enthält Gaststube, Terrassentür, Eingangsschild und sechs Gerichte, jeweils
+als WebP mit JPG-Rückfallebene. **Alle stammen aus Google-Rezensionen von Gästen.** Für den
+Entwurf in Ordnung, vor dem Livegang aber entweder die Erlaubnis der Fotografen einholen
+oder durch eigene Fotos der Gaststätte ersetzen (gleiche Dateinamen, dann ändert sich am
+HTML nichts). Bildnachweis im Impressum ergänzen.
+
+## Gestaltung nach der echten Gaststätte
+
+- Eingangsschild „Original Oberlausitzer Gaststätte Spreetal“: cremegelb mit rostroter
+  Schrift – aufgegriffen im Schild unter der Illustration und am Wirtshausschild darin.
+- Wagenrad und Jägerzaun vom Eingang stehen jetzt in der Illustration.
+- Die getäfelten Wände der Gaststube (graubraune Felder mit hellen Rahmen) bilden den
+  Hintergrund der Gästestimmen (`bilder/taefelung.svg`), die dunklen Deckenbalken den Rahmen.
+- Herzmotiv der Stühle im Abschnitt „Ein Familienbetrieb mit Herz“.
+- „Nur Bares ist Wahres“ ist der eigene Spruch der Gaststätte von der Speisekarte.
 
 ## Vor dem Livegang
 

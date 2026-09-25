@@ -19,6 +19,8 @@
   --tanne: #3e5641;
   --schiefer: #3b464f;
   --gold: #d3a24f;
+  --rost: #b4532a;
+  --salbei: #b3b08c;
   --linie: rgba(58, 42, 31, 0.18);
 
   --schrift-text: 'Vollkorn', Georgia, 'Times New Roman', serif;
@@ -130,6 +132,19 @@ a:hover { color: var(--ochsenblut-dunkel); }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ochsenblut);
+}
+
+.kicker-herz {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.kicker-herz .ico {
+  width: 1.3rem;
+  height: 1.3rem;
+  fill: var(--ochsenblut);
+  stroke: none;
 }
 
 .ico {
@@ -426,20 +441,30 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .schild {
   display: table;
-  margin: -1.1rem auto 0;
   position: relative;
-  padding: 0.45rem 1.1rem;
-  border: 2px solid var(--holz);
-  border-radius: 4px;
-  background: var(--ochsenblut);
-  color: var(--papier);
-  font-family: var(--schrift-ui);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  margin: -1.6rem auto 0;
+  padding: 0.4rem 1.4rem 0.35rem;
+  border: 3px solid var(--holz);
+  border-radius: 3px;
+  background: linear-gradient(180deg, #f3e8ae, #e9db93);
+  color: var(--rost);
   text-align: center;
-  box-shadow: 0 6px 14px -8px rgba(46, 33, 24, 0.7);
+  box-shadow: 0 8px 18px -10px rgba(46, 33, 24, 0.75);
+}
+
+.schild span {
+  display: block;
+  font-family: var(--schrift-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--holz);
+}
+
+.schild strong {
+  display: block;
+  font-size: 1.9rem;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
 }
 
 /* ---------- Vorzüge ---------- */
@@ -515,6 +540,7 @@ a:hover { color: var(--ochsenblut-dunkel); }
     gap: 4.5rem;
   }
   .zwei-spalten-umgekehrt { grid-template-columns: 0.85fr 1.15fr; }
+  .zwei-spalten-oben { align-items: start; }
 }
 
 /* ---------- Unser Haus ---------- */
@@ -604,6 +630,10 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .foto-platzhalter .ico { width: 2rem; height: 2rem; color: var(--gold); }
 
+.foto-schild { margin-bottom: 1.75rem; }
+.foto-schild .foto-flaeche { aspect-ratio: 4 / 3; border-width: 6px; }
+.foto-schild figcaption { text-align: left; }
+
 .foto figcaption {
   margin-top: 0.85rem;
   font-style: italic;
@@ -633,6 +663,51 @@ a:hover { color: var(--ochsenblut-dunkel); }
   border: 1px solid rgba(138, 51, 36, 0.35);
   border-radius: 2px;
   pointer-events: none;
+}
+
+.karte-legende {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--linie);
+  font-family: var(--schrift-ui);
+  font-size: 0.98rem;
+  color: var(--text-weich);
+}
+
+.senior {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-left: 0.4rem;
+  border-radius: 50%;
+  background: var(--tanne);
+  color: var(--papier);
+  font-family: var(--schrift-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: 0.15em;
+  cursor: help;
+}
+
+.karte-legende .senior { margin-left: 0; cursor: default; }
+
+.karte-zusatz {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius);
+  background: rgba(62, 86, 65, 0.08);
+  font-family: var(--schrift-ui);
+  font-size: 0.95rem;
+  color: var(--text-weich);
 }
 
 .karte-raster {
@@ -687,7 +762,8 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .gericht-name {
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.12rem;
+  line-height: 1.3;
 }
 
 .punkte {
@@ -753,6 +829,8 @@ a:hover { color: var(--ochsenblut-dunkel); }
   margin: 0;
 }
 
+.karte-fuss strong { color: var(--text); }
+
 .karte-fuss .ico { color: var(--tanne); margin-top: 0.1rem; }
 
 /* Kreidetafel für Tagesgerichte */
@@ -782,6 +860,84 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .tafel p { margin: 0 auto; max-width: 38rem; }
 
+/* ---------- Tellergalerie ---------- */
+
+.teller-raster {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 52em) {
+  .teller-raster {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 1.75rem;
+  }
+}
+
+.teller img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 6px solid var(--holz);
+  border-radius: var(--radius);
+  background: var(--leinen);
+  box-shadow: 0 18px 36px -24px rgba(46, 33, 24, 0.7);
+}
+
+.teller-text {
+  margin: 0.75rem 0 0;
+  line-height: 1.3;
+}
+
+.teller-text strong {
+  display: block;
+  font-size: 1.1rem;
+}
+
+.teller-text span {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--schrift-ui);
+  font-size: 0.95rem;
+  color: var(--text-weich);
+}
+
+.foto-hinweis {
+  margin: 2rem 0 0;
+  text-align: center;
+  font-family: var(--schrift-ui);
+  font-size: 0.85rem;
+  color: var(--text-weich);
+}
+
+/* ---------- Wandtäfelung wie in der Gaststube ---------- */
+
+.wand {
+  background: #6b5f52 url(../bilder/taefelung.svg) repeat 0 0 / 150px 190px;
+  color: #f3ecdf;
+  box-shadow:
+    inset 0 14px 0 var(--holz-dunkel),
+    inset 0 -14px 0 var(--holz-dunkel);
+}
+
+/* Überschrift auf einem dunklen Holzschild, damit sie vor der Täfelung gut lesbar bleibt */
+.wand .abschnitt-kopf {
+  display: table;
+  padding: 1.4rem 2rem 1.1rem;
+  border: 2px solid rgba(211, 162, 79, 0.45);
+  border-radius: var(--radius);
+  background: rgba(42, 30, 22, 0.94) var(--koernung);
+  box-shadow: 0 16px 32px -18px rgba(0, 0, 0, 0.7);
+}
+
+.wand .abschnitt-kopf h2 { margin-bottom: 0; }
+.wand .kicker { color: #f0d9a6; }
+.wand h2 { color: var(--papier); }
+
 /* ---------- Stimmen ---------- */
 
 .stimmen {
@@ -798,6 +954,7 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .stimme {
   position: relative;
+  color: var(--text);
   display: flex;
   flex-direction: column;
   padding: 3.4rem 1.5rem 1.4rem;
@@ -829,6 +986,12 @@ a:hover { color: var(--ochsenblut-dunkel); }
 }
 
 .stimme blockquote p { margin: 0; }
+
+.stimme-quelle .sterne {
+  margin-right: 0.35rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
 
 .stimme-quelle {
   margin: 1.1rem 0 0;

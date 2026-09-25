@@ -160,10 +160,18 @@
   <!-- Wirtshausschild -->
   <path d="M246 370H202M246 388L224 370" stroke="#2e2118" stroke-width="4" fill="none"/>
   <path d="M206 370V380M236 370V380" stroke="#2e2118" stroke-width="2"/>
-  <rect x="194" y="380" width="48" height="32" rx="3" fill="#8a3324" stroke="#2e2118" stroke-width="2"/>
-  <rect x="209" y="389" width="14" height="17" rx="2" fill="#f3ecdf"/>
-  <path d="M223 392h3.5a3.5 3.5 0 0 1 3.5 3.5v4a3.5 3.5 0 0 1-3.5 3.5H223" fill="none" stroke="#f3ecdf" stroke-width="2.2"/>
-  <g fill="#fbf7ee"><circle cx="211" cy="389" r="3"/><circle cx="216" cy="387.5" r="3.4"/><circle cx="221" cy="389" r="3"/></g>
+  <!-- Schild in den Farben des echten Eingangsschilds: cremegelb mit rostroter Schrift -->
+  <rect x="194" y="380" width="48" height="32" rx="3" fill="#efe2a0" stroke="#2e2118" stroke-width="2"/>
+  <rect x="209" y="390" width="14" height="16" rx="2" fill="#b4532a"/>
+  <path d="M223 392.5h3.5a3.5 3.5 0 0 1 3.5 3.5v4a3.5 3.5 0 0 1-3.5 3.5H223" fill="none" stroke="#b4532a" stroke-width="2.2"/>
+  <g fill="#fffdf6" stroke="#b4532a" stroke-width=".8"><circle cx="211" cy="389.5" r="3"/><circle cx="216" cy="388" r="3.4"/><circle cx="221" cy="389.5" r="3"/></g>
+
+  <!-- Wagenrad wie am Eingang -->
+  <g fill="none" stroke="#3a2a1f" stroke-width="2">
+    <circle cx="224" cy="430" r="13" stroke-width="3"/>
+    <path d="M224 417v26M211 430h26M214.8 420.8l18.4 18.4M233.2 420.8l-18.4 18.4"/>
+  </g>
+  <circle cx="224" cy="430" r="3" fill="#3a2a1f"/>
 
   <!-- Sockel und Stufe -->
   <rect x="238" y="442" width="324" height="10" fill="#9b9285"/>
@@ -186,6 +194,15 @@
   <path d="M356 476H446L450 506H352Z" fill="#9a7552"/>
   <path d="M356 476H446" stroke="#6f4d35" stroke-width="3"/>
   <path d="M372 477V505M388 477V505M404 477V505M420 477V505M436 477V505" stroke="#7d5c3f" stroke-width="1.5"/>
+
+  <!-- Jägerzaun vorn links -->
+  <g stroke="#8b6a48" stroke-width="3" stroke-linecap="round">
+    <path d="M14 446l24 26M38 446l-24 26M38 446l24 26M62 446l-24 26M62 446l24 26M86 446l-24 26M86 446l24 26M110 446l-24 26M110 446l24 26M134 446l-24 26M134 446l24 26M158 446l-24 26M158 446l24 26M182 446l-24 26"/>
+  </g>
+  <rect x="8" y="450" width="180" height="4" rx="1" fill="#6f4d35"/>
+  <rect x="8" y="463" width="180" height="4" rx="1" fill="#6f4d35"/>
+  <rect x="6" y="442" width="6" height="32" fill="#5a4030"/>
+  <rect x="184" y="442" width="6" height="32" fill="#5a4030"/>
 
   <!-- Gräser -->
   <path d="M40 462l4-10 4 10M232 460l3-9 3 9M520 458l4-10 4 10M270 510l4-10 4 10M620 512l3-9 3 9M740 460l4-10 4 10" fill="none" stroke="#5f7550" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
