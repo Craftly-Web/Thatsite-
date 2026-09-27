@@ -184,18 +184,29 @@
   </section>
 
   <!-- Speisekarte -->
-  <section class="abschnitt abschnitt-leinen" id="speisekarte" aria-labelledby="karte-titel">
+  <!-- Speisekarte: liegt wie in der Gaststube auf dem Holztisch. Oben die Brettlehne
+       mit Herz wie an den Stühlen, darunter marmoriertes Papier wie die echte Karte. -->
+  <section class="abschnitt holztisch" id="speisekarte" aria-labelledby="karte-titel">
     <div class="behaelter">
-      <header class="abschnitt-kopf">
-        <p class="kicker">Aus unserer Küche</p>
+      <div class="karte-lehne">
+        <img src="bilder/herzlehne.svg" width="480" height="200" alt="">
         <h2 id="karte-titel">Speisekarte</h2>
-        <p>Gutbürgerlich, reichlich und zu fairen Preisen – so, wie es sich für eine Oberlausitzer Gaststätte gehört.</p>
-      </header>
+      </div>
 
       <!-- ENTWURF: Gerichte und Preise nach Fotos der Speisekarte von Gästen. Vor dem Livegang
            mit der aktuellen Karte abgleichen. Zwei Stellen sind unsicher und markiert. -->
       <div class="karte">
-        <p class="karte-legende"><span class="senior" aria-hidden="true">S</span> Diese Gerichte gibt es auch als Seniorenportion – 1,50 € günstiger.</p>
+        <span class="ecke ecke-ol" aria-hidden="true"></span>
+        <span class="ecke ecke-or" aria-hidden="true"></span>
+        <span class="ecke ecke-ul" aria-hidden="true"></span>
+        <span class="ecke ecke-ur" aria-hidden="true"></span>
+
+        <p class="kicker karte-kicker">Aus unserer Küche</p>
+        <p class="karte-intro">Gutbürgerlich, reichlich und zu fairen Preisen – so, wie es sich für eine Oberlausitzer Gaststätte gehört.</p>
+        <p class="karte-legende">
+          <span><span class="senior" aria-hidden="true">S</span>auch als Seniorenportion – 1,50&nbsp;€ günstiger</span>
+          <span><svg class="herzchen" aria-hidden="true"><use href="#i-herz"/></svg>hausgemacht</span>
+        </p>
 
         <div class="karte-raster">
           <div class="karte-spalte">
@@ -210,7 +221,7 @@
                   <div class="gericht-kopf"><span class="gericht-name">Soljanka</span><span class="punkte" aria-hidden="true"></span><span class="preis">3,50 €</span></div>
                 </li>
                 <li class="gericht">
-                  <div class="gericht-kopf"><span class="gericht-name">Würzfleisch</span><span class="punkte" aria-hidden="true"></span><span class="preis">6,00 €</span></div>
+                  <div class="gericht-kopf"><span class="gericht-name">Würzfleisch<span class="hausgemacht" title="hausgemacht"><svg aria-hidden="true"><use href="#i-herz"/></svg><span class="sr-only">, hausgemacht</span></span></span><span class="punkte" aria-hidden="true"></span><span class="preis">6,00 €</span></div>
                   <p class="gericht-text">mit Käse überbacken, im hausgebackenen Brotnäpfchen</p>
                 </li>
                 <li class="gericht">
@@ -276,7 +287,7 @@
               <h3 id="gruppe-haupt">Hauptgerichte</h3>
               <ul class="gerichte">
                 <li class="gericht">
-                  <div class="gericht-kopf"><span class="gericht-name">Hausgemachte Sülze<span class="senior" title="auch als Seniorenportion">S<span class="sr-only">, auch als Seniorenportion</span></span></span><span class="punkte" aria-hidden="true"></span><span class="preis">9,90 €</span></div>
+                  <div class="gericht-kopf"><span class="gericht-name">Hausgemachte Sülze<span class="hausgemacht" title="hausgemacht"><svg aria-hidden="true"><use href="#i-herz"/></svg><span class="sr-only">, hausgemacht</span></span><span class="senior" title="auch als Seniorenportion">S<span class="sr-only">, auch als Seniorenportion</span></span></span><span class="punkte" aria-hidden="true"></span><span class="preis">9,90 €</span></div>
                   <p class="gericht-text">mit Remoulade, dazu Bratkartoffeln</p>
                 </li>
                 <li class="gericht">
@@ -334,13 +345,18 @@
         </div>
 
         <div class="karte-fuss">
-          <p><svg class="ico" aria-hidden="true"><use href="#i-geld"/></svg><span><strong>Nur Bares ist Wahres:</strong> Bitte haben Sie Verständnis, dass wir keine EC- oder Kreditkarten annehmen.</span></p>
-          <p><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span>Hinweise zu Allergenen erhalten Sie gern bei unserem Personal. Die Getränkekarte bekommen Sie am Tisch.</span></p>
+          <p class="bares">„Nur Bares ist Wahres“<span>Bitte haben Sie Verständnis, dass wir keine EC- oder Kreditkarten annehmen.</span></p>
+          <p class="allergene">Hinweise zu Allergenen erhalten Sie gern bei unserem Personal. Die Getränkekarte bekommen Sie am Tisch.</p>
+          <figure class="karte-skizze">
+            <img src="bilder/haus-skizze.svg" width="410" height="203" loading="lazy" alt="Skizze der Gaststätte Spreetal">
+            <figcaption>Guten Appetit! <svg class="herzchen" aria-hidden="true"><use href="#i-herz"/></svg></figcaption>
+          </figure>
         </div>
       </div>
 
       <aside class="tafel" aria-labelledby="tafel-titel">
-        <h3 id="tafel-titel">Von der Tafel</h3>
+        <svg class="tafel-schnur" viewBox="0 0 240 56" aria-hidden="true"><path d="M24 56L120 8L216 56" fill="none" stroke="#d8c39c" stroke-width="2.4"/><circle cx="120" cy="8" r="6" fill="#8f8b84"/><circle cx="118" cy="6" r="2" fill="#c9c5bd"/></svg>
+        <h3 id="tafel-titel">Von der Tafel <svg class="kreideherz" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.6-4.6-9.5-9.2C1.2 8.1 3.1 4.8 6.6 4.8c2.2 0 3.8 1.3 5.4 3.2 1.6-1.9 3.2-3.2 5.4-3.2 3.5 0 5.4 3.3 4.1 6.5-1.9 4.6-9.5 9.2-9.5 9.2z"/></svg></h3>
         <p>Zur Saison gibt es Extras, die nicht auf der Karte stehen – im Frühjahr zum Beispiel Spargel, im Herbst Kürbis-Cremesuppe. Was es gerade gibt, erfahren Sie in der Gaststube oder am Telefon.</p>
       </aside>
     </div>

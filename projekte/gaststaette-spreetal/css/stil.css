@@ -651,39 +651,125 @@ a:hover { color: var(--ochsenblut-dunkel); }
   text-align: center;
 }
 
-/* ---------- Speisekarte ---------- */
+/* ---------- Speisekarte ----------
+   Die Karte liegt auf einem Holztisch. Oben sitzt die Brettlehne mit Herz, wie an den
+   Stühlen der Gaststube, darunter marmoriertes Papier wie bei der echten Speisekarte.
+   Herzen als Trenner und in den Eckranken nehmen das Motiv leise wieder auf. */
+
+.holztisch {
+  background-color: #6a4730;
+  background-image:
+    url(../bilder/holztisch.svg),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.2)),
+    var(--koernung);
+  background-size: 400px 120px, auto, auto;
+}
+
+.karte-lehne {
+  position: relative;
+  z-index: 2;
+  width: min(30rem, 94%);
+  aspect-ratio: 480 / 200;
+  margin: 0 auto;
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.35));
+}
+
+.karte-lehne img {
+  width: 100%;
+  height: 100%;
+}
+
+.karte-lehne h2 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 54%;
+  margin: 0;
+  font-size: clamp(1.9rem, 5.2vw, 2.75rem);
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  color: #fff4df;
+  text-shadow: 0 1px 0 rgba(92, 52, 22, 0.8), 0 3px 8px rgba(60, 30, 10, 0.45);
+}
 
 .karte {
   position: relative;
-  max-width: 62rem;
-  margin: 0 auto;
-  padding: clamp(1.5rem, 4vw, 3.25rem);
-  border-radius: 4px;
-  background: var(--papier) var(--koernung);
+  max-width: 60rem;
+  margin: -2.6rem auto 0;
+  padding: clamp(4rem, 7vw, 5rem) clamp(1.35rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
+  border-radius: 5px;
+  background-color: #f7eedb;
+  background-image:
+    radial-gradient(ellipse at 50% 38%, rgba(255, 251, 242, 0) 55%, rgba(176, 132, 78, 0.2) 100%),
+    url(../bilder/marmor.svg);
+  background-size: auto, 600px 600px;
+  color: #3a2616;
   box-shadow:
-    0 0 0 1px rgba(58, 42, 31, 0.12),
-    0 30px 60px -35px rgba(46, 33, 24, 0.55);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+    0 0 0 1px rgba(90, 60, 30, 0.25),
+    0 12px 20px -10px rgba(0, 0, 0, 0.45),
+    0 36px 70px -30px rgba(0, 0, 0, 0.7);
 }
 
+/* Doppelter Rahmen wie gedruckt */
 .karte::before {
   content: "";
   position: absolute;
-  inset: 0.6rem;
-  border: 1px solid rgba(138, 51, 36, 0.35);
-  border-radius: 2px;
+  inset: 0.75rem;
+  border: 1px solid rgba(138, 51, 36, 0.32);
+  outline: 1px solid rgba(138, 51, 36, 0.18);
+  outline-offset: 4px;
+  border-radius: 3px;
   pointer-events: none;
+}
+
+.ecke {
+  position: absolute;
+  width: clamp(3.75rem, 11vw, 6.5rem);
+  aspect-ratio: 1;
+  background: url(../bilder/ecke.svg) 0 0 / 100% 100% no-repeat;
+  opacity: 0.85;
+  pointer-events: none;
+}
+.ecke-ol { top: 0.6rem; left: 0.6rem; }
+.ecke-or { top: 0.6rem; right: 0.6rem; transform: scaleX(-1); }
+.ecke-ul { bottom: 0.6rem; left: 0.6rem; transform: scaleY(-1); }
+.ecke-ur { bottom: 0.6rem; right: 0.6rem; transform: scale(-1, -1); }
+
+.karte-kicker {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.karte-intro {
+  max-width: 32rem;
+  margin: 0 auto 1.5rem;
+  font-size: 1.12rem;
+  font-style: italic;
+  text-align: center;
+  color: #6b5646;
 }
 
 .karte-legende {
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 0 0 2rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--linie);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.75rem;
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+  padding: 0.65rem 1rem;
+  border-block: 1px dashed rgba(122, 82, 54, 0.4);
   font-family: var(--schrift-ui);
-  font-size: 0.98rem;
-  color: var(--text-weich);
+  font-size: 0.95rem;
+  color: #6b5646;
+}
+
+.karte-legende > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .senior {
@@ -694,10 +780,12 @@ a:hover { color: var(--ochsenblut-dunkel); }
   height: 1.35rem;
   margin-left: 0.4rem;
   border-radius: 50%;
-  background: var(--tanne);
-  color: var(--papier);
+  background: #a86f3d;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+  color: #fff8ec;
   font-family: var(--schrift-ui);
   font-size: 0.72rem;
+  font-style: normal;
   font-weight: 700;
   line-height: 1;
   vertical-align: 0.15em;
@@ -706,22 +794,29 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .karte-legende .senior { margin-left: 0; cursor: default; }
 
-.karte-zusatz {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin: 1rem 0 0;
-  padding: 0.6rem 0.8rem;
-  border-radius: var(--radius);
-  background: rgba(62, 86, 65, 0.08);
-  font-family: var(--schrift-ui);
-  font-size: 0.95rem;
-  color: var(--text-weich);
+.herzchen {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  fill: var(--ochsenblut);
+}
+
+.hausgemacht {
+  display: inline-flex;
+  margin-left: 0.4rem;
+  vertical-align: 0.02em;
+  cursor: help;
+}
+
+.hausgemacht svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: var(--ochsenblut);
 }
 
 .karte-raster {
   display: grid;
-  gap: 2.5rem;
+  gap: 2.75rem;
 }
 
 @media (min-width: 52em) {
@@ -731,28 +826,28 @@ a:hover { color: var(--ochsenblut-dunkel); }
   }
   .karte-spalte + .karte-spalte {
     padding-left: 3.5rem;
-    border-left: 1px solid var(--linie);
+    border-left: 1px dashed rgba(122, 82, 54, 0.35);
   }
 }
 
-.karte-gruppe + .karte-gruppe { margin-top: 2.25rem; }
+.karte-gruppe + .karte-gruppe { margin-top: 2.5rem; }
 
 .karte-gruppe h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.7rem;
   font-style: italic;
-  font-weight: 400;
-  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
   color: var(--ochsenblut);
 }
 
 .karte-gruppe h3::after {
   content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(138, 51, 36, 0.35);
+  display: block;
+  width: 9.5rem;
+  height: 0.95rem;
+  margin: 0.4rem auto 0;
+  background: url(../bilder/trenner.svg) center / contain no-repeat;
 }
 
 .gerichte {
@@ -770,7 +865,7 @@ a:hover { color: var(--ochsenblut-dunkel); }
 }
 
 .gericht-name {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.12rem;
   line-height: 1.3;
 }
@@ -778,15 +873,15 @@ a:hover { color: var(--ochsenblut-dunkel); }
 .punkte {
   flex: 1;
   min-width: 1.5rem;
-  border-bottom: 2px dotted rgba(58, 42, 31, 0.35);
+  border-bottom: 2px dotted rgba(122, 82, 54, 0.45);
   transform: translateY(-0.3em);
 }
 
 .preis {
-  font-family: var(--schrift-ui);
   font-weight: 700;
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: #5c2718;
 }
 
 .preis-offen { color: #a1968a; }
@@ -795,7 +890,7 @@ a:hover { color: var(--ochsenblut-dunkel); }
   margin: 0.15rem 0 0;
   font-size: 1rem;
   font-style: italic;
-  color: var(--text-weich);
+  color: #6b5646;
 }
 
 .merkmal {
@@ -803,13 +898,13 @@ a:hover { color: var(--ochsenblut-dunkel); }
   align-items: center;
   gap: 0.25rem;
   margin-right: 0.4rem;
-  font-style: normal;
   padding: 0.05rem 0.45rem;
   border-radius: 999px;
   background: rgba(62, 86, 65, 0.12);
   color: var(--tanne);
   font-family: var(--schrift-ui);
   font-size: 0.75rem;
+  font-style: normal;
   font-weight: 700;
   letter-spacing: 0.04em;
   vertical-align: 0.1em;
@@ -817,54 +912,126 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .merkmal .ico { width: 0.95rem; height: 0.95rem; }
 
+.karte-zusatz {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.1rem 0 0;
+  padding: 0.6rem 0.85rem;
+  border: 1px dashed rgba(122, 82, 54, 0.35);
+  border-radius: 4px;
+  background: rgba(168, 111, 61, 0.08);
+  font-size: 0.98rem;
+  font-style: italic;
+  color: #6b5646;
+}
+
 .karte-fuss {
   display: grid;
-  gap: 0.5rem 2rem;
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--linie);
+  gap: 1.25rem;
+  margin-top: 3rem;
+  padding-top: 2.25rem;
+  border-top: 1px dashed rgba(122, 82, 54, 0.4);
+  text-align: center;
+}
+
+.karte-fuss p { margin: 0; }
+
+.bares {
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--ochsenblut);
+}
+
+.bares span {
+  display: block;
+  margin-top: 0.2rem;
   font-family: var(--schrift-ui);
   font-size: 0.95rem;
-  color: var(--text-weich);
+  font-style: normal;
+  font-weight: 400;
+  color: #6b5646;
 }
 
-@media (min-width: 52em) {
-  .karte-fuss { grid-template-columns: 1fr 1fr; }
+.allergene {
+  max-width: 34rem;
+  margin-inline: auto !important;
+  font-family: var(--schrift-ui);
+  font-size: 0.95rem;
+  color: #6b5646;
 }
 
-.karte-fuss p {
+.karte-skizze {
+  max-width: 19rem;
+  margin: 0.5rem auto 0;
+}
+
+.karte-skizze img {
+  width: 100%;
+  opacity: 0.9;
+}
+
+.karte-skizze figcaption {
   display: flex;
-  gap: 0.5rem;
-  margin: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+  font-size: 1.6rem;
+  font-style: italic;
+  font-weight: 700;
+  color: #5a3f2c;
 }
 
-.karte-fuss strong { color: var(--text); }
+.karte-skizze .herzchen { width: 1.2rem; height: 1.2rem; }
 
-.karte-fuss .ico { color: var(--tanne); margin-top: 0.1rem; }
-
-/* Kreidetafel für Tagesgerichte */
+/* Kreidetafel für Tagesgerichte, an einer Schnur aufgehängt */
 .tafel {
-  max-width: 62rem;
-  margin: 2.5rem auto 0;
+  position: relative;
+  max-width: 44rem;
+  margin: 5.5rem auto 0;
   padding: clamp(1.5rem, 4vw, 2.25rem);
-  border: 12px solid var(--holz-mittel);
-  border-radius: 4px;
+  border: 12px solid #8a5f3c;
+  border-radius: 6px;
   background-color: #2f3b36;
   background-image:
-    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.07), transparent 60%),
+    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%),
     var(--koernung);
   box-shadow:
     inset 0 0 0 2px rgba(0, 0, 0, 0.25),
-    0 22px 45px -28px rgba(46, 33, 24, 0.7);
+    0 22px 45px -24px rgba(0, 0, 0, 0.75);
   color: #efeadf;
   text-align: center;
 }
 
+.tafel-schnur {
+  position: absolute;
+  left: 50%;
+  top: -4.3rem;
+  width: 15rem;
+  height: auto;
+  transform: translateX(-50%);
+}
+
 .tafel h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   font-style: italic;
   font-weight: 400;
   font-size: 1.75rem;
   color: #f5e6c4;
+}
+
+.kreideherz {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: none;
+  stroke: #f0c9c0;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
 }
 
 .tafel p { margin: 0 auto; max-width: 38rem; }
