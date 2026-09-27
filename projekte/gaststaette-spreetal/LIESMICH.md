@@ -26,8 +26,8 @@ bilder/taefelung.svg  Wandtäfelung wie in der Gaststube
 bilder/herzlehne.svg  Kopf der Speisekarte: Brettlehne mit Herz wie an den Stühlen
 bilder/marmor.svg     Marmoriertes Papier der Speisekarte
 bilder/holztisch.svg  Holzmaserung für den Tisch unter der Karte
-bilder/ecke.svg       Eckranke mit Herz und Tulpe (Bauernmalerei)
-bilder/trenner.svg    Trenner Linie – Herz – Linie unter den Kartenüberschriften
+bilder/ecke.svg       Eckranke mit Blüte und Tulpe (Bauernmalerei)
+bilder/trenner.svg    Trenner Linie – Raute – Linie unter den Kartenüberschriften
 bilder/haus-skizze.svg  Tintenskizze des Hauses, wie oben auf der echten Karte
 ```
 
@@ -79,10 +79,10 @@ HTML nichts). Bildnachweis im Impressum ergänzen.
 - **Speisekarte als eigenes Stück:** Sie liegt auf einem Holztisch. Oben sitzt als Kopf die
   Brettlehne der Herzstühle aus der Gaststube – mit den runden Kerben und dem ausgesägten
   Herz, durch das man den Tisch sieht. Darunter marmoriertes Papier wie bei der echten
-  Karte, ein doppelter Rahmen, Eckranken mit Herz und Tulpe, Herz-Trenner unter den
-  Rubriken und am Ende eine Tintenskizze des Hauses mit „Guten Appetit!“. Ein kleines Herz
-  markiert, was laut Karte hausgemacht ist (Sülze, Brotnäpfchen). Die Kreidetafel hängt an
-  einer Schnur darunter.
+  Karte, ein doppelter Rahmen, Eckranken mit Blüte und Tulpe, schlichte Trenner unter den
+  Rubriken und am Ende eine Tintenskizze des Hauses mit „Guten Appetit!“. Das Herz ist
+  bewusst sparsam eingesetzt: groß in der Lehne, klein beim „Guten Appetit!“.
+  Die Kreidetafel hängt an einer Schnur darunter.
 
 ## Vor dem Livegang
 

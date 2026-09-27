@@ -654,7 +654,7 @@ a:hover { color: var(--ochsenblut-dunkel); }
 /* ---------- Speisekarte ----------
    Die Karte liegt auf einem Holztisch. Oben sitzt die Brettlehne mit Herz, wie an den
    Stühlen der Gaststube, darunter marmoriertes Papier wie bei der echten Speisekarte.
-   Herzen als Trenner und in den Eckranken nehmen das Motiv leise wieder auf. */
+   Das Herz bleibt bewusst sparsam: groß in der Lehne, klein beim „Guten Appetit!“. */
 
 .holztisch {
   background-color: #6a4730;
@@ -798,19 +798,6 @@ a:hover { color: var(--ochsenblut-dunkel); }
   width: 1rem;
   height: 1rem;
   flex: none;
-  fill: var(--ochsenblut);
-}
-
-.hausgemacht {
-  display: inline-flex;
-  margin-left: 0.4rem;
-  vertical-align: 0.02em;
-  cursor: help;
-}
-
-.hausgemacht svg {
-  width: 0.95rem;
-  height: 0.95rem;
   fill: var(--ochsenblut);
 }
 
@@ -1023,15 +1010,6 @@ a:hover { color: var(--ochsenblut-dunkel); }
   font-weight: 400;
   font-size: 1.75rem;
   color: #f5e6c4;
-}
-
-.kreideherz {
-  width: 1.4rem;
-  height: 1.4rem;
-  fill: none;
-  stroke: #f0c9c0;
-  stroke-width: 1.6;
-  stroke-linejoin: round;
 }
 
 .tafel p { margin: 0 auto; max-width: 38rem; }

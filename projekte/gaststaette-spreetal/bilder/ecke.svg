@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
-  <!-- Eckverzierung oben links: Ranke, Blätter, Herz und Tulpe -->
+  <!-- Eckverzierung oben links: Ranke, Blätter, Blüte und Tulpe -->
   <g fill="none" stroke="#7a5236" stroke-width="1.8" stroke-linecap="round">
     <path d="M14 142C14 86 30 44 60 28C84 16 112 14 142 14"/>
     <path d="M24 100C34 94 40 84 40 72"/>
@@ -11,7 +11,10 @@
     <path d="M0 0C3.8499999999999996 -4.62 8.8 -3.96 11 0C8.8 3.96 3.8499999999999996 4.62 0 0Z" transform="translate(100 18) rotate(160)" fill="#5b7a4a"/><path d="M0 0C3.8499999999999996 -4.62 8.8 -3.96 11 0C8.8 3.96 3.8499999999999996 4.62 0 0Z" transform="translate(72 34) rotate(200)" fill="#3e5641"/><path d="M0 0C3.8499999999999996 -4.62 8.8 -3.96 11 0C8.8 3.96 3.8499999999999996 4.62 0 0Z" transform="translate(124 14) rotate(170)" fill="#3e5641"/>
     <path d="M0 0C3.15 -3.78 7.2 -3.2399999999999998 9 0C7.2 3.2399999999999998 3.15 3.78 0 0Z" transform="translate(50 64) rotate(30)" fill="#5b7a4a"/>
   </g>
-  <path d="M12 20.5s-7.6-4.6-9.5-9.2C1.2 8.1 3.1 4.8 6.6 4.8c2.2 0 3.8 1.3 5.4 3.2 1.6-1.9 3.2-3.2 5.4-3.2 3.5 0 5.4 3.3 4.1 6.5-1.9 4.6-9.5 9.2-9.5 9.2z" transform="translate(26 24) scale(1.35)" fill="#8a3324"/>
+  <g transform="translate(40 38)">
+    <g fill="#c79a52"><circle cx="0" cy="-5" r="3"/><circle cx="4.8" cy="-1.5" r="3"/><circle cx="3" cy="4" r="3"/><circle cx="-3" cy="4" r="3"/><circle cx="-4.8" cy="-1.5" r="3"/></g>
+    <circle r="2.2" fill="#8a3324"/>
+  </g>
   <g transform="translate(142 14) rotate(90)">
     <path d="M0 -2C-6 -4 -8 -12 -6 -18C-3 -14 -1 -12 0 -9C1 -12 3 -14 6 -18C8 -12 6 -4 0 -2Z" fill="#b1473a"/>
   </g>
