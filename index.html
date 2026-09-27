@@ -441,6 +441,17 @@ footer{padding:60px 3vw 25px;border-top:1px solid #202020;background:#0b0b0b}
 .copyright a:hover{color:var(--accent)}
 
 /* Impressum / Datenschutz */
+/* Einwilligungs-Banner (Google Analytics) */
+.consent{position:fixed;left:20px;right:20px;bottom:20px;z-index:150;max-width:520px;background:rgba(14,14,14,.97);border:1px solid #2b2b2b;border-top:2px solid var(--accent);padding:22px 24px;box-shadow:0 30px 80px rgba(0,0,0,.6);backdrop-filter:blur(10px);transform:translateY(30px);opacity:0;visibility:hidden;transition:.45s cubic-bezier(.2,.8,.2,1)}
+.consent.show{transform:none;opacity:1;visibility:visible}
+.consent h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.consent p{font-size:12px;line-height:1.65;color:#bbb;margin-top:10px}
+.consent p a{color:#fff;text-decoration:underline}
+.consent-btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.consent-btns button{flex:1;min-width:150px;padding:13px 16px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border:1px solid #555;color:#fff;transition:.3s}
+.consent-btns button:hover{border-color:var(--accent)}
+.consent-btns .yes{background:var(--accent);border-color:var(--accent);color:#111}
+.consent-btns .yes:hover{background:#fff;border-color:#fff}
 .modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:.35s}
 .modal.open{opacity:1;visibility:visible}
 .modal-box{background:#0e0e0e;border:1px solid #2b2b2b;border-top:2px solid var(--accent);width:min(720px,100%);max-height:88vh;overflow-y:auto;padding:40px;position:relative;transform:translateY(30px);transition:.45s cubic-bezier(.2,.8,.2,1)}
@@ -707,7 +718,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <a class="solidbtn" href="#kontakt">Projekt anfragen →</a></div>
 <div><h4>Navigation</h4><a href="#top">Home</a><a href="#work">Work</a><a href="#leistungen">Leistungen</a><a href="#preise">Preise</a><a href="#ueber">Über uns</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
 <div><h4>Leistungen</h4><a href="#leistungen">Webdesign</a><a href="#leistungen">Website Entwicklung</a><a href="#leistungen">Shop &amp; E-Commerce</a><a href="#leistungen">SEO &amp; Performance</a><a href="#preise">Wartung &amp; Support</a></div>
-<div><h4>Rechtliches</h4><a href="#impressum" data-modal="impressum">Impressum</a><a href="#datenschutz" data-modal="datenschutz">Datenschutz</a><h4 style="margin-top:24px">Kontakt</h4><a href="mailto:thatsite@mail.de">thatsite@mail.de</a><a href="tel:+4915733202692">0157 33202692</a><p>Grüne Straße 5<br>02763 Zittau</p></div>
+<div><h4>Rechtliches</h4><a href="#impressum" data-modal="impressum">Impressum</a><a href="#datenschutz" data-modal="datenschutz">Datenschutz</a><a href="#" id="cookie-settings">Cookie-Einstellungen</a><h4 style="margin-top:24px">Kontakt</h4><a href="mailto:thatsite@mail.de">thatsite@mail.de</a><a href="tel:+4915733202692">0157 33202692</a><p>Grüne Straße 5<br>02763 Zittau</p></div>
 </div>
 <div class="copyright"><span>© 2026 Thatsite! Alle Rechte vorbehalten.</span><a href="#top">↑ Nach oben</a></div>
 </footer>
@@ -769,25 +780,35 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <h3>6. Kontakt per E-Mail oder Telefon</h3>
 <p>Wenn du uns per E-Mail oder Telefon kontaktierst, verarbeiten wir deine Angaben (z.&nbsp;B. Name, E-Mail-Adresse bzw. Telefonnummer und den Inhalt deiner Anfrage) zur Bearbeitung deines Anliegens. Unsere E-Mails werden über den deutschen E-Mail-Anbieter mail.de empfangen und gespeichert. Rechtsgrundlage, Zweck und Speicherdauer entsprechen den Angaben unter Punkt 5.</p>
 
-<h3>7. Cookies, lokale Speicherung und Tracking</h3>
-<p>Diese Website setzt keine Cookies und speichert keine Informationen auf deinem Endgerät (auch nicht im lokalen Speicher des Browsers). Wir verwenden keine Analyse-, Tracking- oder Werbedienste und binden keine Inhalte von Drittanbietern ein – Schriftarten, Bilder und Videos werden ausschließlich von unserem eigenen Server geladen. Eine Einwilligung nach § 25 TDDDG ist daher nicht erforderlich, und es wird kein Cookie-Banner angezeigt.</p>
+<h3>7. Webanalyse mit Google Analytics (nur mit Einwilligung)</h3>
+<p>Mit deiner Einwilligung nutzen wir Google Analytics 4, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland („Google“). Google Analytics hilft uns zu verstehen, wie Besucher unsere Website nutzen – etwa welche Bereiche aufgerufen werden, wie lange man bleibt und über welche Wege Besucher zu uns finden –, damit wir die Website verbessern können.</p>
+<p style="margin-top:8px"><b>Verarbeitete Daten:</b> gekürzte IP-Adresse (Google Analytics 4 speichert keine vollständigen IP-Adressen), eine zufällige Nutzer-Kennung, aufgerufene Seiten und Bereiche, Interaktionen (z.&nbsp;B. das erfolgreiche Absenden des Kontaktformulars – ohne dessen Inhalt), ungefährer Standort (Land, Region, Stadt), Gerätetyp, Browser, Betriebssystem, Bildschirmauflösung und Referrer.<br><b>Cookies:</b> Google Analytics setzt die Cookies „_ga“ und „_ga_&lt;ID&gt;“ zur Wiedererkennung deines Browsers; sie werden nach spätestens 2 Jahren gelöscht.<br><b>Rechtsgrundlage:</b> deine Einwilligung gemäß § 25 Abs. 1 TDDDG und Art. 6 Abs. 1 lit. a DSGVO. Ohne Einwilligung wird Google Analytics nicht geladen.<br><b>Speicherdauer:</b> Die Analysedaten werden in Google Analytics nach 14 Monaten automatisch gelöscht.<br><b>Drittlandübermittlung:</b> Eine Übermittlung an die Google LLC in den USA ist möglich. Google ist nach dem EU-US Data Privacy Framework zertifiziert (Angemessenheitsbeschluss, Art. 45 DSGVO); ergänzend gelten die EU-Standardvertragsklauseln. Mit Google besteht ein Vertrag zur Auftragsverarbeitung.</p>
+<p style="margin-top:8px"><b>Widerruf:</b> Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen – über den Link <a href="#" onclick="document.getElementById('cookie-settings').click();return false">„Cookie-Einstellungen“</a> im Footer. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt unberührt. Weitere Informationen: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
 
-<h3>8. Empfänger deiner Daten</h3>
-<p>Deine Daten erhalten ausschließlich die oben genannten Dienstleister, soweit dies für ihre Aufgabe erforderlich ist: Vercel Inc. (Hosting), IONOS SE (Domain/DNS), Resend Inc. (Zustellung des Kontaktformulars) und mail.de (E-Mail-Postfach). Eine Weitergabe an sonstige Dritte, ein Verkauf oder eine Nutzung zu Werbezwecken findet nicht statt.</p>
+<h3>8. Speicherung deiner Auswahl</h3>
+<p>Damit wir dich nicht bei jedem Besuch erneut fragen müssen, speichern wir deine Entscheidung zu Google Analytics („erlaubt“ oder „abgelehnt“) im lokalen Speicher deines Browsers. Dies ist für die von dir gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Darüber hinaus setzt diese Website keine Cookies; Schriftarten, Bilder und Videos werden ausschließlich von unserem eigenen Server geladen.</p>
 
-<h3>9. Keine automatisierte Entscheidungsfindung</h3>
+<h3>9. Empfänger deiner Daten</h3>
+<p>Deine Daten erhalten ausschließlich die oben genannten Dienstleister, soweit dies für ihre Aufgabe erforderlich ist: Vercel Inc. (Hosting), IONOS SE (Domain/DNS), Resend Inc. (Zustellung des Kontaktformulars), mail.de (E-Mail-Postfach) sowie – nur mit deiner Einwilligung – Google (Webanalyse). Eine Weitergabe an sonstige Dritte, ein Verkauf oder eine Nutzung zu Werbezwecken findet nicht statt.</p>
+
+<h3>10. Keine automatisierte Entscheidungsfindung</h3>
 <p>Eine automatisierte Entscheidungsfindung einschließlich Profiling im Sinne von Art. 22 DSGVO findet nicht statt.</p>
 
-<h3>10. Deine Rechte</h3>
-<p>Du hast jederzeit das Recht auf Auskunft über deine bei uns gespeicherten Daten (Art. 15 DSGVO), auf Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20 DSGVO). Wende dich dazu einfach formlos an die oben genannten Kontaktdaten.</p>
+<h3>11. Deine Rechte</h3>
+<p>Du hast jederzeit das Recht auf Auskunft über deine bei uns gespeicherten Daten (Art. 15 DSGVO), auf Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20 DSGVO). Wende dich dazu einfach formlos an die oben genannten Kontaktdaten. Eine erteilte Einwilligung kannst du jederzeit mit Wirkung für die Zukunft widerrufen (Art. 7 Abs. 3 DSGVO).</p>
 <p style="margin-top:12px;padding:16px 18px;border:1px solid var(--accentdark);background:#141414"><b>Widerspruchsrecht nach Art. 21 DSGVO:</b> Soweit wir deine Daten auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) verarbeiten, hast du das Recht, aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit Widerspruch gegen diese Verarbeitung einzulegen. Wir verarbeiten deine Daten dann nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe nachweisen, die deine Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.</p>
 <p style="margin-top:12px"><b>Beschwerderecht:</b> Du hast außerdem das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO). Zuständig für uns ist: Die Sächsische Datenschutz- und Transparenzbeauftragte, Devrientstraße 5, 01067 Dresden, <a href="https://www.datenschutz.sachsen.de" target="_blank" rel="noopener">www.datenschutz.sachsen.de</a>.</p>
 
-<h3>11. Aktualität dieser Datenschutzerklärung</h3>
+<h3>12. Aktualität dieser Datenschutzerklärung</h3>
 <p>Stand: September 2026. Wir passen diese Datenschutzerklärung an, sobald sich unsere Website oder die rechtlichen Vorgaben ändern.</p>
 </div>
 </div>
 
+<div class="consent" id="consent" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-text">
+<h4 id="consent-title">Deine Privatsphäre</h4>
+<p id="consent-text">Wir möchten mit Google Analytics verstehen, wie unsere Website genutzt wird, um sie zu verbessern. Dabei werden Cookies gesetzt und Daten an Google übermittelt – auch in die USA. Das passiert nur mit deiner Einwilligung, die du jederzeit über „Cookie-Einstellungen“ im Footer widerrufen kannst. Mehr in der <a href="#datenschutz" data-modal="datenschutz">Datenschutzerklärung</a>.</p>
+<div class="consent-btns"><button type="button" id="consent-no">Nur notwendige</button><button type="button" class="yes" id="consent-yes">Analyse erlauben</button></div>
+</div>
 <script>
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -927,6 +948,7 @@ form.addEventListener('submit',async e=>{
     const r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
     const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.ok)throw new Error(j.error||'Fehler');
+    if(gaLoaded)gtag('event','generate_lead',{form:'kontakt'});
     form.reset();setStatus('Danke! Deine Anfrage ist bei uns angekommen – wir melden uns bald bei dir.','ok');
   }catch(err){
     setStatus((err.message&&err.message!=='Fehler'&&err.message!=='Failed to fetch'?err.message+' ':'Die Nachricht konnte gerade nicht gesendet werden. ')+'Schreib uns gern direkt an thatsite@mail.de.','err');
@@ -977,6 +999,33 @@ if(!matchMedia('(hover:hover)').matches&&!reduced){const io=new IntersectionObse
 
 // Footer-Logo nutzt dieselbe eingebettete Grafik wie die Navigation (keine zusätzliche Anfrage)
 document.getElementById('footlogo').src=document.getElementById('navlogo').src;
+
+// Google Analytics – wird erst nach Einwilligung geladen (§ 25 TDDDG, Art. 6 Abs. 1 lit. a DSGVO)
+const GA_ID='G-HGGGCKK7XZ',CONSENT_KEY='ts-consent-v1';
+window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};
+let gaLoaded=false;
+function loadGA(){
+  if(gaLoaded)return;gaLoaded=true;
+  gtag('js',new Date());gtag('config',GA_ID,{anonymize_ip:true});
+  const sc=document.createElement('script');sc.async=true;sc.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(sc);
+}
+function getConsent(){try{return localStorage.getItem(CONSENT_KEY)}catch(e){return null}}
+function setConsent(v){try{localStorage.setItem(CONSENT_KEY,v)}catch(e){}}
+function clearGACookies(){
+  document.cookie.split(';').map(c=>c.split('=')[0].trim()).filter(n=>/^_ga/.test(n)).forEach(n=>{
+    ['',location.hostname,'.'+location.hostname.replace(/^www\./,'')].forEach(d=>{document.cookie=n+'=; Max-Age=0; path=/'+(d?'; domain='+d:'')});
+  });
+}
+const consentBox=document.getElementById('consent');
+const showConsent=()=>consentBox.classList.add('show'),hideConsent=()=>consentBox.classList.remove('show');
+document.getElementById('consent-yes').addEventListener('click',()=>{setConsent('granted');hideConsent();loadGA()});
+document.getElementById('consent-no').addEventListener('click',()=>{
+  const wasOn=getConsent()==='granted';setConsent('denied');hideConsent();clearGACookies();
+  if(wasOn&&gaLoaded)location.reload();   // bereits geladenes Analytics vollständig beenden
+});
+document.getElementById('cookie-settings').addEventListener('click',e=>{e.preventDefault();showConsent()});
+const c0=getConsent();
+if(c0==='granted')loadGA();else if(c0!=='denied')setTimeout(showConsent,900);
 
 if(location.hash==='#impressum'||location.hash==='#datenschutz')openModal(location.hash.slice(1));
 </script>
