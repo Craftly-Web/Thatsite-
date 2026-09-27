@@ -69,8 +69,9 @@ HTML nichts). Bildnachweis im Impressum ergänzen.
 - Die Zeichnung im Kopfbereich (`bilder/haus-900` und `haus-1600`, WebP mit JPG) ist 1:1
   aus dem Straßenfoto nachgezeichnet: das Foto wurde zu flächigen Malfarben vereinfacht,
   in Vektorflächen umgewandelt und als Grafik ausgegeben. Himmel in den warmen Farben der
-  Seite, das Auto rechts weggelassen, die Holzschilder „Gaststätte / Spreetal“ gestochen
-  scharf nachgesetzt (Vollkorn). Weil die Zeichnung auf einem Foto von Gästen beruht, gilt
+  Seite, das Auto rechts weggelassen. Gestochen scharf nachgesetzt: die Holzschilder
+  „Gaststätte / Spreetal“ (Vollkorn), die Hausnummer 30 am Briefkasten, das Firstblech
+  entlang der gemessenen Dachkante und die beiden Antennen. Weil die Zeichnung auf einem Foto von Gästen beruht, gilt
   dafür dasselbe wie für die übrigen Fotos: vor dem Livegang Erlaubnis einholen oder mit
   einem eigenen Foto der Gaststätte neu erzeugen.
 - Die getäfelten Wände der Gaststube (graubraune Felder mit hellen Rahmen) bilden den
