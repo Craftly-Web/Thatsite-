@@ -386,6 +386,15 @@ a:hover { color: var(--ochsenblut-dunkel); }
   color: var(--ochsenblut);
 }
 
+/* Der Spruch der Gaststätte als Hauptzeile: etwas kleiner als eine normale
+   Überschrift, weil er länger ist; das öffnende „ hängt links in den Rand. */
+.held h1.spruch {
+  font-size: clamp(2.15rem, 2.4vw + 1.2rem, 3.4rem);
+  line-height: 1.12;
+  text-indent: -0.42em;
+  text-wrap: wrap;
+}
+
 .status {
   display: inline-flex;
   align-items: center;

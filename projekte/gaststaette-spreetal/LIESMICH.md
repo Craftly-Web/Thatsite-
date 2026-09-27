@@ -40,10 +40,11 @@ die Gäste in Google-Rezensionen veröffentlicht haben – darunter zwei Seiten 
   markiert: Preis des kleinen Salattellers (auf der Karte von Hand geändert, 3,50 oder
   3,90 €) und der angeschnittene Name „…urger Schnitzel“ (eingetragen als Hamburger Schnitzel).
   Getränke- und Nachtischkarte lagen nicht vor.
+- **Spruch ganz oben:** „Herrlich ist dies Fleckchen Erde, denn hier bin ich daheim!“ –
+  Mit gutbürgerlicher Küche laden wir Sie ein, bei uns gemütlich zu verweilen. (Vorgabe.)
 - **Umgebindehaus?** Auf den Fotos ist das Haus weiß verputzt, ein Umgebinde ist von außen
-  nicht zu sehen (höchstens verkleidet). Das Schild zeigt ein gemaltes Umgebindehaus. Vor dem
-  Livegang klären, ob die Überschrift „Hausmannskost im Umgebindehaus“ stimmt – sonst z. B.
-  „Original Oberlausitzer Hausmannskost“.
+  nicht zu sehen. Der Kasten „Was ist ein Umgebindehaus?“ unter „Unser Haus“ behauptet das
+  nicht ausdrücklich, sollte aber mit der Inhaberin abgestimmt werden.
 - **Gästestimmen:** Die ersten beiden Zitate sind wörtlich aus Google-Rezensionen, das dritte
   stammt aus einem Suchergebnis-Auszug und muss noch abgeglichen werden.
 
