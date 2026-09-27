@@ -17,7 +17,7 @@ datenschutz.html      Datenschutzerklärung, Entwurf mit markierten Lücken
 css/schriften.css     Selbst gehostete Schriften (Vollkorn, Source Sans 3; SIL OFL 1.1)
 css/stil.css          Gesamtes Design
 js/seite.js           „Jetzt geöffnet“-Anzeige und Markierung des heutigen Tages
-bilder/haus.svg               Zeichnung der Gaststätte im Kopfbereich, nach Fotos des Hauses
+bilder/haus-900/-1600         Zeichnung der Gaststätte im Kopfbereich (WebP + JPG), nach dem Straßenfoto
 bilder/bogenfries.svg         Bogenfries unter dem Kopf: die Bögen des Umgebindes
 bilder/bogenfries-unten.svg   Gespiegeltes Zierbrett über dem Reservieren-Bereich
 fonts/                Schriftdateien (woff2) und Lizenztexte
@@ -66,12 +66,13 @@ HTML nichts). Bildnachweis im Impressum ergänzen.
 
 - Eingangsschild „Original Oberlausitzer Gaststätte Spreetal“: cremegelb mit rostroter
   Schrift – aufgegriffen im Schild unter der Illustration und am Wirtshausschild darin.
-- Die Zeichnung im Kopfbereich (`bilder/haus.svg`) ist 1:1 nach dem Straßenfoto
-  nachgezeichnet – Koordinaten direkt aus dem Foto abgenommen: Dachform mit Walm links und
-  Krüppelwalm rechts, altdeutsche Schieferdeckung, drei Holzgauben mit Zierkästen, Laube mit
-  Wellblechdach und Rosenbogen, weißer Bogen, Vordach mit Laternen, Tür mit Kranz,
-  Holzschilder, Sprossenfenster mit Blumenkasten, Granitpfeiler, Tor mit Hausnummer 30,
-  Jägerzaun, Thujen und Poller. Schriftzüge als Pfade (Vollkorn).
+- Die Zeichnung im Kopfbereich (`bilder/haus-900` und `haus-1600`, WebP mit JPG) ist 1:1
+  aus dem Straßenfoto nachgezeichnet: das Foto wurde zu flächigen Malfarben vereinfacht,
+  in Vektorflächen umgewandelt und als Grafik ausgegeben. Himmel in den warmen Farben der
+  Seite, das Auto rechts weggelassen, die Holzschilder „Gaststätte / Spreetal“ gestochen
+  scharf nachgesetzt (Vollkorn). Weil die Zeichnung auf einem Foto von Gästen beruht, gilt
+  dafür dasselbe wie für die übrigen Fotos: vor dem Livegang Erlaubnis einholen oder mit
+  einem eigenen Foto der Gaststätte neu erzeugen.
 - Die getäfelten Wände der Gaststube (graubraune Felder mit hellen Rahmen) bilden den
   Hintergrund der Gästestimmen (`bilder/taefelung.svg`), die dunklen Deckenbalken den Rahmen.
 - Herzmotiv der Stühle im Abschnitt „Ein Familienbetrieb mit Herz“.

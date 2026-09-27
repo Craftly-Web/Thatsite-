@@ -438,8 +438,11 @@ a:hover { color: var(--ochsenblut-dunkel); }
 
 .held-bild { margin: 0; }
 
+.held-bild picture { display: block; }
+
 .held-bild img {
   width: 100%;
+  height: auto;
   border: 10px solid var(--holz);
   border-radius: var(--radius);
   box-shadow:
