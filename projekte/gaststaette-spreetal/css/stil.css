@@ -1362,6 +1362,36 @@ a:hover { color: var(--ochsenblut-dunkel); }
   color: #cbbba0;
 }
 
+.facebook-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(234, 223, 202, 0.35);
+  border-radius: 999px;
+  color: #eadfca;
+  font-family: var(--schrift-ui);
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.facebook-link:hover {
+  color: var(--papier);
+  border-color: var(--gold);
+  background: rgba(211, 162, 79, 0.12);
+}
+.facebook-link .ico { width: 1.2rem; height: 1.2rem; color: var(--gold); }
+
+.fuss-facebook .ico {
+  display: inline-block;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-right: 0.35rem;
+  vertical-align: -0.2em;
+}
+
 /* ---------- Fuß ---------- */
 
 .fuss {
