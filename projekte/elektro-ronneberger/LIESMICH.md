@@ -89,6 +89,26 @@ Fotos werden passend zugeschnitten (`object-fit: cover`).
 - **Vertrauensleiste:** „230 V bis 20 kV“ statt „Vielseitige Elektrotechnik“.
 - Bei der Systemeinstellung „Bewegung reduzieren“ stehen alle Effekte still im Endzustand.
 
+## Ausbildungsseite mit eigener Optik
+
+Die Ausbildungsseite spricht Jugendliche an und sieht bewusst anders aus als der Rest,
+in denselben Farben:
+
+- **Gelber Kopfbereich** statt dunklem, mit großer Schrift („Energie.“ in Logo-Rot), schräg
+  gesetztem Etikett und einem roten, langsam drehenden Stempel („Ausbildung · Elektroniker/in ·
+  3½ Jahre“) am Foto, das wie ein Polaroid mit Klebestreifen hängt.
+- **Laufband** mit den vier Stichworten, leicht schräg.
+- **„Passt zu dir, wenn du …“** als dunkle Checkliste mit gelben Haken.
+- **Vier Gründe** als schräge Karten in Gelb, Anthrazit, Weiß und Rot. Beim Darüberfahren
+  richten sie sich gerade.
+- **„Dein Weg“ als Akku:** Melden → Kennenlernen → Ausbildung → Gesellenprüfung. Die Zellen
+  laden sich beim Scrollen nacheinander auf (25 % bis 100 %).
+- **Einblicke** als Polaroid-Wand, **Abschluss** in Gelb mit dunklem Knopf.
+- Die Handy-Leiste unten heißt hier „Ausbildung anfragen“ statt „Projekt anfragen“.
+
+Die vier Schritte beschreiben den üblichen Weg einer Ausbildung. Wie Bewerbung und
+Kennenlernen im Betrieb genau ablaufen (z. B. Praktikum), mit dem Betrieb abstimmen.
+
 ## Was der Betrieb noch bestätigen muss
 
 Nach dem Konzept (Abschnitt 14) steht auf der Website nichts, was nicht belegt ist. Offen:

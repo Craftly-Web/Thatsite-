@@ -1592,6 +1592,400 @@ html:not(.js) .stromkreis .glas { fill: var(--akzent); stroke: var(--akzent); }
 html:not(.js) .stromkreis .glas-x { stroke: var(--dunkel); }
 html:not(.js) .stromkreis .halo { opacity: .55; }
 
+/* =====================================================================
+   AUSBILDUNG — eigene, jüngere Optik in denselben Farben
+   Gelber Kopf, Laufband, schräge Karten, Akku als Ausbildungsweg, Polaroids.
+   ===================================================================== */
+
+.ab-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(56px, 8vw, 110px) clamp(72px, 9vw, 130px);
+  background: var(--akzent);
+  color: var(--dunkel);
+}
+/* feines Punktraster wie auf einer Lochrasterplatine */
+.ab-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(20, 22, 25, .16) 1.4px, transparent 1.6px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(115deg, transparent 20%, #000 75%);
+  mask-image: linear-gradient(115deg, transparent 20%, #000 75%);
+  pointer-events: none;
+}
+.ab-hero-raster {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+}
+.ab-kicker {
+  display: inline-block;
+  margin: 0 0 26px;
+  padding: 7px 14px;
+  background: var(--dunkel);
+  color: var(--akzent);
+  font-family: var(--schrift-titel);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+.ab-hero h1 {
+  font-size: clamp(3rem, 8.2vw, 7.2rem);
+  line-height: .92;
+  letter-spacing: -.045em;
+}
+.ab-hero h1 span { display: block; }
+.ab-rot { color: var(--akzent-tief); }
+.ab-unterzeile {
+  margin: 28px 0 0;
+  max-width: 34ch;
+  font-family: var(--schrift-titel);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+.ab-hero .knopfreihe { align-items: center; }
+.knopf-dunkel { background: var(--dunkel); color: var(--akzent); }
+.knopf-dunkel:hover { background: #000; }
+.knopf.knopf-dunkel:not(.knopf-rahmen):hover { box-shadow: 0 10px 28px rgba(20, 22, 25, .28); }
+.ab-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  font-family: var(--schrift-titel);
+  font-weight: 800;
+  color: var(--dunkel);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+.ab-link .ico { transform: rotate(90deg); }
+.ab-hero :focus-visible, .ab-cta :focus-visible { outline-color: var(--dunkel); }
+
+.ab-hero-bild { position: relative; }
+.polaroid {
+  position: relative;
+  margin: 0;
+  padding: 12px 12px 16px;
+  background: #fff;
+  box-shadow: 0 22px 50px rgba(20, 22, 25, .22), 0 2px 6px rgba(20, 22, 25, .12);
+  transform: rotate(var(--kippen, 3deg));
+  transition: transform .35s cubic-bezier(.3, .7, .2, 1);
+}
+.polaroid:hover { transform: rotate(0deg) scale(1.02); }
+.polaroid::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 96px;
+  height: 28px;
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(20, 22, 25, .08);
+  transform: translateX(-50%) rotate(-4deg);
+  backdrop-filter: blur(1px);
+  z-index: 2;
+}
+.polaroid .foto { --format: 4 / 5; border-radius: 0; }
+.polaroid-text {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--schrift-titel);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--dunkel);
+  text-align: center;
+}
+
+.ab-stempel {
+  position: absolute;
+  right: -34px;
+  top: -40px;
+  width: clamp(120px, 12vw, 160px);
+  height: auto;
+  z-index: 3;
+  filter: drop-shadow(0 10px 18px rgba(20, 22, 25, .25));
+}
+.ab-stempel .ring { animation: drehen 18s linear infinite; transform-origin: 100px 100px; transform-box: view-box; }
+.ab-stempel text { fill: #fff; font: 800 15px var(--schrift-titel); letter-spacing: .18em; }
+@keyframes drehen { to { transform: rotate(360deg); } }
+
+/* Laufband */
+.ab-laufband {
+  overflow: hidden;
+  background: var(--dunkel);
+  color: var(--text-d);
+  border-block: 1px solid var(--linie-d);
+  transform: rotate(-1.2deg);
+  margin: 0 -3vw;
+}
+.ab-laufband-rahmen {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin-top: -30px;
+  padding-block: 14px 18px;
+}
+.ab-laufband-spur {
+  display: flex;
+  width: max-content;
+  animation: laufen 32s linear infinite;
+}
+.ab-laufband span {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding: 18px 0 18px 28px;
+  font-family: var(--schrift-titel);
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.ab-laufband span::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: var(--akzent);
+  box-shadow: 0 0 12px var(--akzent);
+  transform: rotate(45deg);
+}
+.ab-laufband span:nth-child(even) { color: var(--akzent); }
+@keyframes laufen { to { transform: translateX(-50%); } }
+
+/* Einstieg mit Checkliste */
+.ab-intro-raster {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+}
+.ab-intro h2 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); line-height: .98; margin-bottom: 28px; }
+.ab-intro h2 em { font-style: normal; background: linear-gradient(transparent 62%, var(--akzent) 62% 92%, transparent 92%); padding: 0 .06em; }
+.ab-intro-text p { max-width: 52ch; font-size: 18px; color: var(--text-2); }
+.ab-check {
+  position: relative;
+  padding: clamp(28px, 3.4vw, 44px);
+  background: var(--dunkel);
+  color: var(--text-d);
+  border-radius: 6px;
+  transform: rotate(1.5deg);
+  box-shadow: 0 24px 50px rgba(20, 22, 25, .18);
+}
+.ab-check h3 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
+.ab-check ul { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.ab-check li { display: flex; gap: 14px; align-items: flex-start; font-size: 18px; line-height: 1.45; }
+.ab-check li .ico {
+  width: 28px;
+  height: 28px;
+  padding: 5px;
+  margin-top: -1px;
+  border-radius: 4px;
+  background: var(--akzent);
+  color: var(--dunkel);
+  stroke-width: 3;
+}
+.ab-check p { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid var(--linie-d); font-family: var(--schrift-titel); font-weight: 800; font-size: 1.15rem; color: var(--akzent); }
+
+/* Vier Gründe als schräge Karten */
+.ab-karten-liste {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2vw, 26px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ab-karte {
+  position: relative;
+  height: 100%;
+  min-height: 300px;
+  padding: 26px 24px 28px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  transform: rotate(var(--kippen));
+  transition: transform .3s cubic-bezier(.3, .7, .2, 1), box-shadow .3s;
+  box-shadow: 0 14px 30px rgba(20, 22, 25, .1);
+}
+.ab-karte:hover { transform: rotate(0deg) translateY(-8px); box-shadow: 0 24px 44px rgba(20, 22, 25, .18); }
+.ab-karte-nr {
+  font-family: var(--schrift-titel);
+  font-size: 4.2rem;
+  font-weight: 800;
+  line-height: .9;
+  letter-spacing: -.05em;
+}
+.ab-karte .ico { position: absolute; top: 28px; right: 24px; width: 34px; height: 34px; stroke-width: 1.6; }
+.ab-karte h3 { margin-top: auto; padding-top: 34px; font-size: 1.35rem; }
+.ab-karte p { margin: 10px 0 0; font-size: 15.5px; line-height: 1.5; }
+.ab-karte-1 { --kippen: -2deg; background: var(--akzent); color: var(--dunkel); }
+.ab-karte-2 { --kippen: 1.5deg; background: var(--dunkel); color: var(--text-d); }
+.ab-karte-2 .ab-karte-nr, .ab-karte-2 .ico { color: var(--akzent); }
+.ab-karte-2 p { color: var(--text-d2); }
+.ab-karte-3 { --kippen: -1deg; background: #fff; color: var(--text); }
+.ab-karte-3 .ab-karte-nr, .ab-karte-3 .ico { color: var(--akzent-tief); }
+.ab-karte-3 p { color: var(--text-2); }
+.ab-karte-4 { --kippen: 2deg; background: var(--akzent-tief); color: #fff; }
+.ab-karte-4 .ab-karte-nr { color: var(--akzent); }
+
+/* Dein Weg: Akku lädt sich in vier Schritten */
+.ab-weg h2 { max-width: 16ch; }
+.ab-weg h2 .akzent { color: var(--akzent); }
+.akku {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0 30px 0 0;
+  padding: 8px;
+  list-style: none;
+  border: 3px solid var(--text-d);
+  border-radius: 14px;
+}
+.akku::after {
+  content: "";
+  position: absolute;
+  right: -24px;
+  top: 50%;
+  width: 16px;
+  height: 34%;
+  background: var(--text-d);
+  border-radius: 0 6px 6px 0;
+  transform: translateY(-50%);
+}
+.akku-zelle {
+  position: relative;
+  min-height: 230px;
+  padding: 22px 20px;
+  border-radius: 7px;
+  background: var(--dunkel-2);
+  border: 1px solid var(--linie-d);
+  color: var(--text-d);
+  transition: background-color .45s, color .45s, box-shadow .45s, border-color .45s;
+}
+.akku-zelle:nth-child(1) { transition-delay: .2s; }
+.akku-zelle:nth-child(2) { transition-delay: .6s; }
+.akku-zelle:nth-child(3) { transition-delay: 1s; }
+.akku-zelle:nth-child(4) { transition-delay: 1.4s; }
+.sichtbar .akku-zelle,
+html:not(.js) .akku-zelle {
+  background: var(--akzent);
+  border-color: var(--akzent);
+  color: var(--dunkel);
+  box-shadow: 0 0 22px var(--akzent-glut);
+}
+.akku-prozent {
+  display: block;
+  font-family: var(--schrift-titel);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  opacity: .7;
+}
+.akku-zelle h3 { margin-top: 44px; font-size: 1.35rem; }
+.akku-zelle p { margin: 10px 0 0; font-size: 15px; line-height: 1.5; }
+.ab-fakten {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ab-fakten li {
+  padding: 9px 14px;
+  border: 1px solid var(--linie-d);
+  border-radius: 999px;
+  font-size: 14.5px;
+  color: var(--text-d2);
+}
+.ab-fakten strong { color: var(--text-d); font-weight: 600; }
+
+/* Einblicke als Polaroid-Wand */
+.ab-wand {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 44px);
+  padding-top: 14px;
+}
+.ab-wand .polaroid:nth-child(1) { --kippen: -3deg; }
+.ab-wand .polaroid:nth-child(2) { --kippen: 2deg; margin-top: 36px; }
+.ab-wand .polaroid:nth-child(3) { --kippen: -1.5deg; }
+.ab-wand .polaroid .foto { --format: 1 / 1; }
+
+/* Abschluss in Gelb */
+.ab-cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--akzent);
+  color: var(--dunkel);
+}
+.ab-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(20, 22, 25, .14) 1.4px, transparent 1.6px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000);
+  mask-image: linear-gradient(90deg, transparent 30%, #000);
+}
+.ab-cta-innen {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 32px 64px;
+  align-items: center;
+}
+.ab-cta h2 { font-size: clamp(2.3rem, 5vw, 4.2rem); line-height: .96; }
+.ab-cta h2 span { display: block; color: var(--akzent-tief); }
+.ab-cta p { margin-top: 20px; max-width: 46ch; font-size: 18px; }
+.ab-cta-aktion { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.ab-cta .abschluss-telefon { color: var(--dunkel); }
+.ab-cta .abschluss-telefon .ico { color: var(--dunkel); }
+.ab-aufkleber {
+  display: inline-block;
+  padding: 10px 16px;
+  background: var(--dunkel);
+  color: var(--akzent);
+  font-family: var(--schrift-titel);
+  font-weight: 800;
+  font-size: 15px;
+  transform: rotate(-3deg);
+}
+
+@media (max-width: 1100px) {
+  .ab-karten-liste { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1000px) {
+  .ab-hero-raster, .ab-intro-raster, .ab-cta-innen { grid-template-columns: 1fr; }
+  .ab-hero-bild { max-width: 440px; margin: 10px auto 0; }
+  .ab-stempel { right: -14px; top: -34px; }
+  .akku { grid-template-columns: 1fr 1fr; }
+  .ab-wand { grid-template-columns: 1fr 1fr; }
+  .ab-wand .polaroid:nth-child(3) { grid-column: 1 / -1; max-width: 60%; justify-self: center; }
+}
+@media (max-width: 700px) {
+  .ab-kicker { font-size: 11px; letter-spacing: .1em; }
+  .ab-karten-liste { grid-template-columns: 1fr; }
+  .ab-karte { min-height: 0; }
+  .akku { grid-template-columns: 1fr; margin: 30px 0 0; }
+  .akku::after { right: auto; left: 50%; top: -24px; width: 34%; height: 16px; border-radius: 6px 6px 0 0; transform: translateX(-50%); }
+  .akku-zelle { min-height: 0; }
+  .akku-zelle h3 { margin-top: 12px; }
+  .ab-wand { grid-template-columns: 1fr; }
+  .ab-wand .polaroid:nth-child(2) { margin-top: 0; }
+  .ab-wand .polaroid:nth-child(3) { max-width: none; }
+}
+
 /* ---------- Einblenden beim Scrollen ---------- */
 
 .js .einblenden {
@@ -1800,6 +2194,8 @@ html:not(.js) .stromkreis .halo { opacity: .55; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .js .einblenden { opacity: 1; transform: none; }
   .leiterbahnen .puls, .funkenlinie::before { display: none; }
+  .ab-laufband-spur { animation: none; }
+  .akku-zelle { background: var(--akzent); color: var(--dunkel); }
   .stromkreis .hebel { transform: none; }
   .stromkreis .fluss { opacity: 1; }
   .stromkreis .glas { fill: var(--akzent); stroke: var(--akzent); }
