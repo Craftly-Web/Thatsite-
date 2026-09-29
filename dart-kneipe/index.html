@@ -321,7 +321,7 @@ legend{padding:0;margin-bottom:8px}
 <div class="overlay" id="menu" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
   <form class="panel" id="menuForm">
     <h2 id="menuTitle">Dart Kneipe</h2>
-    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz zapft derweil das Pils.</p>
+    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz zapft das Pils und ruft die Punkte, also Ton an!</p>
     <fieldset>
       <legend>Startwert</legend>
       <div class="chips">
@@ -587,6 +587,7 @@ try { sfx.setMuted(localStorage.getItem('dk-muted') === '1'); } catch (e) {}
 paintMute();
 $('#muteBtn').addEventListener('click', () => {
   sfx.init(); sfx.setMuted(!sfx.muted); paintMute();
+  if (sfx.muted) voice.stop();
   try { localStorage.setItem('dk-muted', sfx.muted ? '1' : '0'); } catch (e) {}
 });
 
@@ -1046,11 +1047,40 @@ const wirt = (() => {
     else if (pendingPour) { pendingPour = false; start('pour', now); }
   }
 
+  function talking(on) { talkUntil = on ? Infinity : performance.now(); }
+
   new ResizeObserver(resize).observe(box);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }).observe(box);
   requestAnimationFrame(loop);
-  return { say, react };
+  return { say, react, talking };
+})();
+
+/* ---------- Heinz ruft die Punkte (Sprachausgabe des Browsers) ---------- */
+const voice = (() => {
+  const synth = window.speechSynthesis;
+  let v = null;
+  function pickVoice() {
+    const de = synth.getVoices().filter(x => /^de([-_]|$)/i.test(x.lang));
+    v = de.find(x => /markus|yannick|stefan|hans|conrad|klaus|jonas|florian|male|männlich/i.test(x.name)) || de[0] || null;
+  }
+  if (synth) {
+    try { pickVoice(); } catch (e) {}
+    if ('onvoiceschanged' in synth) synth.onvoiceschanged = () => { try { pickVoice(); } catch (e) {} };
+  }
+  function say(text, opts = {}) {
+    if (!synth || sfx.muted) return;
+    try {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'de-DE'; if (v) u.voice = v;
+      u.pitch = opts.pitch ?? .7; u.rate = opts.rate ?? .95; u.volume = 1;
+      u.onstart = () => wirt.talking(true);
+      u.onend = u.onerror = () => wirt.talking(false);
+      synth.speak(u);
+    } catch (e) {}
+  }
+  function stop() { try { if (synth) synth.cancel(); } catch (e) {} wirt.talking(false); }
+  return { say, stop };
 })();
 
 /* ---------- Zeichnen der Scheibe ---------- */
@@ -1293,6 +1323,8 @@ function newGame(o) {
   };
   endEl.hidden = true; menu.hidden = true;
   wirt.say(pick(['Oche frei! Viel Glück.', `Gegen ${S.opp.name}? Na dann, Prost!`, 'Erst werfen, dann trinken.']));
+  voice.stop();
+  voice.say('Game on!', { rate: .9 });
   beginTurn();
 }
 
@@ -1300,6 +1332,8 @@ function beginTurn() {
   const g = S;
   g.visit = []; g.visitState = 'open'; g.turnStart = g.scores[g.turn]; g.darts = []; g.busy = false;
   renderTafel();
+  const rest = g.scores[g.turn];
+  if (finish(rest, 3)) voice.say(g.turn === 0 ? `Du brauchst ${rest}.` : `${g.opp.name} braucht ${rest}.`);
   if (g.turn === 1) {
     hint(`${g.opp.name} steht am Oche …`);
     setTimeout(() => { if (S === g) cpuDart(); }, 900);
@@ -1367,11 +1401,10 @@ function endVisit(g, bust) {
   if (!bust) g.visitState = 'done';
   g.hist[g.turn].push({ score: bust ? 0 : sum, rest: g.scores[g.turn], bust });
   renderTafel();
-  if (!bust) {
-    if (sum === 180) { call('One hundred and eighty!', 'big'); sfx.cheer(1.3); }
-    else if (sum === 0) call('No score');
-    else { call(String(sum)); if (sum >= 100) sfx.cheer(.5); }
-  }
+  if (bust) voice.say('Überworfen!');
+  else if (sum === 180) { call('Hundertachtzig!', 'big'); sfx.cheer(1.3); voice.say('Hundertachtzig!', { rate: .78, pitch: .65 }); }
+  else if (sum === 0) { call('No score'); voice.say('Null.'); }
+  else { call(String(sum)); if (sum >= 100) sfx.cheer(.5); voice.say(`${sum}!`, { rate: sum >= 100 ? .85 : .95 }); }
   wirtComment(g, sum, bust);
   setTimeout(() => { if (S !== g) return; g.turn = 1 - g.turn; beginTurn(); }, 1700);
 }
@@ -1382,6 +1415,7 @@ function win(g, p, h) {
   g.hist[p].push({ score: sum, rest: 0, bust: false });
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
+  voice.say(p === 0 ? 'Game shot! Und das Spiel geht an dich!' : `Game shot! Das Spiel geht an ${g.opp.name}.`, { rate: .88 });
   hint(p === 0 ? 'Checkout! Heinz zapft dir eins aufs Haus.' : `${g.opp.name} hat gecheckt.`);
   if (p === 0) wirt.react('cheer', 'Game shot! Ein Pils aufs Haus.', true);
   else wirt.react('shake', `${g.opp.name} checkt. Kopf hoch, nächste Runde!`);
