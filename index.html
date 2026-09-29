@@ -167,6 +167,26 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .project h3{font-size:20px;letter-spacing:-.04em;line-height:1.05;margin-top:8px}
 .project.center h3{font-family:Georgia,serif;font-weight:400;font-size:23px}
 .project p.desc{font-size:10px;line-height:1.55;opacity:.75;margin-top:8px;max-width:95%}
+.styles{border:1px solid #262626;background:linear-gradient(150deg,#131313,#0c0c0c);align-self:end}
+.styles-head,.styles-foot{display:flex;justify-content:space-between;gap:16px;padding:16px 22px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#777}
+.styles-head span:first-child{color:#ccc}
+.styles-foot{border-top:1px solid #222;text-transform:none;letter-spacing:.02em;font-size:11px;align-items:center;flex-wrap:wrap}
+.styles-foot a{color:var(--accent);font-weight:700;white-space:nowrap}
+.style-row{display:grid;grid-template-columns:64px 1fr auto 20px;align-items:center;gap:20px;padding:18px 22px;border-top:1px solid #222;transition:background .3s}
+.style-row:hover{background:#171717}
+.st-aa{font-size:42px;line-height:1;text-align:center}
+.st-a{font-family:Arial,Helvetica,sans-serif;font-weight:900;font-style:italic;letter-spacing:-.04em;color:#e2542d}
+.st-b{font-family:Georgia,serif;font-weight:400;color:#f4f1ec}
+.st-c{font-family:Georgia,serif;font-style:italic;color:#d98a4e}
+.st-txt strong{display:block;font-size:15px;letter-spacing:.12em}
+.st-txt small{display:block;font-size:10px;color:#888;margin-top:5px;letter-spacing:.06em}
+.st-sw{display:flex}
+.st-sw i{width:26px;height:26px;border-radius:50%;border:2px solid #0e0e0e;box-shadow:0 0 0 1px #3a3a3a;margin-left:-7px;transition:transform .3s}
+.style-row:hover .st-sw i{transform:translateY(-4px)}
+.style-row:hover .st-sw i:nth-child(2){transition-delay:.04s}.style-row:hover .st-sw i:nth-child(3){transition-delay:.08s}.style-row:hover .st-sw i:nth-child(4){transition-delay:.12s}
+.style-row em{font-style:normal;color:#555;transition:.3s}
+.style-row:hover em{color:var(--accent);transform:translateX(4px)}
+.project.lit{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 30px 80px rgba(255,112,3,.18)}
 .work-note{margin-top:34px;font-size:10px;color:#6f6f6f;letter-spacing:.03em}
 .project small.client{display:block;margin-top:10px;color:#aaa;font-size:8px;text-transform:uppercase;letter-spacing:.12em}
 
@@ -591,9 +611,16 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 </section>
 
 <section class="section" id="work">
-<div class="two"><div><div class="eyebrow">Ausgewählte Projekte</div><h2>DESIGN, DAS<br>WIRKUNG ZEIGT.</h2><p class="lead">Jedes Projekt erzählt seine eigene Geschichte. Hier sind einige unserer Lieblingsstücke – ausgewählt, weil sie zeigen, wie unterschiedlich gutes Webdesign aussehen kann.</p></div><div></div></div>
+<div class="two"><div><div class="eyebrow">Ausgewählte Projekte</div><h2>DESIGN, DAS<br>WIRKUNG ZEIGT.</h2><p class="lead">Jedes Projekt erzählt seine eigene Geschichte. Hier sind einige unserer Lieblingsstücke – ausgewählt, weil sie zeigen, wie unterschiedlich gutes Webdesign aussehen kann.</p></div>
+<div class="styles reveal">
+<div class="styles-head"><span>Drei Branchen. Drei Handschriften.</span><span>Stil · Schrift · Farben</span></div>
+<a class="style-row" href="#p-pulse" data-proj="0"><b class="st-aa st-a">Aa</b><div class="st-txt"><strong>PULSE</strong><small>Fitness · Bold &amp; Dunkel</small></div><div class="st-sw"><i style="background:#0b0b0b"></i><i style="background:#1f1f1f"></i><i style="background:#e2542d"></i><i style="background:#ffffff"></i></div><em>→</em></a>
+<a class="style-row" href="#p-nova" data-proj="1"><b class="st-aa st-b">Aa</b><div class="st-txt"><strong>NOVA</strong><small>Architektur · Editorial &amp; Hell</small></div><div class="st-sw"><i style="background:#f4f1ec"></i><i style="background:#cfd9de"></i><i style="background:#7a6a55"></i><i style="background:#1b1b1b"></i></div><em>→</em></a>
+<a class="style-row" href="#p-lumen" data-proj="2"><b class="st-aa st-c">Aa</b><div class="st-txt"><strong>LUMEN</strong><small>Online-Shop · Warm &amp; Edel</small></div><div class="st-sw"><i style="background:#15110e"></i><i style="background:#3a2a1e"></i><i style="background:#d98a4e"></i><i style="background:#f3e7d7"></i></div><em>→</em></a>
+<div class="styles-foot"><span>Jede Website wird für ihre Zielgruppe gestaltet – nie aus einer Vorlage.</span><a href="#kontakt">Dein Projekt als Nächstes? →</a></div>
+</div></div>
 <div class="projects">
-<article class="project reveal">
+<article id="p-pulse" class="project reveal">
 <div class="mockwrap"><div class="mock type-a">
 <div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 pulse-fitness.de</span></div>
 <div class="mview"><div class="ms ms-pulse">
@@ -620,7 +647,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 </div></div></div></div>
 <div class="caption"><div class="tag">Fitness · Bold &amp; Dunkel</div><h3>Dein Körper.<br>Deine Energie.</h3><p class="desc">Ein dynamisches Redesign für ein Fitnessstudio mit Fokus auf Mitgliedschaften und Online-Buchung. Kräftige Typografie und ein High-Contrast-Look sollen Energie und Antrieb vermitteln.</p><small class="client">PULSE</small></div>
 </article>
-<article class="project center reveal">
+<article id="p-nova" class="project center reveal">
 <div class="mockwrap"><div class="mock type-b">
 <div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 nova-studio.de</span></div>
 <div class="mview"><div class="ms ms-nova">
@@ -643,7 +670,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 </div></div></div></div>
 <div class="caption"><div class="tag">Architektur · Editorial &amp; Hell</div><h3>Architektur neu<br>erleben.</h3><p class="desc">Modernes Webdesign für ein Architekturbüro mit großformatiger Bildsprache, ruhiger Serifen-Typografie und viel Weißraum für eine edle, reduzierte Wirkung.</p><small class="client">NOVA</small></div>
 </article>
-<article class="project reveal">
+<article id="p-lumen" class="project reveal">
 <div class="mockwrap"><div class="mock type-c">
 <div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 lumen-leuchten.de</span></div>
 <div class="mview"><div class="ms ms-lumen">
@@ -1048,6 +1075,13 @@ document.getElementById('consent-no').addEventListener('click',()=>{
 document.getElementById('cookie-settings').addEventListener('click',e=>{e.preventDefault();showConsent()});
 const c0=getConsent();
 if(c0==='granted')loadGA();else if(c0!=='denied')setTimeout(showConsent,900);
+
+// Design-Handschriften: Zeile hebt das passende Projekt hervor
+(function(){const ps=[...document.querySelectorAll('.project')];
+document.querySelectorAll('.style-row').forEach(r=>{const p=ps[+r.dataset.proj];
+  r.addEventListener('mouseenter',()=>p&&p.classList.add('lit'));r.addEventListener('mouseleave',()=>p&&p.classList.remove('lit'));
+  r.addEventListener('click',e=>{e.preventDefault();p.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'});p.classList.add('lit');setTimeout(()=>p.classList.remove('lit'),1800)});});
+})();
 
 if(location.hash==='#impressum'||location.hash==='#datenschutz')openModal(location.hash.slice(1));
 </script>
