@@ -26,7 +26,17 @@ css/schriften.css  Selbst gehostete Schriften (Manrope, Inter; SIL OFL 1.1)
 css/stil.css       Gesamtes Design
 js/seite.js        Menü, Einblenden, Sprungleiste, Formular, mitlaufende Jahreszahlen
 fonts/             Schriftdateien (woff2) und Lizenztexte
+bilder/e-zeichen.svg  Logo: E-Zeichen, als Vektorgrafik nachgezeichnet
 ```
+
+## Logo
+
+Das Logo ist das E-Zeichen (rote Pfeilform auf Gelb), nach der Vorlage des Betriebs als
+Vektorgrafik nachgezeichnet: Die Umrisse wurden aus der Vorlage vermessen und mit wenigen
+glatten Kurven nachgebaut, der 3D-Glanz entsteht über einen SVG-Filter. Es steht als
+`<symbol id="e-zeichen">` am Anfang jeder Seite und wird im Kopf und im Fuß neben der
+Wortmarke „ELEKTRO RONNEBERGER“ gezeigt. Das Browser-Symbol (Favicon) ist dieselbe Form
+ohne Glanz. Die eigenständige Datei `bilder/e-zeichen.svg` ist für Druck, Google-Profil usw.
 
 Die Navigation im Kopf ist auf allen Seiten gleich: Leistungen (mit Aufklappmenü der
 8 Bereiche) · Über uns · Referenzen · Ausbildung · Kontakt, dazu der Knopf „Projekt anfragen“.
@@ -79,8 +89,10 @@ Nach dem Konzept (Abschnitt 14) steht auf der Website nichts, was nicht belegt i
 - **Mitarbeiterzahl:** Nicht genannt.
 - **Ausbildungsplätze:** Überall steht „Aktuelle Ausbildungsplätze auf Anfrage“. Wenn ein Platz
   frei ist, z. B. durch „Ausbildungsplatz 2027 verfügbar“ ersetzen (Startseite, Ausbildungsseite).
-- **Logo / Corporate Design:** Bisher eine schlichte Wortmarke mit Kupferbalken. Ein
-  vorhandenes Logo ersetzt `.marke` im Kopf und im Fuß.
+- **Logo (E-Zeichen):** Der Betrieb nutzt das E-Zeichen der Elektrohandwerke. Es ist ein
+  geschütztes Verbandszeichen des ZVEH und darf nur von Innungsbetrieben verwendet werden –
+  Innungsmitgliedschaft kurz bestätigen lassen. Wenn möglich die Originaldatei über die
+  Innung bzw. den Landesinnungsverband anfordern und die Nachzeichnung damit ersetzen.
 
 ## Vor dem Livegang
 

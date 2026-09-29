@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="8 9 658 551" role="img" aria-labelledby="t">
+  <title id="t">E-Zeichen der Elektrohandwerke</title>
+  <!-- Nachgezeichnet von THATSITE! nach der Vorlage von Elektro Ronneberger. Relief per SVG-Filter. -->
+  <defs>
+  <filter id="e-relief" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="hoehe"/>
+    <feDiffuseLighting in="hoehe" surfaceScale="9" diffuseConstant="1.16" lighting-color="#fff" result="licht"><feDistantLight azimuth="240" elevation="58"/></feDiffuseLighting>
+    <feBlend in="SourceGraphic" in2="licht" mode="multiply" result="schattiert"/>
+    <feSpecularLighting in="hoehe" surfaceScale="9" specularConstant=".55" specularExponent="45" lighting-color="#fff" result="glanz"><feDistantLight azimuth="240" elevation="48"/></feSpecularLighting>
+    <feComposite in="glanz" in2="SourceAlpha" operator="in" result="glanz2"/>
+    <feComposite in="schattiert" in2="glanz2" operator="arithmetic" k2="1" k3="1"/>
+    <feComposite in2="SourceAlpha" operator="in"/>
+  </filter>
+  </defs>
+  <rect x="8" y="9" width="658" height="551" fill="#ffe500"/>
+  <g fill="#f00" filter="url(#e-relief)">
+    <path d="M119.4 326.0L400.9 194.0C289.4 157.1 112.3 175.3 42.7 272.0C53.8 151.0 202.2 97.7 307.0 93.9C386.9 90.9 527.2 123.3 567.4 197.0Z"/>
+    <path d="M600.1 290.0C593.9 420.3 440.2 467.0 332.0 471.1C246.2 474.4 114.8 440.2 69.3 362.0C164.2 436.4 435.9 436.0 497.2 319.0L454.3 329.0L530.0 241.2L642.3 275.0Z"/>
+  </g>
+</svg>

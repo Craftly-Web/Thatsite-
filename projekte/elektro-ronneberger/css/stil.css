@@ -232,10 +232,9 @@ mark.luecke {
   margin-right: auto;
 }
 .marke-zeichen {
-  width: 12px;
-  height: 28px;
-  background: var(--akzent);
-  border-radius: 1px;
+  /* E-Zeichen, Seitenverhältnis 658 : 551 */
+  width: 50px;
+  height: 42px;
   flex: none;
 }
 .marke-text {

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Elektro Ronneberger">
 <meta property="og:title" content="Über Elektro Ronneberger | Meisterbetrieb seit 1991">
 <meta property="og:description" content="Elektro Ronneberger ist ein Elektrotechniker-Meisterbetrieb aus Bernstadt auf dem Eigen. Seit 1991 für Kunden in der Region tätig.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='9' fill='%23141619'/%3E%3Crect x='19' y='9' width='10' height='30' rx='1' fill='%23e2682c'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='8 9 658 551'%3E%3Crect x='8' y='9' width='658' height='551' fill='%23ffe500'/%3E%3Cg fill='%23f00'%3E%3Cpath d='M119.4 326.0L400.9 194.0C289.4 157.1 112.3 175.3 42.7 272.0C53.8 151.0 202.2 97.7 307.0 93.9C386.9 90.9 527.2 123.3 567.4 197.0Z'/%3E%3Cpath d='M600.1 290.0C593.9 420.3 440.2 467.0 332.0 471.1C246.2 474.4 114.8 440.2 69.3 362.0C164.2 436.4 435.9 436.0 497.2 319.0L454.3 329.0L530.0 241.2L642.3 275.0Z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preload" href="fonts/manrope-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/schriften.css">
@@ -46,6 +46,16 @@
   <symbol id="i-archiv" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/></symbol>
   <symbol id="i-portrait" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
   <symbol id="i-extern" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <defs><filter id="e-relief" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="hoehe"/>
+    <feDiffuseLighting in="hoehe" surfaceScale="9" diffuseConstant="1.16" lighting-color="#fff" result="licht"><feDistantLight azimuth="240" elevation="58"/></feDiffuseLighting>
+    <feBlend in="SourceGraphic" in2="licht" mode="multiply" result="schattiert"/>
+    <feSpecularLighting in="hoehe" surfaceScale="9" specularConstant=".55" specularExponent="45" lighting-color="#fff" result="glanz"><feDistantLight azimuth="240" elevation="48"/></feSpecularLighting>
+    <feComposite in="glanz" in2="SourceAlpha" operator="in" result="glanz2"/>
+    <feComposite in="schattiert" in2="glanz2" operator="arithmetic" k2="1" k3="1"/>
+    <feComposite in2="SourceAlpha" operator="in"/>
+  </filter></defs>
+  <symbol id="e-zeichen" viewBox="8 9 658 551"><rect x="8" y="9" width="658" height="551" fill="#ffe500"/><g fill="#f00" filter="url(#e-relief)"><path d="M119.4 326.0L400.9 194.0C289.4 157.1 112.3 175.3 42.7 272.0C53.8 151.0 202.2 97.7 307.0 93.9C386.9 90.9 527.2 123.3 567.4 197.0Z"/><path d="M600.1 290.0C593.9 420.3 440.2 467.0 332.0 471.1C246.2 474.4 114.8 440.2 69.3 362.0C164.2 436.4 435.9 436.0 497.2 319.0L454.3 329.0L530.0 241.2L642.3 275.0Z"/></g></symbol>
 </svg>
 
 <a class="sprung" href="#inhalt">Zum Inhalt springen</a>
@@ -55,7 +65,7 @@
 <header class="kopf">
   <div class="behaelter kopf-innen">
     <a class="marke" href="index.html" aria-label="Elektro Ronneberger – zur Startseite">
-      <span class="marke-zeichen" aria-hidden="true"></span>
+      <svg class="marke-zeichen" aria-hidden="true"><use href="#e-zeichen"/></svg>
       <span class="marke-text" aria-hidden="true"><span class="marke-klein">ELEKTRO</span><span class="marke-name">RONNEBERGER</span></span>
     </a>
     <nav class="hauptnav" id="hauptnav" aria-label="Hauptnavigation">
@@ -189,7 +199,7 @@
   <div class="behaelter fuss-raster">
     <div>
       <a class="marke" href="index.html" aria-label="Elektro Ronneberger – zur Startseite">
-      <span class="marke-zeichen" aria-hidden="true"></span>
+      <svg class="marke-zeichen" aria-hidden="true"><use href="#e-zeichen"/></svg>
       <span class="marke-text" aria-hidden="true"><span class="marke-klein">ELEKTRO</span><span class="marke-name">RONNEBERGER</span></span>
     </a>
       <p class="fuss-claim">Elektrotechnik aus Bernstadt.<br>Seit 1991.</p>
