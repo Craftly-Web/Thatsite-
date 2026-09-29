@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dart Kneipe</title>
+<meta name="description" content="Steeldart im Browser: 501 oder 301 Double Out gegen die Stammgäste der Dart Kneipe.">
+<meta name="theme-color" content="#2a1a10">
+<meta property="og:title" content="Dart Kneipe">
+<meta property="og:description" content="Steeldart im Browser: 501 oder 301 Double Out gegen die Stammgäste der Dart Kneipe.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23171411'/%3E%3Ccircle cx='32' cy='32' r='25' fill='%23b8232a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23eadcb8'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%2312703c'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23171411'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23b8232a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cabin+Sketch:wght@400;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: Holzvertäfelte Kneipenwand, Dartscheibe im Lichtkegel, Kreidetafel für den Spielstand daneben */
+:root{
+  --wall:#2a1a10;
+  --wood:#6a4224;
+  --brass:#e2b457;
+  --chalk:#f1ede2;
+  --slate:#1f2a24;
+  --ink:#f6ead2;
+  --muted:#c9b393;
+  --warn:#ffb39a;
+  --display:'UnifrakturMaguntia','Old English Text MT',Georgia,serif;
+  --chalkf:'Cabin Sketch','Segoe Print','Comic Sans MS',cursive;
+  --ui:'Barlow Condensed','Arial Narrow','Roboto Condensed',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:var(--ui);
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  background-color:var(--wall);
+  background-image:
+    radial-gradient(ellipse 70% 55% at 38% 40%, rgba(255,184,102,.22), rgba(255,184,102,0) 70%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 118px, rgba(0,0,0,.4) 118px 121px),
+    repeating-linear-gradient(90deg, #3d2818 0 40px, #382414 40px 80px, #3a2616 80px 121px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 3px, rgba(0,0,0,.02) 3px 7px);
+  background-attachment:fixed;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 42% 40%, rgba(0,0,0,0) 40%, rgba(0,0,0,.6) 100%);
+}
+.app{
+  position:relative;z-index:1;
+  min-height:100%;
+  max-width:1180px;margin:0 auto;
+  padding-inline:16px;
+  padding-block:calc(12px + env(safe-area-inset-top, 0px)) calc(20px + env(safe-area-inset-bottom, 0px));
+  display:flex;flex-direction:column;gap:16px;
+}
+
+/* Kopf: Kneipenschild */
+.sign{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.plank{
+  background:linear-gradient(180deg,#7d4c29,#5a331a 60%,#4c2b15);
+  border:2px solid #24130a;border-radius:6px;
+  padding:4px 20px 7px;
+  box-shadow:0 8px 18px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,220,170,.25), inset 0 -2px 0 rgba(0,0,0,.25);
+}
+.plank h1{
+  margin:0;font-family:var(--display);font-weight:400;
+  font-size:clamp(30px,5vw,44px);line-height:1.1;letter-spacing:.01em;
+  color:var(--brass);
+  text-shadow:0 1px 0 #24130a, 0 0 18px rgba(255,190,90,.35);
+}
+.plank small{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#e9c98c;opacity:.8;margin-top:-2px}
+.actions{display:flex;gap:8px}
+.btn{
+  font:600 16px/1 var(--ui);letter-spacing:.07em;text-transform:uppercase;
+  color:#2a170b;background:linear-gradient(180deg,#f3cd72,#c9952f);
+  border:1px solid #6d4a12;border-radius:8px;padding:11px 16px;cursor:pointer;
+  box-shadow:0 2px 0 #6d4a12, 0 6px 14px rgba(0,0,0,.4);
+}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:translateY(1px);box-shadow:0 1px 0 #6d4a12}
+.btn.ghost{background:rgba(20,12,6,.55);color:var(--ink);border-color:rgba(233,201,140,.35);box-shadow:none}
+.btn:focus-visible,.chip input:focus-visible + span{outline:2px solid #ffd66b;outline-offset:2px}
+.icon-btn{width:44px;height:44px;padding:0;display:grid;place-items:center}
+.icon-btn svg{width:22px;height:22px}
+
+/* Bühne */
+.stage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,310px);gap:28px;align-items:start}
+.board-col{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.board-wrap{
+  position:relative;
+  width:min(100%, 740px, max(300px, calc(100vh - 150px)));
+  aspect-ratio:1;max-width:100%;
+  border-radius:50%;
+  box-shadow:0 26px 60px rgba(0,0,0,.7), 0 0 0 10px rgba(0,0,0,.2);
+}
+@supports (height:100dvh){.board-wrap{width:min(100%, 740px, max(300px, calc(100dvh - 150px)))}}
+.board-wrap canvas{
+  position:absolute;inset:0;width:100%;height:100%;border-radius:50%;
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+  cursor:crosshair;
+}
+.caller{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  pointer-events:none;opacity:0;text-align:center;white-space:nowrap;
+  font:700 clamp(38px,9vw,80px)/1 var(--ui);text-transform:uppercase;letter-spacing:.02em;
+  color:#fff4d6;
+  text-shadow:0 3px 0 #3a200c, 0 0 26px rgba(255,170,60,.75), 0 8px 30px rgba(0,0,0,.85);
+}
+.caller.big{font-size:clamp(28px,6.6vw,62px);white-space:normal;width:92%;color:#ffd66b}
+.caller.bust{color:var(--warn)}
+.caller.show{animation:call 1.8s ease-out forwards}
+@keyframes call{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.7)}
+  12%{opacity:1;transform:translate(-50%,-50%) scale(1.07)}
+  22%{transform:translate(-50%,-50%) scale(1)}
+  75%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1)}
+}
+@keyframes callfade{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
+.hint{font-size:16px;color:var(--muted);text-align:center;min-height:1.4em;letter-spacing:.03em;text-wrap:balance}
+
+/* Kreidetafel */
+.tafel{
+  position:sticky;top:calc(12px + env(safe-area-inset-top, 0px));
+  background:radial-gradient(ellipse at 30% 20%, #2d3b34, var(--slate) 72%);
+  border:12px solid var(--wood);border-radius:6px;
+  box-shadow:0 0 0 2px #24130a, inset 0 0 34px rgba(0,0,0,.6), 0 16px 40px rgba(0,0,0,.55);
+  padding:14px 16px 16px;
+  font-family:var(--chalkf);color:var(--chalk);
+  display:flex;flex-direction:column;gap:12px;
+}
+.tafel-head,.visit-who,legend{
+  font-family:var(--ui);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:rgba(241,237,226,.66);
+}
+.tafel-head{display:flex;justify-content:space-between;gap:8px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.col{min-width:0;text-align:center;border-radius:4px;padding:6px 4px 8px;border:1px dashed transparent;transition:background .2s,border-color .2s}
+.col.active{border-color:rgba(241,237,226,.4);background:rgba(255,255,255,.035)}
+.col h2{margin:0;font-weight:400;font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rest{font-size:clamp(42px,5.5vw,58px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.hist{list-style:none;margin:6px 0 0;padding:0;max-height:230px;overflow-y:auto;font-size:18px;scrollbar-width:thin}
+.hist li{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:1px 0;font-variant-numeric:tabular-nums}
+.hist .sc{color:rgba(241,237,226,.62)}
+.hist .sc.bust{color:var(--warn)}
+.hist li:not(:last-child) .rs{text-decoration:line-through;text-decoration-thickness:2px;opacity:.5}
+.visit{border-top:1px dashed rgba(241,237,226,.3);padding-top:10px;display:flex;flex-direction:column;gap:7px}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.3fr);gap:6px;align-items:center}
+.slot{border:1px solid rgba(241,237,226,.22);border-radius:4px;text-align:center;font-size:22px;padding:4px 0;min-width:0}
+.slot.hit{border-color:rgba(241,237,226,.6)}
+.sum{text-align:right;font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.sum.bust{color:var(--warn);font-size:19px}
+
+/* Overlays */
+.overlay{
+  position:fixed;inset:0;z-index:20;display:grid;place-items:center;overflow-y:auto;
+  padding:calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  background:rgba(12,7,3,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+}
+.panel{
+  width:min(100%,470px);
+  background:radial-gradient(ellipse at 30% 15%, #2e3c35, #1a221e 75%);
+  border:12px solid var(--wood);border-radius:6px;
+  box-shadow:0 0 0 2px #24130a, 0 30px 80px rgba(0,0,0,.7), inset 0 0 40px rgba(0,0,0,.5);
+  padding:20px 22px 22px;color:var(--chalk);
+  display:flex;flex-direction:column;gap:16px;
+}
+.panel h2{margin:0;font-family:var(--display);font-weight:400;font-size:40px;line-height:1.1;color:var(--brass);text-align:center;text-wrap:balance}
+.panel p{margin:0;font-size:17px;line-height:1.45;color:rgba(241,237,226,.88)}
+.panel p.rules{font-size:15px;color:rgba(241,237,226,.72)}
+.panel p.rules strong{color:var(--chalk);font-weight:600}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;cursor:pointer}
+.chip input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.chip span{display:block;padding:8px 12px;border:1px solid rgba(241,237,226,.35);border-radius:6px;font-family:var(--chalkf);font-size:19px;line-height:1.15}
+.chip small{display:block;font-family:var(--ui);font-size:12px;letter-spacing:.06em;opacity:.75}
+.chip input:checked + span{background:rgba(241,237,226,.93);color:#1b2420;border-color:transparent}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 140px;font-size:19px;padding:14px}
+
+@media (max-width:780px){
+  .stage{grid-template-columns:minmax(0,1fr);gap:14px}
+  .tafel{order:-1;position:static;border-width:8px;padding:10px 12px;gap:8px}
+  .hist{display:none}
+  .rest{font-size:42px}
+  .board-wrap{width:min(100%, 560px)}
+  .hint{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  .caller.show{animation:callfade 1.8s linear forwards}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="sign">
+    <div class="plank">
+      <h1>Dart Kneipe</h1>
+      <small>Steeldart · Double Out</small>
+    </div>
+    <div class="actions">
+      <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
+      <button class="btn ghost" id="menuBtn" type="button">Neues Spiel</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="board-col" aria-label="Dartscheibe">
+      <div class="board-wrap" id="boardWrap">
+        <canvas id="board" aria-label="Dartscheibe – drücken und halten zum Zielen, loslassen zum Werfen"></canvas>
+        <div class="caller" id="caller" aria-live="polite"></div>
+      </div>
+      <div class="hint" id="hint">Drücken &amp; halten zum Zielen – loslassen zum Werfen</div>
+    </section>
+
+    <aside class="tafel" aria-label="Spielstand">
+      <div class="tafel-head"><span id="modeLabel">501 · Double Out</span><span id="levelLabel"></span></div>
+      <div class="cols">
+        <div class="col" id="col0">
+          <h2>Du</h2>
+          <div class="rest" id="rest0">501</div>
+          <ol class="hist" id="hist0"></ol>
+        </div>
+        <div class="col" id="col1">
+          <h2 id="name1">Kalle</h2>
+          <div class="rest" id="rest1">501</div>
+          <ol class="hist" id="hist1"></ol>
+        </div>
+      </div>
+      <div class="visit">
+        <div class="visit-who" id="visitWho">Deine Aufnahme</div>
+        <div class="slots">
+          <div class="slot" id="slot0">·</div>
+          <div class="slot" id="slot1">·</div>
+          <div class="slot" id="slot2">·</div>
+          <div class="sum" id="visitSum"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<div class="overlay" id="menu" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+  <form class="panel" id="menuForm">
+    <h2 id="menuTitle">Dart Kneipe</h2>
+    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt.</p>
+    <fieldset>
+      <legend>Startwert</legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="start" id="start501" value="501" checked><span>501</span></label>
+        <label class="chip"><input type="radio" name="start" id="start301" value="301"><span>301</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Gegner</legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="level" id="lvlA" value="anfaenger"><span>Tante Gerda<small>Anfängerin</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlB" value="stammgast" checked><span>Kalle<small>Stammgast</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span>Der Wirt<small>Vereinsspieler</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlD" value="profi"><span>Die Maschine<small>Profi</small></span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Anwurf</legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="starter" id="startMe" value="0" checked><span>Du</span></label>
+        <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span>Gegner</span></label>
+      </div>
+    </fieldset>
+    <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz zittert erst und wird dann ruhig. Leuchtet es golden, loslassen. Wer zu lange zielt, wird wieder zittrig. Am Handy sitzt das Fadenkreuz etwas über deinem Finger.</p>
+    <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
+    <div class="row">
+      <button type="button" class="btn ghost" id="resumeBtn" hidden>Zurück zum Spiel</button>
+      <button type="submit" class="btn" id="startBtn">Anwerfen</button>
+    </div>
+  </form>
+</div>
+
+<div class="overlay" id="end" role="dialog" aria-modal="true" aria-labelledby="endTitle" hidden>
+  <div class="panel">
+    <h2 id="endTitle">Game shot</h2>
+    <p id="endText"></p>
+    <div class="row">
+      <button type="button" class="btn ghost" id="toMenu">Einstellungen</button>
+      <button type="button" class="btn" id="rematch">Revanche</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------- Scheibe: offizielle Maße in mm ---------- */
+const R = { IB: 6.35, OB: 15.9, TI: 99, TO: 107, DI: 162, DO: 170, EDGE: 226 };
+const ORDER = [20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5];
+const FLY = 190;            // Flugzeit eines Darts in ms
+const TOUCH_OFFSET = 72;    // Fadenkreuz über dem Finger (px)
+const PLAYER_SCATTER = 3.4; // Streuung beim Loslassen (mm)
+
+function hit(x, y) {
+  const r = Math.hypot(x, y);
+  if (r <= R.IB) return { n: 25, m: 2, v: 50, l: 'Bull', r };
+  if (r <= R.OB) return { n: 25, m: 1, v: 25, l: '25', r };
+  if (r > R.DO) return { n: 0, m: 0, v: 0, l: '0', r };
+  const ang = ((Math.atan2(x, -y) * 180 / Math.PI) + 369) % 360;
+  const n = ORDER[Math.floor(ang / 18) % 20];
+  const m = r > R.DI ? 2 : (r > R.TI && r <= R.TO ? 3 : 1);
+  return { n, m, v: n * m, l: (m === 3 ? 'T' : m === 2 ? 'D' : '') + n, r };
+}
+
+function aimOf(t) {
+  if (t.n === 25) return t.m === 2 ? { x: 0, y: 0 } : { x: 0, y: -11.2 };
+  const a = ORDER.indexOf(t.n) * Math.PI / 10;
+  const r = t.m === 3 ? 103 : t.m === 2 ? 166 : 134;
+  return { x: Math.sin(a) * r, y: -Math.cos(a) * r };
+}
+
+/* ---------- Checkout-Wege für den Computer ---------- */
+const THROWS = [];
+for (let n = 20; n >= 1; n--) THROWS.push({ n, m: 3, v: 3 * n, l: 'T' + n });
+for (let n = 20; n >= 1; n--) THROWS.push({ n, m: 1, v: n, l: '' + n });
+for (let n = 20; n >= 1; n--) THROWS.push({ n, m: 2, v: 2 * n, l: 'D' + n });
+THROWS.push({ n: 25, m: 1, v: 25, l: '25' }, { n: 25, m: 2, v: 50, l: 'Bull' });
+const DMAP = {};
+THROWS.forEach(t => { if (t.m === 2) DMAP[t.v] = t; });
+const DPREF = { 20: 0, 16: .05, 8: .15, 18: .2, 12: .25, 10: .3, 4: .35, 2: .45, 6: .45, 14: .45, 5: .6, 3: .65, 1: .7 };
+const dCost = t => t.n === 25 ? 1.1 : (DPREF[t.n] ?? .55);
+const sCost = t => t.m === 1 ? (t.n === 25 ? 1.4 : .6) : t.m === 3 ? (t.n >= 19 ? 1 : 1.2) : 1.6;
+const memo = new Map();
+
+function finish(rest, darts) {
+  if (rest < 2 || rest > 170) return null;
+  const key = rest * 4 + darts;
+  if (memo.has(key)) return memo.get(key);
+  let best = null;
+  const consider = seq => {
+    const c = seq.slice(0, -1).reduce((a, t) => a + sCost(t), 0) + dCost(seq[seq.length - 1]);
+    if (!best || c < best.cost - 1e-9) best = { seq, cost: c };
+  };
+  if (DMAP[rest]) consider([DMAP[rest]]);
+  if (!best && darts >= 2) for (const a of THROWS) { const d = DMAP[rest - a.v]; if (d) consider([a, d]); }
+  if (!best && darts >= 3) for (const a of THROWS) for (const b of THROWS) { const d = DMAP[rest - a.v - b.v]; if (d) consider([a, b, d]); }
+  memo.set(key, best);
+  return best;
+}
+
+function cpuTarget(rest, dartsLeft) {
+  const f = finish(rest, dartsLeft);
+  if (f) return f.seq[0];
+  let best = THROWS[0], bv = -Infinity;
+  for (const t of THROWS) {
+    const r2 = rest - t.v;
+    if (r2 < 2) continue;
+    let v;
+    const f3 = finish(r2, 3);
+    if (f3) v = 500 - f3.seq.length * 40 - f3.cost * 8 - sCost(t) * 10;
+    else v = t.v - sCost(t) * 4;
+    if (t.n === 20 && t.m === 3) v += 1;
+    if (v > bv) { bv = v; best = t; }
+  }
+  return best;
+}
+
+function gauss2() {
+  let u = 0; while (u === 0) u = Math.random();
+  const v = Math.random(), m = Math.sqrt(-2 * Math.log(u));
+  return [m * Math.cos(2 * Math.PI * v), m * Math.sin(2 * Math.PI * v)];
+}
+
+/* ---------- Sound (Web Audio, alles synthetisch) ---------- */
+const sfx = (() => {
+  let ac = null, master = null, noise = null, muted = false;
+  function init() {
+    if (ac) { if (ac.state === 'suspended') ac.resume(); return; }
+    try {
+      ac = new (window.AudioContext || window.webkitAudioContext)();
+      master = ac.createGain(); master.gain.value = .8; master.connect(ac.destination);
+      const len = ac.sampleRate * 2;
+      noise = ac.createBuffer(1, len, ac.sampleRate);
+      const d = noise.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    } catch (e) { ac = null; }
+  }
+  const ok = () => ac && !muted;
+  function nz(t, dur, type, freq, q, gain, attack = .002) {
+    const s = ac.createBufferSource(); s.buffer = noise; s.loop = true;
+    const f = ac.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain, t + attack);
+    g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    s.connect(f); f.connect(g); g.connect(master);
+    s.start(t, Math.random() * 1.5); s.stop(t + dur + .05);
+    return f;
+  }
+  function tone(t, dur, type, f0, f1, gain) {
+    const o = ac.createOscillator(); o.type = type;
+    o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    const g = ac.createGain();
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain, t + .006);
+    g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + .05);
+  }
+  return {
+    init,
+    get muted() { return muted; },
+    setMuted(m) { muted = m; },
+    whoosh() {
+      if (!ok()) return; const t = ac.currentTime;
+      const f = nz(t, .17, 'bandpass', 500, 2.2, .16, .07);
+      f.frequency.exponentialRampToValueAtTime(2600, t + .16);
+    },
+    thud(kind) {
+      if (!ok()) return; const t = ac.currentTime;
+      if (kind === 'wall') { nz(t, .09, 'bandpass', 1300, 3, .45); tone(t, .12, 'triangle', 380, 170, .22); }
+      else { nz(t, .045, 'highpass', 2600, .7, .45); tone(t, .15, 'sine', 170, 55, .75); nz(t, .12, 'lowpass', 520, .8, .35); }
+    },
+    bust() {
+      if (!ok()) return; const t = ac.currentTime;
+      tone(t, .22, 'square', 220, 200, .07); tone(t + .22, .38, 'square', 165, 135, .07);
+    },
+    cheer(level) {
+      if (!ok()) return; const t = ac.currentTime; const dur = 1 + level * 1.8;
+      for (let i = 0; i < 6; i++) {
+        const s = ac.createBufferSource(); s.buffer = noise; s.loop = true;
+        const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 450 + Math.random() * 1500; f.Q.value = .9;
+        const g = ac.createGain(); const peak = .09 * level / (1 + i * .12);
+        g.gain.setValueAtTime(.0001, t);
+        g.gain.exponentialRampToValueAtTime(peak, t + .2 + Math.random() * .25);
+        g.gain.setValueAtTime(peak, t + dur * .5);
+        g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+        const lfo = ac.createOscillator(); lfo.frequency.value = 3 + Math.random() * 6;
+        const lg = ac.createGain(); lg.gain.value = peak * .45;
+        lfo.connect(lg); lg.connect(g.gain);
+        s.connect(f); f.connect(g); g.connect(master);
+        s.start(t, Math.random()); s.stop(t + dur + .1); lfo.start(t); lfo.stop(t + dur + .1);
+      }
+      if (level >= 1) { tone(t + .3, .5, 'sine', 1800, 2700, .045); tone(t + .95, .6, 'sine', 2300, 1500, .035); }
+    }
+  };
+})();
+
+/* ---------- DOM ---------- */
+const $ = s => document.querySelector(s);
+const canvas = $('#board'), ctx = canvas.getContext('2d');
+const wrap = $('#boardWrap'), menu = $('#menu'), endEl = $('#end');
+const hintEl = $('#hint'), callerEl = $('#caller');
+
+const ICON_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+const ICON_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="m16 9 6 6M22 9l-6 6"/></svg>';
+function paintMute() {
+  const m = sfx.muted, b = $('#muteBtn');
+  b.innerHTML = m ? ICON_OFF : ICON_ON;
+  b.setAttribute('aria-pressed', String(m));
+  b.setAttribute('aria-label', m ? 'Ton einschalten' : 'Ton ausschalten');
+}
+try { sfx.setMuted(localStorage.getItem('dk-muted') === '1'); } catch (e) {}
+paintMute();
+$('#muteBtn').addEventListener('click', () => {
+  sfx.init(); sfx.setMuted(!sfx.muted); paintMute();
+  try { localStorage.setItem('dk-muted', sfx.muted ? '1' : '0'); } catch (e) {}
+});
+
+/* ---------- Zeichnen ---------- */
+let dpr = 1, sizeCss = 0, scale = 1, boardImg = null;
+
+function renderBoard(px) {
+  const c = document.createElement('canvas'); c.width = c.height = px;
+  const g = c.getContext('2d');
+  const s = px / 2 / R.EDGE;
+  g.translate(px / 2, px / 2); g.scale(s, s);
+  const TAU = Math.PI * 2;
+
+  // Surround
+  let gr = g.createRadialGradient(-40, -60, 20, 0, 0, R.EDGE);
+  gr.addColorStop(0, '#29231d'); gr.addColorStop(1, '#0c0a08');
+  g.fillStyle = gr; g.beginPath(); g.arc(0, 0, R.EDGE, 0, TAU); g.fill();
+  g.lineWidth = 3; g.strokeStyle = '#3d342a'; g.beginPath(); g.arc(0, 0, R.EDGE - 1.5, 0, TAU); g.stroke();
+
+  // Segmente
+  const BLACK = '#171411', CREAM = '#eadcb8', RED = '#b8232a', GREEN = '#12703c';
+  const ring = (r0, r1, a0, a1, col) => {
+    g.beginPath(); g.arc(0, 0, r1, a0, a1); g.arc(0, 0, r0, a1, a0, true); g.closePath();
+    g.fillStyle = col; g.fill();
+  };
+  for (let i = 0; i < 20; i++) {
+    const a0 = (i * 18 - 9 - 90) * Math.PI / 180, a1 = a0 + Math.PI / 10;
+    const even = i % 2 === 0, single = even ? BLACK : CREAM, hi = even ? RED : GREEN;
+    ring(R.DI, R.DO, a0, a1, hi);
+    ring(R.TO, R.DI, a0, a1, single);
+    ring(R.TI, R.TO, a0, a1, hi);
+    ring(R.OB, R.TI, a0, a1, single);
+  }
+  g.beginPath(); g.arc(0, 0, R.OB, 0, TAU); g.fillStyle = GREEN; g.fill();
+  g.beginPath(); g.arc(0, 0, R.IB, 0, TAU); g.fillStyle = RED; g.fill();
+
+  // Sisal-Struktur
+  g.save(); g.beginPath(); g.arc(0, 0, R.DO, 0, TAU); g.clip();
+  g.lineWidth = .35;
+  for (let i = 0; i < 9000; i++) {
+    const r = Math.sqrt(Math.random()) * R.DO, a = Math.random() * TAU;
+    const x = Math.cos(a) * r, y = Math.sin(a) * r, d = Math.random() * TAU, l = 1 + Math.random() * 2.2;
+    g.strokeStyle = Math.random() < .55 ? 'rgba(0,0,0,.13)' : 'rgba(255,240,210,.06)';
+    g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(d) * l, y + Math.sin(d) * l); g.stroke();
+  }
+  g.restore();
+
+  // Spinne (Drähte)
+  g.strokeStyle = 'rgba(214,214,208,.9)'; g.lineWidth = .75;
+  [R.DO, R.DI, R.TO, R.TI, R.OB, R.IB].forEach(r => { g.beginPath(); g.arc(0, 0, r, 0, TAU); g.stroke(); });
+  for (let i = 0; i < 20; i++) {
+    const a = (i * 18 - 9 - 90) * Math.PI / 180;
+    g.beginPath(); g.moveTo(Math.cos(a) * R.OB, Math.sin(a) * R.OB); g.lineTo(Math.cos(a) * (R.DO + 4), Math.sin(a) * (R.DO + 4)); g.stroke();
+  }
+  g.strokeStyle = 'rgba(160,160,152,.7)'; g.lineWidth = 1.1;
+  g.beginPath(); g.arc(0, 0, 181, 0, TAU); g.stroke();
+
+  // Zahlenring
+  g.fillStyle = '#ece6d8';
+  g.font = "700 25px 'Barlow Condensed', 'Arial Narrow', sans-serif";
+  g.textAlign = 'center'; g.textBaseline = 'middle';
+  ORDER.forEach((n, i) => {
+    const a = i * Math.PI / 10;
+    g.fillText(String(n), Math.sin(a) * 199, -Math.cos(a) * 199 + 1);
+  });
+
+  // Licht der Lampe
+  g.save(); g.beginPath(); g.arc(0, 0, R.EDGE, 0, TAU); g.clip();
+  gr = g.createRadialGradient(-70, -110, 10, -40, -60, 300);
+  gr.addColorStop(0, 'rgba(255,214,150,.20)'); gr.addColorStop(1, 'rgba(255,214,150,0)');
+  g.fillStyle = gr; g.fillRect(-R.EDGE, -R.EDGE, R.EDGE * 2, R.EDGE * 2);
+  gr = g.createLinearGradient(0, -R.EDGE, 0, R.EDGE);
+  gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,.3)');
+  g.fillStyle = gr; g.fillRect(-R.EDGE, -R.EDGE, R.EDGE * 2, R.EDGE * 2);
+  g.restore();
+  return c;
+}
+
+function resize() {
+  const w = wrap.clientWidth;
+  if (!w) return;
+  sizeCss = w;
+  dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+  canvas.width = Math.round(w * dpr); canvas.height = Math.round(w * dpr);
+  scale = (w / 2) / R.EDGE;
+  boardImg = renderBoard(canvas.width);
+}
+new ResizeObserver(resize).observe(wrap);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+
+const P = (x, y) => [sizeCss / 2 + x * scale, sizeCss / 2 + y * scale];
+// Drei Darts, die vor dem ersten Spiel hinter dem Menü in der 20 stecken
+const PREVIEW = [aimOf({ n: 20, m: 3 }), { x: 6, y: -95 }, { x: -9, y: -118 }]
+  .map((p, i) => ({ x: p.x, y: p.y, owner: 0, t0: -1e6, rot: .6 + i * .3 }));
+const COLORS = [
+  { flight: '#c9302c', edge: '#6e1310', stripe: '#f4efe4' },
+  { flight: '#2d63b8', edge: '#122c58', stripe: '#f2c94c' }
+];
+
+function drawDart(d, now) {
+  const p = Math.min(1, (now - d.t0) / FLY);
+  const e = 1 - (1 - p) * (1 - p);
+  const sx = d.x * .35, sy = R.EDGE + 70;
+  const x = sx + (d.x - sx) * e, y = sy + (d.y - sy) * e;
+  const k = 1 + 1.8 * (1 - e);
+  const [X, Y] = P(x, y);
+  const u = sizeCss / 560;
+  const tilt = (d.x / R.EDGE) * 5 * u;
+  const col = COLORS[d.owner];
+  ctx.save(); ctx.translate(X, Y); ctx.scale(k, k);
+  if (p >= 1) {
+    ctx.fillStyle = 'rgba(0,0,0,.4)';
+    ctx.beginPath(); ctx.ellipse(tilt * 1.3 + 4 * u, 19 * u, 9 * u, 4 * u, 0, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.fillStyle = '#050403';
+  ctx.beginPath(); ctx.arc(0, 0, 1.3 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#7f8389'; ctx.lineWidth = 3 * u;
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(tilt, 13 * u); ctx.stroke();
+  ctx.strokeStyle = '#e1e3e6'; ctx.lineWidth = 1 * u;
+  ctx.beginPath(); ctx.moveTo(-.5 * u, 1 * u); ctx.lineTo(tilt - .5 * u, 12 * u); ctx.stroke();
+  ctx.translate(tilt * 1.3, 15 * u); ctx.rotate(d.rot);
+  for (let q = 0; q < 4; q++) {
+    ctx.rotate(Math.PI / 2);
+    ctx.beginPath();
+    ctx.moveTo(0, 0); ctx.lineTo(2.4 * u, 1.4 * u); ctx.lineTo(10 * u, 0); ctx.lineTo(2.4 * u, -1.4 * u); ctx.closePath();
+    ctx.fillStyle = col.flight; ctx.fill();
+    ctx.strokeStyle = col.edge; ctx.lineWidth = .6 * u; ctx.stroke();
+    ctx.strokeStyle = col.stripe; ctx.lineWidth = .7 * u;
+    ctx.beginPath(); ctx.moveTo(4 * u, 0); ctx.lineTo(8.5 * u, 0); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/* ---------- Zielen ---------- */
+let aim = { active: false }, hover = null;
+
+// Die Hand zittert, wird ruhig und dann wieder unruhig. Das ruhige Fenster ist bei jedem Wurf etwas anders.
+const STEADY = 5.5;
+function swayAmp(t, w) {
+  if (t < w.calm) return 17 - (17 - STEADY) * (t / w.calm);
+  if (t < w.calm + w.hold) return STEADY;
+  return Math.min(36, STEADY + (t - w.calm - w.hold) * 20);
+}
+function sway(t, ph, w) {
+  const a = swayAmp(t, w);
+  return {
+    x: a * (.75 * Math.sin(t * 5.1 + ph[0]) + .25 * Math.sin(t * 13.7 + ph[1])),
+    y: a * (.75 * Math.sin(t * 3.9 + ph[2]) + .25 * Math.sin(t * 11.3 + ph[3]))
+  };
+}
+function drawCross(x, y, steady) {
+  const [X, Y] = P(x, y);
+  const r = Math.max(8, sizeCss / 60);
+  const col = steady ? '#ffd66b' : '#f3efe6';
+  for (const pass of [0, 1]) {
+    ctx.strokeStyle = pass ? col : 'rgba(0,0,0,.75)';
+    ctx.lineWidth = pass ? 1.6 : 3.6;
+    ctx.beginPath(); ctx.arc(X, Y, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(X - r * 1.9, Y); ctx.lineTo(X - r * .45, Y);
+    ctx.moveTo(X + r * .45, Y); ctx.lineTo(X + r * 1.9, Y);
+    ctx.moveTo(X, Y - r * 1.9); ctx.lineTo(X, Y - r * .45);
+    ctx.moveTo(X, Y + r * .45); ctx.lineTo(X, Y + r * 1.9);
+    ctx.stroke();
+  }
+  if (steady) {
+    ctx.fillStyle = 'rgba(255,214,107,.18)';
+    ctx.beginPath(); ctx.arc(X, Y, r, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+function frame(now) {
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, sizeCss, sizeCss);
+  if (boardImg) ctx.drawImage(boardImg, 0, 0, sizeCss, sizeCss);
+  for (const d of (S ? S.darts : PREVIEW)) drawDart(d, now);
+  if (aim.active) {
+    const t = (now - aim.t0) / 1000, sw = sway(t, aim.ph, aim.w);
+    drawCross(aim.pos.x + sw.x, aim.pos.y + sw.y, swayAmp(t, aim.w) <= STEADY + .3);
+  } else if (hover && canThrow()) {
+    const [X, Y] = P(hover.x, hover.y);
+    ctx.strokeStyle = 'rgba(243,239,230,.55)'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(X, Y, 5, 0, Math.PI * 2); ctx.stroke();
+  }
+  requestAnimationFrame(frame);
+}
+
+function evToMm(e) {
+  const rc = canvas.getBoundingClientRect();
+  const px = e.clientX - rc.left;
+  let py = e.clientY - rc.top;
+  if (e.pointerType === 'touch' || e.pointerType === 'pen') py -= TOUCH_OFFSET;
+  return { x: (px - sizeCss / 2) / scale, y: (py - sizeCss / 2) / scale };
+}
+const canThrow = () => S && !S.over && S.turn === 0 && !S.busy && S.visit.length < 3 && menu.hidden && endEl.hidden;
+
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+canvas.addEventListener('pointerdown', e => {
+  if (!canThrow()) return;
+  e.preventDefault(); sfx.init();
+  try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+  aim = { active: true, id: e.pointerId, t0: performance.now(), pos: evToMm(e), ph: [0, 0, 0, 0].map(() => Math.random() * 6.283), w: { calm: .5 + Math.random() * .5, hold: .6 + Math.random() * .8 } };
+});
+canvas.addEventListener('pointermove', e => {
+  if (aim.active && e.pointerId === aim.id) aim.pos = evToMm(e);
+  else if (e.pointerType === 'mouse') hover = evToMm(e);
+});
+canvas.addEventListener('pointerup', e => {
+  if (!aim.active || e.pointerId !== aim.id) return;
+  aim.pos = evToMm(e);
+  const t = (performance.now() - aim.t0) / 1000, sw = sway(t, aim.ph, aim.w);
+  aim.active = false;
+  if (!canThrow()) return;
+  const [gx, gy] = gauss2();
+  throwAt(0, aim.pos.x + sw.x + gx * PLAYER_SCATTER, aim.pos.y + sw.y + gy * PLAYER_SCATTER);
+});
+canvas.addEventListener('pointercancel', () => { aim.active = false; });
+canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hover = null; });
+
+/* ---------- Spiel ---------- */
+const LEVELS = {
+  anfaenger: { name: 'Tante Gerda', sigma: 32, label: 'Anfängerin' },
+  stammgast: { name: 'Kalle', sigma: 20, label: 'Stammgast' },
+  verein:    { name: 'Der Wirt', sigma: 13, label: 'Vereinsspieler' },
+  profi:     { name: 'Die Maschine', sigma: 7.5, label: 'Profi' }
+};
+let S = null;
+
+function newGame(o) {
+  S = {
+    start: o.start, level: o.level, opp: LEVELS[o.level],
+    scores: [o.start, o.start], hist: [[], []],
+    turn: o.starter, starter: o.starter,
+    visit: [], visitState: 'open', turnStart: o.start,
+    darts: [], busy: false, over: false
+  };
+  endEl.hidden = true; menu.hidden = true;
+  beginTurn();
+}
+
+function beginTurn() {
+  const g = S;
+  g.visit = []; g.visitState = 'open'; g.turnStart = g.scores[g.turn]; g.darts = []; g.busy = false;
+  renderTafel();
+  if (g.turn === 1) {
+    hint(`${g.opp.name} steht am Oche …`);
+    setTimeout(() => { if (S === g) cpuDart(); }, 900);
+  } else {
+    hint('Drücken & halten zum Zielen – loslassen, wenn das Fadenkreuz golden leuchtet');
+  }
+}
+
+function cpuDart() {
+  const g = S;
+  if (!g || g.over || g.turn !== 1) return;
+  if (!menu.hidden) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  const t = cpuTarget(g.scores[1], 3 - g.visit.length);
+  const a = aimOf(t), [gx, gy] = gauss2();
+  throwAt(1, a.x + gx * g.opp.sigma, a.y + gy * g.opp.sigma);
+}
+
+function throwAt(p, x, y) {
+  const g = S;
+  g.busy = true;
+  g.darts.push({ x, y, owner: p, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 });
+  sfx.whoosh();
+  setTimeout(() => { if (S === g) resolve(g, p, hit(x, y)); }, FLY);
+}
+
+function resolve(g, p, h) {
+  sfx.thud(h.r > R.DO ? 'wall' : 'board');
+  g.visit.push(h);
+  const rest = g.scores[p] - h.v;
+  if (rest < 0 || rest === 1 || (rest === 0 && h.m !== 2)) {
+    g.scores[p] = g.turnStart; g.visitState = 'bust';
+    renderTafel(); call('Überworfen!', 'bust'); sfx.bust();
+    endVisit(g, true);
+    return;
+  }
+  g.scores[p] = rest;
+  if (rest === 0) { win(g, p, h); return; }
+  renderTafel();
+  if (g.visit.length === 3) { endVisit(g, false); return; }
+  g.busy = false;
+  if (p === 1) setTimeout(() => { if (S === g) cpuDart(); }, 650);
+}
+
+function endVisit(g, bust) {
+  const sum = g.visit.reduce((a, h) => a + h.v, 0);
+  if (!bust) g.visitState = 'done';
+  g.hist[g.turn].push({ score: bust ? 0 : sum, rest: g.scores[g.turn], bust });
+  renderTafel();
+  if (!bust) {
+    if (sum === 180) { call('One hundred and eighty!', 'big'); sfx.cheer(1.3); }
+    else if (sum === 0) call('No score');
+    else { call(String(sum)); if (sum >= 100) sfx.cheer(.5); }
+  }
+  setTimeout(() => { if (S !== g) return; g.turn = 1 - g.turn; beginTurn(); }, 1700);
+}
+
+function win(g, p, h) {
+  g.over = true; g.visitState = 'done';
+  const sum = g.visit.reduce((a, x) => a + x.v, 0);
+  g.hist[p].push({ score: sum, rest: 0, bust: false });
+  renderTafel();
+  call('Game shot!', 'big'); sfx.cheer(1.5);
+  hint(p === 0 ? 'Checkout! Die Runde geht auf den Wirt.' : `${g.opp.name} hat gecheckt.`);
+  const darts = (g.hist[p].length - 1) * 3 + g.visit.length;
+  const dbl = h.l === 'Bull' ? 'dem Bull' : h.l;
+  setTimeout(() => {
+    if (S !== g) return;
+    $('#endTitle').textContent = p === 0 ? 'Game shot – du gewinnst!' : `${g.opp.name} gewinnt`;
+    $('#endText').textContent = p === 0
+      ? `Du checkst ${g.turnStart} mit ${dbl}, nach ${darts} Darts. ${g.opp.name} stand noch auf ${g.scores[1]}.`
+      : `${g.opp.name} checkt ${g.turnStart} mit ${dbl}, nach ${darts} Darts. Dir fehlten noch ${g.scores[0]} Punkte.`;
+    endEl.hidden = false;
+    $('#rematch').focus();
+  }, 1700);
+}
+
+/* ---------- Anzeige ---------- */
+function hint(t) { hintEl.textContent = t; }
+function call(text, kind = '') {
+  callerEl.textContent = text;
+  callerEl.className = 'caller ' + kind;
+  void callerEl.offsetWidth;
+  callerEl.classList.add('show');
+}
+
+function renderTafel() {
+  if (!S) return;
+  $('#modeLabel').textContent = `${S.start} · Double Out`;
+  $('#levelLabel').textContent = S.opp.label;
+  $('#name1').textContent = S.opp.name;
+  for (const p of [0, 1]) {
+    $('#rest' + p).textContent = S.scores[p];
+    $('#col' + p).classList.toggle('active', S.turn === p && !S.over);
+    const list = $('#hist' + p);
+    list.innerHTML = `<li><span class="sc"></span><span class="rs">${S.start}</span></li>` +
+      S.hist[p].map(v => `<li><span class="sc${v.bust ? ' bust' : ''}">${v.bust ? 'Bust' : v.score}</span><span class="rs">${v.rest}</span></li>`).join('');
+    list.scrollTop = list.scrollHeight;
+  }
+  for (let i = 0; i < 3; i++) {
+    const h = S.visit[i], el = $('#slot' + i);
+    el.textContent = h ? h.l : '·';
+    el.classList.toggle('hit', !!h);
+  }
+  const sumEl = $('#visitSum');
+  const sum = S.visit.reduce((a, h) => a + h.v, 0);
+  sumEl.classList.toggle('bust', S.visitState === 'bust');
+  sumEl.textContent = S.visitState === 'bust' ? 'Überworfen' : (S.visit.length ? sum : '');
+  $('#visitWho').textContent = S.turn === 0 ? 'Deine Aufnahme' : `${S.opp.name} wirft`;
+}
+
+/* ---------- Menü ---------- */
+function openMenu() {
+  $('#resumeBtn').hidden = !(S && !S.over);
+  endEl.hidden = true; menu.hidden = false;
+  aim.active = false;
+  $('#startBtn').focus();
+}
+$('#menuForm').addEventListener('submit', e => {
+  e.preventDefault(); sfx.init();
+  const f = new FormData(e.target);
+  newGame({ start: +f.get('start'), level: f.get('level'), starter: +f.get('starter') });
+});
+$('#resumeBtn').addEventListener('click', () => { menu.hidden = true; });
+$('#menuBtn').addEventListener('click', openMenu);
+$('#toMenu').addEventListener('click', openMenu);
+$('#rematch').addEventListener('click', () => {
+  sfx.init();
+  newGame({ start: S.start, level: S.level, starter: 1 - S.starter });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !menu.hidden && S && !S.over) menu.hidden = true;
+});
+
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
