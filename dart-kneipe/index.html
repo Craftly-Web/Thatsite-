@@ -345,7 +345,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span>Gegner</span></label>
       </div>
     </fieldset>
-    <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Jeder Atemzug wird ruhiger, aber wer zu lange hält, bekommt zittrige Arme. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
+    <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
     <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
     <div class="row">
       <button type="button" class="btn ghost" id="resumeBtn" hidden>Zurück zum Spiel</button>
@@ -1106,7 +1106,7 @@ const voice = (() => {
     try {
       const u = new SpeechSynthesisUtterance(text);
       u.lang = v ? v.lang : 'en-GB'; if (v) u.voice = v;
-      u.pitch = opts.pitch ?? 1; u.rate = opts.rate ?? 1.12; u.volume = 1;
+      u.pitch = opts.pitch ?? 1; u.rate = opts.rate ?? .95; u.volume = 1;
       u.onstart = () => wirt.talking(true);
       u.onend = u.onerror = () => wirt.talking(false);
       synth.speak(u);
@@ -1120,7 +1120,7 @@ const voice = (() => {
 function words(n) {
   const ones = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
   const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-  const two = k => k < 20 ? ones[k] : tens[Math.floor(k / 10)] + (k % 10 ? '-' + ones[k % 10] : '');
+  const two = k => k < 20 ? ones[k] : tens[Math.floor(k / 10)] + (k % 10 ? ' ' + ones[k % 10] : '');
   if (n < 100) return two(n);
   const r = n % 100;
   return 'one hundred' + (r ? ' and ' + two(r) : '');
@@ -1130,24 +1130,22 @@ function words(n) {
 function callScore(sum) {
   if (sum === 180) {
     call('One hundred and eighty!', 'big');
-    voice.say('One hundred and', { pitch: 1.35, rate: .95 });
-    voice.say('eighty!', { pitch: 1.95, rate: .5 });
+    voice.say('One hundred and... eighty!', { pitch: 1.75, rate: .78 });
     sfx.cheer(2.6); sfx.claps(4.5); sfx.horn();
   } else if (sum >= 150) {
     call(String(sum), 'big');
-    voice.say('One hundred and', { pitch: 1.25, rate: 1.05 });
-    voice.say(words(sum - 100) + '!', { pitch: 1.6, rate: .72 });
+    voice.say(words(sum) + '!', { pitch: 1.5, rate: .85 });
     sfx.cheer(1.6); sfx.claps(3);
   } else if (sum >= 100) {
     call(String(sum));
-    voice.say(words(sum) + '!', { pitch: 1.3, rate: 1.02 });
+    voice.say(words(sum) + '!', { pitch: 1.25, rate: .9 });
     sfx.cheer(.8);
   } else if (sum === 0) {
     call('No score');
-    voice.say('No score.', { rate: 1.1 });
+    voice.say('No score.');
   } else {
     call(String(sum));
-    voice.say(words(sum) + '.', { rate: 1.15 });
+    voice.say(words(sum) + '.');
   }
 }
 
@@ -1284,30 +1282,33 @@ function drawDart(d, now) {
 let aim = { active: false }, hover = null;
 
 // Einatmen hebt das Fadenkreuz, Ausatmen senkt es, in der Atempause steht es fast still.
-// Jeder Atemzug wird ruhiger; wer zu lange hält, bekommt müde Arme.
-const INHALE = .38, EXHALE = .40;   // Anteil am Atemzug, der Rest ist die Atempause
-const BREATH_MAX = 22, BREATH_MIN = 12;   // Hub des Atems in mm, erster Atemzug am größten
-const PAUSE_TREMOR = 5.5;   // leichtes Zittern in der Atempause (mm)
-const SCATTER_PAUSE = 7;    // unsichtbare Streuung beim Loslassen in der Atempause (mm)
-const SCATTER_MOVING = 14;  // unsichtbare Streuung beim Loslassen mitten im Atemzug (mm)
+// Je länger du hältst, desto ruhiger wird die Hand: Atemhub, Zittern und Streuung nehmen stetig ab.
+const INHALE = .38, EXHALE = .40;       // Anteil am Atemzug, der Rest ist die Atempause
+const BREATH_START = 22, BREATH_MIN = 8; // Hub des Atems (mm)
+const TREMOR_START = 15, TREMOR_MIN = 4.5;   // Zittern in der Atempause (mm)
+const SCATTER_START = 15, SCATTER_MIN = 5.5; // unsichtbare Streuung beim Loslassen in der Atempause (mm)
+const SCATTER_MOVING = 14;               // unsichtbare Streuung beim Loslassen mitten im Atemzug (mm)
+const CALM_TIME = 3.2;                   // so schnell beruhigt sich die Hand (s)
 const smooth = k => k < 0 ? 0 : k > 1 ? 1 : k * k * (3 - 2 * k);
 
 function breath(t, w) {
-  const tt = t + w.offset, c = (tt / w.period) % 1, n = Math.floor(tt / w.period);
-  const amp = Math.max(BREATH_MIN, BREATH_MAX - n * 4);
+  const tt = t + w.offset, c = (tt / w.period) % 1;
+  const unrest = Math.exp(-t / CALM_TIME);   // 1 beim Drücken, geht gegen 0
+  const amp = BREATH_MIN + (BREATH_START - BREATH_MIN) * unrest;
   const lift = c < INHALE ? smooth(c / INHALE) : c < INHALE + EXHALE ? 1 - smooth((c - INHALE) / EXHALE) : 0;
-  const fatigue = Math.max(0, t - 7) * 1.5;
-  const tr = PAUSE_TREMOR * (n === 0 ? 1.5 : n === 1 ? 1.2 : 1) + fatigue, p = w.ph;
+  const tr = TREMOR_MIN + (TREMOR_START - TREMOR_MIN) * unrest, p = w.ph;
+  const pause = c >= INHALE + EXHALE + .02;
   return {
     x: amp * .22 * Math.sin(2 * Math.PI * c) + tr * (.6 * Math.sin(t * 10.7 + p[0]) + .4 * Math.sin(t * 18.2 + p[1])),
     y: -amp * lift + tr * (.6 * Math.sin(t * 9.3 + p[2]) + .4 * Math.sin(t * 16.9 + p[3])),
-    lift,
-    pause: c >= INHALE + EXHALE + .02 && fatigue < 2
+    lift, pause, unrest,
+    scatter: pause ? SCATTER_MIN + (SCATTER_START - SCATTER_MIN) * unrest : SCATTER_MOVING
   };
 }
-function drawCross(x, y, steady, lift) {
+
+function drawCross(x, y, steady, lift, unrest) {
   const [X, Y] = P(x, y);
-  const r = Math.max(8, sizeCss / 60) * (1 + .35 * lift);
+  const r = Math.max(8, sizeCss / 60) * (1 + .35 * lift) * (.7 + .6 * unrest);
   const col = steady ? '#ffd66b' : '#f3efe6';
   for (const pass of [0, 1]) {
     ctx.strokeStyle = pass ? col : 'rgba(0,0,0,.75)';
@@ -1333,7 +1334,7 @@ function frame(now) {
   for (const d of (S ? S.darts : PREVIEW)) drawDart(d, now);
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
-    drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift);
+    drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest);
   } else if (hover && canThrow()) {
     const [X, Y] = P(hover.x, hover.y);
     ctx.strokeStyle = 'rgba(243,239,230,.55)'; ctx.lineWidth = 1.2;
@@ -1375,7 +1376,7 @@ canvas.addEventListener('pointerup', e => {
   const b = breath((performance.now() - aim.t0) / 1000, aim.w);
   aim.active = false;
   if (!canThrow()) return;
-  const [gx, gy] = gauss2(), sc = b.pause ? SCATTER_PAUSE : SCATTER_MOVING;
+  const [gx, gy] = gauss2(), sc = b.scatter;
   throwAt(0, aim.pos.x + b.x + gx * sc, aim.pos.y + b.y + gy * sc);
 });
 canvas.addEventListener('pointercancel', () => { aim.active = false; });
@@ -1490,7 +1491,7 @@ function win(g, p, h) {
   g.hist[p].push({ score: sum, rest: 0, bust: false });
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
-  voice.say(p === 0 ? 'Game shot, and the match!' : `Game shot, and the match to ${g.opp.name}!`, { pitch: 1.35, rate: 1 });
+  voice.say(p === 0 ? 'Game shot, and the match!' : `Game shot, and the match to ${g.opp.name}!`, { pitch: 1.3, rate: .9 });
   hint(p === 0 ? 'Checkout! Heinz zapft dir eins aufs Haus.' : `${g.opp.name} hat gecheckt.`);
   if (p === 0) wirt.react('cheer', 'Game shot! Ein Pils aufs Haus.', true);
   else wirt.react('shake', `${g.opp.name} checkt. Kopf hoch, nächste Runde!`);
