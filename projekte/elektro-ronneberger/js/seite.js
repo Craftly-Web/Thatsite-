@@ -25,32 +25,23 @@
   }, { passive: true });
   fortschritt();
 
-  // Menü auf kleinen Bildschirmen
+  // Menü auf kleinen Bildschirmen. Es öffnet über ein Kontrollkästchen (klappt auch ohne
+  // JavaScript); hier kommen nur Komfort-Funktionen dazu: schließen nach Klick und mit Esc.
   var body = document.body;
-  var menueKnopf = document.querySelector('.menue-knopf');
-  var kopf = document.querySelector('.kopf');
+  var schalter = document.querySelector('.menue-schalter');
   function menue(offen) {
-    // Menü direkt unter der Kopfleiste öffnen, auch wenn der Entwurfshinweis darüber sichtbar ist
-    if (offen && kopf) {
-      document.documentElement.style.setProperty('--menue-oben', kopf.getBoundingClientRect().bottom + 'px');
-    }
+    schalter.checked = offen;
     body.classList.toggle('menue-offen', offen);
-    if (menueKnopf) {
-      menueKnopf.setAttribute('aria-expanded', offen ? 'true' : 'false');
-      menueKnopf.setAttribute('aria-label', offen ? 'Menü schließen' : 'Menü öffnen');
-    }
   }
-  if (menueKnopf) {
-    menueKnopf.addEventListener('click', function () {
-      menue(!body.classList.contains('menue-offen'));
-    });
+  if (schalter) {
+    schalter.addEventListener('change', function () { menue(schalter.checked); });
     document.querySelectorAll('.hauptnav a').forEach(function (a) {
       a.addEventListener('click', function () { menue(false); });
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && body.classList.contains('menue-offen')) {
+      if (e.key === 'Escape' && schalter.checked) {
         menue(false);
-        menueKnopf.focus();
+        schalter.focus();
       }
     });
     window.matchMedia('(min-width: 1001px)').addEventListener('change', function (m) {

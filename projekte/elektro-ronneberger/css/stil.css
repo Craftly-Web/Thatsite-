@@ -340,8 +340,17 @@ mark.luecke {
 }
 .menue-knopf .ico { width: 26px; height: 26px; }
 .menue-knopf .ico-zu { display: none; }
-.menue-offen .menue-knopf .ico-auf { display: none; }
-.menue-offen .menue-knopf .ico-zu { display: block; }
+/* Das Menü öffnet über ein verstecktes Kontrollkästchen – funktioniert auch ohne JavaScript */
+.menue-schalter {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.menue-schalter:checked ~ .menue-knopf .ico-auf { display: none; }
+.menue-schalter:checked ~ .menue-knopf .ico-zu { display: block; }
+.menue-schalter:focus-visible ~ .menue-knopf { outline: 2px solid var(--akzent); outline-offset: 2px; }
 
 /* ---------- Abschnitte ---------- */
 
@@ -1576,6 +1585,12 @@ a.kontaktweg:hover span span { color: var(--akzent); }
 .sichtbar .stromkreis .halo { opacity: .55; }
 @keyframes fluss { to { stroke-dashoffset: -18; } }
 .abschluss-aktion { align-items: flex-start; }
+/* Ohne JavaScript: Stromkreis gleich im eingeschalteten Zustand zeigen */
+html:not(.js) .stromkreis .hebel { transform: none; }
+html:not(.js) .stromkreis .fluss { opacity: 1; animation: fluss 1s linear infinite; }
+html:not(.js) .stromkreis .glas { fill: var(--akzent); stroke: var(--akzent); }
+html:not(.js) .stromkreis .glas-x { stroke: var(--dunkel); }
+html:not(.js) .stromkreis .halo { opacity: .55; }
 
 /* ---------- Einblenden beim Scrollen ---------- */
 
@@ -1602,15 +1617,16 @@ a.kontaktweg:hover span span { color: var(--akzent); }
   .kopf .knopf-kopf { display: none; }
 
   .hauptnav {
-    position: fixed;
-    top: var(--menue-oben, var(--kopf));
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: calc(100vh - var(--kopf));
+    height: calc(100dvh - var(--kopf));
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 12px var(--rand) 40px;
+    padding: 12px var(--rand) 140px;
     background: var(--dunkel);
     overflow-y: auto;
     opacity: 0;
@@ -1618,8 +1634,8 @@ a.kontaktweg:hover span span { color: var(--akzent); }
     transform: translateY(-8px);
     transition: opacity .2s, transform .2s, visibility .2s;
   }
-  .menue-offen .hauptnav { opacity: 1; visibility: visible; transform: none; }
-  .menue-offen { overflow: hidden; }
+  .menue-schalter:checked ~ .hauptnav { opacity: 1; visibility: visible; transform: none; }
+  body:has(.menue-schalter:checked) { overflow: hidden; }
 
   .hauptnav > a:not(.knopf),
   .nav-gruppe > a {
@@ -1681,8 +1697,45 @@ a.kontaktweg:hover span span { color: var(--akzent); }
   .bildband .foto:first-child { grid-column: 1 / -1; --format: 16 / 9; aspect-ratio: var(--format); min-height: 0; }
 }
 
+/* Ohne JavaScript (z. B. in manchen Vorschauen): Menü als waagerechte Leiste unter dem Kopf,
+   damit ein Tipp auf einen Link sofort die Seite wechselt */
+@media (max-width: 1000px) {
+  html:not(.js) .menue-knopf, html:not(.js) .menue-schalter { display: none; }
+  html:not(.js) .kopf-innen { flex-wrap: wrap; height: auto; row-gap: 0; padding-top: 10px; }
+  html:not(.js) .hauptnav {
+    position: static;
+    order: 3;
+    flex: 0 0 calc(100% + var(--rand) * 2);
+    height: auto;
+    margin: 0 calc(var(--rand) * -1);
+    padding: 6px var(--rand) 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  html:not(.js) .hauptnav > a:not(.knopf),
+  html:not(.js) .nav-gruppe > a {
+    padding: 8px 10px;
+    border: 0;
+    font-family: var(--schrift-text);
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  html:not(.js) .nav-unter,
+  html:not(.js) .hauptnav .knopf-menue { display: none; }
+  html:not(.js) .marke { min-height: 50px; }
+}
+
 @media (min-width: 1001px) {
   .hauptnav .knopf-menue { display: none; }
+  .menue-schalter { display: none; }
 }
 
 @media (max-width: 700px) {
