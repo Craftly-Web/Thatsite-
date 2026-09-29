@@ -12,6 +12,19 @@
     if (jahre >= 35) el.textContent = jahre;
   });
 
+  // Spannungsanzeige: Leiste unter dem Kopf zeigt, wie weit gescrollt wurde
+  var wurzel = document.documentElement;
+  var geplant = false;
+  function fortschritt() {
+    geplant = false;
+    var max = wurzel.scrollHeight - window.innerHeight;
+    wurzel.style.setProperty('--fortschritt', max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : 0);
+  }
+  window.addEventListener('scroll', function () {
+    if (!geplant) { geplant = true; requestAnimationFrame(fortschritt); }
+  }, { passive: true });
+  fortschritt();
+
   // Menü auf kleinen Bildschirmen
   var body = document.body;
   var menueKnopf = document.querySelector('.menue-knopf');

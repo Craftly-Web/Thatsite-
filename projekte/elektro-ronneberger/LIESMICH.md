@@ -1,9 +1,10 @@
 # Elektro Ronneberger — Website-Entwurf
 
 Entwurf einer neuen Website für Elektro Ronneberger, Elektrotechnikermeister,
-Am Pließnitztal 2, 02748 Bernstadt auf dem Eigen. Umgesetzt nach dem Konzept
-„Industrial · präzise · regional · modern“: sehr dunkles Anthrazit, Off-White und eine
-einzige Akzentfarbe (Kupfer, wie im Leiter). Kein Gelb, keine Blitz-Symbole, keine Stockfotos.
+Am Pließnitztal 2, 02748 Bernstadt auf dem Eigen. Grundlage ist das Konzept
+„Industrial · präzise · regional · modern“ – mit deutlich mehr Strom: sehr dunkles Anthrazit
+und Off-White, dazu die beiden Farben des E-Zeichens. Signalgelb steht für Strom und Licht
+auf dunklem Grund und für die Knöpfe, Logo-Rot ist der Akzent auf hellem Grund.
 
 Reines HTML, CSS und JavaScript ohne Build-Schritt. Der Ordner ist in sich geschlossen
 und kann später unverändert auf die eigene Domain umziehen.
@@ -69,6 +70,24 @@ Foto einsetzen:
 
 Das Format jedes Bildplatzes ist festgelegt (Hero 4:5, Leistungen und Referenzen 4:3 usw.),
 Fotos werden passend zugeschnitten (`object-fit: cover`).
+
+## Strom-Details
+
+- **Leiterbahnen** wie auf einer Platine hinter den Kopfbereichen, mit wandernden
+  Stromimpulsen (reines SVG und CSS, links zum Text hin ausgeblendet).
+- **Neon-Flackern:** „Seit 1991.“, „Energie.“ und „Sprechen wir darüber.“ flackern beim Laden
+  kurz wie eine Leuchtstoffröhre und leuchten dann ruhig.
+- **Spannungsanzeige:** Die gelbe Linie unter der Kopfleiste füllt sich beim Scrollen.
+- **Funken** laufen an der Oberkante der Vertrauensleiste und des Fußes entlang.
+- **Leistungskacheln:** Beim Darüberfahren läuft Strom über die Oberkante, das Symbol glüht.
+- **20 kV** als Hochspannungsbereich: Warnstreifen, Warnzeichen „Elektrische Spannung“,
+  große Kennzahl „20 kV“ und der Zusatz „Mittelspannung“.
+- **Zeitleiste (Über uns):** Strom fließt von 1991 bis heute, die Zukunft ist eine Lampe.
+- **Stromkreis im Abschluss** jeder Seite: Schaltplan mit Spannungsquelle 230 V, Schalter S1
+  und Lampe E1. Scrollt der Abschnitt ins Bild, schließt der Schalter, Strom fließt, die Lampe
+  geht an.
+- **Vertrauensleiste:** „230 V bis 20 kV“ statt „Vielseitige Elektrotechnik“.
+- Bei der Systemeinstellung „Bewegung reduzieren“ stehen alle Effekte still im Endzustand.
 
 ## Was der Betrieb noch bestätigen muss
 
