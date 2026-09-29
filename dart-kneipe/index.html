@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dart Kneipe</title>
-<meta name="description" content="Steeldart im Browser: 501 oder 301 Double Out gegen die Stammgäste der Dart Kneipe.">
+<meta name="description" content="Steeldart im Browser: 501 oder 301 Double Out gegen die Stammgäste der Dart Kneipe, während Wirt Heinz das Pils zapft.">
 <meta name="theme-color" content="#2a1a10">
 <meta property="og:title" content="Dart Kneipe">
-<meta property="og:description" content="Steeldart im Browser: 501 oder 301 Double Out gegen die Stammgäste der Dart Kneipe.">
+<meta property="og:description" content="Steeldart im Browser: 501 oder 301 Double Out gegen die Stammgäste der Dart Kneipe, während Wirt Heinz das Pils zapft.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23171411'/%3E%3Ccircle cx='32' cy='32' r='25' fill='%23b8232a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23eadcb8'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%2312703c'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23171411'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23b8232a'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cabin+Sketch:wght@400;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cabin+Sketch:wght@400;700&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,700&display=swap" rel="stylesheet">
 <style>
-/* Layout: Holzvertäfelte Kneipenwand, Dartscheibe im Lichtkegel, Kreidetafel für den Spielstand daneben */
+/* Layout: Kneipe mit Tapete und Holztäfelung. Links der Tresen mit Wirt Heinz, in der Mitte die Scheibe im Lampenlicht, rechts die Kreidetafel. */
 :root{
-  --wall:#2a1a10;
+  --wall:#2b1512;
   --wood:#6a4224;
   --brass:#e2b457;
   --chalk:#f1ede2;
@@ -38,21 +38,45 @@ body{
   font-size:17px;
   -webkit-font-smoothing:antialiased;
   background-color:var(--wall);
+  /* Tapete: dunkles Ochsenblut mit goldenem Rautenmuster */
   background-image:
-    radial-gradient(ellipse 70% 55% at 38% 40%, rgba(255,184,102,.22), rgba(255,184,102,0) 70%),
-    repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 118px, rgba(0,0,0,.4) 118px 121px),
-    repeating-linear-gradient(90deg, #3d2818 0 40px, #382414 40px 80px, #3a2616 80px 121px),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 3px, rgba(0,0,0,.02) 3px 7px);
+    radial-gradient(ellipse 70% 50% at 45% 30%, rgba(255,184,102,.16), rgba(255,184,102,0) 70%),
+    repeating-linear-gradient(45deg, rgba(226,180,87,.05) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(-45deg, rgba(226,180,87,.05) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.12) 0 60px, rgba(0,0,0,0) 60px 120px);
   background-attachment:fixed;
+}
+/* Holzvertäfelung mit Stuhlleiste im unteren Teil der Wand */
+body::before{
+  content:'';position:fixed;left:0;right:0;bottom:0;height:36%;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,#7d4f2b 0 9px,#2a170b 9px 12px,rgba(0,0,0,0) 12px),
+    repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 116px,rgba(0,0,0,.45) 116px 120px),
+    linear-gradient(180deg,#44291a,#2b190e);
+  box-shadow:0 -8px 24px rgba(0,0,0,.45);
 }
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse at 42% 40%, rgba(0,0,0,0) 40%, rgba(0,0,0,.6) 100%);
+  background:radial-gradient(ellipse at 45% 40%, rgba(0,0,0,0) 38%, rgba(0,0,0,.62) 100%);
 }
+
+/* Hängelampen */
+.lamps{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.lamp{position:absolute;top:0;width:0;transform-origin:top center;animation:swing 7s ease-in-out infinite alternate}
+.lamp.l1{left:50%}
+.lamp.l2{left:14%;animation-duration:8.6s;animation-delay:-3s}
+.lamp.l3{left:88%;animation-duration:7.8s;animation-delay:-5s}
+.lamp i{position:absolute;display:block}
+.cord{left:-1px;top:0;width:2px;height:64px;background:#0d0906}
+.shade{top:64px;left:-36px;width:72px;height:32px;border-radius:36px 36px 5px 5px/32px 32px 5px 5px;background:linear-gradient(180deg,#2d5a40,#15311f);box-shadow:inset 0 -3px 0 #c9a04a, 0 4px 10px rgba(0,0,0,.5)}
+.bulb{top:90px;left:-14px;width:28px;height:12px;border-radius:50%;background:#fff3cf;box-shadow:0 0 18px 8px rgba(255,214,140,.55)}
+.cone{top:96px;left:-280px;width:560px;height:620px;background:radial-gradient(ellipse 50% 90% at 50% 0%, rgba(255,210,140,.22), rgba(255,190,110,.06) 55%, rgba(255,190,110,0) 80%);clip-path:polygon(46% 0,54% 0,100% 100%,0 100%)}
+@keyframes swing{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}
+
 .app{
   position:relative;z-index:1;
   min-height:100%;
-  max-width:1180px;margin:0 auto;
+  max-width:1440px;margin:0 auto;
   padding-inline:16px;
   padding-block:calc(12px + env(safe-area-inset-top, 0px)) calc(20px + env(safe-area-inset-bottom, 0px));
   display:flex;flex-direction:column;gap:16px;
@@ -82,22 +106,26 @@ body::after{
 }
 .btn:hover{filter:brightness(1.06)}
 .btn:active{transform:translateY(1px);box-shadow:0 1px 0 #6d4a12}
-.btn.ghost{background:rgba(20,12,6,.55);color:var(--ink);border-color:rgba(233,201,140,.35);box-shadow:none}
+.btn.ghost{background:rgba(20,12,6,.6);color:var(--ink);border-color:rgba(233,201,140,.35);box-shadow:none}
 .btn:focus-visible,.chip input:focus-visible + span{outline:2px solid #ffd66b;outline-offset:2px}
 .icon-btn{width:44px;height:44px;padding:0;display:grid;place-items:center}
 .icon-btn svg{width:22px;height:22px}
 
-/* Bühne */
-.stage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,310px);gap:28px;align-items:start}
-.board-col{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+/* Bühne: Tresen | Scheibe | Tafel */
+.stage{
+  flex:1;display:grid;gap:24px;align-items:start;
+  grid-template-columns:minmax(250px,310px) minmax(0,1fr) minmax(240px,290px);
+  grid-template-areas:"bar board tafel";
+}
+.board-col{grid-area:board;display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
 .board-wrap{
   position:relative;
-  width:min(100%, 740px, max(300px, calc(100vh - 150px)));
+  width:min(100%, 720px, max(300px, calc(100vh - 150px)));
   aspect-ratio:1;max-width:100%;
   border-radius:50%;
   box-shadow:0 26px 60px rgba(0,0,0,.7), 0 0 0 10px rgba(0,0,0,.2);
 }
-@supports (height:100dvh){.board-wrap{width:min(100%, 740px, max(300px, calc(100dvh - 150px)))}}
+@supports (height:100dvh){.board-wrap{width:min(100%, 720px, max(300px, calc(100dvh - 150px)))}}
 .board-wrap canvas{
   position:absolute;inset:0;width:100%;height:100%;border-radius:50%;
   touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
@@ -106,11 +134,11 @@ body::after{
 .caller{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   pointer-events:none;opacity:0;text-align:center;white-space:nowrap;
-  font:700 clamp(38px,9vw,80px)/1 var(--ui);text-transform:uppercase;letter-spacing:.02em;
+  font:700 clamp(38px,8vw,80px)/1 var(--ui);text-transform:uppercase;letter-spacing:.02em;
   color:#fff4d6;
   text-shadow:0 3px 0 #3a200c, 0 0 26px rgba(255,170,60,.75), 0 8px 30px rgba(0,0,0,.85);
 }
-.caller.big{font-size:clamp(28px,6.6vw,62px);white-space:normal;width:92%;color:#ffd66b}
+.caller.big{font-size:clamp(28px,5.6vw,60px);white-space:normal;width:92%;color:#ffd66b}
 .caller.bust{color:var(--warn)}
 .caller.show{animation:call 1.8s ease-out forwards}
 @keyframes call{
@@ -121,27 +149,50 @@ body::after{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1)}
 }
 @keyframes callfade{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
-.hint{font-size:16px;color:var(--muted);text-align:center;min-height:1.4em;letter-spacing:.03em;text-wrap:balance}
+.hint{font-size:16px;color:var(--muted);text-align:center;min-height:1.4em;letter-spacing:.03em;text-wrap:balance;max-width:60ch}
+
+/* Tresen mit Wirt */
+.bar{grid-area:bar;display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}
+.bar-frame{
+  position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;
+  border:10px solid var(--wood);
+  border-radius:150px 150px 8px 8px/120px 120px 8px 8px;
+  box-shadow:0 0 0 2px #24130a, 0 20px 44px rgba(0,0,0,.6), inset 0 0 30px rgba(0,0,0,.6);
+  background:#170e08;
+}
+.bar-frame canvas{position:absolute;inset:0;width:100%;height:100%}
+.bubble{
+  position:absolute;left:6%;top:9%;max-width:66%;
+  background:#fbf5e6;color:#2a170b;
+  font:600 17px/1.2 var(--ui);letter-spacing:.01em;
+  padding:8px 11px;border-radius:12px;
+  box-shadow:0 6px 16px rgba(0,0,0,.5);
+  transform-origin:80% 100%;
+}
+.bubble::after{content:'';position:absolute;right:16%;bottom:-9px;border:9px solid transparent;border-top-color:#fbf5e6;border-bottom:0}
+.bubble.pop{animation:pop .28s ease-out}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.bar-label{font-family:var(--chalkf);font-size:19px;color:var(--chalk);background:var(--slate);border:5px solid var(--wood);border-radius:4px;padding:2px 14px;box-shadow:0 0 0 1px #24130a, 0 6px 14px rgba(0,0,0,.5)}
 
 /* Kreidetafel */
 .tafel{
-  position:sticky;top:calc(12px + env(safe-area-inset-top, 0px));
+  grid-area:tafel;
   background:radial-gradient(ellipse at 30% 20%, #2d3b34, var(--slate) 72%);
   border:12px solid var(--wood);border-radius:6px;
   box-shadow:0 0 0 2px #24130a, inset 0 0 34px rgba(0,0,0,.6), 0 16px 40px rgba(0,0,0,.55);
   padding:14px 16px 16px;
   font-family:var(--chalkf);color:var(--chalk);
-  display:flex;flex-direction:column;gap:12px;
+  display:flex;flex-direction:column;gap:12px;min-width:0;
 }
 .tafel-head,.visit-who,legend{
   font-family:var(--ui);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:rgba(241,237,226,.66);
 }
-.tafel-head{display:flex;justify-content:space-between;gap:8px}
+.tafel-head{display:flex;justify-content:space-between;gap:8px;letter-spacing:.1em;white-space:nowrap}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .col{min-width:0;text-align:center;border-radius:4px;padding:6px 4px 8px;border:1px dashed transparent;transition:background .2s,border-color .2s}
 .col.active{border-color:rgba(241,237,226,.4);background:rgba(255,255,255,.035)}
 .col h2{margin:0;font-weight:400;font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rest{font-size:clamp(42px,5.5vw,58px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.rest{font-size:clamp(42px,5vw,58px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
 .hist{list-style:none;margin:6px 0 0;padding:0;max-height:230px;overflow-y:auto;font-size:18px;scrollbar-width:thin}
 .hist li{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:1px 0;font-variant-numeric:tabular-nums}
 .hist .sc{color:rgba(241,237,226,.62)}
@@ -183,20 +234,34 @@ legend{padding:0;margin-bottom:8px}
 .row{display:flex;gap:10px;flex-wrap:wrap}
 .row .btn{flex:1 1 140px;font-size:19px;padding:14px}
 
+@media (max-width:1180px){
+  .stage{grid-template-columns:minmax(0,1fr) minmax(240px,300px);grid-template-areas:"board tafel" "board bar"}
+  .lamp.l3{display:none}
+}
 @media (max-width:780px){
-  .stage{grid-template-columns:minmax(0,1fr);gap:14px}
-  .tafel{order:-1;position:static;border-width:8px;padding:10px 12px;gap:8px}
+  .stage{grid-template-columns:minmax(0,1fr);grid-template-areas:"tafel" "board" "bar";gap:14px}
+  .tafel{border-width:8px;padding:10px 12px;gap:8px}
   .hist{display:none}
   .rest{font-size:42px}
   .board-wrap{width:min(100%, 560px)}
+  .bar-frame{width:min(100%, 340px)}
   .hint{font-size:15px}
+  .lamp.l2{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .caller.show{animation:callfade 1.8s linear forwards}
+  .lamp{animation:none}
+  .bubble.pop{animation:none}
 }
 </style>
 </head>
 <body>
+<div class="lamps" aria-hidden="true">
+  <div class="lamp l1"><i class="cone"></i><i class="cord"></i><i class="shade"></i><i class="bulb"></i></div>
+  <div class="lamp l2"><i class="cone"></i><i class="cord"></i><i class="shade"></i><i class="bulb"></i></div>
+  <div class="lamp l3"><i class="cone"></i><i class="cord"></i><i class="shade"></i><i class="bulb"></i></div>
+</div>
+
 <div class="app">
   <header class="sign">
     <div class="plank">
@@ -210,12 +275,20 @@ legend{padding:0;margin-bottom:8px}
   </header>
 
   <main class="stage">
+    <section class="bar" aria-label="Tresen">
+      <div class="bar-frame" id="barWrap">
+        <canvas id="bar" aria-hidden="true"></canvas>
+        <div class="bubble" id="bubble" aria-live="polite" hidden></div>
+      </div>
+      <div class="bar-label">Heinz, der Wirt</div>
+    </section>
+
     <section class="board-col" aria-label="Dartscheibe">
       <div class="board-wrap" id="boardWrap">
         <canvas id="board" aria-label="Dartscheibe – drücken und halten zum Zielen, loslassen zum Werfen"></canvas>
         <div class="caller" id="caller" aria-live="polite"></div>
       </div>
-      <div class="hint" id="hint">Drücken &amp; halten zum Zielen – loslassen zum Werfen</div>
+      <div class="hint" id="hint">Drücken &amp; halten zum Zielen – loslassen, wenn das Fadenkreuz golden leuchtet</div>
     </section>
 
     <aside class="tafel" aria-label="Spielstand">
@@ -248,7 +321,7 @@ legend{padding:0;margin-bottom:8px}
 <div class="overlay" id="menu" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
   <form class="panel" id="menuForm">
     <h2 id="menuTitle">Dart Kneipe</h2>
-    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt.</p>
+    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz zapft derweil das Pils.</p>
     <fieldset>
       <legend>Startwert</legend>
       <div class="chips">
@@ -261,7 +334,7 @@ legend{padding:0;margin-bottom:8px}
       <div class="chips">
         <label class="chip"><input type="radio" name="level" id="lvlA" value="anfaenger"><span>Tante Gerda<small>Anfängerin</small></span></label>
         <label class="chip"><input type="radio" name="level" id="lvlB" value="stammgast" checked><span>Kalle<small>Stammgast</small></span></label>
-        <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span>Der Wirt<small>Vereinsspieler</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span>Otto<small>Vereinsspieler</small></span></label>
         <label class="chip"><input type="radio" name="level" id="lvlD" value="profi"><span>Die Maschine<small>Profi</small></span></label>
       </div>
     </fieldset>
@@ -272,11 +345,11 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span>Gegner</span></label>
       </div>
     </fieldset>
-    <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz zittert erst und wird dann ruhig. Leuchtet es golden, loslassen. Wer zu lange zielt, wird wieder zittrig. Am Handy sitzt das Fadenkreuz etwas über deinem Finger.</p>
+    <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Die Hand zittert, beruhigt sich kurz und wird dann wieder unruhig. Nur solange das Fadenkreuz golden leuchtet, ist sie ruhig, und dieser Moment ist kurz und jedes Mal anders. Auch dann wandert die Hand noch leicht. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
     <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
     <div class="row">
       <button type="button" class="btn ghost" id="resumeBtn" hidden>Zurück zum Spiel</button>
-      <button type="submit" class="btn" id="startBtn">Anwerfen</button>
+      <button type="button" class="btn" id="startBtn">Anwerfen</button>
     </div>
   </form>
 </div>
@@ -301,7 +374,7 @@ const R = { IB: 6.35, OB: 15.9, TI: 99, TO: 107, DI: 162, DO: 170, EDGE: 226 };
 const ORDER = [20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5];
 const FLY = 190;            // Flugzeit eines Darts in ms
 const TOUCH_OFFSET = 72;    // Fadenkreuz über dem Finger (px)
-const PLAYER_SCATTER = 3.4; // Streuung beim Loslassen (mm)
+const PLAYER_SCATTER = 6;   // unsichtbare Streuung beim Loslassen (mm)
 
 function hit(x, y) {
   const r = Math.hypot(x, y);
@@ -372,31 +445,36 @@ function gauss2() {
   const v = Math.random(), m = Math.sqrt(-2 * Math.log(u));
   return [m * Math.cos(2 * Math.PI * v), m * Math.sin(2 * Math.PI * v)];
 }
+const pick = list => list[Math.floor(Math.random() * list.length)];
 
 /* ---------- Sound (Web Audio, alles synthetisch) ---------- */
 const sfx = (() => {
-  let ac = null, master = null, noise = null, muted = false;
+  let ac = null, master = null, noise = null, muted = false, amb = null;
   function init() {
     if (ac) { if (ac.state === 'suspended') ac.resume(); return; }
     try {
       ac = new (window.AudioContext || window.webkitAudioContext)();
-      master = ac.createGain(); master.gain.value = .8; master.connect(ac.destination);
+      master = ac.createGain(); master.gain.value = muted ? 0 : .8; master.connect(ac.destination);
       const len = ac.sampleRate * 2;
       noise = ac.createBuffer(1, len, ac.sampleRate);
       const d = noise.getChannelData(0);
       for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      ambience();
     } catch (e) { ac = null; }
   }
   const ok = () => ac && !muted;
+  function loopNoise(t) {
+    const s = ac.createBufferSource(); s.buffer = noise; s.loop = true; s.start(t, Math.random() * 1.5); return s;
+  }
   function nz(t, dur, type, freq, q, gain, attack = .002) {
-    const s = ac.createBufferSource(); s.buffer = noise; s.loop = true;
+    const s = loopNoise(t);
     const f = ac.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q;
     const g = ac.createGain();
     g.gain.setValueAtTime(.0001, t);
     g.gain.exponentialRampToValueAtTime(gain, t + attack);
     g.gain.exponentialRampToValueAtTime(.0001, t + dur);
     s.connect(f); f.connect(g); g.connect(master);
-    s.start(t, Math.random() * 1.5); s.stop(t + dur + .05);
+    s.stop(t + dur + .05);
     return f;
   }
   function tone(t, dur, type, f0, f1, gain) {
@@ -408,10 +486,30 @@ const sfx = (() => {
     g.gain.exponentialRampToValueAtTime(.0001, t + dur);
     o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + .05);
   }
+  // Leises Kneipengemurmel und ab und zu ein Gläserklirren
+  function ambience() {
+    if (amb) return;
+    const t = ac.currentTime;
+    amb = ac.createGain(); amb.gain.setValueAtTime(.0001, t); amb.gain.exponentialRampToValueAtTime(1, t + 3); amb.connect(master);
+    for (let i = 0; i < 3; i++) {
+      const s = loopNoise(t);
+      const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 230 + i * 180; f.Q.value = .9;
+      const g = ac.createGain(); g.gain.value = .022;
+      const lfo = ac.createOscillator(); lfo.frequency.value = .25 + Math.random() * .6;
+      const lg = ac.createGain(); lg.gain.value = .013;
+      lfo.connect(lg); lg.connect(g.gain); lfo.start(t);
+      s.connect(f); f.connect(g); g.connect(amb);
+    }
+    setInterval(() => {
+      if (!ok() || Math.random() < .5) return;
+      const n = ac.currentTime, f = 2500 + Math.random() * 1200;
+      tone(n, .22, 'sine', f, f * .98, .01);
+    }, 3800);
+  }
   return {
     init,
     get muted() { return muted; },
-    setMuted(m) { muted = m; },
+    setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : .8; },
     whoosh() {
       if (!ok()) return; const t = ac.currentTime;
       const f = nz(t, .17, 'bandpass', 500, 2.2, .16, .07);
@@ -429,7 +527,7 @@ const sfx = (() => {
     cheer(level) {
       if (!ok()) return; const t = ac.currentTime; const dur = 1 + level * 1.8;
       for (let i = 0; i < 6; i++) {
-        const s = ac.createBufferSource(); s.buffer = noise; s.loop = true;
+        const s = loopNoise(t);
         const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 450 + Math.random() * 1500; f.Q.value = .9;
         const g = ac.createGain(); const peak = .09 * level / (1 + i * .12);
         g.gain.setValueAtTime(.0001, t);
@@ -440,9 +538,33 @@ const sfx = (() => {
         const lg = ac.createGain(); lg.gain.value = peak * .45;
         lfo.connect(lg); lg.connect(g.gain);
         s.connect(f); f.connect(g); g.connect(master);
-        s.start(t, Math.random()); s.stop(t + dur + .1); lfo.start(t); lfo.stop(t + dur + .1);
+        s.stop(t + dur + .1); lfo.start(t); lfo.stop(t + dur + .1);
       }
       if (level >= 1) { tone(t + .3, .5, 'sine', 1800, 2700, .045); tone(t + .95, .6, 'sine', 2300, 1500, .035); }
+    },
+    pour(dur) {
+      if (!ok()) return; const t = ac.currentTime;
+      const s = loopNoise(t);
+      const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1700; bp.Q.value = .6;
+      const g = ac.createGain();
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.05, t + .15);
+      g.gain.setValueAtTime(.05, t + dur - .3); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 480;
+      const g2 = ac.createGain(); g2.gain.value = 0;
+      const lfo = ac.createOscillator(); lfo.frequency.value = 7.5;
+      const lg = ac.createGain(); lg.gain.value = .05;
+      lfo.connect(lg); lg.connect(g2.gain);
+      s.connect(bp); bp.connect(g); g.connect(master);
+      s.connect(lp); lp.connect(g2); g2.connect(master);
+      s.stop(t + dur + .05); lfo.start(t); lfo.stop(t + dur + .05);
+    },
+    clink() {
+      if (!ok()) return; const t = ac.currentTime;
+      tone(t, .35, 'sine', 2350, 2320, .05); tone(t, .28, 'sine', 3420, 3390, .03); nz(t, .03, 'highpass', 4000, .7, .06);
+    },
+    slide() {
+      if (!ok()) return; const t = ac.currentTime;
+      nz(t, .7, 'bandpass', 260, .8, .07, .05);
     }
   };
 })();
@@ -468,7 +590,470 @@ $('#muteBtn').addEventListener('click', () => {
   try { localStorage.setItem('dk-muted', sfx.muted ? '1' : '0'); } catch (e) {}
 });
 
-/* ---------- Zeichnen ---------- */
+/* ---------- Wirt Heinz am Tresen ---------- */
+const wirt = (() => {
+  const cv = $('#bar'), g = cv.getContext('2d'), box = $('#barWrap'), bubbleEl = $('#bubble');
+  const W = 360, H = 480, TOP = 336, GY = TOP - 4;   // Tresenkante, Standfläche der Gläser
+  const SKIN = '#eab48d', SKIN_D = '#c98e6a', SHIRT = '#ece3d2', SHIRT_D = '#c9bda8', VEST = '#2a4a34', HAIR = '#cfc8bc';
+  const TAU = Math.PI * 2;
+  let s = 1, back = null, front = null, onScreen = true;
+  let act = { name: 'idle', t0: performance.now(), fired: {} };
+  let fill = 0, slide = null, pendingPour = false;
+  let mood = 'neutral', moodUntil = 0, talkUntil = 0, bubbleTimer = 0;
+  let nextPour = performance.now() + 7000, blinkAt = performance.now() + 2500;
+
+  const clamp01 = k => k < 0 ? 0 : k > 1 ? 1 : k;
+  const ease = k => { k = clamp01(k); return k * k * (3 - 2 * k); };
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const mix = (A, B, k) => ({ x: lerp(A.x, B.x, k), y: lerp(A.y, B.y, k) });
+  const seg = (u, a, b) => ease((u - a) / (b - a));
+  const ell = (x, cx, cy, rx, ry, rot = 0) => { x.beginPath(); x.ellipse(cx, cy, rx, ry, rot, 0, TAU); x.fill(); };
+  const line = (x, A, B) => { x.beginPath(); x.moveTo(A.x, A.y); x.lineTo(B.x, B.y); x.stroke(); };
+
+  /* Statische Ebenen: Rückwand mit Regal und Tresenfront */
+  function layer(fn) {
+    const c = document.createElement('canvas'); c.width = cv.width; c.height = cv.height;
+    const x = c.getContext('2d'); x.scale(s, s); fn(x); return c;
+  }
+  function resize() {
+    const w = box.clientWidth; if (!w) return;
+    const d = Math.min(window.devicePixelRatio || 1, 2.5);
+    cv.width = Math.round(w * d); cv.height = Math.round(w * H / W * d);
+    s = cv.width / W;
+    back = layer(paintBack); front = layer(paintFront);
+  }
+
+  function shelf(x, y) {
+    x.fillStyle = 'rgba(0,0,0,.35)'; x.fillRect(12, y + 8, W - 24, 6);
+    x.fillStyle = '#5a3a20'; x.fillRect(12, y, W - 24, 8);
+    x.fillStyle = '#7d5532'; x.fillRect(12, y, W - 24, 2);
+  }
+  function bottle(x, cx, by, w, h, col, type, rnd) {
+    const bodyH = type === 2 ? h * .78 : h * .6, neckW = type === 2 ? w * .5 : w * .34;
+    x.beginPath();
+    x.moveTo(cx - w / 2, by);
+    x.lineTo(cx - w / 2, by - bodyH);
+    x.quadraticCurveTo(cx - w / 2, by - bodyH - 6, cx - neckW / 2, by - bodyH - 9);
+    x.lineTo(cx - neckW / 2, by - h);
+    x.lineTo(cx + neckW / 2, by - h);
+    x.lineTo(cx + neckW / 2, by - bodyH - 9);
+    x.quadraticCurveTo(cx + w / 2, by - bodyH - 6, cx + w / 2, by - bodyH);
+    x.lineTo(cx + w / 2, by); x.closePath();
+    x.fillStyle = col; x.fill();
+    const gr = x.createLinearGradient(cx - w / 2, 0, cx + w / 2, 0);
+    gr.addColorStop(0, 'rgba(0,0,0,.4)'); gr.addColorStop(.35, 'rgba(255,255,255,.1)'); gr.addColorStop(1, 'rgba(0,0,0,.5)');
+    x.fillStyle = gr; x.fill();
+    if (rnd() < .8) { x.fillStyle = rnd() < .55 ? '#e9dcc0' : '#b33a2c'; x.fillRect(cx - w / 2 + 2, by - bodyH * .72, w - 4, bodyH * .36); }
+    x.fillStyle = '#c9a04a'; x.fillRect(cx - neckW / 2 - .5, by - h, neckW + 1, 4);
+    x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = 1.2;
+    x.beginPath(); x.moveTo(cx - w / 2 + 3, by - 4); x.lineTo(cx - w / 2 + 3, by - bodyH + 2); x.stroke();
+  }
+  function bottles(x, by, seed) {
+    let r = seed;
+    const rnd = () => (r = (r * 16807) % 2147483647) / 2147483647;
+    const cols = ['#2f5d34', '#6b3a17', '#c9d4c8', '#8a1f2a', '#2a3f6b', '#a8761c', '#3d6b3f'];
+    let px = 26;
+    while (px < W - 34) {
+      const type = Math.floor(rnd() * 4), col = cols[Math.floor(rnd() * cols.length)];
+      const w = type === 2 ? 20 : 12 + rnd() * 6;
+      const h = type === 0 ? 54 : type === 1 ? 40 : type === 2 ? 30 : 44 + rnd() * 10;
+      bottle(x, px + w / 2, by, w, h, col, type, rnd);
+      px += w + 4 + rnd() * 7;
+    }
+  }
+  function upsideGlass(x, cx, by) {
+    x.fillStyle = 'rgba(255,255,255,.1)'; x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = 1;
+    x.beginPath(); x.moveTo(cx - 7, by); x.lineTo(cx - 5, by - 18); x.lineTo(cx + 5, by - 18); x.lineTo(cx + 7, by); x.closePath();
+    x.fill(); x.stroke();
+  }
+  function paintBack(x) {
+    let gr = x.createLinearGradient(0, 0, 0, H);
+    gr.addColorStop(0, '#26170e'); gr.addColorStop(1, '#170e08');
+    x.fillStyle = gr; x.fillRect(0, 0, W, H);
+    x.fillStyle = 'rgba(0,0,0,.28)';
+    for (let i = 0; i < W; i += 45) x.fillRect(i, 0, 2, H);
+    // Spiegel hinter dem Regal
+    gr = x.createLinearGradient(0, 72, 0, 214);
+    gr.addColorStop(0, '#3d2f24'); gr.addColorStop(1, '#1c140e');
+    x.fillStyle = gr; x.fillRect(16, 72, W - 32, 142);
+    x.save(); x.beginPath(); x.rect(16, 72, W - 32, 142); x.clip();
+    x.fillStyle = 'rgba(255,230,190,.05)';
+    x.beginPath(); x.moveTo(60, 72); x.lineTo(110, 72); x.lineTo(40, 214); x.lineTo(-10, 214); x.fill();
+    x.beginPath(); x.moveTo(250, 72); x.lineTo(272, 72); x.lineTo(202, 214); x.lineTo(180, 214); x.fill();
+    x.restore();
+    x.strokeStyle = '#8a6a34'; x.lineWidth = 3; x.strokeRect(16, 72, W - 32, 142);
+    // Regale mit Flaschen
+    bottles(x, 138, 11); shelf(x, 138);
+    bottles(x, 212, 29); shelf(x, 212);
+    // Rückbuffet mit gespülten Gläsern
+    x.fillStyle = '#1e130b'; x.fillRect(0, 226, W, 120);
+    x.fillStyle = '#2e1d11'; x.fillRect(0, 226, W, 5);
+    x.fillStyle = '#3a2615'; x.fillRect(0, 268, W, 4);
+    for (let i = 0; i < 5; i++) { upsideGlass(x, 22 + i * 16, 268); upsideGlass(x, 252 + i * 16, 268); }
+  }
+  function paintFront(x) {
+    let gr = x.createLinearGradient(0, TOP - 6, 0, TOP + 12);
+    gr.addColorStop(0, '#9a6a3e'); gr.addColorStop(.4, '#6e4424'); gr.addColorStop(1, '#4a2c16');
+    x.fillStyle = gr; x.fillRect(0, TOP - 6, W, 18);
+    x.fillStyle = 'rgba(255,230,190,.28)'; x.fillRect(0, TOP - 6, W, 1.5);
+    gr = x.createLinearGradient(0, TOP + 12, 0, H);
+    gr.addColorStop(0, '#3e2513'); gr.addColorStop(1, '#22140a');
+    x.fillStyle = gr; x.fillRect(0, TOP + 12, W, H - TOP - 12);
+    x.fillStyle = 'rgba(0,0,0,.35)'; x.fillRect(0, TOP + 12, W, 5);
+    for (let i = 0; i < 3; i++) {
+      const px = 14 + i * 114;
+      x.strokeStyle = 'rgba(255,220,170,.13)'; x.lineWidth = 2; x.strokeRect(px, TOP + 30, 104, 82);
+      x.strokeStyle = 'rgba(0,0,0,.45)'; x.strokeRect(px + 5, TOP + 35, 94, 72);
+    }
+    // Messingstange
+    x.strokeStyle = '#8a6526'; x.lineWidth = 7; line(x, { x: 0, y: H - 16 }, { x: W, y: H - 16 });
+    x.strokeStyle = '#f0d08a'; x.lineWidth = 1.5; line(x, { x: 0, y: H - 18 }, { x: W, y: H - 18 });
+    // Abtropfgitter unter dem Zapfhahn
+    x.fillStyle = '#8d9095'; x.fillRect(212, TOP - 9, 72, 5);
+    x.fillStyle = '#50545a'; for (let i = 214; i < 282; i += 4) x.fillRect(i, TOP - 9, 1.5, 5);
+  }
+
+  /* Leuchtreklame an der Rückwand, flackert ab und zu */
+  function neon(t) {
+    const on = (Math.sin(t * 37) + Math.sin(t * 23.7)) > 1.86 ? .22 : 1;
+    g.save();
+    g.font = "italic 700 30px 'Barlow Condensed', 'Arial Narrow', sans-serif";
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.shadowColor = `rgba(255,60,110,${.95 * on})`; g.shadowBlur = 16 * s;
+    g.strokeStyle = `rgba(255,110,150,${on})`; g.lineWidth = 2.4;
+    g.strokeText('PILS VOM FASS', W / 2, 42);
+    g.shadowBlur = 0;
+    g.strokeStyle = `rgba(255,232,240,${.85 * on})`; g.lineWidth = .8;
+    g.strokeText('PILS VOM FASS', W / 2, 42);
+    g.restore();
+  }
+
+  /* Ablauf: Heinz poliert ein Glas, zapft, serviert, jubelt oder schüttelt den Kopf */
+  function start(name, now) {
+    act = { name, t0: now, fired: {} };
+    if (name === 'pour') nextPour = now + 16000 + Math.random() * 10000;
+  }
+  function update(now) {
+    const u = (now - act.t0) / 1000;
+    if (act.name === 'pour') {
+      if (u < 6.15) fill = clamp01((u - 1.7) / 2.8);
+      const f = act.fired;
+      if (!f.hiss && u >= 1.65) { f.hiss = 1; if (onScreen) sfx.pour(2.9); }
+      if (!f.clink && u >= 5.95) { f.clink = 1; if (onScreen) sfx.clink(); }
+      if (!f.slide && u >= 6.15) { f.slide = 1; slide = { x0: 118, t0: now }; if (onScreen) sfx.slide(); }
+      if (!f.fresh && u >= 6.9) { f.fresh = 1; fill = 0; }
+    }
+    const dur = { idle: Infinity, pour: 8, cheer: 2, shake: 1.4 }[act.name];
+    if (u >= dur) {
+      if (pendingPour) { pendingPour = false; start('pour', now); }
+      else start('idle', now);
+    }
+    if (act.name === 'idle' && now > nextPour) start('pour', now);
+    if (now > blinkAt + 140) blinkAt = now + 2200 + Math.random() * 3200;
+  }
+
+  function pose(now) {
+    const t = now / 1000, u = (now - act.t0) / 1000;
+    const idleL = { x: 138 + Math.sin(t * .8) * 3, y: 284 + Math.sin(t * 1.1) * 2 };
+    const wipeR = { x: 170 + Math.cos(t * 6.5) * 10, y: 266 + Math.sin(t * 6.5) * 7 };
+    const restR = { x: 214, y: 322 };
+    const P = { shift: 0, bob: Math.sin(t * 1.6) * 1.2, L: idleL, R: wipeR, towel: 'hand', cup: true, handle: 0, stream: false, headX: 0, look: { x: 1.5, y: 2.2 } };
+    if (act.name === 'pour') {
+      const SH = 32;
+      const drip = { x: 242 - 17, y: GY - 26 }, serve = { x: 118 - 17, y: GY - 26 }, under = { x: 128, y: 352 };
+      let k;
+      P.shift = SH * seg(u, 0, 1) * (1 - seg(u, 5, 6));
+      if (u < 1) { k = seg(u, 0, 1); P.L = mix(idleL, drip, k); P.L.y -= Math.sin(Math.PI * k) * 16; }
+      else if (u < 5) P.L = drip;
+      else if (u < 6) { k = seg(u, 5, 6); P.L = mix(drip, serve, k); P.L.y -= Math.sin(Math.PI * k) * 14; }
+      else if (u < 6.4) P.L = { x: serve.x - seg(u, 6, 6.3) * 10, y: serve.y };
+      else if (u < 7.2) P.L = mix({ x: serve.x - 10, y: serve.y }, under, seg(u, 6.4, 7.2));
+      else P.L = mix(under, idleL, seg(u, 7.2, 8));
+      P.cup = !(u >= 6.15 && u < 6.9);
+      const hk = seg(u, 1.5, 1.8) * (1 - seg(u, 4.5, 4.8));
+      P.handle = hk;
+      const th = (-6 - 42 * hk) * Math.PI / 180;
+      const grip = { x: 298 + Math.sin(th) * 44 - 2, y: 250 - Math.cos(th) * 44 + 5 };
+      if (u < 1) P.R = mix(wipeR, restR, seg(u, 0, 1));
+      else if (u < 1.5) P.R = mix(restR, grip, seg(u, 1, 1.5));
+      else if (u < 4.8) P.R = grip;
+      else if (u < 5.3) P.R = mix(grip, restR, seg(u, 4.8, 5.3));
+      else if (u < 7.4) P.R = restR;
+      else P.R = mix(restR, wipeR, seg(u, 7.4, 8));
+      P.towel = u > 7.6 || u < .3 ? 'hand' : 'shoulder';
+      P.stream = hk > .6;
+      P.look = u < 5 ? { x: 3, y: 3 } : { x: -1.5, y: 2.5 };
+    } else if (act.name === 'cheer') {
+      const k = seg(u, 0, .35) * (1 - seg(u, 1.6, 2));
+      P.L = mix(idleL, { x: 96, y: 150 + Math.sin(t * 9) * 4 }, k);
+      P.R = mix(wipeR, { x: 224, y: 150 + Math.cos(t * 9) * 6 }, k);
+      P.bob -= Math.abs(Math.sin(u * 8)) * 3 * k;
+      P.look = { x: 0, y: -1 };
+    } else if (act.name === 'shake') {
+      P.headX = Math.sin(u * 16) * 5 * (1 - seg(u, 1, 1.4));
+      P.R = mix(wipeR, restR, seg(u, 0, .3) * (1 - seg(u, 1.1, 1.4)));
+      P.towel = 'shoulder';
+      P.look = { x: 0, y: 3 };
+    }
+    return P;
+  }
+
+  /* Heinz zeichnen */
+  function body(P) {
+    const cx = 160 + P.shift, b = P.bob;
+    g.fillStyle = SKIN_D; g.fillRect(cx - 12, 196 + b, 24, 26);
+    // Hemd mit Bauch
+    g.fillStyle = SHIRT;
+    g.beginPath();
+    g.moveTo(cx - 60, 372);
+    g.bezierCurveTo(cx - 72, 320, cx - 64, 252, cx - 56, 238 + b);
+    g.quadraticCurveTo(cx - 50, 214 + b, cx - 22, 212 + b);
+    g.lineTo(cx + 22, 212 + b);
+    g.quadraticCurveTo(cx + 50, 214 + b, cx + 56, 238 + b);
+    g.bezierCurveTo(cx + 64, 252, cx + 72, 320, cx + 60, 372);
+    g.closePath(); g.fill();
+    // Weste
+    g.fillStyle = VEST;
+    for (const sd of [-1, 1]) {
+      g.beginPath();
+      g.moveTo(cx + sd * 14, 218 + b);
+      g.lineTo(cx + sd * 50, 224 + b);
+      g.bezierCurveTo(cx + sd * 64, 262, cx + sd * 72, 320, cx + sd * 62, 372);
+      g.lineTo(cx + sd * 6, 372);
+      g.lineTo(cx + sd * 6, 264 + b);
+      g.closePath(); g.fill();
+    }
+    g.strokeStyle = 'rgba(0,0,0,.25)'; g.lineWidth = 1.2;
+    line(g, { x: cx - 6, y: 264 + b }, { x: cx - 6, y: 372 });
+    g.fillStyle = '#d6ad55';
+    for (const y of [280, 302, 324]) { g.beginPath(); g.arc(cx - 11, y + b * .5, 2.6, 0, TAU); g.fill(); }
+    // Kragen und Fliege
+    g.fillStyle = '#f7f1e6';
+    g.beginPath(); g.moveTo(cx - 13, 210 + b); g.lineTo(cx - 2, 222 + b); g.lineTo(cx - 16, 224 + b); g.closePath(); g.fill();
+    g.beginPath(); g.moveTo(cx + 13, 210 + b); g.lineTo(cx + 2, 222 + b); g.lineTo(cx + 16, 224 + b); g.closePath(); g.fill();
+    g.fillStyle = '#9b1f24';
+    g.beginPath(); g.moveTo(cx, 224 + b); g.lineTo(cx - 12, 217 + b); g.lineTo(cx - 12, 231 + b); g.closePath(); g.fill();
+    g.beginPath(); g.moveTo(cx, 224 + b); g.lineTo(cx + 12, 217 + b); g.lineTo(cx + 12, 231 + b); g.closePath(); g.fill();
+    g.fillStyle = '#7a161a'; g.beginPath(); g.arc(cx, 224 + b, 3.2, 0, TAU); g.fill();
+    // Geschirrtuch über der Schulter
+    if (P.towel === 'shoulder') towel(cx + 42, 226 + b, .12);
+  }
+  function towel(x0, y0, rot) {
+    g.save(); g.translate(x0, y0); g.rotate(rot);
+    g.fillStyle = '#f4efe4'; g.fillRect(-8, -4, 17, 40);
+    g.fillStyle = 'rgba(178,40,44,.75)';
+    for (let i = 0; i < 40; i += 8) g.fillRect(-8, -4 + i, 17, 2.4);
+    g.fillRect(-3, -4, 2.4, 40); g.fillRect(4, -4, 2.4, 40);
+    g.restore();
+  }
+  function head(P, now) {
+    const hx = 160 + P.shift + P.headX, hy = 170 + P.bob * .7;
+    const happy = mood === 'happy' && now < moodUntil, sad = mood === 'sad' && now < moodUntil;
+    const talking = now < talkUntil;
+    g.fillStyle = SKIN_D; ell(g, hx - 35, hy + 4, 7, 10); ell(g, hx + 35, hy + 4, 7, 10);
+    const gr = g.createRadialGradient(hx - 12, hy - 18, 6, hx, hy, 46);
+    gr.addColorStop(0, '#f6caa6'); gr.addColorStop(1, SKIN_D);
+    g.fillStyle = gr; ell(g, hx, hy, 35, 40);
+    g.fillStyle = 'rgba(255,255,255,.3)'; ell(g, hx - 11, hy - 27, 11, 5, -.3);
+    g.fillStyle = HAIR; ell(g, hx - 31, hy - 2, 7, 15); ell(g, hx + 31, hy - 2, 7, 15);
+    g.fillStyle = 'rgba(214,86,74,.38)'; ell(g, hx - 19, hy + 11, 7, 6); ell(g, hx + 19, hy + 11, 7, 6);
+    // Augen
+    const ey = hy - 5, blink = now > blinkAt && now < blinkAt + 140;
+    g.fillStyle = '#2a1a12'; g.strokeStyle = '#2a1a12';
+    if (happy) {
+      g.lineWidth = 2.4; g.lineCap = 'round';
+      for (const sd of [-1, 1]) { g.beginPath(); g.arc(hx + sd * 12, ey + 2, 4.2, Math.PI * 1.1, Math.PI * 1.9); g.stroke(); }
+    } else {
+      for (const sd of [-1, 1]) ell(g, hx + sd * 12 + P.look.x, ey + P.look.y * .6, 3, blink ? .5 : 3.6);
+      if (!blink) { g.fillStyle = 'rgba(255,255,255,.85)'; for (const sd of [-1, 1]) ell(g, hx + sd * 12 + P.look.x + 1, ey + P.look.y * .6 - 1.2, .9, .9); }
+    }
+    // Augenbrauen
+    g.strokeStyle = HAIR; g.lineWidth = 3.6; g.lineCap = 'round';
+    const lift = happy ? -4 : 0;
+    for (const sd of [-1, 1]) {
+      const outer = { x: hx + sd * 21, y: ey - 10 + lift + (sad ? 3 : 0) };
+      const inner = { x: hx + sd * 6, y: ey - 11 + lift - (sad ? 3 : 0) };
+      line(g, outer, inner);
+    }
+    // Nase
+    g.fillStyle = '#dc8a70'; ell(g, hx, hy + 7, 7, 8);
+    g.fillStyle = 'rgba(255,255,255,.3)'; ell(g, hx - 2, hy + 4, 2.2, 2);
+    // Mund
+    if (talking || happy) {
+      const open = talking ? .35 + .65 * Math.abs(Math.sin(now / 75)) : .7;
+      g.fillStyle = '#5a1d18'; ell(g, hx, hy + 25, 7.5, 2.5 + 5.5 * open);
+    } else if (sad) {
+      g.strokeStyle = '#5a1d18'; g.lineWidth = 2.2;
+      g.beginPath(); g.arc(hx, hy + 33, 7, Math.PI * 1.2, Math.PI * 1.8); g.stroke();
+    }
+    // Schnurrbart
+    g.fillStyle = '#ddd6cb'; g.strokeStyle = '#a79e90'; g.lineWidth = 1;
+    for (const sd of [-1, 1]) {
+      g.beginPath();
+      g.moveTo(hx, hy + 13);
+      g.bezierCurveTo(hx + sd * 10, hy + 8, hx + sd * 22, hy + 10, hx + sd * 30, hy + 4);
+      g.quadraticCurveTo(hx + sd * 36, hy + 1, hx + sd * 32, hy - 2);
+      g.quadraticCurveTo(hx + sd * 34, hy + 12, hx + sd * 24, hy + 19);
+      g.bezierCurveTo(hx + sd * 14, hy + 23, hx + sd * 6, hy + 20, hx, hy + 18);
+      g.closePath(); g.fill(); g.stroke();
+    }
+    g.strokeStyle = 'rgba(0,0,0,.12)'; g.lineWidth = 1.5;
+    g.beginPath(); g.arc(hx, hy + 30, 18, Math.PI * .2, Math.PI * .8); g.stroke();
+  }
+  // Arm mit zwei Gelenken; der Ellenbogen zeigt nach außen
+  function arm(S, T, cx) {
+    const a = 60, b = 60;
+    let dx = T.x - S.x, dy = T.y - S.y, d = Math.hypot(dx, dy), Hd = T;
+    if (d > a + b - 1) { const k = (a + b - 1) / d; Hd = { x: S.x + dx * k, y: S.y + dy * k }; d = a + b - 1; }
+    d = Math.max(d, 4);
+    const th = Math.atan2(Hd.y - S.y, Hd.x - S.x);
+    const al = Math.acos(Math.max(-1, Math.min(1, (a * a + d * d - b * b) / (2 * a * d))));
+    const E1 = { x: S.x + Math.cos(th + al) * a, y: S.y + Math.sin(th + al) * a };
+    const E2 = { x: S.x + Math.cos(th - al) * a, y: S.y + Math.sin(th - al) * a };
+    const score = E => Math.abs(E.x - cx) + E.y * .3;
+    const E = score(E1) > score(E2) ? E1 : E2;
+    g.lineCap = 'round';
+    g.strokeStyle = SHIRT_D; g.lineWidth = 21; line(g, S, E);
+    g.strokeStyle = SHIRT; g.lineWidth = 18; line(g, S, E);
+    g.strokeStyle = SKIN_D; g.lineWidth = 15; line(g, E, Hd);
+    g.strokeStyle = SKIN; g.lineWidth = 12; line(g, E, Hd);
+    g.fillStyle = SHIRT; g.beginPath(); g.arc(E.x, E.y, 10.5, 0, TAU); g.fill();
+    g.strokeStyle = SHIRT_D; g.lineWidth = 1.2; g.stroke();
+    return Hd;
+  }
+  function hand(Hd) {
+    g.fillStyle = SKIN; g.beginPath(); g.arc(Hd.x, Hd.y, 8.5, 0, TAU); g.fill();
+    g.strokeStyle = SKIN_D; g.lineWidth = 1.4; g.stroke();
+  }
+
+  // Bierglas: Unterkante mittig bei (gx, gy); f = Füllstand 0..1
+  function glass(gx, gy, f, t, alpha = 1) {
+    const h = 58, wb = 24, wt = 34, top = gy - h;
+    const path = () => {
+      g.beginPath();
+      g.moveTo(gx - wt / 2, top); g.lineTo(gx - wb / 2, gy - 3);
+      g.quadraticCurveTo(gx - wb / 2, gy, gx - wb / 2 + 3, gy);
+      g.lineTo(gx + wb / 2 - 3, gy);
+      g.quadraticCurveTo(gx + wb / 2, gy, gx + wb / 2, gy - 3);
+      g.lineTo(gx + wt / 2, top); g.closePath();
+    };
+    g.save(); g.globalAlpha = alpha;
+    path(); g.fillStyle = 'rgba(255,255,255,.07)'; g.fill();
+    if (f > 0) {
+      g.save(); path(); g.clip();
+      const inner = h - 7, beerTop = gy - 5 - inner * f * .78, foamH = 2 + 9 * f;
+      const gr = g.createLinearGradient(0, beerTop, 0, gy);
+      gr.addColorStop(0, '#f6bd45'); gr.addColorStop(1, '#c4731a');
+      g.fillStyle = gr; g.fillRect(gx - wt, beerTop, wt * 2, gy - beerTop);
+      g.fillStyle = 'rgba(255,245,210,.55)';
+      for (let i = 0; i < 7; i++) {
+        const bxp = gx - 9 + ((i * 37) % 18), span = gy - beerTop - 4;
+        if (span <= 0) break;
+        const by = gy - 5 - ((t * 22 + i * 13) % span);
+        g.beginPath(); g.arc(bxp, by, .9, 0, TAU); g.fill();
+      }
+      g.fillStyle = '#fbf3dc'; g.fillRect(gx - wt, beerTop - foamH, wt * 2, foamH + .5);
+      for (let i = -3; i <= 3; i++) { g.beginPath(); g.arc(gx + i * 5, beerTop - foamH, 3.2, 0, TAU); g.fill(); }
+      g.restore();
+    }
+    path(); g.strokeStyle = 'rgba(255,255,255,.6)'; g.lineWidth = 1.4; g.stroke();
+    g.fillStyle = 'rgba(255,255,255,.22)'; g.fillRect(gx - wb / 2 + 1, gy - 5, wb - 2, 4);
+    g.strokeStyle = 'rgba(255,255,255,.45)'; g.lineWidth = 1.5;
+    line(g, { x: gx - wt / 2 + 5, y: top + 6 }, { x: gx - wb / 2 + 4, y: gy - 10 });
+    g.restore();
+  }
+  function tap(k) {
+    let gr = g.createLinearGradient(290, 0, 306, 0);
+    gr.addColorStop(0, '#6b4c1c'); gr.addColorStop(.35, '#f2d388'); gr.addColorStop(.7, '#b8893a'); gr.addColorStop(1, '#5d4217');
+    g.fillStyle = gr; g.fillRect(290, 254, 16, TOP - 6 - 254);
+    g.fillStyle = '#d9b262'; ell(g, 298, 254, 11, 4);
+    gr = g.createLinearGradient(0, 263, 0, 272);
+    gr.addColorStop(0, '#f2d388'); gr.addColorStop(1, '#8a6526');
+    g.fillStyle = gr; g.fillRect(246, 263, 46, 8);
+    g.fillRect(240, 266, 10, 16);
+    g.fillStyle = '#6b4c1c'; g.fillRect(240, 280, 10, 3);
+    g.save();
+    g.translate(298, 250); g.rotate((-6 - 42 * k) * Math.PI / 180);
+    g.fillStyle = '#c9a04a'; g.fillRect(-5, -8, 10, 9);
+    g.fillStyle = '#141111';
+    g.beginPath(); g.moveTo(-4.5, -8); g.lineTo(-6, -42); g.quadraticCurveTo(0, -47, 6, -42); g.lineTo(4.5, -8); g.closePath(); g.fill();
+    g.fillStyle = '#efe4c8'; ell(g, 0, -30, 5.5, 8);
+    g.strokeStyle = '#a3262a'; g.lineWidth = 1.4; g.stroke();
+    g.fillStyle = '#a3262a'; g.font = "700 7px 'Barlow Condensed', sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('P', 0, -30);
+    g.restore();
+  }
+
+  function draw(now) {
+    const t = now / 1000, P = pose(now);
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.drawImage(back, 0, 0);
+    g.setTransform(s, 0, 0, s, 0, 0);
+    neon(t);
+    body(P);
+    head(P, now);
+    const cx = 160 + P.shift, b = P.bob;
+    const Lh = arm({ x: cx - 50, y: 234 + b }, P.L, cx);
+    const Rh = arm({ x: cx + 50, y: 234 + b }, P.R, cx);
+    hand(Lh); hand(Rh);
+    if (P.towel === 'hand') towel(Rh.x - 2, Rh.y + 4, -.2);
+    const cup = P.cup ? { x: Lh.x + 17, y: Lh.y + 26 } : null;
+    const behind = cup && cup.y > TOP + 4;
+    if (behind) glass(cup.x, cup.y, fill, t);
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.drawImage(front, 0, 0);
+    g.setTransform(s, 0, 0, s, 0, 0);
+    if (slide) {
+      const k = (now - slide.t0) / 1100;
+      if (k >= 1) slide = null;
+      else glass(slide.x0 - 200 * (1 - (1 - k) * (1 - k)), GY, 1, t, 1 - clamp01((k - .7) / .3));
+    }
+    if (cup && !behind) glass(cup.x, cup.y, fill, t);
+    tap(P.handle);
+    if (P.stream && cup) {
+      const surface = cup.y - 5 - 51 * fill * .78 - (2 + 9 * fill);
+      g.strokeStyle = 'rgba(240,170,60,.9)'; g.lineWidth = 3.2; g.lineCap = 'butt';
+      g.beginPath(); g.moveTo(245, 283);
+      g.quadraticCurveTo(245 + Math.sin(t * 40) * .8, (283 + surface) / 2, 244 + Math.sin(t * 31) * .6, surface);
+      g.stroke();
+    }
+    if (Lh.y < TOP) hand(Lh);
+    if (Rh.y < TOP && P.handle > 0) hand(Rh);
+  }
+
+  function loop(now) {
+    update(now);
+    if (onScreen && back) draw(now);
+    requestAnimationFrame(loop);
+  }
+
+  function say(text) {
+    bubbleEl.textContent = text; bubbleEl.hidden = false;
+    bubbleEl.classList.remove('pop'); void bubbleEl.offsetWidth; bubbleEl.classList.add('pop');
+    talkUntil = performance.now() + Math.min(2400, 300 + text.length * 55);
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(() => { bubbleEl.hidden = true; }, 3400);
+  }
+  // kind: 'cheer' | 'shake' | 'talk'; pour: danach ein Pils zapfen
+  function react(kind, text, pour = false) {
+    const now = performance.now();
+    if (text) say(text);
+    if (kind === 'cheer') { mood = 'happy'; moodUntil = now + 2600; }
+    if (kind === 'shake') { mood = 'sad'; moodUntil = now + 2000; }
+    if (pour) pendingPour = true;
+    if (act.name === 'pour') return;
+    if (kind === 'cheer' || kind === 'shake') start(kind, now);
+    else if (pendingPour) { pendingPour = false; start('pour', now); }
+  }
+
+  new ResizeObserver(resize).observe(box);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }).observe(box);
+  requestAnimationFrame(loop);
+  return { say, react };
+})();
+
+/* ---------- Zeichnen der Scheibe ---------- */
 let dpr = 1, sizeCss = 0, scale = 1, boardImg = null;
 
 function renderBoard(px) {
@@ -478,13 +1063,11 @@ function renderBoard(px) {
   g.translate(px / 2, px / 2); g.scale(s, s);
   const TAU = Math.PI * 2;
 
-  // Surround
   let gr = g.createRadialGradient(-40, -60, 20, 0, 0, R.EDGE);
   gr.addColorStop(0, '#29231d'); gr.addColorStop(1, '#0c0a08');
   g.fillStyle = gr; g.beginPath(); g.arc(0, 0, R.EDGE, 0, TAU); g.fill();
   g.lineWidth = 3; g.strokeStyle = '#3d342a'; g.beginPath(); g.arc(0, 0, R.EDGE - 1.5, 0, TAU); g.stroke();
 
-  // Segmente
   const BLACK = '#171411', CREAM = '#eadcb8', RED = '#b8232a', GREEN = '#12703c';
   const ring = (r0, r1, a0, a1, col) => {
     g.beginPath(); g.arc(0, 0, r1, a0, a1); g.arc(0, 0, r0, a1, a0, true); g.closePath();
@@ -602,18 +1185,20 @@ function drawDart(d, now) {
 /* ---------- Zielen ---------- */
 let aim = { active: false }, hover = null;
 
-// Die Hand zittert, wird ruhig und dann wieder unruhig. Das ruhige Fenster ist bei jedem Wurf etwas anders.
-const STEADY = 5.5;
+// Die Hand zittert stark, wird kurz ruhig und dann wieder unruhig.
+// Das ruhige Fenster ist kurz und bei jedem Wurf anders; ein langsames Wandern bleibt immer.
+const STEADY = 12;   // Zittern im ruhigen Moment (mm)
+const DRIFT = 6;    // langsames Wandern der Hand (mm)
 function swayAmp(t, w) {
-  if (t < w.calm) return 17 - (17 - STEADY) * (t / w.calm);
+  if (t < w.calm) return 22 - (22 - STEADY) * (t / w.calm);
   if (t < w.calm + w.hold) return STEADY;
-  return Math.min(36, STEADY + (t - w.calm - w.hold) * 20);
+  return Math.min(42, STEADY + (t - w.calm - w.hold) * 26);
 }
 function sway(t, ph, w) {
   const a = swayAmp(t, w);
   return {
-    x: a * (.75 * Math.sin(t * 5.1 + ph[0]) + .25 * Math.sin(t * 13.7 + ph[1])),
-    y: a * (.75 * Math.sin(t * 3.9 + ph[2]) + .25 * Math.sin(t * 11.3 + ph[3]))
+    x: a * (.72 * Math.sin(t * 5.3 + ph[0]) + .28 * Math.sin(t * 14.1 + ph[1])) + DRIFT * Math.sin(t * 1.3 + ph[2]),
+    y: a * (.72 * Math.sin(t * 4.1 + ph[2]) + .28 * Math.sin(t * 11.9 + ph[3])) + DRIFT * Math.sin(t * 1.1 + ph[0])
   };
 }
 function drawCross(x, y, steady) {
@@ -667,7 +1252,11 @@ canvas.addEventListener('pointerdown', e => {
   if (!canThrow()) return;
   e.preventDefault(); sfx.init();
   try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
-  aim = { active: true, id: e.pointerId, t0: performance.now(), pos: evToMm(e), ph: [0, 0, 0, 0].map(() => Math.random() * 6.283), w: { calm: .5 + Math.random() * .5, hold: .6 + Math.random() * .8 } };
+  aim = {
+    active: true, id: e.pointerId, t0: performance.now(), pos: evToMm(e),
+    ph: [0, 0, 0, 0].map(() => Math.random() * 6.283),
+    w: { calm: .45 + Math.random() * .55, hold: .3 + Math.random() * .45 }
+  };
 });
 canvas.addEventListener('pointermove', e => {
   if (aim.active && e.pointerId === aim.id) aim.pos = evToMm(e);
@@ -689,7 +1278,7 @@ canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') ho
 const LEVELS = {
   anfaenger: { name: 'Tante Gerda', sigma: 32, label: 'Anfängerin' },
   stammgast: { name: 'Kalle', sigma: 20, label: 'Stammgast' },
-  verein:    { name: 'Der Wirt', sigma: 13, label: 'Vereinsspieler' },
+  verein:    { name: 'Otto', sigma: 13, label: 'Vereinsspieler' },
   profi:     { name: 'Die Maschine', sigma: 7.5, label: 'Profi' }
 };
 let S = null;
@@ -703,6 +1292,7 @@ function newGame(o) {
     darts: [], busy: false, over: false
   };
   endEl.hidden = true; menu.hidden = true;
+  wirt.say(pick(['Oche frei! Viel Glück.', `Gegen ${S.opp.name}? Na dann, Prost!`, 'Erst werfen, dann trinken.']));
   beginTurn();
 }
 
@@ -753,6 +1343,25 @@ function resolve(g, p, h) {
   if (p === 1) setTimeout(() => { if (S === g) cpuDart(); }, 650);
 }
 
+// Heinz kommentiert die Aufnahme
+function wirtComment(g, sum, bust) {
+  const mine = g.turn === 0, name = g.opp.name;
+  if (bust) {
+    if (mine) wirt.react('shake', pick(['Überworfen! Das kostet ’ne Runde.', 'Zu viel des Guten, min Jung.', 'Rechnen muss man auch können.']));
+    else wirt.react('talk', `${name} hat sich überworfen. Hehe.`);
+    return;
+  }
+  if (sum === 180) {
+    if (mine) wirt.react('cheer', 'HUNDERTACHTZIG! Die Runde geht auf mich!', true);
+    else wirt.react('cheer', `180 für ${name}! Respekt.`);
+  } else if (sum >= 100) {
+    if (mine) wirt.react('cheer', pick(['Stark geworfen!', 'Ton! So sieht das aus.', 'Da klingelt die Kasse.']));
+    else if (Math.random() < .5) wirt.react('talk', `Nicht schlecht, ${name}.`);
+  } else if (mine && sum <= 20) {
+    wirt.react('shake', pick(['Das war nix.', 'Ruhige Hand – nicht so zappeln.', 'Erst mal ein Schluck Pils?', 'Die Scheibe hängt da drüben!']));
+  }
+}
+
 function endVisit(g, bust) {
   const sum = g.visit.reduce((a, h) => a + h.v, 0);
   if (!bust) g.visitState = 'done';
@@ -763,6 +1372,7 @@ function endVisit(g, bust) {
     else if (sum === 0) call('No score');
     else { call(String(sum)); if (sum >= 100) sfx.cheer(.5); }
   }
+  wirtComment(g, sum, bust);
   setTimeout(() => { if (S !== g) return; g.turn = 1 - g.turn; beginTurn(); }, 1700);
 }
 
@@ -772,7 +1382,9 @@ function win(g, p, h) {
   g.hist[p].push({ score: sum, rest: 0, bust: false });
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
-  hint(p === 0 ? 'Checkout! Die Runde geht auf den Wirt.' : `${g.opp.name} hat gecheckt.`);
+  hint(p === 0 ? 'Checkout! Heinz zapft dir eins aufs Haus.' : `${g.opp.name} hat gecheckt.`);
+  if (p === 0) wirt.react('cheer', 'Game shot! Ein Pils aufs Haus.', true);
+  else wirt.react('shake', `${g.opp.name} checkt. Kopf hoch, nächste Runde!`);
   const darts = (g.hist[p].length - 1) * 3 + g.visit.length;
   const dbl = h.l === 'Bull' ? 'dem Bull' : h.l;
   setTimeout(() => {
@@ -827,11 +1439,14 @@ function openMenu() {
   aim.active = false;
   $('#startBtn').focus();
 }
-$('#menuForm').addEventListener('submit', e => {
-  e.preventDefault(); sfx.init();
-  const f = new FormData(e.target);
-  newGame({ start: +f.get('start'), level: f.get('level'), starter: +f.get('starter') });
-});
+// Start per Klick statt Formular-Absenden: Eingebettete Vorschauen blockieren das Absenden von Formularen.
+function startFromMenu() {
+  sfx.init();
+  const val = name => document.querySelector(`#menuForm input[name="${name}"]:checked`).value;
+  newGame({ start: +val('start'), level: val('level'), starter: +val('starter') });
+}
+$('#startBtn').addEventListener('click', startFromMenu);
+$('#menuForm').addEventListener('submit', e => { e.preventDefault(); startFromMenu(); });
 $('#resumeBtn').addEventListener('click', () => { menu.hidden = true; });
 $('#menuBtn').addEventListener('click', openMenu);
 $('#toMenu').addEventListener('click', openMenu);
@@ -843,6 +1458,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !menu.hidden && S && !S.over) menu.hidden = true;
 });
 
+setTimeout(() => wirt.say('Moin! Wirf ’ne Runde mit.'), 1200);
 requestAnimationFrame(frame);
 })();
 </script>
