@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elfmeter-Duell</title>
+<meta name="description" content="Elfmeterschießen im Browser: Als Schütze Richtung und Schusshärte timen oder als Torwart die richtige Ecke ahnen.">
+<meta name="theme-color" content="#0A0E16">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<!-- @@style-start -->
+<style>
+/* Layout: Vollbild-Stadion auf Canvas, oben die Anzeigetafel, unten die Anweisung, Menüs als Tafel in der Mitte. */
+:root {
+  --night: #0A0E16;
+  --panel: rgba(11, 15, 24, .84);
+  --ink: #EEF1F6;
+  --muted: #A1AABB;
+  --line: rgba(238, 241, 246, .14);
+  --home: #E2701F;
+  --home-hi: #FF9448;
+  --home-ink: #1A0F06;
+  --bad: #E5484D;
+  --display: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--display);
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.app { position: relative; height: 100%; overflow: hidden; user-select: none; -webkit-user-select: none; }
+#pitch { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--home-hi); outline-offset: 3px; }
+
+/* Anzeigetafel */
+.hud {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 10px;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 0;
+  pointer-events: none;
+}
+.board, .hud-actions { pointer-events: auto; }
+.board {
+  display: flex; align-items: center; gap: 14px;
+  padding: 9px 14px; border-radius: 10px;
+  background: var(--panel); border: 1px solid var(--line);
+  font: 600 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+}
+.board .role { color: var(--home-hi); }
+.score { font-variant-numeric: tabular-nums; }
+.shots { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.shots li { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid rgba(238, 241, 246, .3); box-sizing: border-box; }
+.shots li.good { background: var(--home); border-color: var(--home); }
+.shots li.bad { background: rgba(229, 72, 77, .25); border-color: var(--bad); }
+.shots li.now { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(238, 241, 246, .14); }
+.hud-actions { display: flex; gap: 8px; }
+.chip {
+  font: 600 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 999px; padding: 10px 13px; cursor: pointer;
+}
+.chip:hover { border-color: rgba(238, 241, 246, .4); }
+.chip[aria-pressed="false"] { color: var(--muted); }
+
+/* Anweisung und Ergebnis-Einblendung */
+.prompt {
+  position: absolute; left: 16px; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  margin: 0; text-align: center; pointer-events: none;
+  font: 500 14px/1.5 var(--mono); letter-spacing: .02em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .9);
+}
+.prompt kbd {
+  font: 600 12px/1 var(--mono); padding: 3px 7px; border-radius: 5px;
+  background: rgba(238, 241, 246, .12); border: 1px solid rgba(238, 241, 246, .25);
+}
+.prompt b { color: var(--home-hi); }
+.banner {
+  position: absolute; left: 16px; right: 16px; top: 42%; transform: translateY(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-align: center; pointer-events: none;
+}
+.banner strong {
+  font: 700 clamp(48px, 12vw, 128px)/.9 var(--display); letter-spacing: -.03em;
+  text-shadow: 0 8px 36px rgba(0, 0, 0, .65);
+}
+.app[data-view="shooter"] .banner { top: 64%; }
+.app[data-view="keeper"] .banner { top: 24%; }
+.banner.good strong { color: var(--home-hi); }
+.banner span {
+  font: 500 14px/1.4 var(--mono); padding: 7px 12px; border-radius: 6px;
+  background: var(--panel); border: 1px solid var(--line); max-width: 36ch;
+}
+.banner.show strong { animation: pop .45s cubic-bezier(.2, 1.5, .4, 1) both; }
+@keyframes pop { from { transform: scale(.55); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Menü und Auswertung */
+.overlay {
+  position: absolute; inset: 0; overflow: auto;
+  display: grid; place-items: center; padding: 24px 16px;
+  background: radial-gradient(ellipse at 50% 35%, rgba(10, 14, 22, .5), rgba(10, 14, 22, .9) 70%);
+}
+.card { width: min(600px, 100%); display: flex; flex-direction: column; gap: 20px; }
+.eyebrow { margin: 0; font: 600 12px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--home-hi); }
+h1, h2 { margin: 0; font-weight: 700; letter-spacing: -.035em; text-wrap: balance; }
+h1 { font-size: clamp(40px, 10.5vw, 80px); line-height: .9; }
+h2 { font-size: clamp(30px, 6vw, 44px); line-height: 1; }
+.lead { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.55; max-width: 46ch; }
+.roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.role-btn {
+  display: flex; flex-direction: column; gap: 10px; text-align: left;
+  padding: 20px; border-radius: 14px; cursor: pointer;
+  background: rgba(17, 22, 33, .92); color: var(--ink); border: 1px solid var(--line);
+  font: inherit; transition: border-color .15s, transform .15s;
+}
+.role-btn:hover { border-color: var(--home); transform: translateY(-2px); }
+.role-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.role-name { font: 700 26px/1 var(--display); letter-spacing: -.02em; }
+.role-tag { font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--home-hi); }
+.role-how { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font: 500 13px/1.45 var(--mono); color: var(--muted); }
+.role-how li { display: grid; grid-template-columns: 22px 1fr; }
+.role-how li span { color: var(--ink); font-variant-numeric: tabular-nums; }
+.best { margin: 0; min-height: 1.4em; font: 500 13px/1.4 var(--mono); color: var(--muted); }
+.big-score { font: 700 clamp(64px, 16vw, 120px)/.9 var(--display); letter-spacing: -.04em; color: var(--home-hi); font-variant-numeric: tabular-nums; }
+.result-shots { display: flex; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.result-shots li { width: 18px; height: 18px; border-radius: 50%; border: 2px solid; box-sizing: border-box; }
+.result-shots li.good { background: var(--home); border-color: var(--home); }
+.result-shots li.bad { background: rgba(229, 72, 77, .25); border-color: var(--bad); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  font: 600 16px/1 var(--display); padding: 15px 22px; border-radius: 10px; cursor: pointer;
+  color: var(--ink); background: rgba(17, 22, 33, .92); border: 1px solid var(--line);
+}
+.btn:hover { border-color: rgba(238, 241, 246, .4); }
+.btn.primary { background: var(--home); border-color: var(--home); color: var(--home-ink); }
+.btn.primary:hover { background: var(--home-hi); }
+.muted { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.5; }
+
+@media (max-width: 520px) {
+  .board { gap: 10px; padding: 8px 11px; }
+  .chip { padding: 9px 11px; }
+  .prompt { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .banner.show strong { animation: none; }
+  .role-btn, .role-btn:hover { transition: none; transform: none; }
+}
+</style>
+<!-- @@style-end -->
+</head>
+<body>
+<!-- @@body-start -->
+<div class="app">
+  <canvas id="pitch" aria-label="Spielfeld: Tippen oder Leertaste zum Spielen"></canvas>
+
+  <header class="hud" id="hud" hidden>
+    <div class="board">
+      <span class="role" id="hudRole">Schütze</span>
+      <ol class="shots" id="hudShots" aria-label="Versuche"></ol>
+      <span class="score" id="hudScore">Tore 0</span>
+    </div>
+    <div class="hud-actions">
+      <button class="chip" id="btnSound" type="button" aria-pressed="true">Ton an</button>
+      <button class="chip" id="btnMenu" type="button">Rolle wechseln</button>
+    </div>
+  </header>
+
+  <p class="prompt" id="prompt" aria-live="polite"></p>
+
+  <div class="banner" id="banner" hidden aria-live="assertive">
+    <strong id="bannerTitle"></strong>
+    <span id="bannerSub"></span>
+  </div>
+
+  <section class="overlay" id="menu" aria-labelledby="menuTitle">
+    <div class="card">
+      <p class="eyebrow">11 Meter · Tor 7,32 × 2,44 m · 5 Versuche</p>
+      <h1 id="menuTitle">Elfmeter-Duell</h1>
+      <p class="lead">Nur du, der Ball und der Punkt. Wähle deine Rolle, die Kamera wechselt mit.</p>
+      <div class="roles">
+        <button class="role-btn" id="pickShooter" type="button">
+          <span class="role-top"><span class="role-name">Schütze</span><span class="role-tag">Blick aufs Tor</span></span>
+          <ol class="role-how">
+            <li><span>1</span>Richtung stoppen, wenn der Balken richtig steht.</li>
+            <li><span>2</span>Schusshärte laden. Bei 75 % landet er knapp unter der Latte, später fliegt er drüber.</li>
+          </ol>
+        </button>
+        <button class="role-btn" id="pickKeeper" type="button">
+          <span class="role-top"><span class="role-name">Torwart</span><span class="role-tag">Blick aus dem Tor</span></span>
+          <ol class="role-how">
+            <li><span>1</span>Tippe dorthin, wo du hinspringen willst.</li>
+            <li><span>2</span>Wer zu früh springt, wird ausgeguckt. Tasten: Q W E oben, A S D unten.</li>
+          </ol>
+        </button>
+      </div>
+      <p class="best" id="best"></p>
+    </div>
+  </section>
+
+  <section class="overlay" id="result" hidden aria-labelledby="resultTitle">
+    <div class="card">
+      <p class="eyebrow">Serie beendet</p>
+      <div class="big-score" id="resultScore">0 / 5</div>
+      <h2 id="resultTitle"></h2>
+      <p class="muted" id="resultText"></p>
+      <ol class="result-shots" id="resultShots" aria-label="Versuche"></ol>
+      <div class="actions">
+        <button class="btn primary" id="btnAgain" type="button">Nochmal</button>
+        <button class="btn" id="btnSwitch" type="button">Rolle wechseln</button>
+      </div>
+      <p class="best" id="resultBest"></p>
+    </div>
+  </section>
+</div>
+<!-- @@body-end -->
+<script src="js/elfmeter.js" defer></script>
+</body>
+</html>
