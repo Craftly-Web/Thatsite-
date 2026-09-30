@@ -339,7 +339,7 @@ legend{padding:0;margin-bottom:8px}
       </div>
       <div class="skills" id="skills">
         <button type="button" class="skill prec" id="precBtn" disabled>
-          <span class="skill-top"><span class="skill-name">Präzision</span><span class="skill-state" id="precState">0/12 Darts</span></span>
+          <span class="skill-top"><span class="skill-name">Präzision</span><span class="skill-state" id="precState">0 gespeichert</span></span>
           <span class="skill-meter"><i id="precFill"></i></span>
         </button>
         <div class="skill adr" id="adrBox">
@@ -424,7 +424,7 @@ legend{padding:0;margin-bottom:8px}
       <summary>So wird gespielt</summary>
       <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
       <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
-      <p class="rules"><strong>Präzision:</strong> Lädt sich mit 12 Darts auf. Dann den Knopf unter der Scheibe antippen, und deine nächsten 3 Darts sind deutlich ruhiger. Danach lädt sie sich neu auf.</p>
+      <p class="rules"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
       <p class="rules"><strong>Adrenalin:</strong> Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an: 3 sehr präzise Darts. Einmal pro Leg.</p>
       <p class="rules"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
@@ -640,6 +640,11 @@ const sfx = (() => {
     powerup() {
       if (!ok()) return; const t = ac.currentTime;
       tone(t, .5, 'sine', 440, 1320, .06); tone(t + .08, .5, 'triangle', 660, 1760, .035); nz(t, .4, 'highpass', 5000, .7, .03, .2);
+    },
+    // Ein präziser Pfeil wurde gespeichert
+    charge() {
+      if (!ok()) return; const t = ac.currentTime + .25;
+      tone(t, .18, 'sine', 1320, 1330, .035); tone(t + .09, .22, 'sine', 1980, 1990, .03);
     },
     // Tröte für die 180
     horn() {
@@ -1384,13 +1389,14 @@ const CALM_TIME = 3.2;                   // so schnell beruhigt sich die Hand (s
 const smooth = k => k < 0 ? 0 : k > 1 ? 1 : k * k * (3 - 2 * k);
 
 // Fähigkeiten: Präzision lädt sich mit 12 Darts auf, Adrenalin gibt es bei 150 Punkten Rückstand
-const PREC_CHARGE = 12, ABILITY_DARTS = 3, ADR_GAP = 150;
+// Jeder 3. Dart bringt einen gespeicherten präzisen Pfeil; Adrenalin wirkt für 3 Darts
+const PREC_EVERY = 3, ABILITY_DARTS = 3, ADR_GAP = 150;
 const BOOSTS = {
   none: { amp: 1, tremor: 1, scatter: 1 },
   prec: { amp: .55, tremor: .45, scatter: .45 },
   adr:  { amp: .3, tremor: .2, scatter: .25 }
 };
-const boostKind = () => !S ? 'none' : S.adrLeft > 0 ? 'adr' : S.precLeft > 0 ? 'prec' : 'none';
+const boostKind = () => !S ? 'none' : S.adrLeft > 0 ? 'adr' : S.precArmed ? 'prec' : 'none';
 
 function breath(t, w) {
   const B = BOOSTS[boostKind()];
@@ -1503,7 +1509,7 @@ function newGame(o) {
   S = {
     start: o.start, level: o.level, opp: LEVELS[o.level],
     legsToWin: o.legs, legs: [0, 0], starter: o.starter, legStarter: o.starter,
-    precCharge: 0, precLeft: 0, adrUsed: false, adrLeft: 0,
+    precStock: 0, precProgress: 0, precArmed: false, adrUsed: false, adrLeft: 0,
     scores: [o.start, o.start], hist: [[], []], turn: o.starter,
     visit: [], visitState: 'open', turnStart: o.start,
     darts: [], busy: false, over: false
@@ -1566,8 +1572,8 @@ function throwAt(p, x, y) {
   if (p === 0) {
     // Fähigkeiten verbrauchen; normale Darts laden die Präzision auf
     if (g.adrLeft > 0) { g.adrLeft--; if (!g.adrLeft) document.body.classList.remove('adrenaline'); }
-    else if (g.precLeft > 0) g.precLeft--;
-    else g.precCharge = Math.min(PREC_CHARGE, g.precCharge + 1);
+    else if (g.precArmed) { g.precArmed = false; g.precStock--; }
+    if (++g.precProgress >= PREC_EVERY) { g.precProgress = 0; g.precStock++; sfx.charge(); }
     renderSkills();
   }
   setTimeout(() => { if (S === g) resolve(g, p, hit(x, y)); }, FLY);
@@ -1692,16 +1698,16 @@ function renderTafel() {
 
 function renderSkills() {
   const g = S;
-  const charge = g ? g.precCharge : 0, precLeft = g ? g.precLeft : 0, adrLeft = g ? g.adrLeft : 0;
-  const ready = !!g && charge >= PREC_CHARGE && precLeft === 0;
-  const canUse = ready && !g.over && g.turn === 0 && adrLeft === 0;
+  const stock = g ? g.precStock : 0, armed = !!g && g.precArmed, adrLeft = g ? g.adrLeft : 0;
+  const canUse = !!g && !g.over && g.turn === 0 && adrLeft === 0 && (armed || stock > 0);
   const precBtn = $('#precBtn');
   precBtn.disabled = !canUse;
-  precBtn.classList.toggle('ready', canUse);
-  precBtn.classList.toggle('on', precLeft > 0);
-  $('#precFill').style.width = (precLeft > 0 ? precLeft / ABILITY_DARTS : charge / PREC_CHARGE) * 100 + '%';
-  $('#precState').textContent = precLeft > 0 ? (adrLeft > 0 ? 'wartet auf Adrenalin' : `aktiv · noch ${precLeft}`)
-    : ready ? (canUse ? 'bereit – antippen!' : adrLeft > 0 ? 'bereit nach Adrenalin' : 'bereit') : `${charge}/${PREC_CHARGE} Darts`;
+  precBtn.classList.toggle('ready', canUse && !armed);
+  precBtn.classList.toggle('on', armed);
+  precBtn.setAttribute('aria-pressed', String(armed));
+  $('#precFill').style.width = (g ? g.precProgress / PREC_EVERY : 0) * 100 + '%';
+  $('#precState').textContent = armed ? `nächster Dart präzise · ${stock} ges.`
+    : stock > 0 ? `${stock} gespeichert${canUse ? ' – antippen' : ''}` : '0 gespeichert';
   const used = !!g && g.adrUsed && adrLeft === 0;
   const gap = g ? Math.max(0, g.scores[0] - g.scores[1]) : 0;
   const adrBox = $('#adrBox');
@@ -1711,13 +1717,20 @@ function renderSkills() {
   $('#adrState').textContent = adrLeft > 0 ? `aktiv · noch ${adrLeft}` : used ? 'wieder im nächsten Leg' : gap > 0 ? `Rückstand ${gap}/${ADR_GAP}` : `ab ${ADR_GAP} Rückstand`;
 }
 
+// Antippen macht den nächsten Dart präzise, nochmal antippen bricht ab
 $('#precBtn').addEventListener('click', () => {
   const g = S;
-  if (!g || g.over || g.turn !== 0 || g.adrLeft > 0 || g.precCharge < PREC_CHARGE || g.precLeft > 0) return;
-  g.precCharge = 0; g.precLeft = ABILITY_DARTS;
-  sfx.init(); sfx.powerup();
-  wirt.say('Konzentration … ruhige Hand.');
-  hint('Präzision aktiv: Deine nächsten 3 Darts sind deutlich ruhiger.');
+  if (!g || g.over || g.turn !== 0 || g.adrLeft > 0) return;
+  sfx.init();
+  if (g.precArmed) {
+    g.precArmed = false;
+    hint('Präzision abgebrochen – der Pfeil bleibt gespeichert.');
+  } else if (g.precStock > 0) {
+    g.precArmed = true;
+    sfx.powerup();
+    wirt.say('Konzentration … ruhige Hand.');
+    hint('Präzision: Dein nächster Dart ist deutlich ruhiger.');
+  }
   renderSkills();
 });
 
