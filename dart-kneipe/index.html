@@ -169,6 +169,13 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .skill.prec.ready .skill-state{color:#bff3fb}
 @keyframes ready{from{box-shadow:0 0 0 0 rgba(127,227,245,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(127,227,245,.55),0 6px 14px rgba(0,0,0,.35)}}
 .skill.prec.on{border-color:#7fe3f5;background:rgba(16,58,70,.78)}
+.skill.blitz .skill-meter i{background:linear-gradient(90deg,#b8860b,#f2c230)}
+.skill.blitz.ready{cursor:pointer;border-color:#f2c230;animation:readyGold 1s ease-in-out infinite alternate}
+.skill.blitz.ready .skill-state{color:#ffe7a1}
+.skill.blitz.on{border-color:#f2c230;background:rgba(70,54,8,.8)}
+@keyframes readyGold{from{box-shadow:0 0 0 0 rgba(242,194,48,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(242,194,48,.55),0 6px 14px rgba(0,0,0,.35)}}
+.skill.alt .skill-meter i{background:linear-gradient(90deg,#1f6b45,#6fd39a)}
+.skill.alt.on{border-color:#6fd39a;background:rgba(18,56,36,.78)}
 .skill.adr.on{border-color:#ff5a4e;background:rgba(84,14,14,.78)}
 .skill.on .skill-state{color:#fff}
 .skill.used{opacity:.55}
@@ -182,6 +189,8 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .chip.board-chip span{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:10px;align-items:center;height:100%}
 .board-chip img,.board-chip .ph{grid-row:span 2;width:40px;height:40px;border-radius:50%;display:block;background:#111}
 .board-chip img.automat{border-radius:6px}
+.chip.board-chip.dart-chip span{grid-template-columns:62px minmax(0,1fr)}
+.board-chip img.dart{width:62px;height:19px;border-radius:0;background:none}
 .board-chip b{font-weight:400;min-width:0}
 .board-chip small{min-width:0}
 .board-chip small svg{width:10px;height:10px;vertical-align:-1px;margin-right:3px}
@@ -189,8 +198,10 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .board-chip.locked span{opacity:.6;border-style:dashed}
 .board-chip.locked img{filter:grayscale(1) brightness(.6)}
 /* 3D-Halle: breite Bühne mit Kamerafahrten */
-.board-wrap.is3d{width:100%;aspect-ratio:auto;height:min(calc(100vh - 215px),760px);min-height:320px;border-radius:14px;overflow:hidden;background:#0e0805;box-shadow:0 0 0 2px #24130a,0 26px 60px rgba(0,0,0,.7)}
-@supports (height:100dvh){.board-wrap.is3d{height:min(calc(100dvh - 215px),760px)}}
+.board-wrap.is3d{width:100%;aspect-ratio:auto;height:min(calc(100vh - 185px),840px);min-height:320px;border-radius:14px;overflow:hidden;background:#0e0805;box-shadow:0 0 0 2px #24130a,0 26px 60px rgba(0,0,0,.7)}
+@supports (height:100dvh){.board-wrap.is3d{height:min(calc(100dvh - 185px),840px)}}
+/* Hinweis liegt in der 3D-Bühne, damit sie mehr Platz hat */
+.board-wrap .hint{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:none;margin:0;padding:22px 16px 10px;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.6));color:#f1e3c8;font-size:15px;pointer-events:none;border-radius:0 0 14px 14px}
 .board-wrap.is3d canvas{border-radius:14px}
 .board-wrap.is3d::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:14px;background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.42) 100%)}
 /* Hinweis bei neu freigeschalteter Scheibe */
@@ -306,7 +317,7 @@ legend{padding:0;margin-bottom:8px}
   .hist{display:none}
   .rest{font-size:42px}
   .board-wrap{width:min(100%, 560px)}
-  .board-wrap.is3d{width:100%;height:min(118vw,62vh);min-height:300px}
+  .board-wrap.is3d{width:100%;height:min(128vw,66vh);min-height:300px}
   /* Handy: Bühne zuerst, Kreidetafel darunter, einzeilige Kopfzeile */
   .stage.has3d{grid-template-areas:"board" "tafel" "bar"}
   .sign{flex-wrap:nowrap}
@@ -340,6 +351,7 @@ legend{padding:0;margin-bottom:8px}
   .bubble.pop{animation:none}
   .toast.pop{animation:none}
   .skill.prec.ready{animation:none;box-shadow:0 0 14px 2px rgba(127,227,245,.5)}
+  .skill.blitz.ready{animation:none;box-shadow:0 0 14px 2px rgba(242,194,48,.5)}
   body.adrenaline .adr-fx{animation:none;opacity:.8}
   .skill.adr.ready{animation:none;box-shadow:0 0 14px 2px rgba(255,90,78,.5)}
 }
@@ -381,7 +393,7 @@ legend{padding:0;margin-bottom:8px}
       </div>
       <div class="skills" id="skills">
         <button type="button" class="skill prec" id="precBtn" disabled>
-          <span class="skill-top"><span class="skill-name">Präzision</span><span class="skill-state" id="precState">0 gespeichert</span></span>
+          <span class="skill-top"><span class="skill-name" id="skillName">Präzision</span><span class="skill-state" id="precState">0 gespeichert</span></span>
           <span class="skill-meter"><i id="precFill"></i></span>
         </button>
         <button type="button" class="skill adr" id="adrBox" disabled>
@@ -448,6 +460,10 @@ legend{padding:0;margin-bottom:8px}
       </div>
     </fieldset>
     <fieldset>
+      <legend>Pfeile</legend>
+      <div class="chips boards" id="dartChips"></div>
+    </fieldset>
+    <fieldset>
       <legend>Scheibe</legend>
       <div class="chips boards" id="boardChips"></div>
     </fieldset>
@@ -473,6 +489,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
       <p class="rules"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
       <p class="rules"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
+      <p class="rules"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.</p>
       <p class="rules"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
       <p class="rules"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
@@ -1318,6 +1335,18 @@ const BOARD_STYLE = {
   automat: { black: '#151515', cream: '#e4e4e4', red: '#d4202a', green: '#1f5fd6', wire: '#2e2e2e', wireW: 2.2, num: '#ffffff', numSize: 24, surround: ['#1b3a73', '#0a1630'], holes: true, cabinet: true },
   pro:     { black: '#0c0c0c', cream: '#f3e7c9', red: '#d2141e', green: '#08893d', wire: 'rgba(240,240,240,.95)', wireW: .45, num: '#ffffff', numSize: 27, surround: ['#161616', '#050505'], sisal: true, ringLight: true }
 };
+// Pfeil-Sets: jedes hat eine eigene Fähigkeit; zwei davon werden über Statistiken freigeschaltet
+const DART_INFO = {
+  kneipe: { name: 'Kneipenpfeil', skill: 'Präzision', desc: 'Präzision · jeder 3. Dart', flight: '#c9302c', edge: '#6e1310', stripe: '#f4efe4', barrel: '#7d828a' },
+  blitz:  { name: 'Blitzpfeil', skill: 'Schnellwurf', desc: 'Schnell werfen = perfekt', req: 'Triple 20', need: 5, stat: 't20', flight: '#f2c230', edge: '#6b5200', stripe: '#141414', barrel: '#4d5158' },
+  alt:    { name: 'Stammtischpfeil', skill: 'Alt eingesessen', desc: 'Dauerhaft ruhige Hand', req: 'Matchsiege', need: 3, stat: 'wins', flight: '#1f6b45', edge: '#0c3320', stripe: '#e2b457', barrel: '#b8893a' }
+};
+let stats = { t20: 0, wins: 0 };
+try { Object.assign(stats, JSON.parse(localStorage.getItem('dk-stats') || '{}')); } catch (e) {}
+const dartUnlocked = k => !DART_INFO[k].req || (stats[DART_INFO[k].stat] || 0) >= DART_INFO[k].need;
+let dartKey = 'kneipe';
+try { const k = localStorage.getItem('dk-dart'); if (k && DART_INFO[k] && dartUnlocked(k)) dartKey = k; } catch (e) {}
+
 let unlocked = new Set(['classic']);
 try { JSON.parse(localStorage.getItem('dk-boards') || '[]').forEach(k => { if (BOARD_INFO[k]) unlocked.add(k); }); } catch (e) {}
 let boardKey = 'classic';
@@ -1523,7 +1552,7 @@ const view2d = {
   onThrow(d) { d.fly = FLY; },
   cpuThrow(release) { release(); },
   canAim: () => true,
-  focus() {}, opponentTo() {}, setOpponent() {}, punch() {}, setScores() {}
+  focus() {}, opponentTo() {}, setOpponent() {}, punch() {}, setScores() {}, resetDarts() {}
 };
 
 function makeView3d() {
@@ -1896,17 +1925,31 @@ function makeView3d() {
     tungsten: std({ color: '#7d828a', metalness: .9, roughness: .32 }),
     knurl: std({ color: '#3f4349', metalness: .8, roughness: .5 }),
     shaft: std({ color: '#111', roughness: .4 }),
-    flights: [std({ color: '#c9302c', roughness: .55, side: T.DoubleSide }), std({ color: '#2d63b8', roughness: .55, side: T.DoubleSide })]
+    cpuFlight: std({ color: '#2d63b8', roughness: .55, side: T.DoubleSide }),
+    sets: {}
   };
-  function makeDart(owner) {
+  // Materialien je Pfeil-Set: Flight-Farbe und Barrel (Messing beim Stammtischpfeil)
+  function setMats(key) {
+    if (!dartMats.sets[key]) {
+      const d = DART_INFO[key];
+      dartMats.sets[key] = {
+        flight: std({ color: d.flight, roughness: .55, side: T.DoubleSide }),
+        barrel: std({ color: d.barrel, metalness: .9, roughness: key === 'alt' ? .28 : .32 })
+      };
+    }
+    return dartMats.sets[key];
+  }
+  function makeDart(owner, set = 'kneipe') {
+    const sm = setMats(set), flightMat = owner === 1 ? dartMats.cpuFlight : sm.flight;
     const g = new T.Group();
     const add = (geo, mat) => { const m = new T.Mesh(geo, mat); m.castShadow = true; g.add(m); return m; };
     add(dartParts.tip, dartMats.steel);
-    add(dartParts.barrel, dartMats.tungsten);
+    add(dartParts.barrel, owner === 1 ? dartMats.tungsten : sm.barrel);
     for (let i = 0; i < 5; i++) add(dartParts.grip, dartMats.knurl).position.z = .038 + i * .007;
     add(dartParts.shaft, dartMats.shaft);
-    add(dartParts.flight, dartMats.flights[owner]);
-    add(dartParts.flight, dartMats.flights[owner]).rotation.z = Math.PI / 2;
+    add(dartParts.flight, flightMat);
+    add(dartParts.flight, flightMat).rotation.z = Math.PI / 2;
+    g.scale.setScalar(1.25);   // etwas größer, damit man die Pfeile gut sieht
     return g;
   }
 
@@ -2010,7 +2053,7 @@ function makeView3d() {
     for (const d of list) {
       let mm = dartMeshes.get(d);
       if (!mm) {
-        mm = makeDart(d.owner); scene.add(mm); dartMeshes.set(d, mm);
+        mm = makeDart(d.owner, d.set || dartKey); scene.add(mm); dartMeshes.set(d, mm);
         d.tilt = d.tilt || [(Math.random() - .5) * .14, .1 + Math.random() * .12];
       }
       const end = dartEnd(d), p = d.t0 < 0 || !d.from ? 1 : Math.min(1, (now - d.t0) / d.fly);
@@ -2024,7 +2067,7 @@ function makeView3d() {
   /* Kamera: Halle aus der dritten Person, Nahansicht zum Zielen, kurzer Zoom nach jedem Treffer */
   const HALL = { p: V3(1.8, 1.78, 5.5), t: V3(-.2, 1.3, 1.0) };
   function aimPose() {
-    const half = Math.tan(camera.fov * Math.PI / 360), need = .233;
+    const half = Math.tan(camera.fov * Math.PI / 360), need = .214;
     const d = camera.aspect >= 1 ? need / half : need / (half * camera.aspect);
     return { p: V3(0, BULL_Y, FACE_Z + d), t: V3(0, BULL_Y, FACE_Z) };
   }
@@ -2114,13 +2157,14 @@ function makeView3d() {
       const o = OUTFIT[level] || OUTFIT.stammgast;
       person.m.shirt.color.set(o.shirt); person.m.pants.color.set(o.pants); person.m.hair.color.set(o.hair);
     },
-    setScores: st => drawScores(st)
+    setScores: st => drawScores(st),
+    resetDarts() { for (const [, mm] of dartMeshes) scene.remove(mm); dartMeshes.clear(); }
   };
 }
 
 let V = view2d;
 try { V = makeView3d() || view2d; } catch (e) { V = view2d; }
-if (V.is3d) { wrap.classList.add('is3d'); sceneCanvas.hidden = false; $('.stage').classList.add('has3d'); }
+if (V.is3d) { wrap.classList.add('is3d'); sceneCanvas.hidden = false; $('.stage').classList.add('has3d'); wrap.appendChild(hintEl); }
 
 function resize() { V.resize(); }
 new ResizeObserver(resize).observe(wrap);
@@ -2142,9 +2186,9 @@ function drawDart(d, now) {
   const x = sx + (d.x - sx) * e, y = sy + (d.y - sy) * e;
   const k = 1 + 1.8 * (1 - e);
   const [X, Y] = P(x, y);
-  const u = sizeCss / 560;
+  const u = sizeCss / 560 * 1.25;
   const tilt = (d.x / R.EDGE) * 5 * u;
-  const col = COLORS[d.owner];
+  const col = d.owner === 1 ? COLORS[1] : DART_INFO[d.set || dartKey];
   ctx.save(); ctx.translate(X, Y); ctx.scale(k, k);
   if (p >= 1) {
     ctx.fillStyle = 'rgba(0,0,0,.4)';
@@ -2186,15 +2230,31 @@ const smooth = k => k < 0 ? 0 : k > 1 ? 1 : k * k * (3 - 2 * k);
 // Fähigkeiten: Präzision lädt sich mit 12 Darts auf, Adrenalin gibt es bei 150 Punkten Rückstand
 // Jeder 3. Dart bringt einen gespeicherten präzisen Pfeil; Adrenalin wirkt für 3 Darts
 const PREC_EVERY = 3, ABILITY_DARTS = 3, ADR_GAP = 150;
+const BLITZ_EVERY = 6;   // Schnellwurf: nach 6 normalen Würfen ein Boost
+const QUICK = 1.0;       // Schnellwurf: wer innerhalb 1 s loslässt, zielt perfekt
 const BOOSTS = {
   none: { amp: 1, tremor: 1, scatter: 1 },
   prec: { amp: .55, tremor: .45, scatter: .45 },
-  adr:  { amp: .3, tremor: .2, scatter: .25 }
+  adr:  { amp: .3, tremor: .2, scatter: .25 },
+  alt:  { amp: .62, tremor: .55, scatter: .58 }   // Stammtischpfeil: dauerhaft ruhigere Hand
 };
-const boostKind = () => !S ? 'none' : S.adrLeft > 0 ? 'adr' : S.precArmed ? 'prec' : 'none';
+const boostKind = () => {
+  if (!S) return 'none';
+  if (S.adrLeft > 0) return 'adr';
+  if (S.dartSet === 'kneipe' && S.precArmed) return 'prec';
+  if (S.dartSet === 'blitz' && S.blitzLeft > 0) return 'blitz';
+  if (S.dartSet === 'alt') return 'alt';
+  return 'none';
+};
 
 function breath(t, w) {
-  const B = BOOSTS[boostKind()];
+  const kind = boostKind();
+  if (kind === 'blitz' && t <= QUICK) {
+    // Schnellwurf aktiv und schnell losgelassen: perfektes Zielen, nur ein Hauch Zittern
+    const p = w.ph;
+    return { x: .5 * Math.sin(t * 10.7 + p[0]), y: .5 * Math.sin(t * 9.3 + p[2]), lift: 0, pause: true, unrest: .1, scatter: 1, quick: 1 - t / QUICK };
+  }
+  const B = BOOSTS[kind === 'blitz' ? 'none' : kind];
   const tt = t + w.offset, c = (tt / w.period) % 1;
   const unrest = Math.exp(-t / CALM_TIME);   // 1 beim Drücken, geht gegen 0
   const amp = (BREATH_MIN + (BREATH_START - BREATH_MIN) * unrest) * B.amp;
@@ -2209,7 +2269,7 @@ function breath(t, w) {
   };
 }
 
-function drawCross(x, y, steady, lift, unrest, kind) {
+function drawCross(x, y, steady, lift, unrest, kind, quick) {
   const [X, Y] = P(x, y);
   const r = Math.max(8, V.pxPerMm() * R.EDGE * 2 / 60) * (1 + .35 * lift) * (.7 + .6 * unrest);
   const col = steady ? '#ffd66b' : '#f3efe6';
@@ -2230,9 +2290,14 @@ function drawCross(x, y, steady, lift, unrest, kind) {
   }
   // Farbiger Ring, solange eine Fähigkeit wirkt
   if (kind !== 'none') {
-    ctx.strokeStyle = kind === 'adr' ? 'rgba(255,90,78,.85)' : 'rgba(127,227,245,.85)';
+    ctx.strokeStyle = { adr: 'rgba(255,90,78,.85)', prec: 'rgba(127,227,245,.85)', blitz: 'rgba(242,194,48,.9)', alt: 'rgba(111,211,154,.7)' }[kind];
     ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(X, Y, r * 1.55, 0, Math.PI * 2); ctx.stroke();
+  }
+  // Schnellwurf: schrumpfender Ring zeigt, wie lange der perfekte Wurf noch geht
+  if (quick > 0) {
+    ctx.strokeStyle = 'rgba(242,194,48,.95)'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(X, Y, r * 2.1, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * quick); ctx.stroke();
   }
 }
 
@@ -2240,7 +2305,7 @@ function frame(now) {
   V.render(now);
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
-    drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind());
+    drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind(), b.quick || 0);
   } else if (hover && canThrow()) {
     const [X, Y] = P(hover.x, hover.y);
     ctx.strokeStyle = 'rgba(243,239,230,.55)'; ctx.lineWidth = 1.2;
@@ -2301,7 +2366,8 @@ function newGame(o) {
   S = {
     start: o.start, level: o.level, opp: LEVELS[o.level],
     legsToWin: o.legs, legs: [0, 0], starter: o.starter, legStarter: o.starter,
-    precStock: 0, precProgress: 0, precArmed: false, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0,
+    dartSet: o.dart || 'kneipe', precStock: 0, precProgress: 0, precArmed: false,
+    blitzStock: 0, blitzProgress: 0, blitzLeft: 0, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0,
     scores: [o.start, o.start], hist: [[], []], turn: o.starter,
     visit: [], visitState: 'open', turnStart: o.start,
     darts: [], busy: false, over: false
@@ -2374,15 +2440,20 @@ function cpuDart() {
 function throwAt(p, x, y) {
   const g = S;
   g.busy = true;
-  const d = { x, y, owner: p, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 };
+  const d = { x, y, owner: p, set: p === 0 ? g.dartSet : null, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 };
   V.onThrow(d);
   g.darts.push(d);
   sfx.whoosh();
   if (p === 0) {
     // Fähigkeiten verbrauchen; normale Darts laden die Präzision auf
-    if (g.adrLeft > 0) { g.adrLeft--; if (!g.adrLeft) document.body.classList.remove('adrenaline'); }
-    else if (g.precArmed) { g.precArmed = false; g.precStock--; }
-    if (++g.precProgress >= PREC_EVERY) { g.precProgress = 0; g.precStock++; sfx.charge(); }
+    const wasAdr = g.adrLeft > 0;
+    if (wasAdr) { g.adrLeft--; if (!g.adrLeft) document.body.classList.remove('adrenaline'); }
+    // Fähigkeit des Pfeil-Sets verbrauchen und aufladen
+    const set = g.dartSet, boosted = wasAdr || (set === 'blitz' && g.blitzLeft > 0);
+    if (!wasAdr && set === 'kneipe' && g.precArmed) { g.precArmed = false; g.precStock--; }
+    else if (!wasAdr && set === 'blitz' && g.blitzLeft > 0) g.blitzLeft--;
+    if (set === 'kneipe' && ++g.precProgress >= PREC_EVERY) { g.precProgress = 0; g.precStock++; sfx.charge(); }
+    if (set === 'blitz' && !boosted && ++g.blitzProgress >= BLITZ_EVERY) { g.blitzProgress = 0; g.blitzStock++; sfx.charge(); }
     renderSkills();
   }
   setTimeout(() => { if (S === g) resolve(g, p, hit(x, y)); }, d.fly);
@@ -2390,6 +2461,7 @@ function throwAt(p, x, y) {
 
 function resolve(g, p, h) {
   if (p === 0) V.punch(g.darts[g.darts.length - 1]);
+  if (p === 0 && h.m === 3 && h.n === 20) bumpStat('t20');
   if (boardKey === 'automat' && h.r <= R.DO) sfx.edart(h.m); else sfx.thud(h.r > R.DO ? 'wall' : 'board');
   g.visit.push(h);
   const rest = g.scores[p] - h.v;
@@ -2447,7 +2519,7 @@ function win(g, p, h) {
   g.hist[p].push({ score: sum, rest: 0, bust: false });
   g.legs[p]++;
   const matchWon = g.legs[p] >= g.legsToWin;
-  if (matchWon && p === 0) { unlock('wood'); if (g.level === 'verein' || g.level === 'profi') unlock('pro'); }
+  if (matchWon && p === 0) { bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi') unlock('pro'); }
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
   if (p === 1) { V.focus('aim'); V.opponentTo('aside'); }
@@ -2514,16 +2586,31 @@ function renderTafel() {
 
 function renderSkills() {
   const g = S;
-  const stock = g ? g.precStock : 0, armed = !!g && g.precArmed, adrLeft = g ? g.adrLeft : 0;
-  const canUse = !!g && !g.over && g.turn === 0 && adrLeft === 0 && (armed || stock > 0);
-  const precBtn = $('#precBtn');
-  precBtn.disabled = !canUse;
-  precBtn.classList.toggle('ready', canUse && !armed);
-  precBtn.classList.toggle('on', armed);
-  precBtn.setAttribute('aria-pressed', String(armed));
-  $('#precFill').style.width = (g ? g.precProgress / PREC_EVERY : 0) * 100 + '%';
-  $('#precState').textContent = armed ? `nächster Dart präzise · ${stock} ges.`
-    : stock > 0 ? `${stock} gespeichert${canUse ? ' – antippen' : ''}` : '0 gespeichert';
+  const adrLeft = g ? g.adrLeft : 0, set = g ? g.dartSet : dartKey;
+  const btn = $('#precBtn');
+  btn.classList.remove('prec', 'blitz', 'alt'); btn.classList.add(set === 'kneipe' ? 'prec' : set);
+  $('#skillName').textContent = DART_INFO[set].skill;
+  const myTurn = !!g && !g.over && g.turn === 0 && adrLeft === 0;
+  let canUse = false, on = false, fill = 0, state = '';
+  if (set === 'kneipe') {
+    const stock = g ? g.precStock : 0, armed = !!g && g.precArmed;
+    canUse = myTurn && (armed || stock > 0); on = armed;
+    fill = g ? g.precProgress / PREC_EVERY : 0;
+    state = armed ? `nächster Dart präzise · ${stock} ges.` : stock > 0 ? `${stock} gespeichert${canUse ? ' – antippen' : ''}` : '0 gespeichert';
+  } else if (set === 'blitz') {
+    const stock = g ? g.blitzStock : 0, left = g ? g.blitzLeft : 0, prog = g ? g.blitzProgress : 0;
+    canUse = myTurn && left === 0 && stock > 0; on = left > 0;
+    fill = left > 0 ? left / ABILITY_DARTS : prog / BLITZ_EVERY;
+    state = left > 0 ? `aktiv · schnell werfen! noch ${left}` : stock > 0 ? `${stock} gespeichert${canUse ? ' – antippen' : ''}` : `${prog}/${BLITZ_EVERY} Würfe`;
+  } else {
+    on = true; fill = 1; state = 'dauerhaft aktiv';
+  }
+  btn.disabled = !canUse;
+  btn.classList.toggle('ready', canUse && !on);
+  btn.classList.toggle('on', on);
+  btn.setAttribute('aria-pressed', String(on));
+  $('#precFill').style.width = fill * 100 + '%';
+  $('#precState').textContent = state;
   const gapUsed = !!g && g.adrGapUsed, finUsed = !!g && g.adrFinishUsed;
   const used = gapUsed && finUsed && adrLeft === 0;
   const gap = g ? Math.max(0, g.scores[0] - g.scores[1]) : 0;
@@ -2551,12 +2638,21 @@ $('#adrBox').addEventListener('click', () => {
   triggerAdrenaline(g, 'finish');
 });
 
-// Antippen macht den nächsten Dart präzise, nochmal antippen bricht ab
+// Fähigkeit des Pfeil-Sets: Präzision scharf machen oder Schnellwurf starten
 $('#precBtn').addEventListener('click', () => {
   const g = S;
   if (!g || g.over || g.turn !== 0 || g.adrLeft > 0) return;
   sfx.init();
-  if (g.precArmed) {
+  if (g.dartSet === 'blitz') {
+    if (g.blitzLeft === 0 && g.blitzStock > 0) {
+      g.blitzStock--; g.blitzLeft = ABILITY_DARTS;
+      sfx.powerup();
+      wirt.say('Zack, zack – nicht lange zielen!');
+      hint('Schnellwurf: Lass innerhalb einer Sekunde los, dann zielst du perfekt. Noch 3 Darts.');
+    }
+  } else if (g.dartSet !== 'kneipe') {
+    return;
+  } else if (g.precArmed) {
     g.precArmed = false;
     hint('Präzision abgebrochen – der Pfeil bleibt gespeichert.');
   } else if (g.precStock > 0) {
@@ -2579,7 +2675,7 @@ function openMenu() {
 function startFromMenu() {
   sfx.init();
   const val = name => document.querySelector(`#menuForm input[name="${name}"]:checked`).value;
-  newGame({ start: +val('start'), level: val('level'), starter: +val('starter'), legs: +val('legs') });
+  newGame({ start: +val('start'), level: val('level'), starter: +val('starter'), legs: +val('legs'), dart: dartKey });
 }
 $('#startBtn').addEventListener('click', startFromMenu);
 $('#menuForm').addEventListener('submit', e => { e.preventDefault(); startFromMenu(); });
@@ -2615,6 +2711,51 @@ function toast(title, text) {
   el.hidden = false; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
   clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 4500);
 }
+// Pfeil-Symbol für das Menü
+function dartIcon(k) {
+  const d = DART_INFO[k], c = document.createElement('canvas'); c.width = 170; c.height = 52;
+  const g = c.getContext('2d'); g.translate(6, 26);
+  g.fillStyle = '#c9ccd2'; g.beginPath(); g.moveTo(0, 0); g.lineTo(30, -2.5); g.lineTo(30, 2.5); g.closePath(); g.fill();
+  const gr = g.createLinearGradient(0, -7, 0, 7); gr.addColorStop(0, '#f2f2f2'); gr.addColorStop(.45, d.barrel); gr.addColorStop(1, '#1b1b1b');
+  g.fillStyle = gr; g.fillRect(30, -7, 46, 14);
+  g.fillStyle = 'rgba(0,0,0,.35)'; for (let i = 0; i < 6; i++) g.fillRect(36 + i * 6.5, -7, 2, 14);
+  g.fillStyle = '#161616'; g.fillRect(76, -3, 32, 6);
+  g.fillStyle = d.flight; g.beginPath(); g.moveTo(102, 0); g.lineTo(118, -20); g.lineTo(156, -20); g.lineTo(150, 0); g.lineTo(156, 20); g.lineTo(118, 20); g.closePath(); g.fill();
+  g.strokeStyle = d.edge; g.lineWidth = 2; g.stroke();
+  g.strokeStyle = d.stripe; g.lineWidth = 3; g.beginPath(); g.moveTo(120, -10); g.lineTo(146, -10); g.moveTo(120, 10); g.lineTo(146, 10); g.stroke();
+  return c.toDataURL();
+}
+const dartIcons = {};
+function renderDartChips() {
+  $('#dartChips').innerHTML = Object.entries(DART_INFO).map(([k, d]) => {
+    const locked = !dartUnlocked(k);
+    if (!dartIcons[k]) dartIcons[k] = dartIcon(k);
+    const prog = locked ? `${LOCK}${d.req}: ${Math.min(stats[d.stat] || 0, d.need)}/${d.need}` : d.desc;
+    return `<label class="chip board-chip dart-chip${locked ? ' locked' : ''}"><input type="radio" name="dart" id="dart-${k}" value="${k}"${locked ? ' disabled' : ''}${k === dartKey ? ' checked' : ''}><span><img src="${dartIcons[k]}" alt="" class="dart"><b>${d.name}</b><small>${prog}</small></span></label>`;
+  }).join('');
+}
+function setDart(k) {
+  if (!dartUnlocked(k)) return;
+  dartKey = k;
+  try { localStorage.setItem('dk-dart', k); } catch (e) {}
+  V.resetDarts();
+  if (!S) renderSkills();
+}
+$('#dartChips').addEventListener('change', e => { if (e.target.name === 'dart') setDart(e.target.value); });
+// Statistik zählen und neue Pfeile freischalten
+function bumpStat(key) {
+  const before = Object.keys(DART_INFO).filter(dartUnlocked);
+  stats[key] = (stats[key] || 0) + 1;
+  try { localStorage.setItem('dk-stats', JSON.stringify(stats)); } catch (e) {}
+  for (const k of Object.keys(DART_INFO)) {
+    if (!dartUnlocked(k) || before.includes(k)) continue;
+    toast('Neuer Pfeil freigeschaltet', `${DART_INFO[k].name} mit „${DART_INFO[k].skill}“ – im Menü unter „Pfeile“ auswählen.`);
+    sfx.powerup();
+    setTimeout(() => wirt.say(`Neue Pfeile frei: ${DART_INFO[k].name}!`), 2600);
+  }
+  renderDartChips();
+}
+
 function unlock(k) {
   if (unlocked.has(k)) return;
   unlocked.add(k);
@@ -2627,12 +2768,13 @@ function unlock(k) {
 
 setBoard(boardKey);
 renderBoardChips();
+renderDartChips();
 makePreviews();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(makePreviews);
 $('#toMenu').addEventListener('click', openMenu);
 $('#rematch').addEventListener('click', () => {
   sfx.init();
-  newGame({ start: S.start, level: S.level, starter: 1 - S.starter, legs: S.legsToWin });
+  newGame({ start: S.start, level: S.level, starter: 1 - S.starter, legs: S.legsToWin, dart: S.dartSet });
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !menu.hidden && S && !S.over) menu.hidden = true;
