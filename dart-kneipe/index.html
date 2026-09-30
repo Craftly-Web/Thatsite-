@@ -204,6 +204,10 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .board-wrap .hint{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:none;margin:0;padding:22px 16px 10px;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.6));color:#f1e3c8;font-size:15px;pointer-events:none;border-radius:0 0 14px 14px}
 .board-wrap.is3d canvas{border-radius:14px}
 .board-wrap.is3d::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:14px;background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.42) 100%)}
+/* Heinz' Sprechblase klein in der Spielbühne, damit man sie beim Werfen sieht */
+.mini-bubble{position:absolute;top:10px;left:10px;z-index:3;display:flex;align-items:center;gap:8px;max-width:min(72%,440px);padding:5px 12px 5px 5px;border-radius:24px;background:rgba(251,245,230,.84);color:#2a170b;font:600 15px/1.25 var(--ui);box-shadow:0 6px 16px rgba(0,0,0,.35);pointer-events:none}
+.board-wrap .mini-bubble canvas{position:static;inset:auto;width:36px;height:36px;border-radius:50%;flex:none;background:#2a170b;box-shadow:0 0 0 2px rgba(106,66,36,.9);touch-action:auto}
+.mini-bubble.pop{animation:pop .28s ease-out}
 /* Hinweis bei neu freigeschalteter Scheibe */
 .toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top, 0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 32px);background:#fbf5e6;color:#2a170b;font:600 16px/1.3 var(--ui);padding:10px 16px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.55);text-align:center}
 .toast strong{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#8a5a1a}
@@ -374,24 +378,25 @@ legend{padding:0;margin-bottom:8px}
     </div>
     <div class="actions">
       <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
-      <button class="btn ghost" id="menuBtn" type="button"><span class="long">Neues Spiel</span><span class="short">Menü</span></button>
+      <button class="btn ghost" id="menuBtn" type="button"><span class="long" data-i18n="menu.long">Neues Spiel</span><span class="short" data-i18n="menu.short">Menü</span></button>
     </div>
   </header>
 
   <main class="stage">
-    <section class="bar" aria-label="Tresen">
+    <section class="bar" aria-label="Tresen" data-i18n-aria="bar.aria">
       <div class="bar-frame" id="barWrap">
         <canvas id="bar" aria-hidden="true"></canvas>
         <div class="bubble" id="bubble" aria-live="polite" hidden></div>
       </div>
-      <div class="bar-label">Heinz, der Wirt</div>
+      <div class="bar-label" data-i18n="bar.label">Heinz, der Wirt</div>
     </section>
 
-    <section class="board-col" aria-label="Dartscheibe">
+    <section class="board-col" aria-label="Dartscheibe" data-i18n-aria="board.aria">
       <div class="board-wrap" id="boardWrap">
         <canvas id="scene" aria-hidden="true" hidden></canvas>
-        <canvas id="board" aria-label="Dartscheibe – drücken und halten zum Zielen, loslassen zum Werfen"></canvas>
+        <canvas id="board" aria-label="Dartscheibe – drücken und halten zum Zielen, loslassen zum Werfen" data-i18n-aria="canvas.aria"></canvas>
         <div class="caller" id="caller" aria-live="polite"></div>
+        <div class="mini-bubble" id="miniBubble" aria-hidden="true" hidden><canvas id="miniHeinz" width="96" height="96"></canvas><span id="miniText"></span></div>
       </div>
       <div class="skills" id="skills">
         <button type="button" class="skill prec" id="precBtn" disabled>
@@ -399,33 +404,33 @@ legend{padding:0;margin-bottom:8px}
           <span class="skill-meter"><i id="precFill"></i></span>
         </button>
         <button type="button" class="skill adr" id="adrBox" disabled>
-          <span class="skill-top"><span class="skill-name">Adrenalin</span><span class="skill-state" id="adrState">150 Rückstand oder Gegner-Finish</span></span>
+          <span class="skill-top"><span class="skill-name" data-i18n="adr.name">Adrenalin</span><span class="skill-state" id="adrState">150 Rückstand oder Gegner-Finish</span></span>
           <span class="skill-meter"><i id="adrFill"></i></span>
         </button>
       </div>
       <div class="hint" id="hint">Drücken &amp; halten, ausatmen – in der goldenen Atempause loslassen</div>
     </section>
 
-    <aside class="tafel" aria-label="Spielstand">
+    <aside class="tafel" aria-label="Spielstand" data-i18n-aria="tafel.aria">
       <div class="tafel-head"><span id="modeLabel">501 · Double Out</span><span id="levelLabel"></span></div>
       <div class="cols">
         <div class="col" id="col0">
-          <h2>Du</h2>
+          <h2 data-i18n="you">Du</h2>
           <div class="rest" id="rest0">501</div>
-          <div class="ppd" id="ppd0" title="Points per Dart: Punkte je geworfenem Dart im Match">PPD <b>–</b></div>
+          <div class="ppd" id="ppd0" title="Points per Dart: Punkte je geworfenem Dart im Match" data-i18n-title="ppd.title">PPD <b>–</b></div>
           <div class="legs" id="legs0"></div>
           <ol class="hist" id="hist0"></ol>
         </div>
         <div class="col" id="col1">
           <h2 id="name1">Kalle</h2>
           <div class="rest" id="rest1">501</div>
-          <div class="ppd" id="ppd1" title="Points per Dart: Punkte je geworfenem Dart im Match">PPD <b>–</b></div>
+          <div class="ppd" id="ppd1" title="Points per Dart: Punkte je geworfenem Dart im Match" data-i18n-title="ppd.title">PPD <b>–</b></div>
           <div class="legs" id="legs1"></div>
           <ol class="hist" id="hist1"></ol>
         </div>
       </div>
       <div class="visit">
-        <div class="visit-who" id="visitWho">Deine Aufnahme</div>
+        <div class="visit-who" id="visitWho" data-i18n="visit.mine">Deine Aufnahme</div>
         <div class="slots">
           <div class="slot" id="slot0">·</div>
           <div class="slot" id="slot1">·</div>
@@ -444,16 +449,23 @@ legend{padding:0;margin-bottom:8px}
   <form class="panel" id="menuForm">
     <div class="panel-body">
     <h2 id="menuTitle">Dart Kneipe</h2>
-    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz ruft die Punkte, also Ton an!</p>
+    <p data-i18n="menu.intro">Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz ruft die Punkte, also Ton an!</p>
     <fieldset>
-      <legend>Startwert</legend>
+      <legend>Sprache · Language</legend>
+      <div class="chips" id="langChips">
+        <label class="chip"><input type="radio" name="lang" id="langDe" value="de"><span>Deutsch</span></label>
+        <label class="chip"><input type="radio" name="lang" id="langEn" value="en"><span>English</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend data-i18n="lg.start">Startwert</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="start" id="start501" value="501" checked><span>501</span></label>
         <label class="chip"><input type="radio" name="start" id="start301" value="301"><span>301</span></label>
       </div>
     </fieldset>
     <fieldset>
-      <legend>Legs zum Sieg</legend>
+      <legend data-i18n="lg.legs">Legs zum Sieg</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="legs" id="legs1x" value="1" checked><span>1</span></label>
         <label class="chip"><input type="radio" name="legs" id="legs2x" value="2"><span>2</span></label>
@@ -464,43 +476,43 @@ legend{padding:0;margin-bottom:8px}
       </div>
     </fieldset>
     <fieldset>
-      <legend>Pfeile</legend>
+      <legend data-i18n="lg.darts">Pfeile</legend>
       <div class="chips boards" id="dartChips"></div>
     </fieldset>
     <fieldset>
-      <legend>Scheibe</legend>
+      <legend data-i18n="lg.board">Scheibe</legend>
       <div class="chips boards" id="boardChips"></div>
     </fieldset>
     <fieldset>
-      <legend>Gegner</legend>
+      <legend data-i18n="lg.opp">Gegner</legend>
       <div class="chips">
-        <label class="chip"><input type="radio" name="level" id="lvlA" value="anfaenger"><span>Tante Gerda<small>Anfängerin</small></span></label>
-        <label class="chip"><input type="radio" name="level" id="lvlB" value="stammgast" checked><span>Kalle<small>Stammgast</small></span></label>
-        <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span>Otto<small>Vereinsspieler</small></span></label>
-        <label class="chip"><input type="radio" name="level" id="lvlD" value="profi"><span>Die Maschine<small>Profi</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlA" value="anfaenger"><span><span data-i18n="lvl.anfaenger">Tante Gerda</span><small data-i18n="lvl.anfaenger.l">Anfängerin</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlB" value="stammgast" checked><span><span data-i18n="lvl.stammgast">Kalle</span><small data-i18n="lvl.stammgast.l">Stammgast</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span><span data-i18n="lvl.verein">Otto</span><small data-i18n="lvl.verein.l">Vereinsspieler</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlD" value="profi"><span><span data-i18n="lvl.profi">Die Maschine</span><small data-i18n="lvl.profi.l">Profi</small></span></label>
       </div>
     </fieldset>
     <fieldset>
-      <legend>Anwurf</legend>
+      <legend data-i18n="lg.throw">Anwurf</legend>
       <div class="chips">
-        <label class="chip"><input type="radio" name="starter" id="startMe" value="0" checked><span>Du</span></label>
-        <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span>Gegner</span></label>
+        <label class="chip"><input type="radio" name="starter" id="startMe" value="0" checked><span data-i18n="starter.me">Du</span></label>
+        <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span data-i18n="starter.opp">Gegner</span></label>
       </div>
     </fieldset>
     <details class="howto">
-      <summary>So wird gespielt</summary>
-      <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
-      <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
-      <p class="rules"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
-      <p class="rules"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
-      <p class="rules"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.</p>
-      <p class="rules"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
-      <p class="rules"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
+      <summary data-i18n="howto">So wird gespielt</summary>
+      <p class="rules" data-i18n-html="rules.aim"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
+      <p class="rules" data-i18n-html="rules.do"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
+      <p class="rules" data-i18n-html="rules.prec"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
+      <p class="rules" data-i18n-html="rules.adr"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
+      <p class="rules" data-i18n-html="rules.darts"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.</p>
+      <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
+      <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
     <div class="row panel-foot">
-      <button type="button" class="btn ghost" id="resumeBtn" hidden>Zurück zum Spiel</button>
-      <button type="button" class="btn" id="startBtn">Anwerfen</button>
+      <button type="button" class="btn ghost" id="resumeBtn" hidden data-i18n="btn.resume">Zurück zum Spiel</button>
+      <button type="button" class="btn" id="startBtn" data-i18n="btn.start">Anwerfen</button>
     </div>
   </form>
 </div>
@@ -510,8 +522,8 @@ legend{padding:0;margin-bottom:8px}
     <h2 id="endTitle">Game shot</h2>
     <p id="endText"></p>
     <div class="row">
-      <button type="button" class="btn ghost" id="toMenu">Einstellungen</button>
-      <button type="button" class="btn" id="rematch">Revanche</button>
+      <button type="button" class="btn ghost" id="toMenu" data-i18n="btn.settings">Einstellungen</button>
+      <button type="button" class="btn" id="rematch" data-i18n="btn.rematch">Revanche</button>
     </div>
   </div>
 </div>
@@ -597,6 +609,156 @@ function gauss2() {
   return [m * Math.cos(2 * Math.PI * v), m * Math.sin(2 * Math.PI * v)];
 }
 const pick = list => list[Math.floor(Math.random() * list.length)];
+
+/* ---------- Sprache: Deutsch und Englisch ---------- */
+const I18N = {
+  de: {
+    'mute.on': 'Ton einschalten', 'mute.off': 'Ton ausschalten',
+    'menu.long': 'Neues Spiel', 'menu.short': 'Menü',
+    'bar.aria': 'Tresen', 'bar.label': 'Heinz, der Wirt',
+    'board.aria': 'Dartscheibe', 'canvas.aria': 'Dartscheibe – drücken und halten zum Zielen, loslassen zum Werfen',
+    'adr.name': 'Adrenalin', 'hint.aim': 'Drücken & halten, ausatmen – in der goldenen Atempause loslassen',
+    'tafel.aria': 'Spielstand', 'you': 'Du', 'guest': 'Gast',
+    'ppd.title': 'Points per Dart: Punkte je geworfenem Dart im Match',
+    'visit.mine': 'Deine Aufnahme', 'visit.opp': '{name} wirft', 'bust.word': 'Überworfen',
+    'menu.intro': 'Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz ruft die Punkte, also Ton an!',
+    'lg.start': 'Startwert', 'lg.legs': 'Legs zum Sieg', 'lg.darts': 'Pfeile', 'lg.board': 'Scheibe', 'lg.opp': 'Gegner', 'lg.throw': 'Anwurf',
+    'starter.me': 'Du', 'starter.opp': 'Gegner', 'howto': 'So wird gespielt',
+    'rules.aim': '<strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.',
+    'rules.do': '<strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.',
+    'rules.prec': '<strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.',
+    'rules.adr': '<strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.',
+    'rules.darts': '<strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.',
+    'rules.boards': '<strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.',
+    'rules.legs': '<strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.',
+    'btn.resume': 'Zurück zum Spiel', 'btn.start': 'Anwerfen', 'btn.settings': 'Einstellungen', 'btn.rematch': 'Revanche',
+    'lvl.anfaenger': 'Tante Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'Die Maschine',
+    'lvl.anfaenger.l': 'Anfängerin', 'lvl.stammgast.l': 'Stammgast', 'lvl.verein.l': 'Vereinsspieler', 'lvl.profi.l': 'Profi',
+    'board.classic': 'Klassik', 'board.classic.d': 'Sisal im Kneipenlicht',
+    'board.wood': 'Holz', 'board.wood.d': 'Eiche mit Brandzahlen', 'board.wood.r': 'Gewinne ein Match',
+    'board.automat': 'Dartautomat', 'board.automat.d': 'Soft-Tip mit Lauflicht', 'board.automat.r': 'Wirf 100+ in einer Aufnahme',
+    'board.pro': 'Top Liga', 'board.pro.d': 'Turnierscheibe mit Ringlicht', 'board.pro.r': 'Besiege Otto oder Die Maschine',
+    'dart.kneipe': 'Kneipenpfeil', 'dart.kneipe.s': 'Präzision', 'dart.kneipe.d': 'Präzision · jeder 3. Dart',
+    'dart.blitz': 'Blitzpfeil', 'dart.blitz.s': 'Schnellwurf', 'dart.blitz.d': 'Schnell werfen = perfekt', 'dart.blitz.r': 'Triple 20',
+    'dart.alt': 'Stammtischpfeil', 'dart.alt.s': 'Alt eingesessen', 'dart.alt.d': 'Dauerhaft ruhige Hand', 'dart.alt.r': 'Matchsiege',
+    'prec.armed': 'nächster Dart präzise · {n} ges.', 'stock': '{n} gespeichert', 'stock.tap': ' – antippen',
+    'blitz.on': 'aktiv · schnell werfen! noch {n}', 'blitz.prog': '{n}/{m} Würfe', 'alt.on': 'dauerhaft aktiv',
+    'adr.on': 'aktiv · noch {n}', 'adr.tap': 'Gegner auf Finish – antippen!', 'adr.used': 'wieder im nächsten Leg', 'adr.fin': 'bei Gegner-Finish',
+    'adr.gap': 'Rückstand {g}/{m}', 'adr.from': 'ab {m} Rückstand', 'adr.gapfin': 'Rückstand {g}/{m} · Finish', 'adr.idle': '150 Rückstand oder Gegner-Finish',
+    'hint.oche': '{name} steht am Oche …', 'hint.adr': 'Adrenalin! Deine nächsten 3 Darts sind sehr präzise.',
+    'hint.adrfin': '{name} steht auf {r} – Adrenalin! Deine nächsten 3 Darts sind sehr präzise.',
+    'hint.adroffer': '{name} steht auf {r} – tippe auf Adrenalin, wenn du es brauchst.',
+    'hint.blitz': 'Schnellwurf: Lass innerhalb einer Sekunde los, dann zielst du perfekt. Noch 3 Darts.',
+    'hint.preccancel': 'Präzision abgebrochen – der Pfeil bleibt gespeichert.', 'hint.prec': 'Präzision: Dein nächster Dart ist deutlich ruhiger.',
+    'hint.legme': 'Leg an dich · Stand {a}:{b} · nächstes Leg gleich …', 'hint.legopp': 'Leg an {name} · Stand {a}:{b} · nächstes Leg gleich …',
+    'hint.checkme': 'Checkout! Heinz zapft dir eins aufs Haus.', 'hint.checkopp': '{name} hat gecheckt.',
+    'call.adr': 'Adrenalin!',
+    'end.win': 'Game shot – du gewinnst!', 'end.lose': '{name} gewinnt',
+    'end.textme': 'Du checkst {r} mit {d}, nach {n} Darts. {name} stand noch auf {o}.',
+    'end.textopp': '{name} checkt {r} mit {d}, nach {n} Darts. Dir fehlten noch {o} Punkte.',
+    'end.bull': 'dem Bull', 'end.legs': ' Endstand {a}:{b} in Legs.', 'end.ppd': ' Points per Dart: du {a}, {name} {b}.',
+    'toast.board': 'Neue Scheibe freigeschaltet', 'toast.boardx': '{name} – im Menü unter „Scheibe“ auswählen.',
+    'toast.dart': 'Neuer Pfeil freigeschaltet', 'toast.dartx': '{name} mit „{skill}“ – im Menü unter „Pfeile“ auswählen.',
+    'toast.test': 'Testmodus', 'toast.testx': 'Alle Scheiben und Pfeile sind freigeschaltet.',
+    // Heinz' Sprüche
+    'w.greet': ['Moin! Wirf ’ne Runde mit.', 'Die Scheibe ist frisch gebürstet. Blamier sie nicht.', 'Schuhe abputzen, Pfeile schärfen, rein da!'],
+    'w.start': ['Oche frei! Und bitte nicht die Lampe treffen.', 'Gegen {name}? Ich hol schon mal den Verbandskasten.', 'Erst werfen, dann trinken. Andersrum hatten wir schon – wurde teuer.', 'Wer verliert, zahlt die Runde. Steht so im Grundgesetz.'],
+    'w.bust': ['Überworfen! Mathe war wohl nicht dein Leistungskurs.', 'Zu viel des Guten – wie meine zweite Portion Schnitzel.', 'Erst rechnen, dann werfen! Soll ich dir ’nen Bierdeckel geben?', 'Überworfen. Die Scheibe lacht dich aus. Ich auch.'],
+    'w.bustopp': ['{name} hat sich überworfen. Hehe, das schreib ich mir auf.', 'Ha! Auch {name} kann nicht rechnen.'],
+    'w.180': ['HUNDERTACHTZIG! Die Runde geht auf mich – aber nur diese!', '180! Ich ruf gleich beim Fernsehen an!'],
+    'w.180opp': ['180 für {name}! Da hat wohl einer heimlich geübt.', '180 von {name}! Ich brauch ’nen Schnaps.'],
+    'w.ton': ['Stark! Die Scheibe wackelt noch.', 'Ton! So wirft man in der Kreisliga.', 'Da klingelt die Kasse – bei mir.', 'Nicht schlecht! Fast so gut wie ich 1987.'],
+    'w.tonopp': ['Nicht schlecht, {name}.', '{name} ist heute heiß. Oder es liegt am Pils.'],
+    'w.weak': ['Das war nix. Also wirklich gar nix.', 'Ruhige Hand – du bist hier nicht beim Tanztee.', 'Die Scheibe hängt da drüben, falls du sie suchst.', 'Soll ich dir die Scheibe größer malen?', 'Mein Dackel wirft besser. Und der hat keine Daumen.'],
+    'w.adr': ['Adrenalin! Jetzt zeig’s ihnen!', 'Herzrasen! Jetzt oder nie!'], 'w.adrfin': ['Der steht auf Finish – jetzt oder nie!'],
+    'w.adroffer': ['Der steht auf Finish! Hol dir dein Adrenalin.', 'Achtung, der checkt gleich! Adrenalin, los!'],
+    'w.prec': ['Konzentration … nicht atmen … doch, atmen!', 'Jetzt ganz ruhig. Wie beim Bierzapfen.'],
+    'w.blitz': ['Zack, zack – nicht lange zielen, einfach machen!', 'Schnell, bevor dein Bier warm wird!'],
+    'w.legme': ['Leg gewonnen! Weiter so.', 'Leg für dich! Ich schreib’s an die Tafel.'],
+    'w.legopp': ['Leg an {name}. Kopf hoch, das Bier ist noch kalt.', '{name} holt das Leg. Da geht noch was!'],
+    'w.matchme': ['Game shot! Ein Pils aufs Haus – ausnahmsweise.', 'Sieg! Ich häng dein Foto neben die Stadtmeister.'],
+    'w.matchopp': ['{name} holt das Match. Ich stell dir schon mal ein Trostbier hin.', 'Verloren. Aber schön war’s. Also fast.'],
+    'w.newboard': 'Neue Scheibe frei: {name}!', 'w.newdart': 'Neue Pfeile frei: {name}!',
+    'w.idle': ['Früher war hier ’ne Kegelbahn. Die Pins vermissen mich.', 'Wer hat schon wieder den Kreideschwamm geklaut?', 'Mein Rekord? 181. Frag nicht, wie.', 'Das Pils ist so frisch, das hat noch keinen Namen.', 'Kalle schuldet mir seit 1998 drei Bier.', 'Heute Abend Liga. Ich bin Schiedsrichter und Kellner. Und Putzkraft.']
+  },
+  en: {
+    'mute.on': 'Sound on', 'mute.off': 'Sound off',
+    'menu.long': 'New game', 'menu.short': 'Menu',
+    'bar.aria': 'Bar', 'bar.label': 'Heinz, the landlord',
+    'board.aria': 'Dartboard', 'canvas.aria': 'Dartboard – press and hold to aim, release to throw',
+    'adr.name': 'Adrenaline', 'hint.aim': 'Press & hold, breathe out – release in the golden pause',
+    'tafel.aria': 'Scoreboard', 'you': 'You', 'guest': 'Guest',
+    'ppd.title': 'Points per dart: points per dart thrown in this match',
+    'visit.mine': 'Your visit', 'visit.opp': '{name} throwing', 'bust.word': 'Bust',
+    'menu.intro': 'One leg against a regular from the bar. First to hit exactly zero wins. Heinz calls the scores, so turn the sound on!',
+    'lg.start': 'Starting score', 'lg.legs': 'Legs to win', 'lg.darts': 'Darts', 'lg.board': 'Board', 'lg.opp': 'Opponent', 'lg.throw': 'First throw',
+    'starter.me': 'You', 'starter.opp': 'Opponent', 'howto': 'How to play',
+    'rules.aim': '<strong>Throwing:</strong> Press and hold on the board. The crosshair breathes with you: it rises and grows as you breathe in and sinks as you breathe out. In the short pause between breaths it glows gold and nearly stands still – release then. The longer you hold, the steadier your hand and the smaller the crosshair. Patience pays. On phones the crosshair sits above your finger.',
+    'rules.do': '<strong>Double out:</strong> Your last dart must hit a double; the bull counts as a double. Going below zero, to one, or to zero without a double is a bust, and the whole visit doesn’t count.',
+    'rules.prec': '<strong>Precision:</strong> Every 3rd dart you throw earns you a precise dart. They are saved, so you can keep them until the end of the match, for a checkout for example. Tap the button and your next dart is precise; tap again to cancel.',
+    'rules.adr': '<strong>Adrenaline:</strong> Your next 3 darts become very precise. If you start a visit at least 150 points behind, it kicks in by itself. When your opponent is on a finish – able to check out with three darts – the adrenaline button glows red and you trigger it whenever you like. Each happens once per leg.',
+    'rules.darts': '<strong>Darts:</strong> The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. The lightning dart unlocks after 5 treble 20s, the regulars’ dart after 3 match wins.',
+    'rules.boards': '<strong>Boards:</strong> The wooden board unlocks with your first match win, the dart machine with a visit of 100 or more, and the top league board by beating Otto or The Machine. Your browser remembers what you unlocked.',
+    'rules.legs': '<strong>Legs:</strong> First to win the chosen number of legs takes the match. The first throw alternates every leg.',
+    'btn.resume': 'Back to game', 'btn.start': 'Game on', 'btn.settings': 'Settings', 'btn.rematch': 'Rematch',
+    'lvl.anfaenger': 'Auntie Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'The Machine',
+    'lvl.anfaenger.l': 'Beginner', 'lvl.stammgast.l': 'Regular', 'lvl.verein.l': 'Club player', 'lvl.profi.l': 'Pro',
+    'board.classic': 'Classic', 'board.classic.d': 'Sisal in pub light',
+    'board.wood': 'Wood', 'board.wood.d': 'Oak with burnt numbers', 'board.wood.r': 'Win a match',
+    'board.automat': 'Dart machine', 'board.automat.d': 'Soft tip with chaser lights', 'board.automat.r': 'Score 100+ in one visit',
+    'board.pro': 'Top League', 'board.pro.d': 'Tournament board with ring light', 'board.pro.r': 'Beat Otto or The Machine',
+    'dart.kneipe': 'Pub dart', 'dart.kneipe.s': 'Precision', 'dart.kneipe.d': 'Precision · every 3rd dart',
+    'dart.blitz': 'Lightning dart', 'dart.blitz.s': 'Quick throw', 'dart.blitz.d': 'Throw fast = perfect', 'dart.blitz.r': 'Treble 20',
+    'dart.alt': 'Regulars’ dart', 'dart.alt.s': 'Old hand', 'dart.alt.d': 'Always a steady hand', 'dart.alt.r': 'Match wins',
+    'prec.armed': 'next dart precise · {n} saved', 'stock': '{n} saved', 'stock.tap': ' – tap',
+    'blitz.on': 'active · throw fast! {n} left', 'blitz.prog': '{n}/{m} throws', 'alt.on': 'always active',
+    'adr.on': 'active · {n} left', 'adr.tap': 'Opponent on a finish – tap!', 'adr.used': 'back next leg', 'adr.fin': 'on opponent finish',
+    'adr.gap': 'behind {g}/{m}', 'adr.from': 'from {m} behind', 'adr.gapfin': 'behind {g}/{m} · finish', 'adr.idle': '150 behind or opponent finish',
+    'hint.oche': '{name} steps up to the oche …', 'hint.adr': 'Adrenaline! Your next 3 darts are very precise.',
+    'hint.adrfin': '{name} is on {r} – adrenaline! Your next 3 darts are very precise.',
+    'hint.adroffer': '{name} is on {r} – tap Adrenaline when you need it.',
+    'hint.blitz': 'Quick throw: release within one second for perfect aim. 3 darts left.',
+    'hint.preccancel': 'Precision cancelled – the dart stays saved.', 'hint.prec': 'Precision: your next dart is much steadier.',
+    'hint.legme': 'Leg to you · {a}:{b} · next leg coming …', 'hint.legopp': 'Leg to {name} · {a}:{b} · next leg coming …',
+    'hint.checkme': 'Checkout! Heinz pours you one on the house.', 'hint.checkopp': '{name} checked out.',
+    'call.adr': 'Adrenaline!',
+    'end.win': 'Game shot – you win!', 'end.lose': '{name} wins',
+    'end.textme': 'You check out {r} with {d} after {n} darts. {name} was still on {o}.',
+    'end.textopp': '{name} checks out {r} with {d} after {n} darts. You still needed {o}.',
+    'end.bull': 'the bull', 'end.legs': ' Final score {a}:{b} in legs.', 'end.ppd': ' Points per dart: you {a}, {name} {b}.',
+    'toast.board': 'New board unlocked', 'toast.boardx': '{name} – pick it in the menu under “Board”.',
+    'toast.dart': 'New darts unlocked', 'toast.dartx': '{name} with “{skill}” – pick them in the menu under “Darts”.',
+    'toast.test': 'Test mode', 'toast.testx': 'All boards and darts are unlocked.',
+    'w.greet': ['Evening! Fancy a game?', 'Board’s freshly brushed. Don’t embarrass it.', 'Wipe your feet, sharpen your darts, off you go!'],
+    'w.start': ['Oche’s all yours. Please mind the lamp.', 'Against {name}? I’ll fetch the first-aid kit.', 'Throw first, drink later. The other way round got expensive.', 'Loser buys the round. It’s in the constitution.'],
+    'w.bust': ['Bust! Maths wasn’t your strong subject, was it?', 'Too much of a good thing – like my second schnitzel.', 'Count first, then throw! Want a beer mat to do the sums?', 'Bust. The board’s laughing at you. So am I.'],
+    'w.bustopp': ['{name} busted. Hehe, I’m writing that down.', 'Ha! {name} can’t count either.'],
+    'w.180': ['ONE-EIGHTY! This round’s on me – just this one!', '180! I’m ringing the telly!'],
+    'w.180opp': ['180 for {name}! Someone’s been practising in secret.', '180 from {name}! I need a schnapps.'],
+    'w.ton': ['Lovely! The board’s still shaking.', 'A ton! Proper pub-league stuff.', 'Ka-ching! That’s the till – mine.', 'Not bad! Almost as good as me in ’87.'],
+    'w.tonopp': ['Not bad, {name}.', '{name}’s on fire tonight. Or it’s the lager.'],
+    'w.weak': ['That was nothing. Absolutely nothing.', 'Steady hand – this isn’t a dance class.', 'The board’s over there, in case you’re looking.', 'Shall I paint you a bigger board?', 'My dachshund throws better. He hasn’t got thumbs.'],
+    'w.adr': ['Adrenaline! Show ’em!', 'Heart’s racing! Now or never!'], 'w.adrfin': ['He’s on a finish – now or never!'],
+    'w.adroffer': ['He’s on a finish! Grab your adrenaline.', 'Careful, he’s about to check out! Adrenaline, go!'],
+    'w.prec': ['Focus… don’t breathe… no wait, do breathe!', 'Nice and calm now. Like pulling a pint.'],
+    'w.blitz': ['Chop chop – don’t think, just throw!', 'Quick, before your beer gets warm!'],
+    'w.legme': ['Leg’s yours! Keep going.', 'Leg to you! I’ll chalk it up.'],
+    'w.legopp': ['Leg to {name}. Chin up, the beer’s still cold.', '{name} takes the leg. Still all to play for!'],
+    'w.matchme': ['Game shot! A pint on the house – just this once.', 'Winner! Your photo goes next to the town champions.'],
+    'w.matchopp': ['{name} takes the match. I’ll pour you a consolation pint.', 'Lost. But it was lovely. Well, almost.'],
+    'w.newboard': 'New board unlocked: {name}!', 'w.newdart': 'New darts unlocked: {name}!',
+    'w.idle': ['This used to be a bowling alley. The pins miss me.', 'Who nicked the chalk sponge again?', 'My record? 181. Don’t ask how.', 'The lager’s so fresh it hasn’t got a name yet.', 'Kalle has owed me three beers since 1998.', 'League night tonight. I’m referee, barman and cleaner.']
+  }
+};
+let lang = 'de';
+try { const l = localStorage.getItem('dk-lang'); lang = l === 'en' || l === 'de' ? l : (navigator.language || '').toLowerCase().startsWith('de') ? 'de' : 'en'; } catch (e) {}
+// Text holen und Platzhalter wie {name} ersetzen; Listen liefern einen zufälligen Spruch
+function t(key, vars = {}) {
+  let s = I18N[lang][key] ?? I18N.de[key] ?? key;
+  if (Array.isArray(s)) s = s[Math.floor(Math.random() * s.length)];
+  return s.replace(/\{(\w+)\}/g, (m, k) => vars[k] ?? m);
+}
+
 
 /* ---------- Sound (Web Audio, alles synthetisch) ---------- */
 const sfx = (() => {
@@ -894,7 +1056,7 @@ function paintMute() {
   const m = sfx.muted, b = $('#muteBtn');
   b.innerHTML = m ? ICON_OFF : ICON_ON;
   b.setAttribute('aria-pressed', String(m));
-  b.setAttribute('aria-label', m ? 'Ton einschalten' : 'Ton ausschalten');
+  b.setAttribute('aria-label', m ? t('mute.on') : t('mute.off'));
 }
 try { sfx.setMuted(localStorage.getItem('dk-muted') === '1'); } catch (e) {}
 paintMute();
@@ -1341,7 +1503,19 @@ const wirt = (() => {
     requestAnimationFrame(loop);
   }
 
+  const mini = $('#miniBubble'), miniText = $('#miniText'), miniCv = $('#miniHeinz');
+  let miniTimer = 0, lastSay = performance.now();
+  // Porträt aus dem Tresen-Bild ausschneiden: Kopf von Heinz
+  function portrait() {
+    const mg = miniCv.getContext('2d'), hx = (160 + (act.name === 'pour' ? 16 : 0)) * s, hy = 172 * s, r = 56 * s;
+    mg.fillStyle = '#2a170b'; mg.fillRect(0, 0, 96, 96);
+    try { mg.drawImage(cv, hx - r, hy - r, r * 2, r * 2, 0, 0, 96, 96); } catch (e) {}
+  }
   function say(text) {
+    lastSay = performance.now();
+    miniText.textContent = text; portrait(); mini.hidden = false;
+    mini.classList.remove('pop'); void mini.offsetWidth; mini.classList.add('pop');
+    clearTimeout(miniTimer); miniTimer = setTimeout(() => { mini.hidden = true; }, 3600);
     bubbleEl.textContent = text; bubbleEl.hidden = false;
     bubbleEl.classList.remove('pop'); void bubbleEl.offsetWidth; bubbleEl.classList.add('pop');
     talkUntil = performance.now() + Math.min(2400, 300 + text.length * 55);
@@ -1362,8 +1536,13 @@ const wirt = (() => {
 
   function talking(on) { talkUntil = on ? Infinity : performance.now(); }
 
-  new ResizeObserver(resize).observe(box);
+  new ResizeObserver(() => { resize(); if (back) draw(performance.now()); }).observe(box);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+  // Ab und zu erzählt Heinz etwas vom Tresen, wenn eine Weile Ruhe war
+  setInterval(() => {
+    if (document.hidden || act.name !== 'idle' || performance.now() - lastSay < 45000 || Math.random() > .35) return;
+    say(t('w.idle'));
+  }, 5000);
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }).observe(box);
   requestAnimationFrame(loop);
   return { say, react, talking };
@@ -1463,6 +1642,14 @@ const DART_INFO = {
 let stats = { t20: 0, wins: 0 };
 try { Object.assign(stats, JSON.parse(localStorage.getItem('dk-stats') || '{}')); } catch (e) {}
 const dartUnlocked = k => !DART_INFO[k].req || (stats[DART_INFO[k].stat] || 0) >= DART_INFO[k].need;
+// Namen und Texte der Scheiben und Pfeile kommen aus dem Wörterbuch
+for (const k of Object.keys(BOARD_INFO)) Object.defineProperties(BOARD_INFO[k], {
+  name: { get: () => t('board.' + k) }, desc: { get: () => t('board.' + k + '.d') }, req: { get: () => t('board.' + k + '.r') }
+});
+for (const k of Object.keys(DART_INFO)) Object.defineProperties(DART_INFO[k], {
+  name: { get: () => t('dart.' + k) }, skill: { get: () => t('dart.' + k + '.s') }, desc: { get: () => t('dart.' + k + '.d') },
+  req: { get: () => k === 'kneipe' ? undefined : t('dart.' + k + '.r') }
+});
 let dartKey = 'kneipe';
 try { const k = localStorage.getItem('dk-dart'); if (k && DART_INFO[k] && dartUnlocked(k)) dartKey = k; } catch (e) {}
 
@@ -1923,7 +2110,7 @@ function makeView3d() {
     g.fillStyle = 'rgba(241,237,226,.9)'; g.strokeStyle = 'rgba(241,237,226,.5)'; g.textAlign = 'center';
     g.font = "700 40px 'Cabin Sketch', cursive"; g.fillText(st ? `${st.start} · Double Out` : 'Dart Kneipe', w / 2, 60);
     g.lineWidth = 3; g.beginPath(); g.moveTo(40, 86); g.lineTo(w - 40, 86); g.moveTo(w / 2, 100); g.lineTo(w / 2, h - 60); g.stroke();
-    const names = st ? ['Du', st.opp.name] : ['Du', 'Gast'], rests = st ? st.scores : [501, 501];
+    const names = [t('you'), st ? st.opp.name : t('guest')], rests = st ? st.scores : [501, 501];
     names.forEach((n, i) => {
       const cx = w / 4 + i * w / 2;
       g.font = "700 38px 'Cabin Sketch', cursive"; g.fillText(n.length > 9 ? n.slice(0, 8) + '.' : n, cx, 150);
@@ -2490,6 +2677,9 @@ const LEVELS = {
   verein:    { name: 'Otto', sigma: 13, label: 'Vereinsspieler' },
   profi:     { name: 'Die Maschine', sigma: 7.5, label: 'Profi' }
 };
+for (const k of Object.keys(LEVELS)) Object.defineProperties(LEVELS[k], {
+  name: { get: () => t('lvl.' + k) }, label: { get: () => t('lvl.' + k + '.l') }
+});
 let S = null;
 
 function newGame(o) {
@@ -2505,7 +2695,7 @@ function newGame(o) {
   };
   endEl.hidden = true; menu.hidden = true;
   V.setOpponent(o.level);
-  wirt.say(pick(['Oche frei! Viel Glück.', `Gegen ${S.opp.name}? Na dann, Prost!`, 'Erst werfen, dann trinken.']));
+  wirt.say(t('w.start', { name: S.opp.name }));
   voice.stop();
   voice.say('Game on!', { pitch: 1.1 });
   startLeg();
@@ -2526,11 +2716,9 @@ function triggerAdrenaline(g, why) {
   g.adrLeft = ABILITY_DARTS;
   document.body.classList.add('adrenaline');
   sfx.heartbeat();
-  call('Adrenalin!', 'adr');
-  hint(why === 'finish'
-    ? `${g.opp.name} steht auf ${g.scores[1]} – Adrenalin! Deine nächsten 3 Darts sind sehr präzise.`
-    : 'Adrenalin! Deine nächsten 3 Darts sind sehr präzise.');
-  wirt.react('cheer', why === 'finish' ? 'Der steht auf Finish – jetzt oder nie!' : 'Adrenalin! Jetzt zeig’s ihnen!');
+  call(t('call.adr'), 'adr');
+  hint(why === 'finish' ? t('hint.adrfin', { name: g.opp.name, r: g.scores[1] }) : t('hint.adr'));
+  wirt.react('cheer', t(why === 'finish' ? 'w.adrfin' : 'w.adr'));
   renderSkills();
 }
 
@@ -2543,15 +2731,15 @@ function beginTurn() {
   const rest = g.scores[g.turn];
   if (finish(rest, 3)) voice.say(g.turn === 0 ? `You require ${words(rest)}.` : `${g.opp.name}, you require ${words(rest)}.`);
   if (g.turn === 1) {
-    hint(`${g.opp.name} steht am Oche …`);
+    hint(t('hint.oche', { name: g.opp.name }));
     setTimeout(() => { if (S === g) cpuDart(); }, V.is3d ? 1500 : 900);
   } else {
-    hint('Drücken & halten, ausatmen – in der goldenen Atempause loslassen');
+    hint(t('hint.aim'));
     if (g.adrLeft === 0) {
       if (!g.adrGapUsed && g.scores[0] - g.scores[1] >= ADR_GAP) triggerAdrenaline(g, 'gap');
       else if (!g.adrFinishUsed && finish(g.scores[1], 3)) {
-        hint(`${g.opp.name} steht auf ${g.scores[1]} – tippe auf Adrenalin, wenn du es brauchst.`);
-        if (!g.adrOffered) { g.adrOffered = true; wirt.say('Der steht auf Finish! Hol dir dein Adrenalin.'); }
+        hint(t('hint.adroffer', { name: g.opp.name, r: g.scores[1] }));
+        if (!g.adrOffered) { g.adrOffered = true; wirt.say(t('w.adroffer')); }
       }
     }
   }
@@ -2617,18 +2805,18 @@ function resolve(g, p, h) {
 function wirtComment(g, sum, bust) {
   const mine = g.turn === 0, name = g.opp.name;
   if (bust) {
-    if (mine) wirt.react('shake', pick(['Überworfen! Das kostet ’ne Runde.', 'Zu viel des Guten, min Jung.', 'Rechnen muss man auch können.']));
-    else wirt.react('talk', `${name} hat sich überworfen. Hehe.`);
+    if (mine) wirt.react('shake', t('w.bust'));
+    else wirt.react('talk', t('w.bustopp', { name }));
     return;
   }
   if (sum === 180) {
-    if (mine) wirt.react('cheer', 'HUNDERTACHTZIG! Die Runde geht auf mich!', true);
-    else wirt.react('cheer', `180 für ${name}! Respekt.`);
+    if (mine) wirt.react('cheer', t('w.180'), true);
+    else wirt.react('cheer', t('w.180opp', { name }));
   } else if (sum >= 100) {
-    if (mine) wirt.react('cheer', pick(['Stark geworfen!', 'Ton! So sieht das aus.', 'Da klingelt die Kasse.']));
-    else if (Math.random() < .5) wirt.react('talk', `Nicht schlecht, ${name}.`);
+    if (mine) wirt.react('cheer', t('w.ton'));
+    else if (Math.random() < .5) wirt.react('talk', t('w.tonopp', { name }));
   } else if (mine && sum <= 20) {
-    wirt.react('shake', pick(['Das war nix.', 'Ruhige Hand – nicht so zappeln.', 'Erst mal ein Schluck Pils?', 'Die Scheibe hängt da drüben!']));
+    wirt.react('shake', t('w.weak'));
   }
 }
 
@@ -2659,23 +2847,21 @@ function win(g, p, h) {
   if (p === 1) { V.focus('aim'); V.opponentTo('aside'); }
   const what = matchWon ? 'match' : 'leg';
   voice.say(p === 0 ? `Game shot, and the ${what}!` : `Game shot, and the ${what} to ${g.opp.name}!`, { pitch: 1.3, rate: .9 });
-  if (p === 0) wirt.react('cheer', matchWon ? 'Game shot! Ein Pils aufs Haus.' : 'Leg gewonnen! Weiter so.', matchWon);
-  else wirt.react('shake', matchWon ? `${g.opp.name} holt das Match. Kopf hoch!` : `Leg an ${g.opp.name}. Da geht noch was!`);
+  if (p === 0) wirt.react('cheer', t(matchWon ? 'w.matchme' : 'w.legme'), matchWon);
+  else wirt.react('shake', t(matchWon ? 'w.matchopp' : 'w.legopp', { name: g.opp.name }));
   if (!matchWon) {
-    hint(`${p === 0 ? 'Leg an dich' : 'Leg an ' + g.opp.name} · Stand ${g.legs[0]}:${g.legs[1]} · nächstes Leg gleich …`);
+    hint(t(p === 0 ? 'hint.legme' : 'hint.legopp', { name: g.opp.name, a: g.legs[0], b: g.legs[1] }));
     setTimeout(() => { if (S !== g) return; g.legStarter = 1 - g.legStarter; startLeg(); }, 3200);
     return;
   }
-  hint(p === 0 ? 'Checkout! Heinz zapft dir eins aufs Haus.' : `${g.opp.name} hat gecheckt.`);
+  hint(p === 0 ? t('hint.checkme') : t('hint.checkopp', { name: g.opp.name }));
   const darts = (g.hist[p].length - 1) * 3 + g.visit.length;
-  const dbl = h.l === 'Bull' ? 'dem Bull' : h.l;
-  const score = (g.legsToWin > 1 ? ` Endstand ${g.legs[0]}:${g.legs[1]} in Legs.` : '') + ` Points per Dart: du ${ppd(g, 0)}, ${g.opp.name} ${ppd(g, 1)}.`;
+  const dbl = h.l === 'Bull' ? t('end.bull') : h.l;
+  const score = (g.legsToWin > 1 ? t('end.legs', { a: g.legs[0], b: g.legs[1] }) : '') + t('end.ppd', { a: ppd(g, 0), b: ppd(g, 1), name: g.opp.name });
   setTimeout(() => {
     if (S !== g) return;
-    $('#endTitle').textContent = p === 0 ? 'Game shot – du gewinnst!' : `${g.opp.name} gewinnt`;
-    $('#endText').textContent = (p === 0
-      ? `Du checkst ${g.turnStart} mit ${dbl}, nach ${darts} Darts. ${g.opp.name} stand noch auf ${g.scores[1]}.`
-      : `${g.opp.name} checkt ${g.turnStart} mit ${dbl}, nach ${darts} Darts. Dir fehlten noch ${g.scores[0]} Punkte.`) + score;
+    $('#endTitle').textContent = p === 0 ? t('end.win') : t('end.lose', { name: g.opp.name });
+    $('#endText').textContent = t(p === 0 ? 'end.textme' : 'end.textopp', { r: g.turnStart, d: dbl, n: darts, name: g.opp.name, o: g.scores[p === 0 ? 1 : 0] }) + score;
     endEl.hidden = false;
     $('#rematch').focus();
   }, 1700);
@@ -2713,15 +2899,17 @@ function renderTafel() {
   const sumEl = $('#visitSum');
   const sum = S.visit.reduce((a, h) => a + h.v, 0);
   sumEl.classList.toggle('bust', S.visitState === 'bust');
-  sumEl.textContent = S.visitState === 'bust' ? 'Überworfen' : (S.visit.length ? sum : '');
-  $('#visitWho').textContent = S.turn === 0 ? 'Deine Aufnahme' : `${S.opp.name} wirft`;
+  sumEl.textContent = S.visitState === 'bust' ? t('bust.word') : (S.visit.length ? sum : '');
+  $('#visitWho').textContent = S.turn === 0 ? t('visit.mine') : t('visit.opp', { name: S.opp.name });
   renderSkills();
   V.setScores(S);
 }
 
 // Points per Dart mit einer Nachkommastelle, deutsch formatiert
 function ppd(g, p) {
-  return g && g.dartsN[p] ? (g.pts[p] / g.dartsN[p]).toFixed(1).replace('.', ',') : '–';
+  if (!g || !g.dartsN[p]) return '–';
+  const v = (g.pts[p] / g.dartsN[p]).toFixed(1);
+  return lang === 'de' ? v.replace('.', ',') : v;
 }
 
 function renderSkills() {
@@ -2736,14 +2924,14 @@ function renderSkills() {
     const stock = g ? g.precStock : 0, armed = !!g && g.precArmed;
     canUse = myTurn && (armed || stock > 0); on = armed;
     fill = g ? g.precProgress / PREC_EVERY : 0;
-    state = armed ? `nächster Dart präzise · ${stock} ges.` : stock > 0 ? `${stock} gespeichert${canUse ? ' – antippen' : ''}` : '0 gespeichert';
+    state = armed ? t('prec.armed', { n: stock }) : t('stock', { n: stock }) + (stock > 0 && canUse ? t('stock.tap') : '');
   } else if (set === 'blitz') {
     const stock = g ? g.blitzStock : 0, left = g ? g.blitzLeft : 0, prog = g ? g.blitzProgress : 0;
     canUse = myTurn && left === 0 && stock > 0; on = left > 0;
     fill = left > 0 ? left / ABILITY_DARTS : prog / BLITZ_EVERY;
-    state = left > 0 ? `aktiv · schnell werfen! noch ${left}` : stock > 0 ? `${stock} gespeichert${canUse ? ' – antippen' : ''}` : `${prog}/${BLITZ_EVERY} Würfe`;
+    state = left > 0 ? t('blitz.on', { n: left }) : stock > 0 ? t('stock', { n: stock }) + (canUse ? t('stock.tap') : '') : t('blitz.prog', { n: prog, m: BLITZ_EVERY });
   } else {
-    on = true; fill = 1; state = 'dauerhaft aktiv';
+    on = true; fill = 1; state = t('alt.on');
   }
   btn.disabled = !canUse;
   btn.classList.toggle('ready', canUse && !on);
@@ -2762,12 +2950,12 @@ function renderSkills() {
   adrBox.classList.toggle('on', adrLeft > 0);
   adrBox.classList.toggle('used', used);
   $('#adrFill').style.width = (adrLeft > 0 ? adrLeft / ABILITY_DARTS : gapUsed ? 0 : Math.min(1, gap / ADR_GAP)) * 100 + '%';
-  $('#adrState').textContent = adrLeft > 0 ? `aktiv · noch ${adrLeft}`
-    : adrCanUse ? 'Gegner auf Finish – antippen!'
-    : used ? 'wieder im nächsten Leg'
-    : gapUsed ? 'bei Gegner-Finish'
-    : finUsed ? (gap > 0 ? `Rückstand ${gap}/${ADR_GAP}` : `ab ${ADR_GAP} Rückstand`)
-    : gap > 0 ? `Rückstand ${gap}/${ADR_GAP} · Finish` : '150 Rückstand oder Gegner-Finish';
+  $('#adrState').textContent = adrLeft > 0 ? t('adr.on', { n: adrLeft })
+    : adrCanUse ? t('adr.tap')
+    : used ? t('adr.used')
+    : gapUsed ? t('adr.fin')
+    : finUsed ? (gap > 0 ? t('adr.gap', { g: gap, m: ADR_GAP }) : t('adr.from', { m: ADR_GAP }))
+    : gap > 0 ? t('adr.gapfin', { g: gap, m: ADR_GAP }) : t('adr.idle');
 }
 
 // Adrenalin selbst einsetzen, sobald der Gegner auf einem Finish steht
@@ -2787,19 +2975,19 @@ $('#precBtn').addEventListener('click', () => {
     if (g.blitzLeft === 0 && g.blitzStock > 0) {
       g.blitzStock--; g.blitzLeft = ABILITY_DARTS;
       sfx.powerup();
-      wirt.say('Zack, zack – nicht lange zielen!');
-      hint('Schnellwurf: Lass innerhalb einer Sekunde los, dann zielst du perfekt. Noch 3 Darts.');
+      wirt.say(t('w.blitz'));
+      hint(t('hint.blitz'));
     }
   } else if (g.dartSet !== 'kneipe') {
     return;
   } else if (g.precArmed) {
     g.precArmed = false;
-    hint('Präzision abgebrochen – der Pfeil bleibt gespeichert.');
+    hint(t('hint.preccancel'));
   } else if (g.precStock > 0) {
     g.precArmed = true;
     sfx.powerup();
-    wirt.say('Konzentration … ruhige Hand.');
-    hint('Präzision: Dein nächster Dart ist deutlich ruhiger.');
+    wirt.say(t('w.prec'));
+    hint(t('hint.prec'));
   }
   renderSkills();
 });
@@ -2889,9 +3077,9 @@ function bumpStat(key) {
   try { localStorage.setItem('dk-stats', JSON.stringify(stats)); } catch (e) {}
   for (const k of Object.keys(DART_INFO)) {
     if (!dartUnlocked(k) || before.includes(k)) continue;
-    toast('Neuer Pfeil freigeschaltet', `${DART_INFO[k].name} mit „${DART_INFO[k].skill}“ – im Menü unter „Pfeile“ auswählen.`);
+    toast(t('toast.dart'), t('toast.dartx', { name: DART_INFO[k].name, skill: DART_INFO[k].skill }));
     sfx.powerup();
-    setTimeout(() => wirt.say(`Neue Pfeile frei: ${DART_INFO[k].name}!`), 2600);
+    setTimeout(() => wirt.say(t('w.newdart', { name: DART_INFO[k].name })), 2600);
   }
   renderDartChips();
 }
@@ -2901,9 +3089,9 @@ function unlock(k) {
   unlocked.add(k);
   try { localStorage.setItem('dk-boards', JSON.stringify([...unlocked])); } catch (e) {}
   renderBoardChips();
-  toast('Neue Scheibe freigeschaltet', `${BOARD_INFO[k].name} – im Menü unter „Scheibe“ auswählen.`);
+  toast(t('toast.board'), t('toast.boardx', { name: BOARD_INFO[k].name }));
   sfx.powerup();
-  setTimeout(() => wirt.say(`Neue Scheibe frei: ${BOARD_INFO[k].name}!`), 2200);
+  setTimeout(() => wirt.say(t('w.newboard', { name: BOARD_INFO[k].name })), 2200);
 }
 
 setBoard(boardKey);
@@ -2921,8 +3109,27 @@ document.addEventListener('keydown', e => {
 });
 
 renderSkills();
-setTimeout(() => wirt.say('Moin! Wirf ’ne Runde mit.'), 1200);
-if (TEST_ALL) setTimeout(() => toast('Testmodus', 'Alle Scheiben und Pfeile sind freigeschaltet.'), 600);
+// Sprache umschalten: alle festen Texte, Menü-Kacheln und Anzeigen neu beschriften
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
+  $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
+  paintMute(); renderBoardChips(); renderDartChips();
+  if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
+  hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
+}
+$('#langChips').addEventListener('change', e => {
+  if (e.target.name !== 'lang') return;
+  lang = e.target.value;
+  try { localStorage.setItem('dk-lang', lang); } catch (x) {}
+  applyLang();
+});
+applyLang();
+setTimeout(() => wirt.say(t('w.greet')), 1200);
+if (TEST_ALL) setTimeout(() => toast(t('toast.test'), t('toast.testx')), 600);
 requestAnimationFrame(frame);
 })();
 </script>
