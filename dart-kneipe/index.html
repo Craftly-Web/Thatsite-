@@ -120,12 +120,12 @@ body::after{
 .board-col{grid-area:board;display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
 .board-wrap{
   position:relative;
-  width:min(100%, 720px, max(300px, calc(100vh - 150px)));
+  width:min(100%, 720px, max(300px, calc(100vh - 215px)));
   aspect-ratio:1;max-width:100%;
   border-radius:50%;
   box-shadow:0 26px 60px rgba(0,0,0,.7), 0 0 0 10px rgba(0,0,0,.2);
 }
-@supports (height:100dvh){.board-wrap{width:min(100%, 720px, max(300px, calc(100dvh - 150px)))}}
+@supports (height:100dvh){.board-wrap{width:min(100%, 720px, max(300px, calc(100dvh - 215px)))}}
 .board-wrap canvas{
   position:absolute;inset:0;width:100%;height:100%;border-radius:50%;
   touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
@@ -149,6 +149,32 @@ body::after{
   100%{opacity:0;transform:translate(-50%,-50%) scale(1)}
 }
 @keyframes callfade{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
+/* Fähigkeiten unter der Scheibe */
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,560px)}
+.skill{min-width:0;display:grid;gap:6px;padding:9px 12px 10px;border-radius:8px;background:rgba(20,12,6,.7);border:1px solid rgba(233,201,140,.3);color:var(--ink);font-family:var(--ui);text-align:left;box-shadow:0 6px 14px rgba(0,0,0,.35)}
+button.skill{font:inherit;font-family:var(--ui);cursor:default}
+button.skill:disabled{color:var(--ink);opacity:1}
+.skill-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-width:0}
+.skill-name{font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase}
+.skill-state{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.skill-meter{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}
+.skill-meter i{display:block;height:100%;width:0;border-radius:3px;transition:width .35s ease}
+.skill.prec .skill-meter i{background:linear-gradient(90deg,#2a8fb0,#7fe3f5)}
+.skill.adr .skill-meter i{background:linear-gradient(90deg,#9b1f24,#ff5a4e)}
+.skill.prec.ready{cursor:pointer;border-color:#7fe3f5;animation:ready 1.1s ease-in-out infinite alternate}
+.skill.prec.ready .skill-state{color:#bff3fb}
+@keyframes ready{from{box-shadow:0 0 0 0 rgba(127,227,245,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(127,227,245,.55),0 6px 14px rgba(0,0,0,.35)}}
+.skill.prec.on{border-color:#7fe3f5;background:rgba(16,58,70,.78)}
+.skill.adr.on{border-color:#ff5a4e;background:rgba(84,14,14,.78)}
+.skill.on .skill-state{color:#fff}
+.skill.used{opacity:.55}
+.skill:focus-visible{outline:2px solid #ffd66b;outline-offset:2px}
+.caller.adr{color:#ff6b5e}
+/* Adrenalin: roter Herzschlag-Puls am Bildrand */
+.adr-fx{position:fixed;inset:0;z-index:15;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 50%, rgba(255,0,0,0) 52%, rgba(200,10,20,.5) 100%);transition:opacity .4s}
+body.adrenaline .adr-fx{opacity:1;animation:heartbeat .8s ease-in-out infinite}
+@keyframes heartbeat{0%,100%{opacity:.5}14%{opacity:1}28%{opacity:.6}42%{opacity:.9}}
+.legs{font-size:17px;letter-spacing:.2em;color:rgba(241,237,226,.82);min-height:1.2em}
 .hint{font-size:16px;color:var(--muted);text-align:center;min-height:1.4em;letter-spacing:.03em;text-wrap:balance;max-width:60ch}
 
 /* Tresen mit Wirt */
@@ -255,6 +281,10 @@ legend{padding:0;margin-bottom:8px}
   .bar-frame{width:min(100%, 340px)}
   .hint{font-size:15px}
   .lamp.l2{display:none}
+  .skills{gap:8px;order:-1}
+  .skill{padding:8px 10px 9px}
+  .skill-name{font-size:14px;letter-spacing:.08em}
+  .skill-state{font-size:13px}
   .overlay{padding:calc(10px + env(safe-area-inset-top, 0px)) 10px calc(10px + env(safe-area-inset-bottom, 0px))}
   .panel{border-width:8px;padding:14px 14px 16px;gap:12px;max-height:calc(100vh - 20px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))}
   .panel-body{gap:11px}
@@ -269,6 +299,8 @@ legend{padding:0;margin-bottom:8px}
   .caller.show{animation:callfade 1.8s linear forwards}
   .lamp{animation:none}
   .bubble.pop{animation:none}
+  .skill.prec.ready{animation:none;box-shadow:0 0 14px 2px rgba(127,227,245,.5)}
+  body.adrenaline .adr-fx{animation:none;opacity:.8}
 }
 </style>
 </head>
@@ -305,6 +337,16 @@ legend{padding:0;margin-bottom:8px}
         <canvas id="board" aria-label="Dartscheibe – drücken und halten zum Zielen, loslassen zum Werfen"></canvas>
         <div class="caller" id="caller" aria-live="polite"></div>
       </div>
+      <div class="skills" id="skills">
+        <button type="button" class="skill prec" id="precBtn" disabled>
+          <span class="skill-top"><span class="skill-name">Präzision</span><span class="skill-state" id="precState">0/12 Darts</span></span>
+          <span class="skill-meter"><i id="precFill"></i></span>
+        </button>
+        <div class="skill adr" id="adrBox">
+          <span class="skill-top"><span class="skill-name">Adrenalin</span><span class="skill-state" id="adrState">ab 150 Rückstand</span></span>
+          <span class="skill-meter"><i id="adrFill"></i></span>
+        </div>
+      </div>
       <div class="hint" id="hint">Drücken &amp; halten, ausatmen – in der goldenen Atempause loslassen</div>
     </section>
 
@@ -314,11 +356,13 @@ legend{padding:0;margin-bottom:8px}
         <div class="col" id="col0">
           <h2>Du</h2>
           <div class="rest" id="rest0">501</div>
+          <div class="legs" id="legs0"></div>
           <ol class="hist" id="hist0"></ol>
         </div>
         <div class="col" id="col1">
           <h2 id="name1">Kalle</h2>
           <div class="rest" id="rest1">501</div>
+          <div class="legs" id="legs1"></div>
           <ol class="hist" id="hist1"></ol>
         </div>
       </div>
@@ -335,6 +379,8 @@ legend{padding:0;margin-bottom:8px}
   </main>
 </div>
 
+<div class="adr-fx" aria-hidden="true"></div>
+
 <div class="overlay" id="menu" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
   <form class="panel" id="menuForm">
     <div class="panel-body">
@@ -345,6 +391,17 @@ legend{padding:0;margin-bottom:8px}
       <div class="chips">
         <label class="chip"><input type="radio" name="start" id="start501" value="501" checked><span>501</span></label>
         <label class="chip"><input type="radio" name="start" id="start301" value="301"><span>301</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Legs zum Sieg</legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="legs" id="legs1x" value="1" checked><span>1</span></label>
+        <label class="chip"><input type="radio" name="legs" id="legs2x" value="2"><span>2</span></label>
+        <label class="chip"><input type="radio" name="legs" id="legs3x" value="3"><span>3</span></label>
+        <label class="chip"><input type="radio" name="legs" id="legs4x" value="4"><span>4</span></label>
+        <label class="chip"><input type="radio" name="legs" id="legs5x" value="5"><span>5</span></label>
+        <label class="chip"><input type="radio" name="legs" id="legs6x" value="6"><span>6</span></label>
       </div>
     </fieldset>
     <fieldset>
@@ -367,6 +424,9 @@ legend{padding:0;margin-bottom:8px}
       <summary>So wird gespielt</summary>
       <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
       <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
+      <p class="rules"><strong>Präzision:</strong> Lädt sich mit 12 Darts auf. Dann den Knopf unter der Scheibe antippen, und deine nächsten 3 Darts sind deutlich ruhiger. Danach lädt sie sich neu auf.</p>
+      <p class="rules"><strong>Adrenalin:</strong> Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an: 3 sehr präzise Darts. Einmal pro Leg.</p>
+      <p class="rules"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
     <div class="row panel-foot">
@@ -570,6 +630,16 @@ const sfx = (() => {
         const at = t + Math.random() * dur * (1 - .25 * Math.random());
         nz(at, .035, 'bandpass', 1300 + Math.random() * 1400, 1.2, .03 + Math.random() * .05);
       }
+    },
+    // Herzschlag beim Adrenalin
+    heartbeat() {
+      if (!ok()) return; const t = ac.currentTime;
+      for (let i = 0; i < 5; i++) { const b = t + i * .8; tone(b, .16, 'sine', 72, 44, .55); tone(b + .22, .14, 'sine', 64, 42, .38); }
+    },
+    // Aufladeton für die Präzision
+    powerup() {
+      if (!ok()) return; const t = ac.currentTime;
+      tone(t, .5, 'sine', 440, 1320, .06); tone(t + .08, .5, 'triangle', 660, 1760, .035); nz(t, .4, 'highpass', 5000, .7, .03, .2);
     },
     // Tröte für die 180
     horn() {
@@ -1313,22 +1383,32 @@ const SCATTER_MOVING = 14;               // unsichtbare Streuung beim Loslassen 
 const CALM_TIME = 3.2;                   // so schnell beruhigt sich die Hand (s)
 const smooth = k => k < 0 ? 0 : k > 1 ? 1 : k * k * (3 - 2 * k);
 
+// Fähigkeiten: Präzision lädt sich mit 12 Darts auf, Adrenalin gibt es bei 150 Punkten Rückstand
+const PREC_CHARGE = 12, ABILITY_DARTS = 3, ADR_GAP = 150;
+const BOOSTS = {
+  none: { amp: 1, tremor: 1, scatter: 1 },
+  prec: { amp: .55, tremor: .45, scatter: .45 },
+  adr:  { amp: .3, tremor: .2, scatter: .25 }
+};
+const boostKind = () => !S ? 'none' : S.adrLeft > 0 ? 'adr' : S.precLeft > 0 ? 'prec' : 'none';
+
 function breath(t, w) {
+  const B = BOOSTS[boostKind()];
   const tt = t + w.offset, c = (tt / w.period) % 1;
   const unrest = Math.exp(-t / CALM_TIME);   // 1 beim Drücken, geht gegen 0
-  const amp = BREATH_MIN + (BREATH_START - BREATH_MIN) * unrest;
+  const amp = (BREATH_MIN + (BREATH_START - BREATH_MIN) * unrest) * B.amp;
   const lift = c < INHALE ? smooth(c / INHALE) : c < INHALE + EXHALE ? 1 - smooth((c - INHALE) / EXHALE) : 0;
-  const tr = TREMOR_MIN + (TREMOR_START - TREMOR_MIN) * unrest, p = w.ph;
+  const tr = (TREMOR_MIN + (TREMOR_START - TREMOR_MIN) * unrest) * B.tremor, p = w.ph;
   const pause = c >= INHALE + EXHALE + .02;
   return {
     x: amp * .22 * Math.sin(2 * Math.PI * c) + tr * (.6 * Math.sin(t * 10.7 + p[0]) + .4 * Math.sin(t * 18.2 + p[1])),
     y: -amp * lift + tr * (.6 * Math.sin(t * 9.3 + p[2]) + .4 * Math.sin(t * 16.9 + p[3])),
     lift, pause, unrest,
-    scatter: pause ? SCATTER_MIN + (SCATTER_START - SCATTER_MIN) * unrest : SCATTER_MOVING
+    scatter: (pause ? SCATTER_MIN + (SCATTER_START - SCATTER_MIN) * unrest : SCATTER_MOVING) * B.scatter
   };
 }
 
-function drawCross(x, y, steady, lift, unrest) {
+function drawCross(x, y, steady, lift, unrest, kind) {
   const [X, Y] = P(x, y);
   const r = Math.max(8, sizeCss / 60) * (1 + .35 * lift) * (.7 + .6 * unrest);
   const col = steady ? '#ffd66b' : '#f3efe6';
@@ -1347,6 +1427,12 @@ function drawCross(x, y, steady, lift, unrest) {
     ctx.fillStyle = 'rgba(255,214,107,.18)';
     ctx.beginPath(); ctx.arc(X, Y, r, 0, Math.PI * 2); ctx.fill();
   }
+  // Farbiger Ring, solange eine Fähigkeit wirkt
+  if (kind !== 'none') {
+    ctx.strokeStyle = kind === 'adr' ? 'rgba(255,90,78,.85)' : 'rgba(127,227,245,.85)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(X, Y, r * 1.55, 0, Math.PI * 2); ctx.stroke();
+  }
 }
 
 function frame(now) {
@@ -1356,7 +1442,7 @@ function frame(now) {
   for (const d of (S ? S.darts : PREVIEW)) drawDart(d, now);
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
-    drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest);
+    drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind());
   } else if (hover && canThrow()) {
     const [X, Y] = P(hover.x, hover.y);
     ctx.strokeStyle = 'rgba(243,239,230,.55)'; ctx.lineWidth = 1.2;
@@ -1416,8 +1502,9 @@ let S = null;
 function newGame(o) {
   S = {
     start: o.start, level: o.level, opp: LEVELS[o.level],
-    scores: [o.start, o.start], hist: [[], []],
-    turn: o.starter, starter: o.starter,
+    legsToWin: o.legs, legs: [0, 0], starter: o.starter, legStarter: o.starter,
+    precCharge: 0, precLeft: 0, adrUsed: false, adrLeft: 0,
+    scores: [o.start, o.start], hist: [[], []], turn: o.starter,
     visit: [], visitState: 'open', turnStart: o.start,
     darts: [], busy: false, over: false
   };
@@ -1425,7 +1512,26 @@ function newGame(o) {
   wirt.say(pick(['Oche frei! Viel Glück.', `Gegen ${S.opp.name}? Na dann, Prost!`, 'Erst werfen, dann trinken.']));
   voice.stop();
   voice.say('Game on!', { pitch: 1.1 });
+  startLeg();
+}
+
+// Neues Leg: Punkte zurücksetzen; Adrenalin gibt es in jedem Leg einmal
+function startLeg() {
+  const g = S;
+  g.scores = [g.start, g.start]; g.hist = [[], []]; g.turn = g.legStarter;
+  g.over = false; g.adrUsed = false; g.adrLeft = 0;
+  document.body.classList.remove('adrenaline');
   beginTurn();
+}
+
+function triggerAdrenaline(g) {
+  g.adrUsed = true; g.adrLeft = ABILITY_DARTS;
+  document.body.classList.add('adrenaline');
+  sfx.heartbeat();
+  call('Adrenalin!', 'adr');
+  hint('Adrenalin! Deine nächsten 3 Darts sind sehr präzise.');
+  wirt.react('cheer', 'Adrenalin! Jetzt zeig’s ihnen!');
+  renderSkills();
 }
 
 function beginTurn() {
@@ -1439,6 +1545,7 @@ function beginTurn() {
     setTimeout(() => { if (S === g) cpuDart(); }, 900);
   } else {
     hint('Drücken & halten, ausatmen – in der goldenen Atempause loslassen');
+    if (!g.adrUsed && g.scores[0] - g.scores[1] >= ADR_GAP) triggerAdrenaline(g);
   }
 }
 
@@ -1456,6 +1563,13 @@ function throwAt(p, x, y) {
   g.busy = true;
   g.darts.push({ x, y, owner: p, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 });
   sfx.whoosh();
+  if (p === 0) {
+    // Fähigkeiten verbrauchen; normale Darts laden die Präzision auf
+    if (g.adrLeft > 0) { g.adrLeft--; if (!g.adrLeft) document.body.classList.remove('adrenaline'); }
+    else if (g.precLeft > 0) g.precLeft--;
+    else g.precCharge = Math.min(PREC_CHARGE, g.precCharge + 1);
+    renderSkills();
+  }
   setTimeout(() => { if (S === g) resolve(g, p, hit(x, y)); }, FLY);
 }
 
@@ -1508,23 +1622,33 @@ function endVisit(g, bust) {
 }
 
 function win(g, p, h) {
-  g.over = true; g.visitState = 'done';
+  g.over = true; g.visitState = 'done'; g.adrLeft = 0;
+  document.body.classList.remove('adrenaline');
   const sum = g.visit.reduce((a, x) => a + x.v, 0);
   g.hist[p].push({ score: sum, rest: 0, bust: false });
+  g.legs[p]++;
+  const matchWon = g.legs[p] >= g.legsToWin;
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
-  voice.say(p === 0 ? 'Game shot, and the match!' : `Game shot, and the match to ${g.opp.name}!`, { pitch: 1.3, rate: .9 });
+  const what = matchWon ? 'match' : 'leg';
+  voice.say(p === 0 ? `Game shot, and the ${what}!` : `Game shot, and the ${what} to ${g.opp.name}!`, { pitch: 1.3, rate: .9 });
+  if (p === 0) wirt.react('cheer', matchWon ? 'Game shot! Ein Pils aufs Haus.' : 'Leg gewonnen! Weiter so.', matchWon);
+  else wirt.react('shake', matchWon ? `${g.opp.name} holt das Match. Kopf hoch!` : `Leg an ${g.opp.name}. Da geht noch was!`);
+  if (!matchWon) {
+    hint(`${p === 0 ? 'Leg an dich' : 'Leg an ' + g.opp.name} · Stand ${g.legs[0]}:${g.legs[1]} · nächstes Leg gleich …`);
+    setTimeout(() => { if (S !== g) return; g.legStarter = 1 - g.legStarter; startLeg(); }, 3200);
+    return;
+  }
   hint(p === 0 ? 'Checkout! Heinz zapft dir eins aufs Haus.' : `${g.opp.name} hat gecheckt.`);
-  if (p === 0) wirt.react('cheer', 'Game shot! Ein Pils aufs Haus.', true);
-  else wirt.react('shake', `${g.opp.name} checkt. Kopf hoch, nächste Runde!`);
   const darts = (g.hist[p].length - 1) * 3 + g.visit.length;
   const dbl = h.l === 'Bull' ? 'dem Bull' : h.l;
+  const score = g.legsToWin > 1 ? ` Endstand ${g.legs[0]}:${g.legs[1]} in Legs.` : '';
   setTimeout(() => {
     if (S !== g) return;
     $('#endTitle').textContent = p === 0 ? 'Game shot – du gewinnst!' : `${g.opp.name} gewinnt`;
-    $('#endText').textContent = p === 0
+    $('#endText').textContent = (p === 0
       ? `Du checkst ${g.turnStart} mit ${dbl}, nach ${darts} Darts. ${g.opp.name} stand noch auf ${g.scores[1]}.`
-      : `${g.opp.name} checkt ${g.turnStart} mit ${dbl}, nach ${darts} Darts. Dir fehlten noch ${g.scores[0]} Punkte.`;
+      : `${g.opp.name} checkt ${g.turnStart} mit ${dbl}, nach ${darts} Darts. Dir fehlten noch ${g.scores[0]} Punkte.`) + score;
     endEl.hidden = false;
     $('#rematch').focus();
   }, 1700);
@@ -1541,11 +1665,12 @@ function call(text, kind = '') {
 
 function renderTafel() {
   if (!S) return;
-  $('#modeLabel').textContent = `${S.start} · Double Out`;
+  $('#modeLabel').textContent = S.legsToWin > 1 ? `${S.start} · First to ${S.legsToWin}` : `${S.start} · Double Out`;
   $('#levelLabel').textContent = S.opp.label;
   $('#name1').textContent = S.opp.name;
   for (const p of [0, 1]) {
     $('#rest' + p).textContent = S.scores[p];
+    $('#legs' + p).textContent = S.legsToWin > 1 ? '●'.repeat(S.legs[p]) + '○'.repeat(S.legsToWin - S.legs[p]) : '';
     $('#col' + p).classList.toggle('active', S.turn === p && !S.over);
     const list = $('#hist' + p);
     list.innerHTML = `<li><span class="sc"></span><span class="rs">${S.start}</span></li>` +
@@ -1562,7 +1687,39 @@ function renderTafel() {
   sumEl.classList.toggle('bust', S.visitState === 'bust');
   sumEl.textContent = S.visitState === 'bust' ? 'Überworfen' : (S.visit.length ? sum : '');
   $('#visitWho').textContent = S.turn === 0 ? 'Deine Aufnahme' : `${S.opp.name} wirft`;
+  renderSkills();
 }
+
+function renderSkills() {
+  const g = S;
+  const charge = g ? g.precCharge : 0, precLeft = g ? g.precLeft : 0, adrLeft = g ? g.adrLeft : 0;
+  const ready = !!g && charge >= PREC_CHARGE && precLeft === 0;
+  const canUse = ready && !g.over && g.turn === 0 && adrLeft === 0;
+  const precBtn = $('#precBtn');
+  precBtn.disabled = !canUse;
+  precBtn.classList.toggle('ready', canUse);
+  precBtn.classList.toggle('on', precLeft > 0);
+  $('#precFill').style.width = (precLeft > 0 ? precLeft / ABILITY_DARTS : charge / PREC_CHARGE) * 100 + '%';
+  $('#precState').textContent = precLeft > 0 ? (adrLeft > 0 ? 'wartet auf Adrenalin' : `aktiv · noch ${precLeft}`)
+    : ready ? (canUse ? 'bereit – antippen!' : adrLeft > 0 ? 'bereit nach Adrenalin' : 'bereit') : `${charge}/${PREC_CHARGE} Darts`;
+  const used = !!g && g.adrUsed && adrLeft === 0;
+  const gap = g ? Math.max(0, g.scores[0] - g.scores[1]) : 0;
+  const adrBox = $('#adrBox');
+  adrBox.classList.toggle('on', adrLeft > 0);
+  adrBox.classList.toggle('used', used);
+  $('#adrFill').style.width = (adrLeft > 0 ? adrLeft / ABILITY_DARTS : used ? 0 : Math.min(1, gap / ADR_GAP)) * 100 + '%';
+  $('#adrState').textContent = adrLeft > 0 ? `aktiv · noch ${adrLeft}` : used ? 'wieder im nächsten Leg' : gap > 0 ? `Rückstand ${gap}/${ADR_GAP}` : `ab ${ADR_GAP} Rückstand`;
+}
+
+$('#precBtn').addEventListener('click', () => {
+  const g = S;
+  if (!g || g.over || g.turn !== 0 || g.adrLeft > 0 || g.precCharge < PREC_CHARGE || g.precLeft > 0) return;
+  g.precCharge = 0; g.precLeft = ABILITY_DARTS;
+  sfx.init(); sfx.powerup();
+  wirt.say('Konzentration … ruhige Hand.');
+  hint('Präzision aktiv: Deine nächsten 3 Darts sind deutlich ruhiger.');
+  renderSkills();
+});
 
 /* ---------- Menü ---------- */
 function openMenu() {
@@ -1575,7 +1732,7 @@ function openMenu() {
 function startFromMenu() {
   sfx.init();
   const val = name => document.querySelector(`#menuForm input[name="${name}"]:checked`).value;
-  newGame({ start: +val('start'), level: val('level'), starter: +val('starter') });
+  newGame({ start: +val('start'), level: val('level'), starter: +val('starter'), legs: +val('legs') });
 }
 $('#startBtn').addEventListener('click', startFromMenu);
 $('#menuForm').addEventListener('submit', e => { e.preventDefault(); startFromMenu(); });
@@ -1584,12 +1741,13 @@ $('#menuBtn').addEventListener('click', openMenu);
 $('#toMenu').addEventListener('click', openMenu);
 $('#rematch').addEventListener('click', () => {
   sfx.init();
-  newGame({ start: S.start, level: S.level, starter: 1 - S.starter });
+  newGame({ start: S.start, level: S.level, starter: 1 - S.starter, legs: S.legsToWin });
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !menu.hidden && S && !S.over) menu.hidden = true;
 });
 
+renderSkills();
 setTimeout(() => wirt.say('Moin! Wirf ’ne Runde mit.'), 1200);
 requestAnimationFrame(frame);
 })();
