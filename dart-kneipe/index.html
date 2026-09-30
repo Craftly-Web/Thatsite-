@@ -639,7 +639,7 @@ const I18N = {
     'rules.adr': '<strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.',
     'rules.darts': '<strong>Pfeile:</strong> Der Anfängerpfeil ist von Anfang an frei: Er schwankt beim Zielen nur wenig, und mit „Viel Glück“ fliegt jeder Dart mit 33 % Wahrscheinlichkeit so präzise wie mit Adrenalin. Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.',
     'rules.boards': '<strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.',
-    'rules.cpu': '<strong>Gegner:</strong> Dein Gegner wirft mit demselben Pfeil-Set und hat dieselben Boni wie du – Adrenalin, Präzision, Schnellwurf, ruhige Hand oder Glück –, aber nur mit halber Wirkung. Was er gerade hat, steht an der Tafel unter seinem Namen.',
+    'rules.cpu': '<strong>Gegner:</strong> Dein Gegner wirft mit demselben Pfeil-Set und hat dieselben Boni wie du – Adrenalin, Präzision, Schnellwurf, ruhige Hand oder Glück –, aber nur mit halber Wirkung. Die Maschine spielt anders: Sie wählt jede Aufnahme zufällig eine der vier Pfeil-Fähigkeiten, die nur für diese Aufnahme gilt. Was er gerade hat, steht an der Tafel unter seinem Namen.',
     'rules.legs': '<strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.',
     'btn.resume': 'Zurück zum Spiel', 'btn.start': 'Anwerfen', 'btn.settings': 'Einstellungen', 'btn.rematch': 'Revanche',
     'lvl.anfaenger': 'Tante Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'Die Maschine',
@@ -668,6 +668,7 @@ const I18N = {
     'call.adr': 'Adrenalin!',
     'hint.cpuadr': '{name} hat Adrenalin, halbe Wirkung – die nächsten 3 Darts sitzen besser.',
     'hint.cpublitz': '{name} zündet einen Schnellwurf, halbe Wirkung.',
+    'hint.cpuset': '{name} setzt diese Aufnahme auf {s} (halbe Wirkung).',
     'cpu.adr': 'Adrenalin ½ ({n})', 'cpu.blitz': 'Schnellwurf ½ ({n})', 'cpu.stock': 'Schnellwurf ½ bereit', 'cpu.prec': 'Präzision ½: {n}', 'cpu.alt': 'Ruhige Hand ½',
     'w.cpuadr': ['Oha, {name} kriegt Puls! Aber nur halb so wild.', '{name} hat Adrenalin – halbe Portion, trotzdem aufpassen!', 'Guck mal, {name} schwitzt. Das ist Adrenalin, kein Bier.'],
     'end.win': 'Game shot – du gewinnst!', 'end.lose': '{name} gewinnt',
@@ -719,7 +720,7 @@ const I18N = {
     'rules.adr': '<strong>Adrenaline:</strong> Your next 3 darts become very precise. If you start a visit at least 150 points behind, it kicks in by itself. When your opponent is on a finish – able to check out with three darts – the adrenaline button glows red and you trigger it whenever you like. Each happens once per leg.',
     'rules.darts': '<strong>Darts:</strong> The rookie dart is free from the start: it barely sways while you aim, and with “good luck” every dart has a 33% chance to fly as true as with adrenaline. The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. The lightning dart unlocks after 5 treble 20s, the regulars’ dart after 3 match wins.',
     'rules.boards': '<strong>Boards:</strong> The wooden board unlocks with your first match win, the dart machine with a visit of 100 or more, and the top league board by beating Otto or The Machine. Your browser remembers what you unlocked.',
-    'rules.cpu': '<strong>Opponent:</strong> Your opponent throws with the same dart set and gets the same bonuses as you – adrenaline, precision, quick throw, steady hand or luck – but at half strength. Whatever they have right now shows on the scoreboard under their name.',
+    'rules.cpu': '<strong>Opponent:</strong> Your opponent throws with the same dart set and gets the same bonuses as you – adrenaline, precision, quick throw, steady hand or luck – but at half strength. The Machine plays differently: every visit it picks one of the four dart abilities at random, valid for that visit only. Whatever they have right now shows on the scoreboard under their name.',
     'rules.legs': '<strong>Legs:</strong> First to win the chosen number of legs takes the match. The first throw alternates every leg.',
     'btn.resume': 'Back to game', 'btn.start': 'Game on', 'btn.settings': 'Settings', 'btn.rematch': 'Rematch',
     'lvl.anfaenger': 'Auntie Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'The Machine',
@@ -748,6 +749,7 @@ const I18N = {
     'call.adr': 'Adrenaline!',
     'hint.cpuadr': '{name} has adrenaline at half strength – the next 3 darts are sharper.',
     'hint.cpublitz': '{name} fires up a quick throw at half strength.',
+    'hint.cpuset': '{name} goes with {s} this visit (half strength).',
     'cpu.adr': 'Adrenaline ½ ({n})', 'cpu.blitz': 'Quick throw ½ ({n})', 'cpu.stock': 'Quick throw ½ ready', 'cpu.prec': 'Precision ½: {n}', 'cpu.alt': 'Steady hand ½',
     'w.cpuadr': ['Whoa, {name}’s pulse is up! Only half as wild though.', '{name} has adrenaline – half a portion, still watch out!', 'Look, {name} is sweating. That’s adrenaline, not lager.'],
     'end.win': 'Game shot – you win!', 'end.lose': '{name} wins',
@@ -2839,7 +2841,7 @@ const LEVELS = {
   anfaenger: { name: 'Tante Gerda', sigma: 30, label: 'Anfängerin' },
   stammgast: { name: 'Kalle', sigma: 18.5, label: 'Stammgast' },
   verein:    { name: 'Otto', sigma: 12, label: 'Vereinsspieler' },
-  profi:     { name: 'Die Maschine', sigma: 7, label: 'Profi' }
+  profi:     { name: 'Die Maschine', sigma: 10, label: 'Profi' }
 };
 for (const k of Object.keys(LEVELS)) Object.defineProperties(LEVELS[k], {
   name: { get: () => t('lvl.' + k) }, label: { get: () => t('lvl.' + k + '.l') }
@@ -2853,6 +2855,7 @@ function newGame(o) {
     pts: [0, 0], dartsN: [0, 0],   // für Points per Dart über das ganze Match
     dartSet: o.dart || 'kneipe', precStock: 0, precProgress: 0, precArmed: false,
     blitzStock: 0, blitzProgress: 0, blitzLeft: 0, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0,
+    cpuSet: Object.keys(DART_INFO)[Math.floor(Math.random() * Object.keys(DART_INFO).length)],
     cpu: { precStock: 0, precProgress: 0, blitzStock: 0, blitzProgress: 0, blitzLeft: 0, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0 },
     scores: [o.start, o.start], hist: [[], []], turn: o.starter,
     visit: [], visitState: 'open', turnStart: o.start,
@@ -2917,9 +2920,22 @@ function beginTurn() {
 const CPU_BOOST = .5, CPU_BLITZ = .15;   // Schnellwurf zählt für ihn wie eine fast perfekte Hand
 const cpuMult = kind => kind === 'none' ? 1 : 1 - (1 - (kind === 'blitz' ? CPU_BLITZ : BOOSTS[kind === 'luck' ? 'adr' : kind].scatter)) * CPU_BOOST;
 
+// Die Maschine spielt nicht mit deinem Pfeil-Set, sondern wählt jede Aufnahme zufällig eine Fähigkeit.
+// Die gilt nur für diese Aufnahme: Präzision = ein präziser Dart, Schnellwurf = alle drei Darts.
+const SHUFFLE_LEVEL = 'profi';
+const cpuSet = g => g.level === SHUFFLE_LEVEL ? g.cpuSet : g.dartSet;
+function cpuShuffle(g) {
+  const c = g.cpu, sets = Object.keys(DART_INFO).filter(k => k !== g.cpuSet);
+  g.cpuSet = sets[Math.floor(Math.random() * sets.length)];
+  c.precStock = g.cpuSet === 'kneipe' ? 1 : 0;
+  c.blitzLeft = g.cpuSet === 'blitz' ? ABILITY_DARTS : 0;
+  hint(t('hint.cpuset', { name: g.opp.name, s: DART_INFO[g.cpuSet].skill }));
+}
+
 // Zu Beginn seiner Aufnahme: Adrenalin wie beim Spieler, Schnellwurf sofort zünden
 function cpuBoostStart(g) {
   const c = g.cpu, name = g.opp.name;
+  if (g.level === SHUFFLE_LEVEL) cpuShuffle(g);
   if (c.adrLeft === 0) {
     let why = null;
     if (!c.adrGapUsed && g.scores[1] - g.scores[0] >= ADR_GAP) { why = 'gap'; c.adrGapUsed = true; }
@@ -2931,7 +2947,7 @@ function cpuBoostStart(g) {
       wirt.say(t('w.cpuadr', { name }));
     }
   }
-  if (c.adrLeft === 0 && g.dartSet === 'blitz' && c.blitzLeft === 0 && c.blitzStock > 0) {
+  if (c.adrLeft === 0 && cpuSet(g) === 'blitz' && c.blitzLeft === 0 && c.blitzStock > 0) {
     c.blitzStock--; c.blitzLeft = ABILITY_DARTS;
     sfx.powerup();
     hint(t('hint.cpublitz', { name }));
@@ -2940,34 +2956,38 @@ function cpuBoostStart(g) {
 }
 
 function cpuBoostKind(g, onDouble) {
-  const c = g.cpu, set = g.dartSet;
+  const c = g.cpu, set = cpuSet(g);
   if (c.adrLeft > 0) return 'adr';
   if (set === 'blitz' && c.blitzLeft > 0) return 'blitz';
-  // Präzise Pfeile spart er fürs Doppel auf, bei vollem Vorrat wirft er sie auch so
-  if (set === 'kneipe' && c.precStock > 0 && (onDouble || c.precStock >= 3)) return 'prec';
+  // Präzise Pfeile spart er fürs Doppel auf, bei vollem Vorrat wirft er sie auch so;
+  // die Maschine setzt ihren einen präzisen Dart spätestens mit dem letzten Dart der Aufnahme
+  const last = g.level === SHUFFLE_LEVEL && g.visit.length === 2;
+  if (set === 'kneipe' && c.precStock > 0 && (onDouble || last || c.precStock >= 3)) return 'prec';
   if (set === 'alt') return 'alt';
   if (set === 'anfaenger' && Math.random() < LUCK) return 'luck';
   return 'none';
 }
 
 function cpuBoostUse(g, kind) {
-  const c = g.cpu, set = g.dartSet;
+  const c = g.cpu, set = cpuSet(g);
   if (kind === 'adr') c.adrLeft--;
   else if (kind === 'prec') c.precStock--;
   else if (kind === 'blitz') c.blitzLeft--;
+  if (g.level === SHUFFLE_LEVEL) return;   // die Maschine lädt nichts auf, sie wählt jede Aufnahme neu
   if (set === 'kneipe' && ++c.precProgress >= PREC_EVERY) { c.precProgress = 0; c.precStock++; }
   if (set === 'blitz' && kind !== 'adr' && kind !== 'blitz' && ++c.blitzProgress >= BLITZ_EVERY) { c.blitzProgress = 0; c.blitzStock++; }
 }
 
 // Was der Gegner gerade hat, steht an der Tafel unter seinem Namen
 function cpuBoostTag(g) {
-  const c = g.cpu;
+  const c = g.cpu, set = cpuSet(g);
   if (c.adrLeft > 0) return t('cpu.adr', { n: c.adrLeft });
-  if (g.dartSet === 'blitz') return c.blitzLeft > 0 ? t('cpu.blitz', { n: c.blitzLeft }) : c.blitzStock > 0 ? t('cpu.stock', { n: c.blitzStock }) : '';
-  if (g.dartSet === 'kneipe') return c.precStock > 0 ? t('cpu.prec', { n: c.precStock }) : '';
-  if (g.dartSet === 'alt') return t('cpu.alt');
-  if (g.dartSet === 'anfaenger') return t('cpu.luck');
-  return '';
+  let tag = '';
+  if (set === 'blitz') tag = c.blitzLeft > 0 ? t('cpu.blitz', { n: c.blitzLeft }) : c.blitzStock > 0 ? t('cpu.stock', { n: c.blitzStock }) : '';
+  else if (set === 'kneipe') tag = c.precStock > 0 ? t('cpu.prec', { n: c.precStock }) : '';
+  else if (set === 'alt') tag = t('cpu.alt');
+  else if (set === 'anfaenger') tag = t('cpu.luck');
+  return tag || (g.level === SHUFFLE_LEVEL ? DART_INFO[set].skill + ' ½' : '');
 }
 
 function cpuDart() {
