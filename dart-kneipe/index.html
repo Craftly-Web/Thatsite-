@@ -664,7 +664,7 @@ legend{padding:0;margin-bottom:8px}
     </div>
     <details class="paytable">
       <summary data-i18n="arc.pay">Gewinnplan</summary>
-      <p class="rules" data-i18n="bk.payx">Das Buch ersetzt jedes Symbol außer der Schatztruhe. Drei oder mehr Truhen irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Truhen neue dazu.</p>
+      <p class="rules" data-i18n="bk.payx">Drei oder mehr Bücher irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Büchern neue dazu. Die Schatztruhe ist Joker und ersetzt jedes Symbol außer dem Buch.</p>
       <div id="bkPayList"></div>
     </details>
     <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.</p>
@@ -829,15 +829,15 @@ const I18N = {
     'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle',
     'bk.title': 'Buch der Weisen', 'bk.sub': '5 Walzen · 10 Linien · Freispiele mit Sondersymbol',
     'bk.pick': 'Wähle dein Sondersymbol', 'bk.pickx': 'Es breitet sich in den Freispielen über ganze Walzen aus und zahlt auf allen 10 Linien. Seltene Symbole bringen mehr Freispiele.',
-    'bk.payx': 'Das Buch ersetzt jedes Symbol außer der Schatztruhe. Drei oder mehr Truhen irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Truhen neue dazu.',
-    'bk.spins': '{n} Freispiele', 'bk.top': '5 Walzen: {m}×', 'bk.wild': 'Ersetzt alle Symbole außer der Truhe', 'bk.scatter': 'Irgendwo · × Gesamteinsatz · startet Freispiele',
-    'bk.trigger': '{n} Schatztruhen! Freispiele gewonnen.', 'bk.retrigger': 'Noch mal drei Truhen: +{n} Freispiele!',
+    'bk.payx': 'Drei oder mehr Bücher irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Büchern neue dazu. Die Schatztruhe ist Joker und ersetzt jedes Symbol außer dem Buch.',
+    'bk.spins': '{n} Freispiele', 'bk.top': '5 Walzen: {m}×', 'bk.wild': 'Joker: ersetzt alle Symbole außer dem Buch', 'bk.scatter': 'Irgendwo · × Gesamteinsatz · startet Freispiele',
+    'bk.trigger': '{n} Bücher! Freispiele gewonnen.', 'bk.retrigger': 'Noch mal drei Bücher: +{n} Freispiele!',
     'bk.fs': 'Freispiel {i} von {n} · Sondersymbol: {s}', 'bk.fsrun': 'Freispiele …', 'bk.expand': '{s} breitet sich aus: {v}!',
     'bk.fsend': 'Freispiele vorbei – insgesamt {v} gewonnen!', 'bk.fsnone': 'Freispiele vorbei. Diesmal wollte das Buch nicht.',
     'bsym.ten': 'Zehn', 'bsym.jack': 'Bube', 'bsym.queen': 'Dame', 'bsym.king': 'König', 'bsym.ace': 'Ass', 'bsym.amphora': 'Amphore', 'bsym.owl': 'Eule',
     'bsym.helmet': 'Helm', 'bsym.bust': 'Büste', 'bsym.book': 'Buch', 'bsym.chest': 'Schatztruhe',
     'sym.cherry': 'Kirsche', 'sym.lemon': 'Zitrone', 'sym.orange': 'Orange', 'sym.plum': 'Pflaume', 'sym.grape': 'Traube', 'sym.melon': 'Melone', 'sym.bell': 'Glocke', 'sym.seven': 'Sieben',
-    'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Daneben steht das „Buch der Weisen“: Das Buch ist Joker, drei Schatztruhen starten Freispiele, und du wählst selbst das Sondersymbol, das sich über ganze Walzen ausbreitet (rund 95 % Auszahlung). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu 100 € für jedes gewonnene Match.',
+    'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Daneben steht das „Buch der Weisen“: drei Bücher starten Freispiele, die Schatztruhe ist Joker, und du wählst selbst das Sondersymbol, das sich über ganze Walzen ausbreitet (rund 95 % Auszahlung). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu 100 € für jedes gewonnene Match.',
     'w.greet': ['Moin! Wirf ’ne Runde mit.', 'Die Scheibe ist frisch gebürstet. Blamier sie nicht.', 'Schuhe abputzen, Pfeile schärfen, rein da!'],
     'w.start': ['Oche frei! Und bitte nicht die Lampe treffen.', 'Gegen {name}? Ich hol schon mal den Verbandskasten.', 'Erst werfen, dann trinken. Andersrum hatten wir schon – wurde teuer.', 'Wer verliert, zahlt die Runde. Steht so im Grundgesetz.'],
     'w.bust': ['Überworfen! Mathe war wohl nicht dein Leistungskurs.', 'Zu viel des Guten – wie meine zweite Portion Schnitzel.', 'Erst rechnen, dann werfen! Soll ich dir ’nen Bierdeckel geben?', 'Überworfen. Die Scheibe lacht dich aus. Ich auch.'],
@@ -929,15 +929,15 @@ const I18N = {
     'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade',
     'bk.title': 'Tome of the Sages', 'bk.sub': '5 reels · 10 lines · free spins with a special symbol',
     'bk.pick': 'Choose your special symbol', 'bk.pickx': 'During free spins it spreads over whole reels and pays on all 10 lines. Rare symbols give more free spins.',
-    'bk.payx': 'The book stands in for every symbol except the treasure chest. Three or more chests anywhere pay a multiple of the total bet and start free spins; three chests during free spins add more.',
-    'bk.spins': '{n} free spins', 'bk.top': '5 reels: {m}×', 'bk.wild': 'Stands in for all symbols except the chest', 'bk.scatter': 'Anywhere · × total bet · starts free spins',
-    'bk.trigger': '{n} treasure chests! Free spins won.', 'bk.retrigger': 'Three chests again: +{n} free spins!',
+    'bk.payx': 'Three or more books anywhere pay a multiple of the total bet and start free spins; three books during free spins add more. The treasure chest is wild and stands in for every symbol except the book.',
+    'bk.spins': '{n} free spins', 'bk.top': '5 reels: {m}×', 'bk.wild': 'Wild: stands in for all symbols except the book', 'bk.scatter': 'Anywhere · × total bet · starts free spins',
+    'bk.trigger': '{n} books! Free spins won.', 'bk.retrigger': 'Three books again: +{n} free spins!',
     'bk.fs': 'Free spin {i} of {n} · special symbol: {s}', 'bk.fsrun': 'Free spins …', 'bk.expand': '{s} spreads out: {v}!',
     'bk.fsend': 'Free spins over – {v} won in total!', 'bk.fsnone': 'Free spins over. The book wasn’t in the mood.',
     'bsym.ten': 'Ten', 'bsym.jack': 'Jack', 'bsym.queen': 'Queen', 'bsym.king': 'King', 'bsym.ace': 'Ace', 'bsym.amphora': 'Amphora', 'bsym.owl': 'Owl',
     'bsym.helmet': 'Helmet', 'bsym.bust': 'Bust', 'bsym.book': 'Book', 'bsym.chest': 'Treasure chest',
     'sym.cherry': 'cherry', 'sym.lemon': 'lemon', 'sym.orange': 'orange', 'sym.plum': 'plum', 'sym.grape': 'grapes', 'sym.melon': 'melon', 'sym.bell': 'bell', 'sym.seven': 'seven',
-    'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). Next to it stands the “Tome of the Sages”: the book is wild, three treasure chests start free spins, and you pick the special symbol that spreads over whole reels (about 95% payout). It runs on play money: €20 to start, plus €100 for every match you win.',
+    'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). Next to it stands the “Tome of the Sages”: three books start free spins, the treasure chest is wild, and you pick the special symbol that spreads over whole reels (about 95% payout). It runs on play money: €20 to start, plus €100 for every match you win.',
     'w.greet': ['Evening! Fancy a game?', 'Board’s freshly brushed. Don’t embarrass it.', 'Wipe your feet, sharpen your darts, off you go!'],
     'w.start': ['Oche’s all yours. Please mind the lamp.', 'Against {name}? I’ll fetch the first-aid kit.', 'Throw first, drink later. The other way round got expensive.', 'Loser buys the round. It’s in the constitution.'],
     'w.bust': ['Bust! Maths wasn’t your strong subject, was it?', 'Too much of a good thing – like my second schnitzel.', 'Count first, then throw! Want a beer mat to do the sums?', 'Bust. The board’s laughing at you. So am I.'],
@@ -3766,20 +3766,20 @@ const arcade = (() => {
 
 /* ---------- Spielhalle: Buch der Weisen (antiker Bücher-Automat mit Freispielen) ---------- */
 const bookSlot = (() => {
-  const SYM = ['ten', 'jack', 'queen', 'king', 'ace', 'amphora', 'owl', 'helmet', 'bust', 'book', 'chest'];
-  const PAY = {   // Vielfaches des Linieneinsatzes für 2..5 gleiche von links; das Buch ist Joker
+  const SYM = ['ten', 'jack', 'queen', 'king', 'ace', 'amphora', 'owl', 'helmet', 'bust', 'chest', 'book'];
+  const PAY = {   // Vielfaches des Linieneinsatzes für 2..5 gleiche von links; die Schatztruhe ist Joker
     ten: [0, 0, 0, 4, 20, 80], jack: [0, 0, 0, 4, 20, 80], queen: [0, 0, 0, 5, 25, 100], king: [0, 0, 0, 6, 35, 140], ace: [0, 0, 0, 6, 35, 140],
     amphora: [0, 0, 3, 25, 90, 500], owl: [0, 0, 3, 25, 90, 500], helmet: [0, 0, 5, 35, 300, 1500], bust: [0, 0, 8, 80, 800, 4000],
-    book: [0, 0, 0, 15, 150, 1500]
+    chest: [0, 0, 0, 15, 150, 1500]
   };
-  const SCAT = [0, 0, 0, 2, 15, 150];   // Schatztruhen irgendwo, × Gesamteinsatz
+  const SCAT = [0, 0, 0, 2, 15, 150];   // Bücher irgendwo, × Gesamteinsatz
   // Freispiele je Sondersymbol: so gewählt, dass jede Wahl rund 95 % Auszahlung ergibt (94–96 %)
   const FS = { ten: 10, jack: 12, queen: 12, king: 13, ace: 13, amphora: 10, owl: 11, helmet: 12, bust: 14 };
-  const COUNT = { ten: 8, jack: 8, queen: 7, king: 6, ace: 6, amphora: 4, owl: 4, helmet: 3, bust: 2, book: 2, chest: 1 };
-  const CHESTS = [1, 2, 2, 2, 1];
+  const COUNT = { ten: 8, jack: 8, queen: 7, king: 6, ace: 6, amphora: 4, owl: 4, helmet: 3, bust: 2, chest: 2, book: 1 };
+  const BOOKS = [1, 2, 2, 2, 1];   // Bücher je Walze (Freispiel-Auslöser)
   const LINES = SLOT_LINES, LINE_COL = SLOT_LINE_COL, BETS = SLOT_BETS;
-  const strips = CHESTS.map((c, r) => {
-    const a = []; for (const k of Object.keys(COUNT)) for (let i = 0; i < (k === 'chest' ? c : COUNT[k]); i++) a.push(k);
+  const strips = BOOKS.map((c, r) => {
+    const a = []; for (const k of Object.keys(COUNT)) for (let i = 0; i < (k === 'book' ? c : COUNT[k]); i++) a.push(k);
     let x = 17 + r * 31;
     for (let i = a.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) & 0x7fffffff; const j = x % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
     return a;
@@ -3882,11 +3882,11 @@ const bookSlot = (() => {
     const out = [];
     LINES.forEach((ln, i) => {
       let best = null, kb = 0;
-      while (kb < 5 && grid[kb][ln[kb]] === 'book') kb++;
-      if (PAY.book[kb]) best = { line: i, sym: 'book', k: kb, mult: PAY.book[kb] };
+      while (kb < 5 && grid[kb][ln[kb]] === 'chest') kb++;
+      if (PAY.chest[kb]) best = { line: i, sym: 'chest', k: kb, mult: PAY.chest[kb] };
       for (const sy of SYM) {
-        if (sy === 'book' || sy === 'chest') continue;
-        let k = 0; while (k < 5 && (grid[k][ln[k]] === sy || grid[k][ln[k]] === 'book')) k++;
+        if (sy === 'chest' || sy === 'book') continue;
+        let k = 0; while (k < 5 && (grid[k][ln[k]] === sy || grid[k][ln[k]] === 'chest')) k++;
         let real = false; for (let r = 0; r < k; r++) if (grid[r][ln[r]] === sy) real = true;
         if (!real) continue;
         const m = PAY[sy][k];
@@ -3896,7 +3896,7 @@ const bookSlot = (() => {
     });
     return out;
   }
-  const chestCount = grid => Math.min(5, grid.reduce((a, col) => a + col.filter(v => v === 'chest').length, 0));
+  const bookCount = grid => Math.min(5, grid.reduce((a, col) => a + col.filter(v => v === 'book').length, 0));
 
   function resize() {
     const r = cv.getBoundingClientRect(); if (!r.width) return;
@@ -3967,7 +3967,7 @@ const bookSlot = (() => {
       if (Math.floor(rl.p) !== before && now - lastTick > 45) { lastTick = now; sfx.tick(); }
       if (k >= 1) {
         rl.done = true; rl.p = mod(rl.to, rl.L); sfx.reelStop();
-        if ([0, 1, 2].some(q => strips[r][mod(rl.p + q, rl.L)] === 'chest')) sfx.charge();
+        if ([0, 1, 2].some(q => strips[r][mod(rl.p + q, rl.L)] === 'book')) sfx.charge();
       } else moving = true;
     });
     draw(now);
@@ -4022,7 +4022,7 @@ const bookSlot = (() => {
     const gr = grid(), lineBet = fs ? fs.lineBet : BETS[betIdx];
     wins = lineWins(gr);
     let total = wins.reduce((a, w) => a + w.mult * lineBet, 0);
-    const c = chestCount(gr);
+    const c = bookCount(gr);
     total += SCAT[c] * lineBet * LINES.length;
     let exp = null;
     if (fs) {
@@ -4054,7 +4054,7 @@ const bookSlot = (() => {
       }, delay);
       delay += 2600;
     }
-    // Truhen: Freispiele starten oder verlängern
+    // Bücher: Freispiele starten oder verlängern
     if (c >= 3) {
       sfx.jackpot();
       if (fs) { fs.left += FS[fs.sym]; fs.total += FS[fs.sym]; msg(t('bk.retrigger', { n: FS[fs.sym] }), true); }
@@ -4096,8 +4096,8 @@ const bookSlot = (() => {
       const p = PAY[k], parts = [2, 3, 4, 5].filter(n => p[n]).map(n => `${n}× <b>${p[n]}</b>`).join(' · ');
       return `<div class="pay-row"><img src="${img(k)}" alt="${t('bsym.' + k)}"><span>${parts}</span></div>`;
     });
-    rows.unshift(`<div class="pay-row"><img src="${img('chest')}" alt="${t('bsym.chest')}"><span>3× <b>2</b> · 4× <b>15</b> · 5× <b>150</b><br><small>${t('bk.scatter')}</small></span></div>`,
-      `<div class="pay-row"><img src="${img('book')}" alt="${t('bsym.book')}"><span>3× <b>15</b> · 4× <b>150</b> · 5× <b>1500</b><br><small>${t('bk.wild')}</small></span></div>`);
+    rows.unshift(`<div class="pay-row"><img src="${img('book')}" alt="${t('bsym.book')}"><span>3× <b>2</b> · 4× <b>15</b> · 5× <b>150</b><br><small>${t('bk.scatter')}</small></span></div>`,
+      `<div class="pay-row"><img src="${img('chest')}" alt="${t('bsym.chest')}"><span>3× <b>15</b> · 4× <b>150</b> · 5× <b>1500</b><br><small>${t('bk.wild')}</small></span></div>`);
     $('#bkPayList').innerHTML = rows.join('');
   }
 
