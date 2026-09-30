@@ -221,6 +221,7 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .adr-fx{position:fixed;inset:0;z-index:15;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 50%, rgba(255,0,0,0) 52%, rgba(200,10,20,.5) 100%);transition:opacity .4s}
 body.adrenaline .adr-fx{opacity:1;animation:heartbeat .8s ease-in-out infinite}
 @keyframes heartbeat{0%,100%{opacity:.5}14%{opacity:1}28%{opacity:.6}42%{opacity:.9}}
+.out{font-family:var(--ui);font-size:15px;font-weight:700;letter-spacing:.06em;color:#ffd66b;min-height:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .legs{font-size:17px;letter-spacing:.2em;color:rgba(241,237,226,.82);min-height:1.2em}
 .ppd{font-family:var(--ui);font-size:15px;letter-spacing:.06em;color:rgba(241,237,226,.78);font-variant-numeric:tabular-nums}
 .ppd b{font-weight:700;color:var(--chalk);font-size:17px}
@@ -423,6 +424,7 @@ legend{padding:0;margin-bottom:8px}
         <div class="col" id="col0">
           <h2 data-i18n="you">Du</h2>
           <div class="rest" id="rest0">501</div>
+          <div class="out" id="out0" aria-live="polite"></div>
           <div class="ppd" id="ppd0" title="Points per Dart: Punkte je geworfenem Dart im Match" data-i18n-title="ppd.title">PPD <b>–</b></div>
           <div class="cpu-tag" id="tag0"></div>
           <div class="legs" id="legs0"></div>
@@ -431,6 +433,7 @@ legend{padding:0;margin-bottom:8px}
         <div class="col" id="col1">
           <h2 id="name1">Kalle</h2>
           <div class="rest" id="rest1">501</div>
+          <div class="out" id="out1" aria-live="polite"></div>
           <div class="ppd" id="ppd1" title="Points per Dart: Punkte je geworfenem Dart im Match" data-i18n-title="ppd.title">PPD <b>–</b></div>
           <div class="cpu-tag" id="tag1"></div>
           <div class="legs" id="legs1"></div>
@@ -2298,7 +2301,7 @@ function makeView3d() {
   mesh(new T.PlaneGeometry(.49, .65), std({ map: scoreTex, roughness: .95 }), 0, 0, .031, scoreGrp);
   let scoreKey = '';
   function drawScores(st) {
-    const key = st ? [lang, st.start, st.opp.name, st.scores, ppd(st, 0), ppd(st, 1), st.legsToWin, st.legs, st.hist.map(h => h.slice(-4).map(v => v.bust ? 'B' : v.rest))].join('|') : lang;
+    const key = st ? [lang, st.start, st.opp.name, st.scores, ppd(st, 0), ppd(st, 1), st.legsToWin, st.legs, st.hist.map(h => h.slice(-4).map(v => v.bust ? 'B' : v.rest)), checkoutText(st, 0), checkoutText(st, 1)].join('|') : lang;
     const fontKey = key + (document.fonts ? document.fonts.status : '');
     if (fontKey === scoreKey) return false;
     scoreKey = fontKey;
@@ -2316,11 +2319,15 @@ function makeView3d() {
       const cx = w / 4 + i * w / 2;
       g.font = "700 38px 'Cabin Sketch', cursive"; g.fillText(n.length > 9 ? n.slice(0, 8) + '.' : n, cx, 150);
       g.font = "700 104px 'Cabin Sketch', cursive"; g.fillText(String(rests[i]), cx, 280);
-      if (st) { g.font = "400 32px 'Cabin Sketch', cursive"; g.fillText('PPD ' + ppd(st, i), cx, 330); }
-      if (st && st.legsToWin > 1) { g.font = "700 38px 'Cabin Sketch', cursive"; g.fillText('●'.repeat(st.legs[i]) + '○'.repeat(st.legsToWin - st.legs[i]), cx, 378); }
+      if (st) {
+        const out = checkoutText(st, i);
+        if (out) { g.save(); g.fillStyle = 'rgba(255,214,107,.95)'; g.font = "700 27px 'Cabin Sketch', cursive"; g.fillText(out.replace(/ · /g, ' '), cx, 322, w / 2 - 16); g.restore(); }
+        g.font = "400 30px 'Cabin Sketch', cursive"; g.fillText('PPD ' + ppd(st, i), cx, 364);
+      }
+      if (st && st.legsToWin > 1) { g.font = "700 36px 'Cabin Sketch', cursive"; g.fillText('●'.repeat(st.legs[i]) + '○'.repeat(st.legsToWin - st.legs[i]), cx, 408); }
       if (st) {
         g.font = "400 34px 'Cabin Sketch', cursive";
-        st.hist[i].slice(-4).forEach((v, k) => g.fillText(v.bust ? 'Bust' : String(v.rest), cx, 440 + k * 42));
+        st.hist[i].slice(-4).forEach((v, k) => g.fillText(v.bust ? 'Bust' : String(v.rest), cx, 462 + k * 42));
       }
     });
     scoreTex.needsUpdate = true;
@@ -3131,6 +3138,7 @@ function renderTafel() {
   $('#name1').textContent = S.opp.name;
   for (const p of [0, 1]) {
     $('#rest' + p).textContent = S.scores[p];
+    $('#out' + p).textContent = checkoutText(S, p);
     $('#ppd' + p).innerHTML = `PPD <b>${ppd(S, p)}</b>`;
     $('#legs' + p).textContent = S.legsToWin > 1 ? '●'.repeat(S.legs[p]) + '○'.repeat(S.legsToWin - S.legs[p]) : '';
     $('#col' + p).classList.toggle('active', S.turn === p && !S.over);
@@ -3151,6 +3159,13 @@ function renderTafel() {
   $('#visitWho').textContent = S.turn === 0 ? t('visit.mine') : t('visit.opp', { name: S.opp.name });
   renderSkills();
   V.setScores(S);
+}
+
+// Möglicher Checkout mit den Darts, die noch übrig sind, z. B. "T20 · T20 · D20"
+function checkoutText(g, p) {
+  const left = g.turn === p && g.visitState === 'open' ? 3 - g.visit.length : 3;
+  const f = !g.over && left > 0 ? finish(g.scores[p], left) : null;
+  return f ? f.seq.map(x => x.l).join(' · ') : '';
 }
 
 // Points per Dart mit einer Nachkommastelle, deutsch formatiert
