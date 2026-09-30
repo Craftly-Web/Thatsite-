@@ -220,6 +220,7 @@ body.adrenaline .adr-fx{opacity:1;animation:heartbeat .8s ease-in-out infinite}
 .legs{font-size:17px;letter-spacing:.2em;color:rgba(241,237,226,.82);min-height:1.2em}
 .ppd{font-family:var(--ui);font-size:15px;letter-spacing:.06em;color:rgba(241,237,226,.78);font-variant-numeric:tabular-nums}
 .ppd b{font-weight:700;color:var(--chalk);font-size:17px}
+.cpu-tag{font-family:var(--ui);font-size:12px;letter-spacing:.04em;color:#ffd66b;min-height:16px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hint{font-size:16px;color:var(--muted);text-align:center;min-height:1.4em;letter-spacing:.03em;text-wrap:balance;max-width:60ch}
 
 /* Tresen mit Wirt */
@@ -418,6 +419,7 @@ legend{padding:0;margin-bottom:8px}
           <h2 data-i18n="you">Du</h2>
           <div class="rest" id="rest0">501</div>
           <div class="ppd" id="ppd0" title="Points per Dart: Punkte je geworfenem Dart im Match" data-i18n-title="ppd.title">PPD <b>–</b></div>
+          <div class="cpu-tag" id="tag0"></div>
           <div class="legs" id="legs0"></div>
           <ol class="hist" id="hist0"></ol>
         </div>
@@ -425,6 +427,7 @@ legend{padding:0;margin-bottom:8px}
           <h2 id="name1">Kalle</h2>
           <div class="rest" id="rest1">501</div>
           <div class="ppd" id="ppd1" title="Points per Dart: Punkte je geworfenem Dart im Match" data-i18n-title="ppd.title">PPD <b>–</b></div>
+          <div class="cpu-tag" id="tag1"></div>
           <div class="legs" id="legs1"></div>
           <ol class="hist" id="hist1"></ol>
         </div>
@@ -507,6 +510,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.adr"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
       <p class="rules" data-i18n-html="rules.darts"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.</p>
       <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
+      <p class="rules" data-i18n-html="rules.cpu"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -630,6 +634,7 @@ const I18N = {
     'rules.adr': '<strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.',
     'rules.darts': '<strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.',
     'rules.boards': '<strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.',
+    'rules.cpu': '<strong>Gegner:</strong> Dein Gegner wirft mit demselben Pfeil-Set und hat dieselben Boni wie du – Adrenalin, Präzision, Schnellwurf oder ruhige Hand –, aber nur mit halber Wirkung. Was er gerade hat, steht an der Tafel unter seinem Namen.',
     'rules.legs': '<strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.',
     'btn.resume': 'Zurück zum Spiel', 'btn.start': 'Anwerfen', 'btn.settings': 'Einstellungen', 'btn.rematch': 'Revanche',
     'lvl.anfaenger': 'Tante Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'Die Maschine',
@@ -653,6 +658,10 @@ const I18N = {
     'hint.legme': 'Leg an dich · Stand {a}:{b} · nächstes Leg gleich …', 'hint.legopp': 'Leg an {name} · Stand {a}:{b} · nächstes Leg gleich …',
     'hint.checkme': 'Checkout! Heinz zapft dir eins aufs Haus.', 'hint.checkopp': '{name} hat gecheckt.',
     'call.adr': 'Adrenalin!',
+    'hint.cpuadr': '{name} hat Adrenalin, halbe Wirkung – die nächsten 3 Darts sitzen besser.',
+    'hint.cpublitz': '{name} zündet einen Schnellwurf, halbe Wirkung.',
+    'cpu.adr': 'Adrenalin ½ ({n})', 'cpu.blitz': 'Schnellwurf ½ ({n})', 'cpu.stock': 'Schnellwurf ½ bereit', 'cpu.prec': 'Präzision ½: {n}', 'cpu.alt': 'Ruhige Hand ½',
+    'w.cpuadr': ['Oha, {name} kriegt Puls! Aber nur halb so wild.', '{name} hat Adrenalin – halbe Portion, trotzdem aufpassen!', 'Guck mal, {name} schwitzt. Das ist Adrenalin, kein Bier.'],
     'end.win': 'Game shot – du gewinnst!', 'end.lose': '{name} gewinnt',
     'end.textme': 'Du checkst {r} mit {d}, nach {n} Darts. {name} stand noch auf {o}.',
     'end.textopp': '{name} checkt {r} mit {d}, nach {n} Darts. Dir fehlten noch {o} Punkte.',
@@ -699,6 +708,7 @@ const I18N = {
     'rules.adr': '<strong>Adrenaline:</strong> Your next 3 darts become very precise. If you start a visit at least 150 points behind, it kicks in by itself. When your opponent is on a finish – able to check out with three darts – the adrenaline button glows red and you trigger it whenever you like. Each happens once per leg.',
     'rules.darts': '<strong>Darts:</strong> The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. The lightning dart unlocks after 5 treble 20s, the regulars’ dart after 3 match wins.',
     'rules.boards': '<strong>Boards:</strong> The wooden board unlocks with your first match win, the dart machine with a visit of 100 or more, and the top league board by beating Otto or The Machine. Your browser remembers what you unlocked.',
+    'rules.cpu': '<strong>Opponent:</strong> Your opponent throws with the same dart set and gets the same bonuses as you – adrenaline, precision, quick throw or steady hand – but at half strength. Whatever they have right now shows on the scoreboard under their name.',
     'rules.legs': '<strong>Legs:</strong> First to win the chosen number of legs takes the match. The first throw alternates every leg.',
     'btn.resume': 'Back to game', 'btn.start': 'Game on', 'btn.settings': 'Settings', 'btn.rematch': 'Rematch',
     'lvl.anfaenger': 'Auntie Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'The Machine',
@@ -722,6 +732,10 @@ const I18N = {
     'hint.legme': 'Leg to you · {a}:{b} · next leg coming …', 'hint.legopp': 'Leg to {name} · {a}:{b} · next leg coming …',
     'hint.checkme': 'Checkout! Heinz pours you one on the house.', 'hint.checkopp': '{name} checked out.',
     'call.adr': 'Adrenaline!',
+    'hint.cpuadr': '{name} has adrenaline at half strength – the next 3 darts are sharper.',
+    'hint.cpublitz': '{name} fires up a quick throw at half strength.',
+    'cpu.adr': 'Adrenaline ½ ({n})', 'cpu.blitz': 'Quick throw ½ ({n})', 'cpu.stock': 'Quick throw ½ ready', 'cpu.prec': 'Precision ½: {n}', 'cpu.alt': 'Steady hand ½',
+    'w.cpuadr': ['Whoa, {name}’s pulse is up! Only half as wild though.', '{name} has adrenaline – half a portion, still watch out!', 'Look, {name} is sweating. That’s adrenaline, not lager.'],
     'end.win': 'Game shot – you win!', 'end.lose': '{name} wins',
     'end.textme': 'You check out {r} with {d} after {n} darts. {name} was still on {o}.',
     'end.textopp': '{name} checks out {r} with {d} after {n} darts. You still needed {o}.',
@@ -762,7 +776,7 @@ function t(key, vars = {}) {
 
 /* ---------- Sound (Web Audio, alles synthetisch) ---------- */
 const sfx = (() => {
-  let ac = null, master = null, noise = null, muted = false, amb = null;
+  let ac = null, master = null, noise = null, muted = false, amb = null, style = 'classic';
   // Handy: iOS schaltet Web Audio mit dem Stumm-Schalter ab. Als Medien-Wiedergabe markieren
   // und ein stilles <audio> mitlaufen lassen, dann klingt es wie ein Video.
   let media = null;
@@ -875,15 +889,6 @@ const sfx = (() => {
     if (amb) return;
     const t = ac.currentTime;
     amb = ac.createGain(); amb.gain.setValueAtTime(.0001, t); amb.gain.exponentialRampToValueAtTime(1, t + 3); amb.connect(master);
-    for (let i = 0; i < 3; i++) {
-      const s = loopNoise(t);
-      const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 230 + i * 180; f.Q.value = .9;
-      const g = ac.createGain(); g.gain.value = .017;
-      const lfo = ac.createOscillator(); lfo.frequency.value = .25 + Math.random() * .6;
-      const lg = ac.createGain(); lg.gain.value = .01;
-      lfo.connect(lg); lg.connect(g.gain); lfo.start(t);
-      s.connect(f); f.connect(g); g.connect(amb);
-    }
     const events = [[clinkBg, 4], [cough, 2], [shaker, 1.5], [tapBg, 1.5]];
     const total = events.reduce((a, e) => a + e[1], 0);
     const next = () => setTimeout(() => {
@@ -928,29 +933,70 @@ const sfx = (() => {
       const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.05, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .5);
       o.connect(g); g.connect(out); o.start(t); o.stop(t + .55);
     }
-    const beatsPerLoop = bars.length * 3, start = ac.currentTime + 1;
-    let next = 0;   // nächster zu planender Schlag, ganzzahlig gezählt
+    const beatsPerLoop = bars.length * 3;
+    function waltz(n, at) {
+      const k = n % beatsPerLoop, bar = Math.floor(k / 3), beat = k % 3;
+      const ch = CH[bars[bar]];
+      if (beat === 0) bass(at, ch[0]); else ch.slice(1).forEach(m => reed(at, .28, m, .006));
+      mel.filter(x => x[0] === bar && x[1] === beat).forEach(x => reed(at, x[2] * BEAT * .92, x[3], .014));
+    }
+
+    // Dartautomat: Elektro im Viervierteltakt mit Chip-Arpeggio, 120 BPM in Sechzehnteln
+    const STEP = .125;
+    const DCH = [[57, 60, 64], [53, 57, 60], [48, 52, 55], [55, 59, 62]];   // Am F C G
+    // Lead: [Takt, Sechzehntel, Länge, MIDI-Note]
+    const lead = [
+      [0, 0, 2, 76], [0, 3, 1, 74], [0, 4, 2, 72], [0, 6, 2, 74], [0, 8, 4, 76], [0, 12, 2, 79], [0, 14, 2, 76],
+      [1, 0, 3, 77], [1, 4, 2, 76], [1, 6, 2, 74], [1, 8, 6, 72], [1, 14, 2, 69],
+      [2, 0, 2, 72], [2, 2, 2, 74], [2, 4, 2, 76], [2, 6, 2, 79], [2, 8, 4, 84], [2, 12, 4, 79],
+      [3, 0, 3, 79], [3, 4, 2, 77], [3, 6, 2, 76], [3, 8, 4, 74], [3, 12, 4, 71]
+    ];
+    function blip(t, dur, m, gain, type = 'square', cut = 2600) {
+      const o = ac.createOscillator(); o.type = type; o.frequency.value = hz(m);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = cut;
+      const g = ac.createGain();
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + .006);
+      g.gain.setValueAtTime(gain, t + dur * .6); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(lp); lp.connect(g); g.connect(out); o.start(t); o.stop(t + dur + .03);
+    }
+    function kick(t) {
+      const o = ac.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(45, t + .12);
+      const g = ac.createGain(); g.gain.setValueAtTime(.08, t); g.gain.exponentialRampToValueAtTime(.0001, t + .18);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + .2);
+    }
+    function digi(n, at) {
+      const k = n % 128, bar = Math.floor(k / 16) % 4, s = k % 16, ch = DCH[bar];
+      if (s % 4 === 0) kick(at);
+      if (s === 4 || s === 12) nz(at, .1, 'bandpass', 1900, .8, .035, .002, out);   // Clap
+      nz(at, .03, 'highpass', 7500, .7, s % 4 === 2 ? .03 : .01, .001, out);          // Hi-Hat
+      if (s % 2 === 0) blip(at, .11, ch[0] - 12, .045, 'sawtooth', 420 + 260 * (s % 8 === 0));
+      blip(at, .09, ch[s % 3] + 12, .008);                                            // Arpeggio
+      if (k >= 64) lead.filter(x => x[0] === bar && x[1] === s).forEach(x => blip(at, x[2] * STEP * .9, x[3], .016, 'square', 3200));
+    }
+
+    // Ein Taktgeber für beide Stile; beim Scheibenwechsel startet der neue Stil sauber neu
+    let mode = null, t0 = 0, next = 0;
+    const stepLen = () => mode === 'digi' ? STEP : BEAT;
     setInterval(() => {
       if (!ac || document.hidden) return;
-      const until = (ac.currentTime - start + .5) / BEAT;
+      const want = style === 'automat' ? 'digi' : 'pub';
+      if (want !== mode) { mode = want; t0 = ac.currentTime + (next ? .6 : 1); next = 0; }
+      const until = (ac.currentTime - t0 + .5) / stepLen();
       while (next < until) {
-        const k = next % beatsPerLoop, bar = Math.floor(k / 3), beat = k % 3, at = start + next * BEAT;
-        if (!muted) {
-          const ch = CH[bars[bar]];
-          if (beat === 0) bass(at, ch[0]); else ch.slice(1).forEach(m => reed(at, .28, m, .006));
-          mel.filter(n => n[0] === bar && n[1] === beat).forEach(n => reed(at, n[2] * BEAT * .92, n[3], .014));
-        }
+        if (!muted) (mode === 'digi' ? digi : waltz)(next, t0 + next * stepLen());
         next++;
       }
-    }, 150);
+    }, 100);
     document.addEventListener('visibilitychange', () => {
       // Im Hintergrund pausieren, danach ohne Nachholen weiterspielen
-      if (!document.hidden) next = Math.max(next, Math.ceil((ac.currentTime - start) / BEAT));
+      if (!document.hidden && mode) next = Math.max(next, Math.ceil((ac.currentTime - t0) / stepLen()));
     });
   }
   return {
     init,
     get state() { return ac ? ac.state : 'none'; },
+    setStyle(k) { style = k; },
     get muted() { return muted; },
     setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : .8; },
     whoosh() {
@@ -2766,10 +2812,10 @@ canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') ho
 
 /* ---------- Spiel ---------- */
 const LEVELS = {
-  anfaenger: { name: 'Tante Gerda', sigma: 32, label: 'Anfängerin' },
-  stammgast: { name: 'Kalle', sigma: 20, label: 'Stammgast' },
-  verein:    { name: 'Otto', sigma: 13, label: 'Vereinsspieler' },
-  profi:     { name: 'Die Maschine', sigma: 7.5, label: 'Profi' }
+  anfaenger: { name: 'Tante Gerda', sigma: 30, label: 'Anfängerin' },
+  stammgast: { name: 'Kalle', sigma: 18.5, label: 'Stammgast' },
+  verein:    { name: 'Otto', sigma: 12, label: 'Vereinsspieler' },
+  profi:     { name: 'Die Maschine', sigma: 7, label: 'Profi' }
 };
 for (const k of Object.keys(LEVELS)) Object.defineProperties(LEVELS[k], {
   name: { get: () => t('lvl.' + k) }, label: { get: () => t('lvl.' + k + '.l') }
@@ -2783,6 +2829,7 @@ function newGame(o) {
     pts: [0, 0], dartsN: [0, 0],   // für Points per Dart über das ganze Match
     dartSet: o.dart || 'kneipe', precStock: 0, precProgress: 0, precArmed: false,
     blitzStock: 0, blitzProgress: 0, blitzLeft: 0, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0,
+    cpu: { precStock: 0, precProgress: 0, blitzStock: 0, blitzProgress: 0, blitzLeft: 0, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0 },
     scores: [o.start, o.start], hist: [[], []], turn: o.starter,
     visit: [], visitState: 'open', turnStart: o.start,
     darts: [], busy: false, over: false
@@ -2800,6 +2847,7 @@ function startLeg() {
   const g = S;
   g.scores = [g.start, g.start]; g.hist = [[], []]; g.turn = g.legStarter;
   g.over = false; g.adrGapUsed = false; g.adrFinishUsed = false; g.adrOffered = false; g.adrLeft = 0;
+  g.cpu.adrGapUsed = false; g.cpu.adrFinishUsed = false; g.cpu.adrLeft = 0;
   document.body.classList.remove('adrenaline');
   beginTurn();
 }
@@ -2827,6 +2875,7 @@ function beginTurn() {
   if (finish(rest, 3)) voice.say(g.turn === 0 ? `You require ${words(rest)}.` : `${g.opp.name}, you require ${words(rest)}.`);
   if (g.turn === 1) {
     hint(t('hint.oche', { name: g.opp.name }));
+    cpuBoostStart(g);
     setTimeout(() => { if (S === g) cpuDart(); }, V.is3d ? 1500 : 900);
   } else {
     hint(t('hint.aim'));
@@ -2840,15 +2889,72 @@ function beginTurn() {
   }
 }
 
+// Der Gegner bekommt dieselben Boni wie du, aber nur mit halber Wirkung
+const CPU_BOOST = .5, CPU_BLITZ = .15;   // Schnellwurf zählt für ihn wie eine fast perfekte Hand
+const cpuMult = kind => kind === 'none' ? 1 : 1 - (1 - (kind === 'blitz' ? CPU_BLITZ : BOOSTS[kind].scatter)) * CPU_BOOST;
+
+// Zu Beginn seiner Aufnahme: Adrenalin wie beim Spieler, Schnellwurf sofort zünden
+function cpuBoostStart(g) {
+  const c = g.cpu, name = g.opp.name;
+  if (c.adrLeft === 0) {
+    let why = null;
+    if (!c.adrGapUsed && g.scores[1] - g.scores[0] >= ADR_GAP) { why = 'gap'; c.adrGapUsed = true; }
+    else if (!c.adrFinishUsed && finish(g.scores[0], 3)) { why = 'finish'; c.adrFinishUsed = true; }
+    if (why) {
+      c.adrLeft = ABILITY_DARTS;
+      sfx.heartbeat();
+      hint(t('hint.cpuadr', { name }));
+      wirt.say(t('w.cpuadr', { name }));
+    }
+  }
+  if (c.adrLeft === 0 && g.dartSet === 'blitz' && c.blitzLeft === 0 && c.blitzStock > 0) {
+    c.blitzStock--; c.blitzLeft = ABILITY_DARTS;
+    sfx.powerup();
+    hint(t('hint.cpublitz', { name }));
+  }
+  renderTafel();
+}
+
+function cpuBoostKind(g, onDouble) {
+  const c = g.cpu, set = g.dartSet;
+  if (c.adrLeft > 0) return 'adr';
+  if (set === 'blitz' && c.blitzLeft > 0) return 'blitz';
+  // Präzise Pfeile spart er fürs Doppel auf, bei vollem Vorrat wirft er sie auch so
+  if (set === 'kneipe' && c.precStock > 0 && (onDouble || c.precStock >= 3)) return 'prec';
+  if (set === 'alt') return 'alt';
+  return 'none';
+}
+
+function cpuBoostUse(g, kind) {
+  const c = g.cpu, set = g.dartSet;
+  if (kind === 'adr') c.adrLeft--;
+  else if (kind === 'prec') c.precStock--;
+  else if (kind === 'blitz') c.blitzLeft--;
+  if (set === 'kneipe' && ++c.precProgress >= PREC_EVERY) { c.precProgress = 0; c.precStock++; }
+  if (set === 'blitz' && kind !== 'adr' && kind !== 'blitz' && ++c.blitzProgress >= BLITZ_EVERY) { c.blitzProgress = 0; c.blitzStock++; }
+}
+
+// Was der Gegner gerade hat, steht an der Tafel unter seinem Namen
+function cpuBoostTag(g) {
+  const c = g.cpu;
+  if (c.adrLeft > 0) return t('cpu.adr', { n: c.adrLeft });
+  if (g.dartSet === 'blitz') return c.blitzLeft > 0 ? t('cpu.blitz', { n: c.blitzLeft }) : c.blitzStock > 0 ? t('cpu.stock', { n: c.blitzStock }) : '';
+  if (g.dartSet === 'kneipe') return c.precStock > 0 ? t('cpu.prec', { n: c.precStock }) : '';
+  if (g.dartSet === 'alt') return t('cpu.alt');
+  return '';
+}
+
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1) return;
   if (!menu.hidden) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
-  const t = cpuTarget(g.scores[1], 3 - g.visit.length);
-  const a = aimOf(t), [gx, gy] = gauss2();
-  const tx = a.x + gx * g.opp.sigma, ty = a.y + gy * g.opp.sigma;
+  const left = 3 - g.visit.length, f = finish(g.scores[1], left);
+  const kind = cpuBoostKind(g, !!f && f.seq.length === 1);
+  const sigma = g.opp.sigma * cpuMult(kind);
+  const a = aimOf(cpuTarget(g.scores[1], left)), [gx, gy] = gauss2();
+  const tx = a.x + gx * sigma, ty = a.y + gy * sigma;
   // In 3D holt die Figur erst aus und lässt dann los
-  V.cpuThrow(() => { if (S === g && !g.over && g.turn === 1) throwAt(1, tx, ty); });
+  V.cpuThrow(() => { if (S === g && !g.over && g.turn === 1) { cpuBoostUse(g, kind); throwAt(1, tx, ty); } });
 }
 
 function throwAt(p, x, y) {
@@ -2975,6 +3081,7 @@ function renderTafel() {
   if (!S) return;
   $('#modeLabel').textContent = S.legsToWin > 1 ? `${S.start} · First to ${S.legsToWin}` : `${S.start} · Double Out`;
   $('#levelLabel').textContent = S.opp.label;
+  $('#tag1').textContent = cpuBoostTag(S);
   $('#name1').textContent = S.opp.name;
   for (const p of [0, 1]) {
     $('#rest' + p).textContent = S.scores[p];
@@ -3120,6 +3227,7 @@ function setBoard(k) {
   try { localStorage.setItem('dk-board', k); } catch (e) {}
   wrap.classList.remove(...Object.keys(BOARD_INFO)); wrap.classList.add(k);
   V.setTheme(k);
+  sfx.setStyle(k);
 }
 function makePreviews() {
   for (const k of Object.keys(BOARD_INFO)) previews[k] = renderBoard(96, k).toDataURL();
