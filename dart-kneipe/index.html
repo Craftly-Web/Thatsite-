@@ -162,6 +162,9 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .skill.prec .skill-meter i{background:linear-gradient(90deg,#2a8fb0,#7fe3f5)}
 .skill.adr .skill-meter i{background:linear-gradient(90deg,#9b1f24,#ff5a4e)}
 .skill.prec.ready{cursor:pointer;border-color:#7fe3f5;animation:ready 1.1s ease-in-out infinite alternate}
+.skill.adr.ready{cursor:pointer;border-color:#ff5a4e;animation:readyRed .9s ease-in-out infinite alternate}
+.skill.adr.ready .skill-state{color:#ffc2bb}
+@keyframes readyRed{from{box-shadow:0 0 0 0 rgba(255,90,78,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(255,90,78,.6),0 6px 14px rgba(0,0,0,.35)}}
 .skill.prec.ready .skill-state{color:#bff3fb}
 @keyframes ready{from{box-shadow:0 0 0 0 rgba(127,227,245,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(127,227,245,.55),0 6px 14px rgba(0,0,0,.35)}}
 .skill.prec.on{border-color:#7fe3f5;background:rgba(16,58,70,.78)}
@@ -321,6 +324,7 @@ legend{padding:0;margin-bottom:8px}
   .toast.pop{animation:none}
   .skill.prec.ready{animation:none;box-shadow:0 0 14px 2px rgba(127,227,245,.5)}
   body.adrenaline .adr-fx{animation:none;opacity:.8}
+  .skill.adr.ready{animation:none;box-shadow:0 0 14px 2px rgba(255,90,78,.5)}
 }
 </style>
 </head>
@@ -362,10 +366,10 @@ legend{padding:0;margin-bottom:8px}
           <span class="skill-top"><span class="skill-name">Präzision</span><span class="skill-state" id="precState">0 gespeichert</span></span>
           <span class="skill-meter"><i id="precFill"></i></span>
         </button>
-        <div class="skill adr" id="adrBox">
+        <button type="button" class="skill adr" id="adrBox" disabled>
           <span class="skill-top"><span class="skill-name">Adrenalin</span><span class="skill-state" id="adrState">150 Rückstand oder Gegner-Finish</span></span>
           <span class="skill-meter"><i id="adrFill"></i></span>
-        </div>
+        </button>
       </div>
       <div class="hint" id="hint">Drücken &amp; halten, ausatmen – in der goldenen Atempause loslassen</div>
     </section>
@@ -450,7 +454,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
       <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
       <p class="rules"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
-      <p class="rules"><strong>Adrenalin:</strong> Springt zu Beginn deiner Aufnahme von selbst an, wenn du mindestens 150 Punkte zurückliegst oder dein Gegner auf einem Finish steht, also mit höchstens drei Darts auschecken kann. Dann sind deine nächsten 3 Darts sehr präzise. Jeder der beiden Auslöser zählt einmal pro Leg.</p>
+      <p class="rules"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
       <p class="rules"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
       <p class="rules"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
@@ -1677,7 +1681,7 @@ function newGame(o) {
 function startLeg() {
   const g = S;
   g.scores = [g.start, g.start]; g.hist = [[], []]; g.turn = g.legStarter;
-  g.over = false; g.adrGapUsed = false; g.adrFinishUsed = false; g.adrLeft = 0;
+  g.over = false; g.adrGapUsed = false; g.adrFinishUsed = false; g.adrOffered = false; g.adrLeft = 0;
   document.body.classList.remove('adrenaline');
   beginTurn();
 }
@@ -1709,7 +1713,10 @@ function beginTurn() {
     hint('Drücken & halten, ausatmen – in der goldenen Atempause loslassen');
     if (g.adrLeft === 0) {
       if (!g.adrGapUsed && g.scores[0] - g.scores[1] >= ADR_GAP) triggerAdrenaline(g, 'gap');
-      else if (!g.adrFinishUsed && finish(g.scores[1], 3)) triggerAdrenaline(g, 'finish');
+      else if (!g.adrFinishUsed && finish(g.scores[1], 3)) {
+        hint(`${g.opp.name} steht auf ${g.scores[1]} – tippe auf Adrenalin, wenn du es brauchst.`);
+        if (!g.adrOffered) { g.adrOffered = true; wirt.say('Der steht auf Finish! Hol dir dein Adrenalin.'); }
+      }
     }
   }
 }
@@ -1872,16 +1879,29 @@ function renderSkills() {
   const gapUsed = !!g && g.adrGapUsed, finUsed = !!g && g.adrFinishUsed;
   const used = gapUsed && finUsed && adrLeft === 0;
   const gap = g ? Math.max(0, g.scores[0] - g.scores[1]) : 0;
+  const finOpen = !!g && !finUsed && !!finish(g.scores[1], 3);
+  const adrCanUse = !!g && !g.over && g.turn === 0 && adrLeft === 0 && finOpen;
   const adrBox = $('#adrBox');
+  adrBox.disabled = !adrCanUse;
+  adrBox.classList.toggle('ready', adrCanUse);
   adrBox.classList.toggle('on', adrLeft > 0);
   adrBox.classList.toggle('used', used);
   $('#adrFill').style.width = (adrLeft > 0 ? adrLeft / ABILITY_DARTS : gapUsed ? 0 : Math.min(1, gap / ADR_GAP)) * 100 + '%';
   $('#adrState').textContent = adrLeft > 0 ? `aktiv · noch ${adrLeft}`
+    : adrCanUse ? 'Gegner auf Finish – antippen!'
     : used ? 'wieder im nächsten Leg'
     : gapUsed ? 'bei Gegner-Finish'
     : finUsed ? (gap > 0 ? `Rückstand ${gap}/${ADR_GAP}` : `ab ${ADR_GAP} Rückstand`)
     : gap > 0 ? `Rückstand ${gap}/${ADR_GAP} · Finish` : '150 Rückstand oder Gegner-Finish';
 }
+
+// Adrenalin selbst einsetzen, sobald der Gegner auf einem Finish steht
+$('#adrBox').addEventListener('click', () => {
+  const g = S;
+  if (!g || g.over || g.turn !== 0 || g.adrLeft > 0 || g.adrFinishUsed || !finish(g.scores[1], 3)) return;
+  sfx.init();
+  triggerAdrenaline(g, 'finish');
+});
 
 // Antippen macht den nächsten Dart präzise, nochmal antippen bricht ab
 $('#precBtn').addEventListener('click', () => {
