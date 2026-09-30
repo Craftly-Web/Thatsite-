@@ -1954,7 +1954,7 @@ function makeView3d() {
     const held = makeDart(1); held.rotation.x = -Math.PI / 2; held.position.set(0, -.03, -.02); Rr.hand.add(held);
     return { grp, m, L, R: Rr, head, torso, held };
   })();
-  const SPOTS = { oche: { p: V3(.24, 0, OCHE_Z + .12), ry: .45 }, aside: { p: V3(-1.3, 0, 2.45), ry: -.6 } };
+  const SPOTS = { oche: { p: V3(.24, 0, OCHE_Z + .12), ry: .45 }, aside: { p: V3(-1.0, 0, 2.75), ry: -.6 } };
   const opp = { from: null, to: SPOTS.aside, t0: 0, throwT0: 0, release: null, released: false };
   person.grp.position.copy(SPOTS.aside.p); person.grp.rotation.y = SPOTS.aside.ry;
   let nextFrom = null;
@@ -2022,9 +2022,9 @@ function makeView3d() {
   }
 
   /* Kamera: Halle aus der dritten Person, Nahansicht zum Zielen, kurzer Zoom nach jedem Treffer */
-  const HALL = { p: V3(2.05, 1.8, 6.1), t: V3(-.25, 1.25, 1.1) };
+  const HALL = { p: V3(1.8, 1.78, 5.5), t: V3(-.2, 1.3, 1.0) };
   function aimPose() {
-    const half = Math.tan(camera.fov * Math.PI / 360), need = .255;
+    const half = Math.tan(camera.fov * Math.PI / 360), need = .233;
     const d = camera.aspect >= 1 ? need / half : need / (half * camera.aspect);
     return { p: V3(0, BULL_Y, FACE_Z + d), t: V3(0, BULL_Y, FACE_Z) };
   }
