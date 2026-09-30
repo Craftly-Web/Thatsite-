@@ -213,12 +213,20 @@ body::after{
 }
 .panel{
   width:min(100%,470px);
+  max-height:calc(100vh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   background:radial-gradient(ellipse at 30% 15%, #2e3c35, #1a221e 75%);
   border:12px solid var(--wood);border-radius:6px;
   box-shadow:0 0 0 2px #24130a, 0 30px 80px rgba(0,0,0,.7), inset 0 0 40px rgba(0,0,0,.5);
   padding:20px 22px 22px;color:var(--chalk);
   display:flex;flex-direction:column;gap:16px;
 }
+@supports (height:100dvh){.panel{max-height:calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))}}
+.panel-body{display:flex;flex-direction:column;gap:14px;overflow-y:auto;min-height:0;overscroll-behavior:contain}
+.panel-foot{flex:none}
+.howto{border-top:1px dashed rgba(241,237,226,.3);padding-top:10px;display:flex;flex-direction:column;gap:10px}
+.howto summary{cursor:pointer;font:600 14px/1.2 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:rgba(241,237,226,.8);padding:4px 0}
+.howto summary:focus-visible{outline:2px solid #ffd66b;outline-offset:2px}
+.howto[open] summary{margin-bottom:8px}
 .panel h2{margin:0;font-family:var(--display);font-weight:400;font-size:40px;line-height:1.1;color:var(--brass);text-align:center;text-wrap:balance}
 .panel p{margin:0;font-size:17px;line-height:1.45;color:rgba(241,237,226,.88)}
 .panel p.rules{font-size:15px;color:rgba(241,237,226,.72)}
@@ -247,7 +255,16 @@ legend{padding:0;margin-bottom:8px}
   .bar-frame{width:min(100%, 340px)}
   .hint{font-size:15px}
   .lamp.l2{display:none}
+  .overlay{padding:calc(10px + env(safe-area-inset-top, 0px)) 10px calc(10px + env(safe-area-inset-bottom, 0px))}
+  .panel{border-width:8px;padding:14px 14px 16px;gap:12px;max-height:calc(100vh - 20px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))}
+  .panel-body{gap:11px}
+  .panel h2{font-size:32px}
+  .panel p{font-size:15.5px;line-height:1.4}
+  .chip span{font-size:17px;padding:6px 10px}
+  legend{margin-bottom:6px}
+  .row .btn{padding:13px}
 }
+@supports (height:100dvh){@media (max-width:780px){.panel{max-height:calc(100dvh - 20px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px))}}}
 @media (prefers-reduced-motion:reduce){
   .caller.show{animation:callfade 1.8s linear forwards}
   .lamp{animation:none}
@@ -320,8 +337,9 @@ legend{padding:0;margin-bottom:8px}
 
 <div class="overlay" id="menu" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
   <form class="panel" id="menuForm">
+    <div class="panel-body">
     <h2 id="menuTitle">Dart Kneipe</h2>
-    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz zapft das Pils und ruft die Punkte wie ein Profi-Caller, also Ton an!</p>
+    <p>Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz ruft die Punkte, also Ton an!</p>
     <fieldset>
       <legend>Startwert</legend>
       <div class="chips">
@@ -345,9 +363,13 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span>Gegner</span></label>
       </div>
     </fieldset>
-    <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
-    <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
-    <div class="row">
+    <details class="howto">
+      <summary>So wird gespielt</summary>
+      <p class="rules"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
+      <p class="rules"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
+    </details>
+    </div>
+    <div class="row panel-foot">
       <button type="button" class="btn ghost" id="resumeBtn" hidden>Zurück zum Spiel</button>
       <button type="button" class="btn" id="startBtn">Anwerfen</button>
     </div>
