@@ -110,6 +110,7 @@ body::after{
 .btn:focus-visible,.chip input:focus-visible + span{outline:2px solid #ffd66b;outline-offset:2px}
 .icon-btn{width:44px;height:44px;padding:0;display:grid;place-items:center}
 .icon-btn svg{width:22px;height:22px}
+#menuBtn .short{display:none}
 
 /* Bühne: Tresen | Scheibe | Tafel */
 .stage{
@@ -187,6 +188,11 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .board-chip.locked,.board-chip.locked input{cursor:not-allowed}
 .board-chip.locked span{opacity:.6;border-style:dashed}
 .board-chip.locked img{filter:grayscale(1) brightness(.6)}
+/* 3D-Halle: breite Bühne mit Kamerafahrten */
+.board-wrap.is3d{width:100%;aspect-ratio:auto;height:min(calc(100vh - 215px),760px);min-height:320px;border-radius:14px;overflow:hidden;background:#0e0805;box-shadow:0 0 0 2px #24130a,0 26px 60px rgba(0,0,0,.7)}
+@supports (height:100dvh){.board-wrap.is3d{height:min(calc(100dvh - 215px),760px)}}
+.board-wrap.is3d canvas{border-radius:14px}
+.board-wrap.is3d::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:14px;background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.42) 100%)}
 /* Hinweis bei neu freigeschalteter Scheibe */
 .toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top, 0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 32px);background:#fbf5e6;color:#2a170b;font:600 16px/1.3 var(--ui);padding:10px 16px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.55);text-align:center}
 .toast strong{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#8a5a1a}
@@ -300,6 +306,17 @@ legend{padding:0;margin-bottom:8px}
   .hist{display:none}
   .rest{font-size:42px}
   .board-wrap{width:min(100%, 560px)}
+  .board-wrap.is3d{width:100%;height:min(118vw,62vh);min-height:300px}
+  /* Handy: Bühne zuerst, Kreidetafel darunter, einzeilige Kopfzeile */
+  .stage.has3d{grid-template-areas:"board" "tafel" "bar"}
+  .sign{flex-wrap:nowrap}
+  .plank{padding:3px 12px 5px}
+  .plank h1{font-size:27px}
+  .plank small{display:none}
+  .actions .btn{padding:9px 12px;font-size:14px}
+  .actions .icon-btn{width:40px;height:40px;padding:0}
+  #menuBtn .long{display:none}
+  #menuBtn .short{display:inline}
   .bar-frame{width:min(100%, 340px)}
   .hint{font-size:15px}
   .lamp.l2{display:none}
@@ -343,7 +360,7 @@ legend{padding:0;margin-bottom:8px}
     </div>
     <div class="actions">
       <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
-      <button class="btn ghost" id="menuBtn" type="button">Neues Spiel</button>
+      <button class="btn ghost" id="menuBtn" type="button"><span class="long">Neues Spiel</span><span class="short">Menü</span></button>
     </div>
   </header>
 
@@ -358,6 +375,7 @@ legend{padding:0;margin-bottom:8px}
 
     <section class="board-col" aria-label="Dartscheibe">
       <div class="board-wrap" id="boardWrap">
+        <canvas id="scene" aria-hidden="true" hidden></canvas>
         <canvas id="board" aria-label="Dartscheibe – drücken und halten zum Zielen, loslassen zum Werfen"></canvas>
         <div class="caller" id="caller" aria-live="polite"></div>
       </div>
@@ -477,6 +495,7 @@ legend{padding:0;margin-bottom:8px}
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (() => {
 'use strict';
@@ -1474,29 +1493,650 @@ function drawAutomatLights(now) {
   }
 }
 
-function resize() {
-  const w = wrap.clientWidth;
-  if (!w) return;
-  sizeCss = w;
-  dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-  canvas.width = Math.round(w * dpr); canvas.height = Math.round(w * dpr);
-  scale = (w / 2) / R.EDGE;
-  boardImg = renderBoard(canvas.width);
-}
-new ResizeObserver(resize).observe(wrap);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+/* ---------- Ansicht: 3D-Halle mit Kamerafahrten, sonst flache Scheibe ---------- */
+const sceneCanvas = $('#scene');
+let sizeW = 0, sizeH = 0;   // CSS-Größe der Spielfläche
 
-const P = (x, y) => [sizeCss / 2 + x * scale, sizeCss / 2 + y * scale];
-// Drei Darts, die vor dem ersten Spiel hinter dem Menü in der 20 stecken
+// Flache Scheibe wie bisher: für Geräte ohne WebGL oder wenn three.js nicht lädt
+const view2d = {
+  is3d: false,
+  resize() {
+    const w = wrap.clientWidth;
+    if (!w) return;
+    sizeCss = sizeW = sizeH = w;
+    dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(w * dpr);
+    scale = (w / 2) / R.EDGE;
+    boardImg = renderBoard(canvas.width);
+  },
+  project: (x, y) => [sizeCss / 2 + x * scale, sizeCss / 2 + y * scale],
+  unproject: (px, py) => ({ x: (px - sizeCss / 2) / scale, y: (py - sizeCss / 2) / scale }),
+  pxPerMm: () => scale,
+  render(now) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, sizeCss, sizeCss);
+    if (boardImg) ctx.drawImage(boardImg, 0, 0, sizeCss, sizeCss);
+    if (boardKey === 'automat') drawAutomatLights(now);
+    for (const d of (S ? S.darts : PREVIEW)) drawDart(d, now);
+  },
+  setTheme() { this.resize(); },
+  onThrow(d) { d.fly = FLY; },
+  cpuThrow(release) { release(); },
+  canAim: () => true,
+  focus() {}, opponentTo() {}, setOpponent() {}, punch() {}, setScores() {}
+};
+
+function makeView3d() {
+  const T = window.THREE;
+  if (!T) return null;
+  let renderer;
+  try { renderer = new T.WebGLRenderer({ canvas: sceneCanvas, antialias: true }); }
+  catch (e) { return null; }
+  renderer.outputEncoding = T.sRGBEncoding;
+  renderer.toneMapping = T.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.25;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = T.PCFSoftShadowMap;
+  const aniso = renderer.capabilities.getMaxAnisotropy();
+  const TAU = Math.PI * 2, V3 = (x, y, z) => new T.Vector3(x, y, z);
+  // Maße in Metern: Bull auf 1,73 m, Oche 2,37 m vor der Scheibe
+  const BULL_Y = 1.73, FACE_Z = .075, OCHE_Z = 2.37;
+  const RW = 3.2, RD = 7.5, RH = 3.05;   // halbe Raumbreite, Raumtiefe, Raumhöhe
+
+  const scene = new T.Scene();
+  scene.background = new T.Color('#0e0805');
+  scene.fog = new T.Fog('#0e0805', 7, 13);
+  const camera = new T.PerspectiveCamera(44, 1, .02, 30);
+
+  const std = o => new T.MeshStandardMaterial(o);
+  const basic = o => new T.MeshBasicMaterial(o);
+  const mesh = (geo, mat, x = 0, y = 0, z = 0, parent = scene, shadows = true) => {
+    const m = new T.Mesh(geo, mat); m.position.set(x, y, z);
+    if (shadows) { m.castShadow = true; m.receiveShadow = true; }
+    parent.add(m); return m;
+  };
+
+  /* Prozedurale Texturen */
+  function tex(w, h, draw, rx = 1, ry = 1, srgb = true) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    draw(c.getContext('2d'), w, h);
+    const t = new T.CanvasTexture(c);
+    t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(rx, ry); t.anisotropy = aniso;
+    if (srgb) t.encoding = T.sRGBEncoding;
+    return t;
+  }
+  const rep = (t, rx, ry) => { const c = t.clone(); c.needsUpdate = true; c.repeat.set(rx, ry); return c; };
+  function speckle(g, w, h, n, dark = .12, light = .05) {
+    for (let i = 0; i < n; i++) {
+      g.fillStyle = Math.random() < .55 ? `rgba(0,0,0,${Math.random() * dark})` : `rgba(255,230,200,${Math.random() * light})`;
+      g.fillRect(Math.random() * w, Math.random() * h, 1 + Math.random() * 2, 1 + Math.random() * 2);
+    }
+  }
+  function grain(g, x, y, w, h, n, vertical = true) {
+    for (let k = 0; k < n; k++) {
+      g.strokeStyle = Math.random() < .6 ? `rgba(20,8,2,${.05 + Math.random() * .12})` : `rgba(255,220,170,${.03 + Math.random() * .06})`;
+      g.lineWidth = .5 + Math.random() * 1.6;
+      g.beginPath();
+      const off = Math.random() * (vertical ? w : h), ph = Math.random() * 6;
+      if (vertical) { g.moveTo(x + off, y); for (let t = 0; t <= h; t += 16) g.lineTo(x + off + Math.sin(t * .012 + ph) * 3 + Math.sin(t * .05 + k) * .8, y + t); }
+      else { g.moveTo(x, y + off); for (let t = 0; t <= w; t += 16) g.lineTo(x + t, y + off + Math.sin(t * .012 + ph) * 3 + Math.sin(t * .05 + k) * .8); }
+      g.stroke();
+    }
+  }
+  // Holzdielen, verschiedene Bretter mit Maserung und Fugen
+  const floorTex = tex(1024, 1024, (g, w, h) => {
+    const n = 7, pw = w / n;
+    for (let i = 0; i < n; i++) {
+      let y = -Math.random() * h * .6;
+      while (y < h) {
+        const len = h * (.4 + Math.random() * .5);
+        g.fillStyle = `hsl(${25 + Math.random() * 5},${40 + Math.random() * 10}%,${19 + Math.random() * 5}%)`;
+        g.fillRect(i * pw, y, pw, len);
+        grain(g, i * pw, y, pw, len, 30);
+        g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(i * pw, y + len - 2, pw, 3);
+        y += len;
+      }
+      g.fillStyle = 'rgba(0,0,0,.7)'; g.fillRect(i * pw, 0, 3, h);
+    }
+    speckle(g, w, h, 6000, .12, .04);
+  }, 3.5, 4.2);
+  // Tapete: Ochsenblut mit goldenem Ornament
+  const paperTex = tex(512, 512, (g, w, h) => {
+    g.fillStyle = '#3a1411'; g.fillRect(0, 0, w, h);
+    speckle(g, w, h, 5000, .1, .03);
+    const orn = (cx, cy) => {
+      g.save(); g.translate(cx, cy);
+      g.fillStyle = 'rgba(206,160,82,.06)'; g.strokeStyle = 'rgba(206,160,82,.1)'; g.lineWidth = 1.5;
+      for (let a = 0; a < 8; a++) { g.rotate(Math.PI / 4); g.beginPath(); g.ellipse(0, -46, 11, 40, 0, 0, TAU); g.fill(); g.stroke(); }
+      g.beginPath(); g.arc(0, 0, 14, 0, TAU); g.fill(); g.stroke();
+      g.restore();
+    };
+    orn(w / 2, h / 2); orn(0, 0); orn(w, 0); orn(0, h); orn(w, h);
+    g.fillStyle = 'rgba(0,0,0,.14)'; for (let x = 0; x < w; x += 64) g.fillRect(x, 0, 2, h);
+  });
+  // Holzvertäfelung mit Kassetten
+  const panelTex = tex(512, 512, (g, w, h) => {
+    g.fillStyle = '#3b2213'; g.fillRect(0, 0, w, h);
+    grain(g, 0, 0, w, h, 70);
+    g.fillStyle = 'rgba(255,215,160,.05)'; g.fillRect(44, 60, w - 88, h - 120);
+    g.lineWidth = 7;
+    g.strokeStyle = 'rgba(255,215,160,.16)'; g.beginPath(); g.moveTo(44, h - 60); g.lineTo(44, 60); g.lineTo(w - 44, 60); g.stroke();
+    g.strokeStyle = 'rgba(0,0,0,.5)'; g.beginPath(); g.moveTo(w - 44, 60); g.lineTo(w - 44, h - 60); g.lineTo(44, h - 60); g.stroke();
+    g.fillStyle = 'rgba(0,0,0,.55)'; g.fillRect(0, 0, 4, h);
+    speckle(g, w, h, 2500);
+  });
+  // dunkles Holz für Decke, Möbel und Schrank
+  const darkWood = tex(512, 512, (g, w, h) => {
+    g.fillStyle = '#2a170c'; g.fillRect(0, 0, w, h);
+    grain(g, 0, 0, w, h, 90, false);
+    speckle(g, w, h, 3000);
+  });
+  const oakWood = tex(512, 512, (g, w, h) => {
+    g.fillStyle = '#7a4a24'; g.fillRect(0, 0, w, h);
+    grain(g, 0, 0, w, h, 90);
+    speckle(g, w, h, 3000, .1, .05);
+  });
+  // Gummimatte vor der Scheibe
+  const matTex = tex(256, 1024, (g, w, h) => {
+    g.fillStyle = '#141414'; g.fillRect(0, 0, w, h);
+    speckle(g, w, h, 9000, .35, .06);
+    g.fillStyle = 'rgba(230,230,230,.55)'; g.fillRect(10, 0, 5, h); g.fillRect(w - 15, 0, 5, h);
+    g.font = "700 22px 'Barlow Condensed', sans-serif"; g.textAlign = 'center';
+    g.save(); g.translate(w / 2, h * .79); g.fillText('237 cm', 0, 0); g.restore();
+  }, 1, 1);
+  // Kreidetafel innen an den Schranktüren
+  const doorChalk = tex(256, 512, (g, w, h) => {
+    g.fillStyle = '#1d2923'; g.fillRect(0, 0, w, h);
+    speckle(g, w, h, 1500, .15, .06);
+    g.strokeStyle = 'rgba(240,236,226,.75)'; g.lineWidth = 3;
+    for (let r = 0; r < 4; r++) for (let k = 0; k < 5; k++) {
+      const x = 40 + k * 16, y = 70 + r * 60;
+      g.beginPath(); if (k < 4) { g.moveTo(x, y); g.lineTo(x + 2, y + 40); } else { g.moveTo(x - 70, y + 34); g.lineTo(x + 8, y + 6); } g.stroke();
+    }
+    g.fillStyle = 'rgba(240,236,226,.8)'; g.font = "700 34px 'Cabin Sketch', cursive"; g.textAlign = 'center';
+    g.fillText('501', w / 2, h - 120); g.fillText('D.O.', w / 2, h - 70);
+  }, 1, 1);
+
+  /* Raum */
+  const floor = mesh(new T.PlaneGeometry(RW * 2, RD), std({ map: floorTex, bumpMap: floorTex, bumpScale: .006, roughness: .7 }), 0, 0, RD / 2);
+  floor.rotation.x = -Math.PI / 2; floor.castShadow = false;
+  const paperMat = (w, h) => std({ map: rep(paperTex, w / .5, h / .5), roughness: .92 });
+  const panelMat = w => std({ map: rep(panelTex, w / .64, 1), bumpMap: rep(panelTex, w / .64, 1), bumpScale: .004, roughness: .55 });
+  const DADO = 1.05;
+  const walls = [
+    { w: RW * 2, x: 0, z: 0, ry: 0 },
+    { w: RD, x: -RW, z: RD / 2, ry: Math.PI / 2 },
+    { w: RD, x: RW, z: RD / 2, ry: -Math.PI / 2 },
+    { w: RW * 2, x: 0, z: RD, ry: Math.PI }
+  ];
+  const trim = std({ map: darkWood, roughness: .5 });
+  for (const wl of walls) {
+    const up = mesh(new T.PlaneGeometry(wl.w, RH - DADO), paperMat(wl.w, RH - DADO), wl.x, DADO + (RH - DADO) / 2, wl.z);
+    const low = mesh(new T.PlaneGeometry(wl.w, DADO), panelMat(wl.w), wl.x, DADO / 2, wl.z);
+    up.rotation.y = low.rotation.y = wl.ry; up.castShadow = low.castShadow = false;
+    // Stuhlleiste und Sockelleiste
+    for (const [y, hgt] of [[DADO, .05], [.06, .12]]) {
+      const b = mesh(new T.BoxGeometry(wl.w, hgt, .035), trim, wl.x, y, wl.z);
+      b.rotation.y = wl.ry; b.translateZ(.017);
+    }
+  }
+  const ceil = mesh(new T.PlaneGeometry(RW * 2, RD), std({ map: rep(darkWood, 4, 5), roughness: .8 }), 0, RH, RD / 2);
+  ceil.rotation.x = Math.PI / 2; ceil.castShadow = false;
+  for (let z = 1.1; z < RD; z += 1.35) mesh(new T.BoxGeometry(RW * 2, .17, .15), trim, 0, RH - .085, z);
+
+  /* Scheibe mit Schrank, Scheibenlicht und Varianten */
+  const boardGroup = new T.Group(); boardGroup.position.set(0, BULL_Y, 0); scene.add(boardGroup);
+  const faceTex = new T.CanvasTexture(document.createElement('canvas'));
+  faceTex.encoding = T.sRGBEncoding; faceTex.anisotropy = aniso;
+  const faceMat = std({ map: faceTex, roughness: .88, alphaTest: .5 });
+  const face = mesh(new T.PlaneGeometry(.452, .452), faceMat, 0, 0, FACE_Z, boardGroup);
+  face.castShadow = false;
+  const disc = mesh(new T.CylinderGeometry(.2255, .2255, .044, 72), std({ color: '#0d0b09', roughness: .95 }), 0, 0, FACE_Z - .0225, boardGroup);
+  disc.rotation.x = Math.PI / 2;
+
+  const cab = new T.Group(); boardGroup.add(cab);
+  const cabMat = std({ map: rep(darkWood, 1, 1), roughness: .45 });
+  mesh(new T.BoxGeometry(.72, .72, .02), cabMat, 0, 0, .01, cab);
+  for (const [x, y, w, h] of [[0, .35, .72, .025], [0, -.35, .72, .025], [-.35, 0, .025, .72], [.35, 0, .025, .72]]) mesh(new T.BoxGeometry(w, h, .11), cabMat, x, y, .055, cab);
+  for (const sx of [-1, 1]) {
+    const hinge = new T.Group(); hinge.position.set(sx * .36, 0, .11); hinge.rotation.y = -sx * 1.72; cab.add(hinge);
+    mesh(new T.BoxGeometry(.35, .72, .025), cabMat, -sx * .175, 0, 0, hinge);
+    const ch = mesh(new T.PlaneGeometry(.29, .6), std({ map: doorChalk, roughness: .95 }), -sx * .175, 0, -.0135, hinge);
+    ch.rotation.y = Math.PI;
+  }
+
+  // Top Liga: schwarze Umrandung und Ringlicht
+  const proGrp = new T.Group(); boardGroup.add(proGrp);
+  const foam = mesh(new T.CylinderGeometry(.36, .36, .03, 72), std({ color: '#0a0a0a', roughness: .95 }), 0, 0, .03, proGrp);
+  foam.rotation.x = Math.PI / 2;
+  mesh(new T.TorusGeometry(.232, .007, 12, 120), basic({ color: '#ffffff' }), 0, 0, FACE_Z + .004, proGrp, false);
+  const proLight = new T.PointLight(0xffffff, .7, 1.3, 2); proLight.position.set(0, 0, .3); proGrp.add(proLight);
+
+  // Dartautomat: Gehäuse, Leuchtschrift, Münzfeld, Lauflicht
+  const autoGrp = new T.Group(); boardGroup.add(autoGrp);
+  mesh(new T.BoxGeometry(.78, 2.25, .12), std({ color: '#161a22', metalness: .55, roughness: .38 }), 0, -BULL_Y + 1.125, 0, autoGrp);
+  const header = tex(512, 160, (g, w, h) => {
+    g.fillStyle = '#05070c'; g.fillRect(0, 0, w, h);
+    g.font = "italic 700 120px 'Barlow Condensed', sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.shadowColor = '#2bb8ff'; g.shadowBlur = 30; g.fillStyle = '#8fe0ff'; g.fillText('DART', w / 2, h / 2 + 6);
+  });
+  mesh(new T.PlaneGeometry(.68, .21), basic({ map: header }), 0, .43, .061, autoGrp, false);
+  const coin = tex(512, 256, (g, w, h) => {
+    g.fillStyle = '#10141c'; g.fillRect(0, 0, w, h);
+    g.font = "700 40px 'Courier New', monospace"; g.textAlign = 'center'; g.fillStyle = '#ff4136';
+    g.shadowColor = '#ff2a1a'; g.shadowBlur = 14; g.fillText('1 SPIEL = 1 €', w / 2, 70);
+    g.shadowBlur = 0; g.fillStyle = '#9aa1ad'; g.fillRect(w / 2 - 50, 120, 100, 70);
+    g.fillStyle = '#0a0a0a'; g.fillRect(w / 2 - 6, 132, 12, 46);
+  });
+  mesh(new T.PlaneGeometry(.52, .26), basic({ map: coin }), 0, -.6, .061, autoGrp, false);
+  const ledMats = [];
+  for (let i = 0; i < 48; i++) {
+    const a = i / 48 * TAU, m = basic({ color: '#2a5aa0' });
+    ledMats.push(m);
+    mesh(new T.SphereGeometry(.0045, 8, 6), m, Math.sin(a) * .216, Math.cos(a) * .216, FACE_Z + .004, autoGrp, false);
+  }
+  for (const sx of [-1, 1]) mesh(new T.BoxGeometry(.012, 1.7, .012), basic({ color: '#3fb6ff' }), sx * .385, -.15, .062, autoGrp, false);
+
+  // Scheibenlicht an einem Arm über der Scheibe
+  const brass = std({ color: '#b8893a', metalness: .85, roughness: .3 });
+  mesh(new T.BoxGeometry(.02, .02, .5), brass, 0, .66, .25, boardGroup, false);
+  const lampShade = mesh(new T.CylinderGeometry(.035, .1, .11, 28, 1, true), std({ color: '#1b1b1b', metalness: .6, roughness: .35, side: T.DoubleSide }), 0, .62, .52, boardGroup, false);
+  lampShade.rotation.x = -.8;
+  mesh(new T.CircleGeometry(.08, 24), basic({ color: '#fff2d2' }), 0, .585, .545, boardGroup, false).rotation.x = Math.PI / 2 + .8;
+  const boardSpot = new T.SpotLight(0xfff0d8, 2.5, 3.4, .62, .55, 1.2);
+  boardSpot.position.set(0, BULL_Y + .56, .66); boardSpot.target.position.set(0, BULL_Y - .05, 0);
+  boardSpot.castShadow = true; boardSpot.shadow.mapSize.set(1024, 1024); boardSpot.shadow.bias = -.0004; boardSpot.shadow.normalBias = .01;
+  boardSpot.shadow.camera.near = .1; boardSpot.shadow.camera.far = 3;
+  scene.add(boardSpot, boardSpot.target);
+
+  /* Kreidetafel mit dem echten Spielstand neben der Scheibe */
+  const scoreCanvas = document.createElement('canvas'); scoreCanvas.width = 480; scoreCanvas.height = 640;
+  const scoreTex = new T.CanvasTexture(scoreCanvas); scoreTex.encoding = T.sRGBEncoding; scoreTex.anisotropy = aniso;
+  const scoreGrp = new T.Group(); scoreGrp.position.set(.9, BULL_Y - .02, 0); scene.add(scoreGrp);
+  mesh(new T.BoxGeometry(.56, .72, .03), std({ map: rep(oakWood, 1, 1), roughness: .5 }), 0, 0, .015, scoreGrp);
+  mesh(new T.PlaneGeometry(.49, .65), std({ map: scoreTex, roughness: .95 }), 0, 0, .031, scoreGrp);
+  function drawScores(st) {
+    const g = scoreCanvas.getContext('2d'), w = 480, h = 640;
+    g.fillStyle = '#1d2a24'; g.fillRect(0, 0, w, h);
+    for (let i = 0; i < 6; i++) {
+      const gr = g.createRadialGradient(Math.random() * w, Math.random() * h, 10, Math.random() * w, Math.random() * h, 220);
+      gr.addColorStop(0, 'rgba(255,255,255,.05)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    }
+    g.fillStyle = 'rgba(241,237,226,.9)'; g.strokeStyle = 'rgba(241,237,226,.5)'; g.textAlign = 'center';
+    g.font = "700 40px 'Cabin Sketch', cursive"; g.fillText(st ? `${st.start} · Double Out` : 'Dart Kneipe', w / 2, 60);
+    g.lineWidth = 3; g.beginPath(); g.moveTo(40, 86); g.lineTo(w - 40, 86); g.moveTo(w / 2, 100); g.lineTo(w / 2, h - 60); g.stroke();
+    const names = st ? ['Du', st.opp.name] : ['Du', 'Gast'], rests = st ? st.scores : [501, 501];
+    names.forEach((n, i) => {
+      const cx = w / 4 + i * w / 2;
+      g.font = "700 38px 'Cabin Sketch', cursive"; g.fillText(n.length > 9 ? n.slice(0, 8) + '.' : n, cx, 150);
+      g.font = "700 104px 'Cabin Sketch', cursive"; g.fillText(String(rests[i]), cx, 280);
+      if (st && st.legsToWin > 1) { g.font = "700 40px 'Cabin Sketch', cursive"; g.fillText('●'.repeat(st.legs[i]) + '○'.repeat(st.legsToWin - st.legs[i]), cx, 350); }
+      if (st) {
+        g.font = "400 34px 'Cabin Sketch', cursive";
+        st.hist[i].slice(-5).forEach((v, k) => g.fillText(v.bust ? 'Bust' : String(v.rest), cx, 420 + k * 42));
+      }
+    });
+    scoreTex.needsUpdate = true;
+  }
+
+  /* Dartmatte und Oche */
+  const matM = mesh(new T.PlaneGeometry(.78, 3.1), std({ map: matTex, roughness: .95 }), 0, .004, 1.55);
+  matM.rotation.x = -Math.PI / 2; matM.castShadow = false;
+  mesh(new T.BoxGeometry(.72, .035, .045), std({ color: '#c9cdd3', metalness: .9, roughness: .25 }), 0, .0175, OCHE_Z);
+
+  /* Poster, Leuchtschrift, Bar, Tische und Hocker */
+  function frameOn(x, y, z, ry, w, h, texture) {
+    const f = new T.Group(); f.position.set(x, y, z); f.rotation.y = ry; scene.add(f);
+    mesh(new T.BoxGeometry(w + .06, h + .06, .03), std({ color: '#1a120b', roughness: .5 }), 0, 0, .015, f);
+    mesh(new T.PlaneGeometry(w, h), std({ map: texture, roughness: .6 }), 0, 0, .031, f);
+  }
+  const poster = tex(384, 512, (g, w, h) => {
+    g.fillStyle = '#e9dcc0'; g.fillRect(0, 0, w, h);
+    g.fillStyle = '#9b1f24'; g.fillRect(0, 0, w, 90);
+    g.fillStyle = '#e9dcc0'; g.font = "700 56px 'Barlow Condensed', sans-serif"; g.textAlign = 'center'; g.fillText('LIGA-ABEND', w / 2, 66);
+    g.save(); g.translate(w / 2, 250);
+    for (const [r, c] of [[110, '#171411'], [96, '#b8232a'], [88, '#eadcb8'], [56, '#12703c'], [48, '#171411'], [12, '#b8232a']]) { g.fillStyle = c; g.beginPath(); g.arc(0, 0, r, 0, TAU); g.fill(); }
+    g.restore();
+    g.fillStyle = '#171411'; g.font = "700 40px 'Barlow Condensed', sans-serif"; g.fillText('DONNERSTAG 20 UHR', w / 2, 420);
+    g.font = "400 30px 'Barlow Condensed', sans-serif"; g.fillText('Startgeld 5 € · Freibier fürs 180', w / 2, 465);
+    speckle(g, w, h, 3000, .12, .02);
+  });
+  const photo = tex(512, 384, (g, w, h) => {
+    const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#8a6f4d'); gr.addColorStop(1, '#3b2b1b'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    for (let i = 0; i < 6; i++) {
+      const x = 60 + i * 78, y = 200 + (i % 2) * 14;
+      g.fillStyle = 'rgba(30,20,10,.75)'; g.beginPath(); g.arc(x, y - 70, 24, 0, TAU); g.fill();
+      g.beginPath(); g.ellipse(x, y + 40, 38, 80, 0, 0, TAU); g.fill();
+    }
+    g.fillStyle = 'rgba(240,225,190,.85)'; g.font = "italic 700 34px 'Barlow Condensed', sans-serif"; g.textAlign = 'center';
+    g.fillText('Stadtmeister 1987', w / 2, h - 24);
+    speckle(g, w, h, 6000, .2, .08);
+  });
+  frameOn(-RW + .005, 1.75, 1.5, Math.PI / 2, .46, .62, poster);
+  frameOn(-RW + .005, 1.8, 3.3, Math.PI / 2, .72, .54, photo);
+  const neonTex = tex(512, 192, (g, w, h) => {
+    g.font = "italic 700 130px 'Barlow Condensed', sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.shadowColor = '#ff2d6f'; g.shadowBlur = 28; g.strokeStyle = '#ff7aa2'; g.lineWidth = 8; g.strokeText('DARTS', w / 2, h / 2);
+    g.shadowBlur = 0; g.strokeStyle = '#ffe6ef'; g.lineWidth = 2.5; g.strokeText('DARTS', w / 2, h / 2);
+  });
+  const neon = mesh(new T.PlaneGeometry(1.2, .45), basic({ map: neonTex, transparent: true, blending: T.AdditiveBlending, depthWrite: false }), RW - .02, 2.25, 1.9, scene, false);
+  neon.rotation.y = -Math.PI / 2;
+  const neonLight = new T.PointLight(0xff3d7f, .7, 3.2, 2); neonLight.position.set(RW - .4, 2.2, 1.9); scene.add(neonLight);
+
+  // Bar hinten links mit Flaschenregal
+  mesh(new T.BoxGeometry(.75, 1.08, 2.9), std({ map: rep(darkWood, 2, 1), roughness: .5 }), -RW + .5, .54, 5.9);
+  mesh(new T.BoxGeometry(.9, .05, 3.0), std({ map: rep(oakWood, 2, 2), roughness: .3 }), -RW + .5, 1.1, 5.9);
+  for (const y of [1.55, 1.95]) {
+    mesh(new T.BoxGeometry(.25, .03, 2.8), trim, -RW + .13, y, 5.9);
+    mesh(new T.BoxGeometry(.01, .02, 2.8), basic({ color: '#ffcf8a' }), -RW + .02, y + .03, 5.9, scene, false);
+    for (let z = 4.65; z < 7.15; z += .13 + Math.random() * .06) {
+      const col = ['#2f5d34', '#6b3a17', '#c9d4c8', '#8a1f2a', '#2a3f6b', '#a8761c'][Math.floor(Math.random() * 6)];
+      const hgt = .22 + Math.random() * .12, bm = std({ color: col, roughness: .15, metalness: .1, transparent: true, opacity: .85 });
+      mesh(new T.CylinderGeometry(.032, .034, hgt * .7, 14), bm, -RW + .13, y + .015 + hgt * .35, z);
+      mesh(new T.CylinderGeometry(.011, .02, hgt * .3, 10), bm, -RW + .13, y + .015 + hgt * .85, z);
+    }
+  }
+  const glassMat = std({ color: '#ffffff', transparent: true, opacity: .2, roughness: .05, metalness: .1 });
+  const beerMat = std({ color: '#e39a2a', emissive: '#3a1c00', roughness: .2, transparent: true, opacity: .92 });
+  const foamMat = std({ color: '#fbf3dc', roughness: .9 });
+  function beer(x, y, z) {
+    mesh(new T.CylinderGeometry(.036, .03, .16, 18), glassMat, x, y + .08, z);
+    mesh(new T.CylinderGeometry(.033, .028, .12, 18), beerMat, x, y + .062, z);
+    mesh(new T.CylinderGeometry(.034, .033, .025, 18), foamMat, x, y + .135, z);
+  }
+  function bistro(x, z) {
+    const wood = std({ map: rep(oakWood, 1, 1), roughness: .35 }), iron = std({ color: '#1b1b1b', metalness: .7, roughness: .4 });
+    mesh(new T.CylinderGeometry(.25, .27, .03, 32), iron, x, .015, z);
+    mesh(new T.CylinderGeometry(.03, .03, 1.05, 12), iron, x, .54, z);
+    mesh(new T.CylinderGeometry(.36, .36, .035, 40), wood, x, 1.07, z);
+    beer(x - .1, 1.088, z + .05); beer(x + .12, 1.088, z - .06);
+  }
+  function stool(x, z) {
+    const iron = std({ color: '#222', metalness: .7, roughness: .4 });
+    for (let i = 0; i < 4; i++) {
+      const a = i / 4 * TAU + .4;
+      const leg = mesh(new T.CylinderGeometry(.012, .012, .78, 8), iron, x + Math.cos(a) * .13, .39, z + Math.sin(a) * .13);
+      leg.rotation.set(Math.sin(a) * .12, 0, -Math.cos(a) * .12);
+    }
+    const ring = mesh(new T.TorusGeometry(.15, .01, 8, 32), iron, x, .28, z); ring.rotation.x = Math.PI / 2;
+    mesh(new T.CylinderGeometry(.18, .17, .06, 28), std({ color: '#4a1a14', roughness: .55 }), x, .8, z);
+  }
+  bistro(-1.75, 2.9); stool(-2.2, 3.35); stool(-1.35, 3.5);
+  bistro(2.05, 4.9); stool(2.5, 5.3); stool(1.6, 5.45);
+
+  /* Licht */
+  scene.add(new T.HemisphereLight(0xffdcb0, 0x1a0f08, .38));
+  scene.add(new T.AmbientLight(0x3a2416, .35));
+  const fill = new T.PointLight(0xffd2a0, .45, 9, 2); fill.position.set(1.4, 2.4, 5.6); scene.add(fill);
+  function pendant(x, z, shadow) {
+    mesh(new T.CylinderGeometry(.006, .006, .55, 6), basic({ color: '#0b0806' }), x, RH - .275, z, scene, false);
+    mesh(new T.CylinderGeometry(.05, .24, .17, 32, 1, true), std({ color: '#1f4a33', metalness: .3, roughness: .4, side: T.DoubleSide }), x, RH - .6, z, scene, false);
+    mesh(new T.SphereGeometry(.035, 16, 12), basic({ color: '#ffe3a8' }), x, RH - .64, z, scene, false);
+    const l = new T.SpotLight(0xffc98a, .95, 6, 1.0, .75, 1.2);
+    l.position.set(x, RH - .65, z); l.target.position.set(x, 0, z);
+    if (shadow) { l.castShadow = true; l.shadow.mapSize.set(1024, 1024); l.shadow.bias = -.0006; l.shadow.normalBias = .02; }
+    scene.add(l, l.target);
+  }
+  pendant(0, 2.5, true); pendant(-1.8, 3.4, false); pendant(1.5, 4.2, false);
+
+  /* Darts */
+  const dartParts = {
+    tip: new T.CylinderGeometry(.0006, .0013, .03, 8).rotateX(Math.PI / 2).translate(0, 0, .015),
+    barrel: new T.CylinderGeometry(.0037, .0035, .046, 18).rotateX(Math.PI / 2).translate(0, 0, .053),
+    grip: new T.CylinderGeometry(.0039, .0039, .004, 18).rotateX(Math.PI / 2),
+    shaft: new T.CylinderGeometry(.0016, .0019, .036, 10).rotateX(Math.PI / 2).translate(0, 0, .094),
+    flight: (() => {
+      const s = new T.Shape();
+      s.moveTo(0, 0); s.lineTo(.017, .01); s.lineTo(.018, .03); s.lineTo(0, .038); s.lineTo(-.018, .03); s.lineTo(-.017, .01); s.lineTo(0, 0);
+      return new T.ShapeGeometry(s).rotateX(Math.PI / 2).translate(0, 0, .106);
+    })()
+  };
+  const dartMats = {
+    steel: std({ color: '#d0d3d8', metalness: .95, roughness: .25 }),
+    tungsten: std({ color: '#7d828a', metalness: .9, roughness: .32 }),
+    knurl: std({ color: '#3f4349', metalness: .8, roughness: .5 }),
+    shaft: std({ color: '#111', roughness: .4 }),
+    flights: [std({ color: '#c9302c', roughness: .55, side: T.DoubleSide }), std({ color: '#2d63b8', roughness: .55, side: T.DoubleSide })]
+  };
+  function makeDart(owner) {
+    const g = new T.Group();
+    const add = (geo, mat) => { const m = new T.Mesh(geo, mat); m.castShadow = true; g.add(m); return m; };
+    add(dartParts.tip, dartMats.steel);
+    add(dartParts.barrel, dartMats.tungsten);
+    for (let i = 0; i < 5; i++) add(dartParts.grip, dartMats.knurl).position.z = .038 + i * .007;
+    add(dartParts.shaft, dartMats.shaft);
+    add(dartParts.flight, dartMats.flights[owner]);
+    add(dartParts.flight, dartMats.flights[owner]).rotation.z = Math.PI / 2;
+    return g;
+  }
+
+  /* Gegner als Figur an der Oche */
+  const OUTFIT = {
+    anfaenger: { shirt: '#7a3b69', pants: '#3a3340', hair: '#cfc8cf' },
+    stammgast: { shirt: '#2f5d8a', pants: '#2c3e5c', hair: '#3b2a1e' },
+    verein:    { shirt: '#9b2226', pants: '#2b2b2b', hair: '#6b4a2b' },
+    profi:     { shirt: '#141414', pants: '#111111', hair: '#1a1a1a' }
+  };
+  const person = (() => {
+    const grp = new T.Group(); scene.add(grp);
+    const m = {
+      shirt: std({ color: '#2f5d8a', roughness: .85 }), pants: std({ color: '#2c3e5c', roughness: .9 }),
+      skin: std({ color: '#d9a584', roughness: .65 }), hair: std({ color: '#3b2a1e', roughness: .9 }),
+      shoe: std({ color: '#161616', roughness: .5 })
+    };
+    const add = (geo, mat, x, y, z, parent = grp) => mesh(geo, mat, x, y, z, parent);
+    for (const sx of [-1, 1]) {
+      add(new T.CylinderGeometry(.075, .062, .88, 16), m.pants, sx * .1, .47, 0);
+      add(new T.BoxGeometry(.11, .075, .28), m.shoe, sx * .1, .038, -.05);
+    }
+    const lathe = pts => new T.LatheGeometry(pts.map(([r, y]) => new T.Vector2(r, y)), 32);
+    add(lathe([[.001, .82], [.15, .83], [.172, .9], [.176, 1.0], [.17, 1.04], [.001, 1.05]]), m.pants, 0, 0, 0).scale.z = .78;
+    const torso = add(lathe([[.001, .99], [.172, 1.0], [.168, 1.1], [.178, 1.24], [.198, 1.38], [.205, 1.46], [.19, 1.53], [.13, 1.58], [.06, 1.6], [.001, 1.605]]), m.shirt, 0, 0, 0);
+    torso.scale.z = .7;
+    add(new T.TorusGeometry(.055, .012, 8, 20), m.shirt, 0, 1.6, 0).rotation.x = Math.PI / 2;
+    add(new T.CylinderGeometry(.05, .056, .1, 12), m.skin, 0, 1.6, 0);
+    const head = new T.Group(); head.position.set(0, 1.73, 0); grp.add(head);
+    add(new T.SphereGeometry(.105, 24, 18), m.skin, 0, 0, 0, head).scale.set(.9, 1.08, 1);
+    add(new T.SphereGeometry(.11, 24, 14, 0, TAU, 0, Math.PI * .5), m.hair, 0, .014, .006, head).scale.set(.95, 1.05, 1.03);
+    add(new T.SphereGeometry(.108, 24, 14, 0, Math.PI, 0, Math.PI * .72), m.hair, 0, .0, .012, head).scale.set(.95, 1.05, 1.03);
+    add(new T.SphereGeometry(.017, 10, 8), m.skin, 0, -.01, -.098, head);
+    for (const sx of [-1, 1]) add(new T.SphereGeometry(.022, 10, 8), m.skin, sx * .094, -.005, 0, head).scale.set(.5, 1, .8);
+    const arm = sx => {
+      const sh = new T.Group(); sh.position.set(sx * .235, 1.5, 0); sh.rotation.order = 'YXZ'; grp.add(sh);
+      add(new T.SphereGeometry(.058, 14, 10), m.shirt, 0, 0, 0, sh);
+      add(new T.CylinderGeometry(.05, .043, .3, 14), m.shirt, 0, -.15, 0, sh);
+      const el = new T.Group(); el.position.set(0, -.3, 0); sh.add(el);
+      add(new T.CylinderGeometry(.038, .031, .27, 12), m.skin, 0, -.135, 0, el);
+      const hand = add(new T.SphereGeometry(.042, 12, 10), m.skin, 0, -.29, 0, el);
+      return { sh, el, hand };
+    };
+    const L = arm(-1), Rr = arm(1);
+    const held = makeDart(1); held.rotation.x = -Math.PI / 2; held.position.set(0, -.03, -.02); Rr.hand.add(held);
+    return { grp, m, L, R: Rr, head, torso, held };
+  })();
+  const SPOTS = { oche: { p: V3(.24, 0, OCHE_Z + .12), ry: .45 }, aside: { p: V3(-1.3, 0, 2.45), ry: -.6 } };
+  const opp = { from: null, to: SPOTS.aside, t0: 0, throwT0: 0, release: null, released: false };
+  person.grp.position.copy(SPOTS.aside.p); person.grp.rotation.y = SPOTS.aside.ry;
+  let nextFrom = null;
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const ease = k => k <= 0 ? 0 : k >= 1 ? 1 : k * k * (3 - 2 * k);
+
+  function updateOpponent(now) {
+    const P0 = person;
+    let walking = false;
+    if (opp.from) {
+      const k = Math.min(1, (now - opp.t0) / 800), e = ease(k);
+      P0.grp.position.lerpVectors(opp.from.p, opp.to.p, e);
+      P0.grp.rotation.y = lerp(opp.from.ry, opp.to.ry, e);
+      P0.grp.position.y = Math.abs(Math.sin(k * Math.PI * 3)) * .025;
+      walking = k < 1;
+      if (k >= 1) opp.from = null;
+    }
+    const atOche = opp.to === SPOTS.oche && !walking;
+    P0.torso.scale.x = 1 + Math.sin(now / 900) * .01;
+    let sh = .06, el = .18, lsh = .08;
+    if (atOche) { sh = 1.35; el = 1.6; lsh = .3; }
+    if (opp.throwT0) {
+      const u = now - opp.throwT0;
+      if (u < 420) { const k = ease(u / 420); sh = lerp(1.35, 1.5, k); el = lerp(1.6, 2.3, k); }
+      else if (u < 560) { const k = ease((u - 420) / 140); sh = lerp(1.5, 1.3, k); el = lerp(2.3, .1, k); }
+      else if (u < 900) { const k = ease((u - 560) / 340); sh = lerp(1.3, 1.15, k); el = lerp(.1, .35, k); }
+      else if (u < 1300) { const k = ease((u - 900) / 400); sh = lerp(1.15, 1.35, k); el = lerp(.35, 1.6, k); }
+      else opp.throwT0 = 0;
+      if (!opp.released && u >= 500) {
+        opp.released = true;
+        nextFrom = person.R.hand.getWorldPosition(V3(0, 0, 0));
+        const r = opp.release; opp.release = null; if (r) r();
+      }
+    }
+    // Dart in der Hand: an der Oche sichtbar, nach dem Loslassen kurz weg
+    P0.held.visible = opp.throwT0 ? !(opp.released && now - opp.throwT0 < 900) : atOche;
+    P0.R.sh.rotation.set(sh, atOche ? -P0.grp.rotation.y - .05 : 0, 0);
+    P0.R.el.rotation.x = el;
+    P0.L.sh.rotation.set(lsh, 0, -.08);
+    P0.L.el.rotation.x = atOche ? .5 : .15;
+    P0.head.rotation.y = atOche ? -P0.grp.rotation.y : 0;
+  }
+
+  /* Darts in der Szene: fliegen und stecken */
+  const dartMeshes = new Map();
+  function dartEnd(d) {
+    const far = Math.hypot(d.x, d.y) > 330;
+    return V3(d.x / 1000, BULL_Y - d.y / 1000, far ? .03 : FACE_Z - .012);
+  }
+  function syncDarts(now) {
+    const list = S ? S.darts : PREVIEW, alive = new Set(list);
+    for (const [d, mm] of dartMeshes) if (!alive.has(d)) { scene.remove(mm); dartMeshes.delete(d); }
+    for (const d of list) {
+      let mm = dartMeshes.get(d);
+      if (!mm) {
+        mm = makeDart(d.owner); scene.add(mm); dartMeshes.set(d, mm);
+        d.tilt = d.tilt || [(Math.random() - .5) * .14, .1 + Math.random() * .12];
+      }
+      const end = dartEnd(d), p = d.t0 < 0 || !d.from ? 1 : Math.min(1, (now - d.t0) / d.fly);
+      if (p >= 1) { mm.position.copy(end); mm.rotation.set(d.tilt[1], d.tilt[0], d.rot || 0); continue; }
+      const pos = V3().lerpVectors(d.from, end, p); pos.y += d.arc * 4 * p * (1 - p);
+      const q = Math.min(1, p + .03), ahead = V3().lerpVectors(d.from, end, q); ahead.y += d.arc * 4 * q * (1 - q);
+      mm.position.copy(pos); mm.lookAt(pos.clone().multiplyScalar(2).sub(ahead)); mm.rotateZ(p * 6);
+    }
+  }
+
+  /* Kamera: Halle aus der dritten Person, Nahansicht zum Zielen, kurzer Zoom nach jedem Treffer */
+  const HALL = { p: V3(2.05, 1.8, 6.1), t: V3(-.25, 1.25, 1.1) };
+  function aimPose() {
+    const half = Math.tan(camera.fov * Math.PI / 360), need = .255;
+    const d = camera.aspect >= 1 ? need / half : need / (half * camera.aspect);
+    return { p: V3(0, BULL_Y, FACE_Z + d), t: V3(0, BULL_Y, FACE_Z) };
+  }
+  const cam = { mode: 'hall', from: null, t0: 0, dur: 1000, punch: null };
+  const curP = HALL.p.clone(), curT = HALL.t.clone();
+  function updateCamera(now) {
+    const goal = cam.mode === 'aim' ? aimPose() : HALL;
+    if (cam.from) {
+      const k = Math.min(1, (now - cam.t0) / cam.dur), e = ease(k);
+      curP.lerpVectors(cam.from.p, goal.p, e); curT.lerpVectors(cam.from.t, goal.t, e);
+      if (k >= 1) cam.from = null;
+    } else { curP.copy(goal.p); curT.copy(goal.t); }
+    const p = curP.clone(), t = curT.clone();
+    if (cam.mode === 'hall') { p.x += Math.sin(now / 3100) * .05; p.y += Math.sin(now / 2300) * .02; }
+    if (cam.punch) {
+      const u = (now - cam.punch.t0) / 420;
+      if (u >= 1) cam.punch = null;
+      else { const s = Math.sin(Math.PI * u); p.lerp(cam.punch.at, .1 * s); t.lerp(cam.punch.at, .3 * s); }
+    }
+    camera.position.copy(p); camera.lookAt(t);
+  }
+  let ledStep = -1;
+  function updateLeds(now) {
+    if (!autoGrp.visible) return;
+    const step = Math.floor(now / 70);
+    if (step === ledStep) return; ledStep = step;
+    ledMats.forEach((mt, i) => mt.color.set(((i - step) % 48 + 48) % 48 < 6 ? '#7fdcff' : '#23467c'));
+  }
+
+  const ray = new T.Raycaster(), ndc = new T.Vector2();
+  drawScores(null);
+  return {
+    is3d: true,
+    resize() {
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      if (!w || !h) return;
+      sizeW = w; sizeH = h; sizeCss = Math.min(w, h);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    },
+    project(x, y) {
+      const v = V3(x / 1000, BULL_Y - y / 1000, FACE_Z).project(camera);
+      return [(v.x + 1) / 2 * sizeW, (1 - v.y) / 2 * sizeH];
+    },
+    unproject(px, py) {
+      ndc.set(px / sizeW * 2 - 1, -(py / sizeH) * 2 + 1);
+      ray.setFromCamera(ndc, camera);
+      const o = ray.ray.origin, d = ray.ray.direction;
+      const t = Math.abs(d.z) < 1e-6 ? 0 : (FACE_Z - o.z) / d.z;
+      return { x: (o.x + d.x * t) * 1000, y: (BULL_Y - (o.y + d.y * t)) * 1000 };
+    },
+    pxPerMm() { const a = this.project(0, 0), b = this.project(100, 0); return Math.hypot(b[0] - a[0], b[1] - a[1]) / 100; },
+    render(now) {
+      updateCamera(now); updateOpponent(now); syncDarts(now); updateLeds(now);
+      renderer.render(scene, camera);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, sizeW, sizeH);
+    },
+    setTheme(k) {
+      faceTex.image = renderBoard(2048, k); faceTex.needsUpdate = true;
+      disc.visible = k !== 'automat';
+      cab.visible = k === 'classic' || k === 'wood';
+      cabMat.color.set(k === 'wood' ? '#e2b27a' : '#ffffff');
+      proGrp.visible = k === 'pro';
+      autoGrp.visible = k === 'automat';
+      boardSpot.intensity = k === 'pro' ? 2.9 : 2.5;
+    },
+    onThrow(d) {
+      if (d.owner === 1) { d.fly = 380; d.arc = .12; d.from = nextFrom || V3(.3, 1.6, OCHE_Z); nextFrom = null; }
+      else { d.fly = 200; d.arc = .02; d.from = camera.position.clone().add(V3(.04, -.12, -.06)); }
+    },
+    cpuThrow(release) { opp.throwT0 = performance.now(); opp.release = release; opp.released = false; },
+    canAim: () => cam.mode === 'aim' && !cam.from,
+    focus(mode) {
+      if (cam.mode === mode) return;
+      cam.from = { p: camera.position.clone(), t: curT.clone() };
+      cam.mode = mode; cam.t0 = performance.now(); cam.dur = 1000;
+    },
+    punch(d) { cam.punch = { t0: performance.now(), at: dartEnd(d) }; },
+    opponentTo(where) {
+      const to = SPOTS[where];
+      if (opp.to === to) return;
+      opp.from = { p: person.grp.position.clone(), ry: person.grp.rotation.y }; opp.to = to; opp.t0 = performance.now();
+    },
+    setOpponent(level) {
+      const o = OUTFIT[level] || OUTFIT.stammgast;
+      person.m.shirt.color.set(o.shirt); person.m.pants.color.set(o.pants); person.m.hair.color.set(o.hair);
+    },
+    setScores: st => drawScores(st)
+  };
+}
+
+let V = view2d;
+try { V = makeView3d() || view2d; } catch (e) { V = view2d; }
+if (V.is3d) { wrap.classList.add('is3d'); sceneCanvas.hidden = false; $('.stage').classList.add('has3d'); }
+
+function resize() { V.resize(); }
+new ResizeObserver(resize).observe(wrap);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { resize(); V.setTheme(boardKey); if (S) V.setScores(S); });
+
+const P = (x, y) => V.project(x, y);
+// Drei Darts, die vor dem ersten Spiel in der 20 stecken
 const PREVIEW = [aimOf({ n: 20, m: 3 }), { x: 6, y: -95 }, { x: -9, y: -118 }]
-  .map((p, i) => ({ x: p.x, y: p.y, owner: 0, t0: -1e6, rot: .6 + i * .3 }));
+  .map((p, i) => ({ x: p.x, y: p.y, owner: 0, t0: -1e6, rot: .6 + i * .3, fly: FLY }));
 const COLORS = [
   { flight: '#c9302c', edge: '#6e1310', stripe: '#f4efe4' },
   { flight: '#2d63b8', edge: '#122c58', stripe: '#f2c94c' }
 ];
 
 function drawDart(d, now) {
-  const p = Math.min(1, (now - d.t0) / FLY);
+  const p = Math.min(1, (now - d.t0) / (d.fly || FLY));
   const e = 1 - (1 - p) * (1 - p);
   const sx = d.x * .35, sy = R.EDGE + 70;
   const x = sx + (d.x - sx) * e, y = sy + (d.y - sy) * e;
@@ -1571,7 +2211,7 @@ function breath(t, w) {
 
 function drawCross(x, y, steady, lift, unrest, kind) {
   const [X, Y] = P(x, y);
-  const r = Math.max(8, sizeCss / 60) * (1 + .35 * lift) * (.7 + .6 * unrest);
+  const r = Math.max(8, V.pxPerMm() * R.EDGE * 2 / 60) * (1 + .35 * lift) * (.7 + .6 * unrest);
   const col = steady ? '#ffd66b' : '#f3efe6';
   for (const pass of [0, 1]) {
     ctx.strokeStyle = pass ? col : 'rgba(0,0,0,.75)';
@@ -1597,11 +2237,7 @@ function drawCross(x, y, steady, lift, unrest, kind) {
 }
 
 function frame(now) {
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, sizeCss, sizeCss);
-  if (boardImg) ctx.drawImage(boardImg, 0, 0, sizeCss, sizeCss);
-  if (boardKey === 'automat') drawAutomatLights(now);
-  for (const d of (S ? S.darts : PREVIEW)) drawDart(d, now);
+  V.render(now);
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
     drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind());
@@ -1618,9 +2254,9 @@ function evToMm(e) {
   const px = e.clientX - rc.left;
   let py = e.clientY - rc.top;
   if (e.pointerType === 'touch' || e.pointerType === 'pen') py -= TOUCH_OFFSET;
-  return { x: (px - sizeCss / 2) / scale, y: (py - sizeCss / 2) / scale };
+  return V.unproject(px, py);
 }
-const canThrow = () => S && !S.over && S.turn === 0 && !S.busy && S.visit.length < 3 && menu.hidden && endEl.hidden;
+const canThrow = () => S && !S.over && S.turn === 0 && !S.busy && S.visit.length < 3 && menu.hidden && endEl.hidden && V.canAim();
 
 canvas.addEventListener('contextmenu', e => e.preventDefault());
 canvas.addEventListener('pointerdown', e => {
@@ -1671,6 +2307,7 @@ function newGame(o) {
     darts: [], busy: false, over: false
   };
   endEl.hidden = true; menu.hidden = true;
+  V.setOpponent(o.level);
   wirt.say(pick(['Oche frei! Viel Glück.', `Gegen ${S.opp.name}? Na dann, Prost!`, 'Erst werfen, dann trinken.']));
   voice.stop();
   voice.say('Game on!', { pitch: 1.1 });
@@ -1704,11 +2341,13 @@ function beginTurn() {
   const g = S;
   g.visit = []; g.visitState = 'open'; g.turnStart = g.scores[g.turn]; g.darts = []; g.busy = false;
   renderTafel();
+  V.focus(g.turn === 0 ? 'aim' : 'hall');
+  V.opponentTo(g.turn === 1 ? 'oche' : 'aside');
   const rest = g.scores[g.turn];
   if (finish(rest, 3)) voice.say(g.turn === 0 ? `You require ${words(rest)}.` : `${g.opp.name}, you require ${words(rest)}.`);
   if (g.turn === 1) {
     hint(`${g.opp.name} steht am Oche …`);
-    setTimeout(() => { if (S === g) cpuDart(); }, 900);
+    setTimeout(() => { if (S === g) cpuDart(); }, V.is3d ? 1500 : 900);
   } else {
     hint('Drücken & halten, ausatmen – in der goldenen Atempause loslassen');
     if (g.adrLeft === 0) {
@@ -1727,13 +2366,17 @@ function cpuDart() {
   if (!menu.hidden) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const t = cpuTarget(g.scores[1], 3 - g.visit.length);
   const a = aimOf(t), [gx, gy] = gauss2();
-  throwAt(1, a.x + gx * g.opp.sigma, a.y + gy * g.opp.sigma);
+  const tx = a.x + gx * g.opp.sigma, ty = a.y + gy * g.opp.sigma;
+  // In 3D holt die Figur erst aus und lässt dann los
+  V.cpuThrow(() => { if (S === g && !g.over && g.turn === 1) throwAt(1, tx, ty); });
 }
 
 function throwAt(p, x, y) {
   const g = S;
   g.busy = true;
-  g.darts.push({ x, y, owner: p, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 });
+  const d = { x, y, owner: p, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 };
+  V.onThrow(d);
+  g.darts.push(d);
   sfx.whoosh();
   if (p === 0) {
     // Fähigkeiten verbrauchen; normale Darts laden die Präzision auf
@@ -1742,10 +2385,11 @@ function throwAt(p, x, y) {
     if (++g.precProgress >= PREC_EVERY) { g.precProgress = 0; g.precStock++; sfx.charge(); }
     renderSkills();
   }
-  setTimeout(() => { if (S === g) resolve(g, p, hit(x, y)); }, FLY);
+  setTimeout(() => { if (S === g) resolve(g, p, hit(x, y)); }, d.fly);
 }
 
 function resolve(g, p, h) {
+  if (p === 0) V.punch(g.darts[g.darts.length - 1]);
   if (boardKey === 'automat' && h.r <= R.DO) sfx.edart(h.m); else sfx.thud(h.r > R.DO ? 'wall' : 'board');
   g.visit.push(h);
   const rest = g.scores[p] - h.v;
@@ -1788,6 +2432,8 @@ function endVisit(g, bust) {
   if (!bust && g.turn === 0 && sum >= 100) unlock('automat');
   g.hist[g.turn].push({ score: bust ? 0 : sum, rest: g.scores[g.turn], bust });
   renderTafel();
+  // Nach der Aufnahme des Gegners: Kamera an die Scheibe, Gegner tritt zur Seite
+  if (g.turn === 1) { V.focus('aim'); V.opponentTo('aside'); }
   if (bust) voice.say('Bust!', { pitch: .95 });
   else callScore(sum);
   wirtComment(g, sum, bust);
@@ -1804,6 +2450,7 @@ function win(g, p, h) {
   if (matchWon && p === 0) { unlock('wood'); if (g.level === 'verein' || g.level === 'profi') unlock('pro'); }
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
+  if (p === 1) { V.focus('aim'); V.opponentTo('aside'); }
   const what = matchWon ? 'match' : 'leg';
   voice.say(p === 0 ? `Game shot, and the ${what}!` : `Game shot, and the ${what} to ${g.opp.name}!`, { pitch: 1.3, rate: .9 });
   if (p === 0) wirt.react('cheer', matchWon ? 'Game shot! Ein Pils aufs Haus.' : 'Leg gewonnen! Weiter so.', matchWon);
@@ -1862,6 +2509,7 @@ function renderTafel() {
   sumEl.textContent = S.visitState === 'bust' ? 'Überworfen' : (S.visit.length ? sum : '');
   $('#visitWho').textContent = S.turn === 0 ? 'Deine Aufnahme' : `${S.opp.name} wirft`;
   renderSkills();
+  V.setScores(S);
 }
 
 function renderSkills() {
@@ -1952,7 +2600,7 @@ function setBoard(k) {
   boardKey = k;
   try { localStorage.setItem('dk-board', k); } catch (e) {}
   wrap.classList.remove(...Object.keys(BOARD_INFO)); wrap.classList.add(k);
-  resize();
+  V.setTheme(k);
 }
 function makePreviews() {
   for (const k of Object.keys(BOARD_INFO)) previews[k] = renderBoard(96, k).toDataURL();
