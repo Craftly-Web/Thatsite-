@@ -1163,16 +1163,71 @@ const sfx = (() => {
       if (k >= 64) lead.filter(x => x[0] === bar && x[1] === s).forEach(x => blip(at, x[2] * STEP * .9, x[3], .016, 'square', 3200));
     }
 
-    // Ein Taktgeber für beide Stile; beim Scheibenwechsel startet der neue Stil sauber neu
+    // Bücher-Automat: antike Musik in D-Dorisch – Lyra-Arpeggien, Bordun, Rahmentrommel und ein Aulos
+    const AST = .36;   // Achtel bei etwa 83 BPM
+    const ACH = [[50, 57, 62, 65, 69], [48, 55, 60, 64, 67], [50, 57, 62, 65, 69], [45, 52, 57, 60, 64],
+                 [46, 53, 58, 62, 65], [48, 55, 60, 64, 67], [50, 57, 62, 65, 69], [45, 52, 57, 61, 64]];   // Dm C Dm Am B C Dm A
+    const ARP = [1, 2, 3, 4, 3, 2, 4, 3];
+    // Aulos-Melodie: [Takt, Achtel, Länge in Achteln, MIDI-Note]
+    const aulos = [
+      [0, 0, 3, 74], [0, 3, 1, 76], [0, 4, 4, 77], [1, 0, 2, 76], [1, 2, 2, 74], [1, 4, 4, 72],
+      [2, 0, 3, 74], [2, 3, 1, 77], [2, 4, 2, 81], [2, 6, 2, 79], [3, 0, 6, 76],
+      [4, 0, 3, 77], [4, 3, 1, 79], [4, 4, 4, 81], [5, 0, 2, 79], [5, 2, 2, 77], [5, 4, 4, 76],
+      [6, 0, 2, 74], [6, 2, 2, 76], [6, 4, 2, 77], [6, 6, 2, 76], [7, 0, 8, 73]
+    ];
+    function pluck(t, m, gain) {
+      // Lyra: gezupfte Saite, hell im Anschlag, klingt weich aus
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(3200, t); lp.frequency.exponentialRampToValueAtTime(700, t + 1.2);
+      const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + .004); g.gain.exponentialRampToValueAtTime(.0001, t + 1.6);
+      lp.connect(g); g.connect(out);
+      for (const [type, mul, det] of [['triangle', 1, -4], ['triangle', 1, 4], ['sine', 2, 0]]) {
+        const o = ac.createOscillator(); o.type = type; o.frequency.value = hz(m) * mul; o.detune.value = det;
+        o.connect(lp); o.start(t); o.stop(t + 1.65);
+      }
+    }
+    function reedAulos(t, dur, m, gain) {
+      // Aulos: näselndes Doppelrohr mit leichtem Vibrato
+      const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = hz(m) * 2.2; bp.Q.value = 1.4;
+      const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + .08);
+      g.gain.setValueAtTime(gain, t + Math.max(.1, dur - .12)); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      bp.connect(g); g.connect(out);
+      const vib = ac.createOscillator(), vg = ac.createGain(); vib.frequency.value = 5.2; vg.gain.value = hz(m) * .012;
+      vib.connect(vg); vib.start(t); vib.stop(t + dur + .05);
+      for (const det of [-6, 6]) {
+        const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = hz(m); o.detune.value = det;
+        vg.connect(o.frequency); o.connect(bp); o.start(t); o.stop(t + dur + .05);
+      }
+    }
+    function drone(t, dur) {
+      const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.022, t + 2); g.gain.setValueAtTime(.022, t + dur - 2); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 600; lp.connect(g); g.connect(out);
+      for (const m of [38, 45, 50]) { const o = ac.createOscillator(); o.type = 'triangle'; o.frequency.value = hz(m); o.connect(lp); o.start(t); o.stop(t + dur + .05); }
+    }
+    function frameDrum(t, strength) {
+      const o = ac.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(52, t + .18);
+      const g = ac.createGain(); g.gain.setValueAtTime(.09 * strength, t); g.gain.exponentialRampToValueAtTime(.0001, t + .3);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + .32);
+      nz(t, .06, 'bandpass', 900, 1.2, .025 * strength, .002, out);
+    }
+    function antik(n, at) {
+      const k = n % 128, bar = Math.floor(k / 8) % 8, e = k % 8, ch = ACH[bar];
+      if (k % 32 === 0) drone(at, 32 * AST);
+      if (e === 0) frameDrum(at, 1); else if (e === 3) frameDrum(at, .45); else if (e === 4) frameDrum(at, .7); else if (e === 6) frameDrum(at, .35);
+      pluck(at, ch[ARP[e]] + (e >= 4 ? 12 : 0), .022);
+      if (e === 0) pluck(at, ch[0], .03);
+      if (k >= 64) aulos.filter(x => x[0] === bar && x[1] === e).forEach(x => reedAulos(at, x[2] * AST * .95, x[3], .02));
+    }
+
+    // Ein Taktgeber für alle Stile; beim Wechsel startet der neue Stil sauber neu
     let mode = null, t0 = 0, next = 0;
-    const stepLen = () => mode === 'digi' ? STEP : BEAT;
+    const stepLen = () => mode === 'digi' ? STEP : mode === 'antik' ? AST : BEAT;
     setInterval(() => {
       if (!ac || document.hidden) return;
-      const want = style === 'automat' ? 'digi' : 'pub';
+      const want = style === 'automat' ? 'digi' : style === 'book' ? 'antik' : 'pub';
       if (want !== mode) { mode = want; t0 = ac.currentTime + (next ? .6 : 1); next = 0; }
       const until = (ac.currentTime - t0 + .5) / stepLen();
       while (next < until) {
-        if (!muted) (mode === 'digi' ? digi : waltz)(next, t0 + next * stepLen());
+        if (!muted) (mode === 'digi' ? digi : mode === 'antik' ? antik : waltz)(next, t0 + next * stepLen());
         next++;
       }
     }, 100);
@@ -3722,6 +3777,7 @@ const arcade = (() => {
     if (arcadeBusy.some(f => f())) return;
     const book = which === 'book';
     fruitEl.hidden = book; bookEl.hidden = !book;
+    sfx.setStyle(book ? 'book' : 'automat');   // Bücher-Automat mit antiker Musik, Früchte mit Elektro
     $('#tabFruit').setAttribute('aria-selected', String(!book)); $('#tabBook').setAttribute('aria-selected', String(book));
     try { localStorage.setItem('dk-machine', which); } catch (e) {}
     listeners.forEach(f => f(which));
