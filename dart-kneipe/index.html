@@ -152,7 +152,7 @@ body::after{
 @keyframes callfade{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
 /* Fähigkeiten unter der Scheibe */
 .skills{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,560px)}
-.skill{min-width:0;display:grid;gap:6px;padding:9px 12px 10px;border-radius:8px;background:rgba(20,12,6,.7);border:1px solid rgba(233,201,140,.3);color:var(--ink);font-family:var(--ui);text-align:left;box-shadow:0 6px 14px rgba(0,0,0,.35)}
+.skill{position:relative;min-width:0;display:grid;gap:6px;padding:9px 12px 10px;border-radius:8px;background:rgba(20,12,6,.7);border:1px solid rgba(233,201,140,.3);color:var(--ink);font-family:var(--ui);text-align:left;box-shadow:0 6px 14px rgba(0,0,0,.35)}
 button.skill{font:inherit;font-family:var(--ui);cursor:default}
 button.skill:disabled{color:var(--ink);opacity:1}
 .skill-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-width:0}
@@ -162,18 +162,18 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .skill-meter i{display:block;height:100%;width:0;border-radius:3px;transition:width .35s ease}
 .skill.prec .skill-meter i{background:linear-gradient(90deg,#2a8fb0,#7fe3f5)}
 .skill.adr .skill-meter i{background:linear-gradient(90deg,#9b1f24,#ff5a4e)}
-.skill.prec.ready{cursor:pointer;border-color:#7fe3f5;animation:ready 1.1s ease-in-out infinite alternate}
-.skill.adr.ready{cursor:pointer;border-color:#ff5a4e;animation:readyRed .9s ease-in-out infinite alternate}
+.skill.prec.ready{cursor:pointer;border-color:#7fe3f5;--glow:rgba(127,227,245,.55);--glow-t:1.1s}
+.skill.adr.ready{cursor:pointer;border-color:#ff5a4e;--glow:rgba(255,90,78,.6);--glow-t:.9s}
 .skill.adr.ready .skill-state{color:#ffc2bb}
-@keyframes readyRed{from{box-shadow:0 0 0 0 rgba(255,90,78,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(255,90,78,.6),0 6px 14px rgba(0,0,0,.35)}}
+.skill::after{content:'';position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;opacity:0;box-shadow:0 0 18px 3px var(--glow,transparent)}
+.skill.ready::after{animation:glow var(--glow-t,1s) ease-in-out infinite alternate}
+@keyframes glow{from{opacity:0}to{opacity:1}}
 .skill.prec.ready .skill-state{color:#bff3fb}
-@keyframes ready{from{box-shadow:0 0 0 0 rgba(127,227,245,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(127,227,245,.55),0 6px 14px rgba(0,0,0,.35)}}
 .skill.prec.on{border-color:#7fe3f5;background:rgba(16,58,70,.78)}
 .skill.blitz .skill-meter i{background:linear-gradient(90deg,#b8860b,#f2c230)}
-.skill.blitz.ready{cursor:pointer;border-color:#f2c230;animation:readyGold 1s ease-in-out infinite alternate}
+.skill.blitz.ready{cursor:pointer;border-color:#f2c230;--glow:rgba(242,194,48,.55);--glow-t:1s}
 .skill.blitz.ready .skill-state{color:#ffe7a1}
 .skill.blitz.on{border-color:#f2c230;background:rgba(70,54,8,.8)}
-@keyframes readyGold{from{box-shadow:0 0 0 0 rgba(242,194,48,0),0 6px 14px rgba(0,0,0,.35)}to{box-shadow:0 0 18px 3px rgba(242,194,48,.55),0 6px 14px rgba(0,0,0,.35)}}
 .skill.alt .skill-meter i{background:linear-gradient(90deg,#1f6b45,#6fd39a)}
 .skill.alt.on{border-color:#6fd39a;background:rgba(18,56,36,.78)}
 .skill.adr.on{border-color:#ff5a4e;background:rgba(84,14,14,.78)}
@@ -189,8 +189,10 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .chip.board-chip span{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:10px;align-items:center;height:100%}
 .board-chip img,.board-chip .ph{grid-row:span 2;width:40px;height:40px;border-radius:50%;display:block;background:#111}
 .board-chip img.automat{border-radius:6px}
-.chip.board-chip.dart-chip span{grid-template-columns:68px minmax(0,1fr)}
-.board-chip img.dart{width:68px;height:20px;border-radius:0;background:none}
+.chip.board-chip.dart-chip span{grid-template-columns:minmax(0,1fr);align-content:start;row-gap:2px}
+.board-chip img.dart{grid-row:auto;width:102px;height:30px;border-radius:0;background:none;margin-bottom:2px}
+.dart-chip b{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:400px){.dart-chip b{font-size:15px}.chip.board-chip.dart-chip span{padding-left:10px;padding-right:8px}}
 .board-chip b{font-weight:400;min-width:0}
 .board-chip small{min-width:0}
 .board-chip small svg{width:10px;height:10px;vertical-align:-1px;margin-right:3px}
@@ -281,7 +283,7 @@ body.adrenaline .adr-fx{opacity:1;animation:heartbeat .8s ease-in-out infinite}
 .overlay{
   position:fixed;inset:0;z-index:20;display:grid;place-items:center;overflow-y:auto;
   padding:calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
-  background:rgba(12,7,3,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  background:rgba(12,7,3,.82);
 }
 .panel{
   width:min(100%,470px);
@@ -360,6 +362,7 @@ legend{padding:0;margin-bottom:8px}
   .skill.prec.ready{animation:none;box-shadow:0 0 14px 2px rgba(127,227,245,.5)}
   .skill.blitz.ready{animation:none;box-shadow:0 0 14px 2px rgba(242,194,48,.5)}
   body.adrenaline .adr-fx{animation:none;opacity:.8}
+  .skill.ready::after{animation:none;opacity:0}
   .skill.adr.ready{animation:none;box-shadow:0 0 14px 2px rgba(255,90,78,.5)}
 }
 </style>
@@ -1173,7 +1176,7 @@ const wirt = (() => {
   }
   function resize() {
     const w = box.clientWidth; if (!w) return;
-    const d = Math.min(window.devicePixelRatio || 1, 2.5);
+    const d = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = Math.round(w * d); cv.height = Math.round(w * H / W * d);
     s = cv.width / W;
     back = layer(paintBack); front = layer(paintFront);
@@ -1577,9 +1580,12 @@ const wirt = (() => {
     if (Rh.y < TOP && P.handle > 0) hand(Rh);
   }
 
+  let lastDraw = 0;
+  const overlays = [...document.querySelectorAll('.overlay')];
   function loop(now) {
     update(now);
-    if (onScreen && back) draw(now);
+    const covered = overlays.some(o => !o.hidden);
+    if (onScreen && back && !covered && !document.hidden && now - lastDraw >= 31) { lastDraw = now; draw(now); }
     requestAnimationFrame(loop);
   }
 
@@ -1712,6 +1718,7 @@ function callScore(sum) {
 
 /* ---------- Zeichnen der Scheibe ---------- */
 let dpr = 1, sizeCss = 0, scale = 1, boardImg = null;
+let overlayDirty = true;   // 3D: Fadenkreuz-Ebene nur leeren, wenn im letzten Bild darauf gezeichnet wurde
 
 /* ---------- Scheiben: vier Designs, drei davon zum Freischalten ---------- */
 const BOARD_INFO = {
@@ -1807,6 +1814,7 @@ function renderBoard(px, key = boardKey) {
   const c = document.createElement('canvas'); c.width = c.height = px;
   const g = c.getContext('2d');
   const s = px / 2 / R.EDGE, E = R.EDGE, TAU = Math.PI * 2;
+  const fine = px >= 300;   // Sisal, Maserung und Lochraster sieht man in kleinen Vorschaubildern nicht
   g.translate(px / 2, px / 2); g.scale(s, s);
 
   // Automatengehäuse in den Ecken
@@ -1859,16 +1867,20 @@ function renderBoard(px, key = boardKey) {
 
   // Oberfläche
   g.save(); g.beginPath(); g.arc(0, 0, R.DO, 0, TAU); g.clip();
-  if (st.sisal) {
+  if (st.sisal && fine) {
+    // Fasern in zwei Pfaden (dunkel/hell) statt 9000 Einzelstrichen: auf dem Handy um ein Vielfaches schneller
     g.lineWidth = .35;
+    const dark = new Path2D(), light = new Path2D();
     for (let i = 0; i < 9000; i++) {
       const r = Math.sqrt(Math.random()) * R.DO, a = Math.random() * TAU;
       const x = Math.cos(a) * r, y = Math.sin(a) * r, d = Math.random() * TAU, l = 1 + Math.random() * 2.2;
-      g.strokeStyle = Math.random() < .55 ? 'rgba(0,0,0,.13)' : 'rgba(255,240,210,.06)';
-      g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(d) * l, y + Math.sin(d) * l); g.stroke();
+      const path = Math.random() < .55 ? dark : light;
+      path.moveTo(x, y); path.lineTo(x + Math.cos(d) * l, y + Math.sin(d) * l);
     }
+    g.strokeStyle = 'rgba(0,0,0,.13)'; g.stroke(dark);
+    g.strokeStyle = 'rgba(255,240,210,.06)'; g.stroke(light);
   }
-  if (st.grain) {
+  if (st.grain && fine) {
     // Holzmaserung quer über die ganze Scheibe, dazu zwei Äste
     const p1 = Math.random() * 6, p2 = Math.random() * 6;
     for (let y = -R.DO; y < R.DO; y += 2.1) {
@@ -1887,16 +1899,18 @@ function renderBoard(px, key = boardKey) {
       }
     }
   }
-  if (st.holes) {
-    // Lochraster der Soft-Tip-Scheibe
+  if (st.holes && fine) {
+    // Lochraster der Soft-Tip-Scheibe, alle Löcher in einem Pfad
     g.fillStyle = 'rgba(0,0,0,.4)';
+    const holes = new Path2D();
     for (let r = 2.4; r < R.DO - 1; r += 3.1) {
       const n = Math.max(6, Math.floor(TAU * r / 3.1));
       for (let k = 0; k < n; k++) {
-        const a = k / n * TAU;
-        g.beginPath(); g.arc(Math.cos(a) * r, Math.sin(a) * r, .75, 0, TAU); g.fill();
+        const a = k / n * TAU, x = Math.cos(a) * r, y = Math.sin(a) * r;
+        holes.moveTo(x + .75, y); holes.arc(x, y, .75, 0, TAU);
       }
     }
+    g.fill(holes);
   }
   g.restore();
 
@@ -2234,7 +2248,12 @@ function makeView3d() {
   const scoreGrp = new T.Group(); scoreGrp.position.set(.9, BULL_Y - .02, 0); scene.add(scoreGrp);
   mesh(new T.BoxGeometry(.56, .72, .03), std({ map: rep(oakWood, 1, 1), roughness: .5 }), 0, 0, .015, scoreGrp);
   mesh(new T.PlaneGeometry(.49, .65), std({ map: scoreTex, roughness: .95 }), 0, 0, .031, scoreGrp);
+  let scoreKey = '';
   function drawScores(st) {
+    const key = st ? [lang, st.start, st.opp.name, st.scores, ppd(st, 0), ppd(st, 1), st.legsToWin, st.legs, st.hist.map(h => h.slice(-4).map(v => v.bust ? 'B' : v.rest))].join('|') : lang;
+    const fontKey = key + (document.fonts ? document.fonts.status : '');
+    if (fontKey === scoreKey) return false;
+    scoreKey = fontKey;
     const g = scoreCanvas.getContext('2d'), w = 480, h = 640;
     g.fillStyle = '#1d2a24'; g.fillRect(0, 0, w, h);
     for (let i = 0; i < 6; i++) {
@@ -2257,6 +2276,7 @@ function makeView3d() {
       }
     });
     scoreTex.needsUpdate = true;
+    return true;
   }
 
   /* Dartmatte und Oche */
@@ -2462,14 +2482,13 @@ function makeView3d() {
   // Gibt zurück, ob sich die Kamera bewegt
   function updateCamera(now) {
     const goal = cam.mode === 'aim' ? aimPose() : cam.mode === 'side' ? sidePose() : HALL;
-    const moving = !!cam.from || !!cam.punch || cam.mode === 'hall';
+    const moving = !!cam.from || !!cam.punch;
     if (cam.from) {
       const k = Math.min(1, (now - cam.t0) / cam.dur), e = ease(k);
       curP.lerpVectors(cam.from.p, goal.p, e); curT.lerpVectors(cam.from.t, goal.t, e);
       if (k >= 1) cam.from = null;
     } else { curP.copy(goal.p); curT.copy(goal.t); }
     const p = curP.clone(), t = curT.clone();
-    if (cam.mode === 'hall') { p.x += Math.sin(now / 3100) * .05; p.y += Math.sin(now / 2300) * .02; }
     if (cam.punch) {
       const u = (now - cam.punch.t0) / 420;
       if (u >= 1) cam.punch = null;
@@ -2489,9 +2508,24 @@ function makeView3d() {
   // Nur neu zeichnen, wenn sich etwas ändert; Schatten nur, wenn sich Darts oder die Scheibe ändern
   let dirty = true, shadowDirty = true;
   renderer.shadowMap.autoUpdate = false;
+  sceneCanvas.addEventListener('webglcontextlost', e => e.preventDefault());
+  sceneCanvas.addEventListener('webglcontextrestored', () => { dirty = shadowDirty = true; });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) dirty = shadowDirty = true; });
 
   const ray = new T.Raycaster(), ndc = new T.Vector2();
   drawScores(null);
+  // Alle Pfeil-Looks und Scheiben-Varianten einmal kompilieren und hochladen, sonst ruckelt der erste Wurf
+  try {
+    const warm = ['kneipe', 'blitz', 'alt'].map(k => makeDart(0, k)).concat(makeDart(1));
+    warm.forEach((w, i) => { w.position.set(-.5 + i * .1, BULL_Y, FACE_Z + .2); scene.add(w); });
+    const groups = [disc, cab, proGrp, autoGrp], was = groups.map(o => o.visible);
+    groups.forEach(o => { o.visible = true; });
+    updateCamera(performance.now());
+    renderer.compile(scene, camera);
+    if (renderer.initTexture) for (const k of Object.keys(lookMats)) renderer.initTexture(lookMats[k].flight.map);
+    warm.forEach(w => scene.remove(w));
+    groups.forEach((o, i) => { o.visible = was[i]; });
+  } catch (e) {}
   return {
     is3d: true,
     resize() {
@@ -2519,7 +2553,8 @@ function makeView3d() {
       const camMoving = updateCamera(now), dartsMoving = syncDarts(now), leds = updateLeds(now);
       if (dartsMoving || shadowDirty) { renderer.shadowMap.needsUpdate = true; shadowDirty = false; }
       if (camMoving || dartsMoving || leds || dirty) { renderer.render(scene, camera); dirty = false; }
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, sizeW, sizeH);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (overlayDirty) { ctx.clearRect(0, 0, sizeW, sizeH); overlayDirty = false; }
     },
     setTheme(k) {
       faceTex.image = renderBoard(2048, k); faceTex.needsUpdate = true;
@@ -2544,7 +2579,7 @@ function makeView3d() {
     },
     punch(d) { cam.punch = { t0: performance.now(), at: dartEnd(d) }; },
     opponentTo() {}, setOpponent() {},
-    setScores: st => { drawScores(st); dirty = true; },
+    setScores: st => { if (drawScores(st)) dirty = true; },
     resetDarts() { for (const [, mm] of dartMeshes) scene.remove(mm); dartMeshes.clear(); }
   };
 }
@@ -2555,7 +2590,7 @@ if (V.is3d) { wrap.classList.add('is3d'); sceneCanvas.hidden = false; $('.stage'
 
 function resize() { V.resize(); }
 new ResizeObserver(resize).observe(wrap);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { resize(); V.setTheme(boardKey); if (S) V.setScores(S); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { resize(); V.setTheme(boardKey); V.setScores(S); });
 
 const P = (x, y) => V.project(x, y);
 // Drei Darts, die vor dem ersten Spiel in der 20 stecken
@@ -2694,10 +2729,12 @@ function frame(now) {
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
     drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind(), b.quick || 0);
+    overlayDirty = true;
   } else if (hover && canThrow()) {
     const [X, Y] = P(hover.x, hover.y);
     ctx.strokeStyle = 'rgba(243,239,230,.55)'; ctx.lineWidth = 1.2;
     ctx.beginPath(); ctx.arc(X, Y, 5, 0, Math.PI * 2); ctx.stroke();
+    overlayDirty = true;
   }
   requestAnimationFrame(frame);
 }
