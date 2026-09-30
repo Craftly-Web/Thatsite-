@@ -1349,6 +1349,16 @@ try { const k = localStorage.getItem('dk-dart'); if (k && DART_INFO[k] && dartUn
 
 let unlocked = new Set(['classic']);
 try { JSON.parse(localStorage.getItem('dk-boards') || '[]').forEach(k => { if (BOARD_INFO[k]) unlocked.add(k); }); } catch (e) {}
+// Testzugang: Link mit #allesfrei schaltet alle Scheiben und Pfeile frei (bleibt im Browser gespeichert)
+const TEST_ALL = location.hash === '#allesfrei';
+if (TEST_ALL) {
+  Object.keys(BOARD_INFO).forEach(k => unlocked.add(k));
+  stats.t20 = Math.max(stats.t20 || 0, 5); stats.wins = Math.max(stats.wins || 0, 3);
+  try {
+    localStorage.setItem('dk-boards', JSON.stringify([...unlocked]));
+    localStorage.setItem('dk-stats', JSON.stringify(stats));
+  } catch (e) {}
+}
 let boardKey = 'classic';
 try { const k = localStorage.getItem('dk-board'); if (k && unlocked.has(k)) boardKey = k; } catch (e) {}
 
@@ -2782,6 +2792,7 @@ document.addEventListener('keydown', e => {
 
 renderSkills();
 setTimeout(() => wirt.say('Moin! Wirf ’ne Runde mit.'), 1200);
+if (TEST_ALL) setTimeout(() => toast('Testmodus', 'Alle Scheiben und Pfeile sind freigeschaltet.'), 600);
 requestAnimationFrame(frame);
 })();
 </script>
