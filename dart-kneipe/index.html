@@ -673,6 +673,9 @@ const I18N = {
     'toast.dart': 'Neuer Pfeil freigeschaltet', 'toast.dartx': '{name} mit „{skill}“ – im Menü unter „Pfeile“ auswählen.',
     'toast.test': 'Testmodus', 'toast.testx': 'Alle Scheiben und Pfeile sind freigeschaltet.',
     // Heinz' Sprüche
+    'v.gameon': 'Los geht’s!', 'v.req': 'Du brauchst {n}.', 'v.reqopp': '{name} braucht {n}.', 'v.noscore': 'Keine Punkte.', 'v.bust': 'Überworfen.',
+    'v.180': 'Einhundert… achtzig!', 'v.win.leg': 'Und das Leg geht an dich!', 'v.win.match': 'Und das Match! Glückwunsch!',
+    'v.winopp.leg': 'Das Leg geht an {name}.', 'v.winopp.match': 'Das Match geht an {name}.',
     'w.greet': ['Moin! Wirf ’ne Runde mit.', 'Die Scheibe ist frisch gebürstet. Blamier sie nicht.', 'Schuhe abputzen, Pfeile schärfen, rein da!'],
     'w.start': ['Oche frei! Und bitte nicht die Lampe treffen.', 'Gegen {name}? Ich hol schon mal den Verbandskasten.', 'Erst werfen, dann trinken. Andersrum hatten wir schon – wurde teuer.', 'Wer verliert, zahlt die Runde. Steht so im Grundgesetz.'],
     'w.bust': ['Überworfen! Mathe war wohl nicht dein Leistungskurs.', 'Zu viel des Guten – wie meine zweite Portion Schnitzel.', 'Erst rechnen, dann werfen! Soll ich dir ’nen Bierdeckel geben?', 'Überworfen. Die Scheibe lacht dich aus. Ich auch.'],
@@ -746,6 +749,9 @@ const I18N = {
     'toast.board': 'New board unlocked', 'toast.boardx': '{name} – pick it in the menu under “Board”.',
     'toast.dart': 'New darts unlocked', 'toast.dartx': '{name} with “{skill}” – pick them in the menu under “Darts”.',
     'toast.test': 'Test mode', 'toast.testx': 'All boards and darts are unlocked.',
+    'v.gameon': 'Game on!', 'v.req': 'You require {n}.', 'v.reqopp': '{name}, you require {n}.', 'v.noscore': 'No score.', 'v.bust': 'Bust!',
+    'v.180': 'One hundred and… eighty!', 'v.win.leg': 'Game shot, and the leg!', 'v.win.match': 'Game shot, and the match!',
+    'v.winopp.leg': 'Game shot, and the leg to {name}!', 'v.winopp.match': 'Game shot, and the match to {name}!',
     'w.greet': ['Evening! Fancy a game?', 'Board’s freshly brushed. Don’t embarrass it.', 'Wipe your feet, sharpen your darts, off you go!'],
     'w.start': ['Oche’s all yours. Please mind the lamp.', 'Against {name}? I’ll fetch the first-aid kit.', 'Throw first, drink later. The other way round got expensive.', 'Loser buys the round. It’s in the constitution.'],
     'w.bust': ['Bust! Maths wasn’t your strong subject, was it?', 'Too much of a good thing – like my second schnitzel.', 'Count first, then throw! Want a beer mat to do the sums?', 'Bust. The board’s laughing at you. So am I.'],
@@ -1634,41 +1640,54 @@ const wirt = (() => {
   return { say, react, talking };
 })();
 
-/* ---------- Heinz ruft die Punkte auf Englisch (Sprachausgabe des Browsers) ---------- */
+/* ---------- Heinz ruft die Punkte in der eingestellten Sprache (Sprachausgabe des Browsers) ---------- */
 const voice = (() => {
   const synth = window.speechSynthesis;
-  let v = null;
-  // Natürlich klingende Stimmen bevorzugen, britisch wie die Caller im Profi-Darts, gern männlich
-  function rate(x) {
+  const picked = {};   // je Sprache: { v, male }
+  // Männliche Stimmen je System: macOS/iOS, Windows/Edge, Android (Google-Kürzel)
+  const MALE = {
+    de: /markus|yannick|stefan|conrad|killian|florian|martin|viktor|jonas|bernd|eddy|reed|rocko|grandpa|de-de-x-deg|male|männlich/i,
+    en: /daniel|arthur|ryan|george|guy|thomas|oliver|james|william|alfie|brian|eric|christopher|roger|rocko|eddy|reed|en-gb-x-rjs|en-gb-x-gbd|male/i
+  };
+  const FEMALE = {
+    de: /anna|helena|petra|katja|hedda|amala|seraphina|marlene|vicki|sandy|shelley|grandma|\bflo\b|female|weiblich/i,
+    en: /serena|kate|stephanie|susan|hazel|libby|sonia|samantha|karen|moira|tessa|fiona|martha|victoria|allison|ava|zira|female/i
+  };
+  function score(x, l) {
     let r = 0;
-    if (/natural|neural|online|premium|enhanced/i.test(x.name)) r += 5;
-    if (/^en[-_]GB/i.test(x.lang)) r += 3;
-    if (/daniel|arthur|ryan|george|guy|thomas|oliver|james|william|male/i.test(x.name)) r += 2;
-    if (/google/i.test(x.name)) r += 1;
+    if (/natural|neural|online|premium|enhanced/i.test(x.name)) r += 4;
+    if (MALE[l].test(x.name) || MALE[l].test(x.voiceURI || '')) r += 6;
+    if (FEMALE[l].test(x.name)) r -= 4;
+    if (l === 'de' && /^de[-_]DE/i.test(x.lang)) r += 2;
+    if (l === 'en' && /^en[-_]GB/i.test(x.lang)) r += 2;
+    if (x.localService) r += 1;   // lokale Stimmen setzen ohne Netz-Verzögerung ein
     return r;
   }
-  function pickVoice() {
-    const en = synth.getVoices().filter(x => /^en([-_]|$)/i.test(x.lang));
-    v = en.sort((a, b) => rate(b) - rate(a))[0] || null;
+  function pick(l) {
+    const all = synth.getVoices().filter(x => new RegExp('^' + l + '([-_]|$)', 'i').test(x.lang));
+    const v = all.sort((a, b) => score(b, l) - score(a, l))[0] || null;
+    picked[l] = { v, male: !!v && (MALE[l].test(v.name) || MALE[l].test(v.voiceURI || '')) };
+    return picked[l];
   }
-  if (synth) {
-    try { pickVoice(); } catch (e) {}
-    if ('onvoiceschanged' in synth) synth.onvoiceschanged = () => { try { pickVoice(); } catch (e) {} };
-  }
+  if (synth && 'onvoiceschanged' in synth) synth.onvoiceschanged = () => { for (const k in picked) delete picked[k]; };
   // iOS spricht erst, nachdem einmal innerhalb einer Berührung gesprochen wurde
-  let unlocked = false;
+  let spoke = false;
   function unlock() {
-    if (unlocked || !synth) return;
-    unlocked = true;
+    if (spoke || !synth) return;
+    spoke = true;
     try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; synth.speak(u); } catch (e) {}
   }
-  function say(text, opts = {}) {
+  // lift: 0 = ruhig, 1 = 100+, 2 = 150+, 3 = 180. Sanft heißt: tiefe Grundlage, nur leichte Steigerung
+  function say(text, lift = 0) {
     if (!synth || sfx.muted) return;
     try {
       if (synth.paused) synth.resume();
+      const l = lang === 'en' ? 'en' : 'de', P = picked[l] || pick(l), v = P.v;
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = v ? v.lang : 'en-GB'; if (v) u.voice = v;
-      u.pitch = opts.pitch ?? 1; u.rate = opts.rate ?? .95; u.volume = 1;
+      u.lang = v ? v.lang : (l === 'de' ? 'de-DE' : 'en-GB'); if (v) u.voice = v;
+      // Keine männliche Stimme auf dem Gerät: etwas tiefer, damit es weicher und dunkler klingt
+      const base = P.male ? .92 : .78;
+      u.pitch = base + [0, .06, .12, .18][lift]; u.rate = [.9, .88, .86, .8][lift]; u.volume = .95;
       u.onstart = () => wirt.talking(true);
       u.onend = u.onerror = () => wirt.talking(false);
       synth.speak(u);
@@ -1683,8 +1702,14 @@ const voice = (() => {
   sfx.init(); voice.unlock();
 }, { capture: true, passive: true }));
 
-// Zahlen so, wie ein britischer Caller sie ruft: "one hundred and forty"
+// Zahlen ausgeschrieben, damit die Stimme sie sauber betont: "one hundred and forty" / "hundertvierzig"
 function words(n) {
+  if (lang !== 'en') {
+    const ones = ['null', 'eins', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf', 'dreizehn', 'vierzehn', 'fünfzehn', 'sechzehn', 'siebzehn', 'achtzehn', 'neunzehn'];
+    const tens = ['', '', 'zwanzig', 'dreißig', 'vierzig', 'fünfzig', 'sechzig', 'siebzig', 'achtzig', 'neunzig'];
+    const two = k => k < 20 ? ones[k] : (k % 10 ? (k % 10 === 1 ? 'ein' : ones[k % 10]) + 'und' : '') + tens[Math.floor(k / 10)];
+    return n < 100 ? two(n) : 'hundert' + (n % 100 ? two(n % 100) : '');
+  }
   const ones = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
   const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
   const two = k => k < 20 ? ones[k] : tens[Math.floor(k / 10)] + (k % 10 ? ' ' + ones[k % 10] : '');
@@ -1697,19 +1722,19 @@ function words(n) {
 function callScore(sum) {
   if (sum === 180) {
     call('One hundred and eighty!', 'big');
-    voice.say('One hundred and... eighty!', { pitch: 1.75, rate: .78 });
+    voice.say(t('v.180'), 3);
     sfx.cheer(2.6); sfx.claps(4.5); sfx.horn();
   } else if (sum >= 150) {
     call(String(sum), 'big');
-    voice.say(words(sum) + '!', { pitch: 1.5, rate: .85 });
+    voice.say(words(sum) + '!', 2);
     sfx.cheer(1.6); sfx.claps(3);
   } else if (sum >= 100) {
     call(String(sum));
-    voice.say(words(sum) + '!', { pitch: 1.25, rate: .9 });
+    voice.say(words(sum) + '!', 1);
     sfx.cheer(.8);
   } else if (sum === 0) {
     call('No score');
-    voice.say('No score.');
+    voice.say(t('v.noscore'));
   } else {
     call(String(sum));
     voice.say(words(sum) + '.');
@@ -2806,7 +2831,7 @@ function newGame(o) {
   V.setOpponent(o.level);
   wirt.say(t('w.start', { name: S.opp.name }));
   voice.stop();
-  voice.say('Game on!', { pitch: 1.1 });
+  voice.say(t('v.gameon'));
   startLeg();
 }
 
@@ -2840,7 +2865,7 @@ function beginTurn() {
   V.focus(g.turn === 0 ? 'aim' : 'side');
   V.opponentTo(g.turn === 1 ? 'oche' : 'aside');
   const rest = g.scores[g.turn];
-  if (finish(rest, 3)) voice.say(g.turn === 0 ? `You require ${words(rest)}.` : `${g.opp.name}, you require ${words(rest)}.`);
+  if (finish(rest, 3)) voice.say(t(g.turn === 0 ? 'v.req' : 'v.reqopp', { n: words(rest), name: g.opp.name }));
   if (g.turn === 1) {
     hint(t('hint.oche', { name: g.opp.name }));
     cpuBoostStart(g);
@@ -2997,7 +3022,7 @@ function endVisit(g, bust) {
   renderTafel();
   // Nach der Aufnahme des Gegners: Kamera an die Scheibe, Gegner tritt zur Seite
   if (g.turn === 1) { V.focus('aim'); V.opponentTo('aside'); }
-  if (bust) voice.say('Bust!', { pitch: .95 });
+  if (bust) voice.say(t('v.bust'));
   else callScore(sum);
   wirtComment(g, sum, bust);
   setTimeout(() => { if (S !== g) return; g.turn = 1 - g.turn; beginTurn(); }, 1700);
@@ -3015,7 +3040,7 @@ function win(g, p, h) {
   call('Game shot!', 'big'); sfx.cheer(1.5);
   if (p === 1) { V.focus('aim'); V.opponentTo('aside'); }
   const what = matchWon ? 'match' : 'leg';
-  voice.say(p === 0 ? `Game shot, and the ${what}!` : `Game shot, and the ${what} to ${g.opp.name}!`, { pitch: 1.3, rate: .9 });
+  voice.say(t((p === 0 ? 'v.win.' : 'v.winopp.') + what, { name: g.opp.name }), 1);
   if (p === 0) wirt.react('cheer', t(matchWon ? 'w.matchme' : 'w.legme'), matchWon);
   else wirt.react('shake', t(matchWon ? 'w.matchopp' : 'w.legopp', { name: g.opp.name }));
   if (!matchWon) {
