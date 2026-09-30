@@ -2409,93 +2409,7 @@ function makeView3d() {
     return g;
   }
 
-  /* Gegner als Figur an der Oche */
-  const OUTFIT = {
-    anfaenger: { shirt: '#7a3b69', pants: '#3a3340', hair: '#cfc8cf' },
-    stammgast: { shirt: '#2f5d8a', pants: '#2c3e5c', hair: '#3b2a1e' },
-    verein:    { shirt: '#9b2226', pants: '#2b2b2b', hair: '#6b4a2b' },
-    profi:     { shirt: '#141414', pants: '#111111', hair: '#1a1a1a' }
-  };
-  const person = (() => {
-    const grp = new T.Group(); scene.add(grp);
-    const m = {
-      shirt: std({ color: '#2f5d8a', roughness: .85 }), pants: std({ color: '#2c3e5c', roughness: .9 }),
-      skin: std({ color: '#d9a584', roughness: .65 }), hair: std({ color: '#3b2a1e', roughness: .9 }),
-      shoe: std({ color: '#161616', roughness: .5 })
-    };
-    const add = (geo, mat, x, y, z, parent = grp) => mesh(geo, mat, x, y, z, parent);
-    for (const sx of [-1, 1]) {
-      add(new T.CylinderGeometry(.075, .062, .88, 16), m.pants, sx * .1, .47, 0);
-      add(new T.BoxGeometry(.11, .075, .28), m.shoe, sx * .1, .038, -.05);
-    }
-    const lathe = pts => new T.LatheGeometry(pts.map(([r, y]) => new T.Vector2(r, y)), 32);
-    add(lathe([[.001, .82], [.15, .83], [.172, .9], [.176, 1.0], [.17, 1.04], [.001, 1.05]]), m.pants, 0, 0, 0).scale.z = .78;
-    const torso = add(lathe([[.001, .99], [.172, 1.0], [.168, 1.1], [.178, 1.24], [.198, 1.38], [.205, 1.46], [.19, 1.53], [.13, 1.58], [.06, 1.6], [.001, 1.605]]), m.shirt, 0, 0, 0);
-    torso.scale.z = .7;
-    add(new T.TorusGeometry(.055, .012, 8, 20), m.shirt, 0, 1.6, 0).rotation.x = Math.PI / 2;
-    add(new T.CylinderGeometry(.05, .056, .1, 12), m.skin, 0, 1.6, 0);
-    const head = new T.Group(); head.position.set(0, 1.73, 0); grp.add(head);
-    add(new T.SphereGeometry(.105, 24, 18), m.skin, 0, 0, 0, head).scale.set(.9, 1.08, 1);
-    add(new T.SphereGeometry(.11, 24, 14, 0, TAU, 0, Math.PI * .5), m.hair, 0, .014, .006, head).scale.set(.95, 1.05, 1.03);
-    add(new T.SphereGeometry(.108, 24, 14, 0, Math.PI, 0, Math.PI * .72), m.hair, 0, .0, .012, head).scale.set(.95, 1.05, 1.03);
-    add(new T.SphereGeometry(.017, 10, 8), m.skin, 0, -.01, -.098, head);
-    for (const sx of [-1, 1]) add(new T.SphereGeometry(.022, 10, 8), m.skin, sx * .094, -.005, 0, head).scale.set(.5, 1, .8);
-    const arm = sx => {
-      const sh = new T.Group(); sh.position.set(sx * .235, 1.5, 0); sh.rotation.order = 'YXZ'; grp.add(sh);
-      add(new T.SphereGeometry(.058, 14, 10), m.shirt, 0, 0, 0, sh);
-      add(new T.CylinderGeometry(.05, .043, .3, 14), m.shirt, 0, -.15, 0, sh);
-      const el = new T.Group(); el.position.set(0, -.3, 0); sh.add(el);
-      add(new T.CylinderGeometry(.038, .031, .27, 12), m.skin, 0, -.135, 0, el);
-      const hand = add(new T.SphereGeometry(.042, 12, 10), m.skin, 0, -.29, 0, el);
-      return { sh, el, hand };
-    };
-    const L = arm(-1), Rr = arm(1);
-    const held = makeDart(1); held.rotation.x = -Math.PI / 2; held.position.set(0, -.03, -.02); Rr.hand.add(held);
-    return { grp, m, L, R: Rr, head, torso, held };
-  })();
-  const SPOTS = { oche: { p: V3(.24, 0, OCHE_Z + .12), ry: .45 }, aside: { p: V3(-1.0, 0, 2.75), ry: -.6 } };
-  const opp = { from: null, to: SPOTS.aside, t0: 0, throwT0: 0, release: null, released: false };
-  person.grp.position.copy(SPOTS.aside.p); person.grp.rotation.y = SPOTS.aside.ry;
-  let nextFrom = null;
-  const lerp = (a, b, k) => a + (b - a) * k;
   const ease = k => k <= 0 ? 0 : k >= 1 ? 1 : k * k * (3 - 2 * k);
-
-  function updateOpponent(now) {
-    const P0 = person;
-    let walking = false;
-    if (opp.from) {
-      const k = Math.min(1, (now - opp.t0) / 800), e = ease(k);
-      P0.grp.position.lerpVectors(opp.from.p, opp.to.p, e);
-      P0.grp.rotation.y = lerp(opp.from.ry, opp.to.ry, e);
-      P0.grp.position.y = Math.abs(Math.sin(k * Math.PI * 3)) * .025;
-      walking = k < 1;
-      if (k >= 1) opp.from = null;
-    }
-    const atOche = opp.to === SPOTS.oche && !walking;
-    P0.torso.scale.x = 1 + Math.sin(now / 900) * .01;
-    let sh = .06, el = .18, lsh = .08;
-    if (atOche) { sh = 1.35; el = 1.6; lsh = .3; }
-    if (opp.throwT0) {
-      const u = now - opp.throwT0;
-      if (u < 420) { const k = ease(u / 420); sh = lerp(1.35, 1.5, k); el = lerp(1.6, 2.3, k); }
-      else if (u < 560) { const k = ease((u - 420) / 140); sh = lerp(1.5, 1.3, k); el = lerp(2.3, .1, k); }
-      else if (u < 900) { const k = ease((u - 560) / 340); sh = lerp(1.3, 1.15, k); el = lerp(.1, .35, k); }
-      else if (u < 1300) { const k = ease((u - 900) / 400); sh = lerp(1.15, 1.35, k); el = lerp(.35, 1.6, k); }
-      else opp.throwT0 = 0;
-      if (!opp.released && u >= 500) {
-        opp.released = true;
-        nextFrom = person.R.hand.getWorldPosition(V3(0, 0, 0));
-        const r = opp.release; opp.release = null; if (r) r();
-      }
-    }
-    // Dart in der Hand: an der Oche sichtbar, nach dem Loslassen kurz weg
-    P0.held.visible = opp.throwT0 ? !(opp.released && now - opp.throwT0 < 900) : atOche;
-    P0.R.sh.rotation.set(sh, atOche ? -P0.grp.rotation.y - .05 : 0, 0);
-    P0.R.el.rotation.x = el;
-    P0.L.sh.rotation.set(lsh, 0, -.08);
-    P0.L.el.rotation.x = atOche ? .5 : .15;
-    P0.head.rotation.y = atOche ? -P0.grp.rotation.y : 0;
-  }
 
   /* Darts in der Szene: fliegen und stecken */
   const dartMeshes = new Map();
@@ -2503,34 +2417,52 @@ function makeView3d() {
     const far = Math.hypot(d.x, d.y) > 330;
     return V3(d.x / 1000, BULL_Y - d.y / 1000, far ? .03 : FACE_Z - .012);
   }
+  // Gibt zurück, ob sich ein Dart bewegt hat; nur dann muss neu gezeichnet werden
   function syncDarts(now) {
     const list = S ? S.darts : PREVIEW, alive = new Set(list);
-    for (const [d, mm] of dartMeshes) if (!alive.has(d)) { scene.remove(mm); dartMeshes.delete(d); }
+    let changed = false;
+    for (const [d, mm] of dartMeshes) if (!alive.has(d)) { scene.remove(mm); dartMeshes.delete(d); changed = true; }
     for (const d of list) {
       let mm = dartMeshes.get(d);
       if (!mm) {
         mm = makeDart(d.owner, d.set || dartKey); scene.add(mm); dartMeshes.set(d, mm);
         d.tilt = d.tilt || [(Math.random() - .5) * .14, .1 + Math.random() * .12];
+        mm.userData.settled = false;
       }
       const end = dartEnd(d), p = d.t0 < 0 || !d.from ? 1 : Math.min(1, (now - d.t0) / d.fly);
-      if (p >= 1) { mm.position.copy(end); mm.rotation.set(d.tilt[1], d.tilt[0], d.rot || 0); continue; }
+      if (p >= 1) {
+        if (!mm.userData.settled) { mm.userData.settled = true; changed = true; mm.position.copy(end); mm.rotation.set(d.tilt[1], d.tilt[0], d.rot || 0); }
+        continue;
+      }
+      changed = true;
       const pos = V3().lerpVectors(d.from, end, p); pos.y += d.arc * 4 * p * (1 - p);
       const q = Math.min(1, p + .03), ahead = V3().lerpVectors(d.from, end, q); ahead.y += d.arc * 4 * q * (1 - q);
       mm.position.copy(pos); mm.lookAt(pos.clone().multiplyScalar(2).sub(ahead)); mm.rotateZ(p * 6);
     }
+    return changed;
   }
 
-  /* Kamera: Halle aus der dritten Person, Nahansicht zum Zielen, kurzer Zoom nach jedem Treffer */
+  /* Kamera: Halle vor dem Spiel, Nahansicht zum Zielen, beim Gegner leicht von rechts auf die Scheibe */
   const HALL = { p: V3(1.8, 1.78, 5.5), t: V3(-.2, 1.3, 1.0) };
+  function boardDist(need) {
+    const half = Math.tan(camera.fov * Math.PI / 360);
+    return camera.aspect >= 1 ? need / half : need / (half * camera.aspect);
+  }
   function aimPose() {
-    const half = Math.tan(camera.fov * Math.PI / 360), need = .214;
-    const d = camera.aspect >= 1 ? need / half : need / (half * camera.aspect);
+    const d = boardDist(.214);
     return { p: V3(0, BULL_Y, FACE_Z + d), t: V3(0, BULL_Y, FACE_Z) };
+  }
+  const SIDE_ANGLE = .38;   // gut 20 Grad von rechts
+  function sidePose() {
+    const d = boardDist(.25);
+    return { p: V3(Math.sin(SIDE_ANGLE) * d, BULL_Y + .06, FACE_Z + Math.cos(SIDE_ANGLE) * d), t: V3(-.012, BULL_Y - .01, FACE_Z) };
   }
   const cam = { mode: 'hall', from: null, t0: 0, dur: 1000, punch: null };
   const curP = HALL.p.clone(), curT = HALL.t.clone();
+  // Gibt zurück, ob sich die Kamera bewegt
   function updateCamera(now) {
-    const goal = cam.mode === 'aim' ? aimPose() : HALL;
+    const goal = cam.mode === 'aim' ? aimPose() : cam.mode === 'side' ? sidePose() : HALL;
+    const moving = !!cam.from || !!cam.punch || cam.mode === 'hall';
     if (cam.from) {
       const k = Math.min(1, (now - cam.t0) / cam.dur), e = ease(k);
       curP.lerpVectors(cam.from.p, goal.p, e); curT.lerpVectors(cam.from.t, goal.t, e);
@@ -2544,14 +2476,19 @@ function makeView3d() {
       else { const s = Math.sin(Math.PI * u); p.lerp(cam.punch.at, .1 * s); t.lerp(cam.punch.at, .3 * s); }
     }
     camera.position.copy(p); camera.lookAt(t);
+    return moving;
   }
   let ledStep = -1;
   function updateLeds(now) {
-    if (!autoGrp.visible) return;
+    if (!autoGrp.visible) return false;
     const step = Math.floor(now / 70);
-    if (step === ledStep) return; ledStep = step;
+    if (step === ledStep) return false; ledStep = step;
     ledMats.forEach((mt, i) => mt.color.set(((i - step) % 48 + 48) % 48 < 6 ? '#7fdcff' : '#23467c'));
+    return true;
   }
+  // Nur neu zeichnen, wenn sich etwas ändert; Schatten nur, wenn sich Darts oder die Scheibe ändern
+  let dirty = true, shadowDirty = true;
+  renderer.shadowMap.autoUpdate = false;
 
   const ray = new T.Raycaster(), ndc = new T.Vector2();
   drawScores(null);
@@ -2562,7 +2499,7 @@ function makeView3d() {
       if (!w || !h) return;
       sizeW = w; sizeH = h; sizeCss = Math.min(w, h);
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
+      renderer.setPixelRatio(Math.min(dpr, 1.5)); renderer.setSize(w, h, false); dirty = true;
       camera.aspect = w / h; camera.updateProjectionMatrix();
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     },
@@ -2579,8 +2516,9 @@ function makeView3d() {
     },
     pxPerMm() { const a = this.project(0, 0), b = this.project(100, 0); return Math.hypot(b[0] - a[0], b[1] - a[1]) / 100; },
     render(now) {
-      updateCamera(now); updateOpponent(now); syncDarts(now); updateLeds(now);
-      renderer.render(scene, camera);
+      const camMoving = updateCamera(now), dartsMoving = syncDarts(now), leds = updateLeds(now);
+      if (dartsMoving || shadowDirty) { renderer.shadowMap.needsUpdate = true; shadowDirty = false; }
+      if (camMoving || dartsMoving || leds || dirty) { renderer.render(scene, camera); dirty = false; }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, sizeW, sizeH);
     },
     setTheme(k) {
@@ -2591,12 +2529,13 @@ function makeView3d() {
       proGrp.visible = k === 'pro';
       autoGrp.visible = k === 'automat';
       boardSpot.intensity = k === 'pro' ? 2.9 : 2.5;
+      dirty = shadowDirty = true;
     },
     onThrow(d) {
-      if (d.owner === 1) { d.fly = 380; d.arc = .12; d.from = nextFrom || V3(.3, 1.6, OCHE_Z); nextFrom = null; }
+      if (d.owner === 1) { d.fly = 330; d.arc = .06; d.from = camera.position.clone().add(V3(.08, -.1, .25)); }
       else { d.fly = 200; d.arc = .02; d.from = camera.position.clone().add(V3(.04, -.12, -.06)); }
     },
-    cpuThrow(release) { opp.throwT0 = performance.now(); opp.release = release; opp.released = false; },
+    cpuThrow(release) { setTimeout(release, 380); },
     canAim: () => cam.mode === 'aim' && !cam.from,
     focus(mode) {
       if (cam.mode === mode) return;
@@ -2604,16 +2543,8 @@ function makeView3d() {
       cam.mode = mode; cam.t0 = performance.now(); cam.dur = 1000;
     },
     punch(d) { cam.punch = { t0: performance.now(), at: dartEnd(d) }; },
-    opponentTo(where) {
-      const to = SPOTS[where];
-      if (opp.to === to) return;
-      opp.from = { p: person.grp.position.clone(), ry: person.grp.rotation.y }; opp.to = to; opp.t0 = performance.now();
-    },
-    setOpponent(level) {
-      const o = OUTFIT[level] || OUTFIT.stammgast;
-      person.m.shirt.color.set(o.shirt); person.m.pants.color.set(o.pants); person.m.hair.color.set(o.hair);
-    },
-    setScores: st => drawScores(st),
+    opponentTo() {}, setOpponent() {},
+    setScores: st => { drawScores(st); dirty = true; },
     resetDarts() { for (const [, mm] of dartMeshes) scene.remove(mm); dartMeshes.clear(); }
   };
 }
@@ -2869,7 +2800,7 @@ function beginTurn() {
   aim.active = false;   // beim Zugwechsel nie mit altem Fadenkreuz weiterzielen
   g.visit = []; g.visitState = 'open'; g.turnStart = g.scores[g.turn]; g.darts = []; g.busy = false;
   renderTafel();
-  V.focus(g.turn === 0 ? 'aim' : 'hall');
+  V.focus(g.turn === 0 ? 'aim' : 'side');
   V.opponentTo(g.turn === 1 ? 'oche' : 'aside');
   const rest = g.scores[g.turn];
   if (finish(rest, 3)) voice.say(g.turn === 0 ? `You require ${words(rest)}.` : `${g.opp.name}, you require ${words(rest)}.`);
@@ -2953,7 +2884,7 @@ function cpuDart() {
   const sigma = g.opp.sigma * cpuMult(kind);
   const a = aimOf(cpuTarget(g.scores[1], left)), [gx, gy] = gauss2();
   const tx = a.x + gx * sigma, ty = a.y + gy * sigma;
-  // In 3D holt die Figur erst aus und lässt dann los
+  // In 3D fliegt der Dart kurz verzögert von rechts ins Bild
   V.cpuThrow(() => { if (S === g && !g.over && g.turn === 1) { cpuBoostUse(g, kind); throwAt(1, tx, ty); } });
 }
 
