@@ -109,6 +109,40 @@ body::after{
 .btn.ghost{background:rgba(20,12,6,.6);color:var(--ink);border-color:rgba(233,201,140,.35);box-shadow:none}
 .btn:focus-visible,.chip input:focus-visible + span{outline:2px solid #ffd66b;outline-offset:2px}
 .icon-btn{width:44px;height:44px;padding:0;display:grid;place-items:center}
+/* Spielhalle */
+.arc-card{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:12px;width:100%;padding:11px 14px;border-radius:8px;cursor:pointer;text-align:left;
+  font-family:var(--ui);color:var(--ink);background:linear-gradient(90deg,rgba(120,20,40,.55),rgba(40,10,30,.55));border:1px solid rgba(255,120,160,.45)}
+.arc-card svg{width:28px;height:28px;color:#ff8fb4}
+.arc-card b{display:block;font-size:17px;letter-spacing:.1em;text-transform:uppercase}
+.arc-card small{display:block;font-size:14px;color:#ffd66b}
+.arc-card i{font-style:normal;font-size:26px;color:#ff8fb4}
+.slot{width:min(100%,580px);display:flex;flex-direction:column;gap:10px;padding:16px 16px 14px;border-radius:18px;color:var(--ink);font-family:var(--ui);
+  background:linear-gradient(180deg,#5a0d1f,#2b0612 60%,#1a040b);border:3px solid #e2b457;box-shadow:0 0 0 2px #3a2208,0 0 40px rgba(255,60,120,.25),0 20px 40px rgba(0,0,0,.6)}
+.slot-top{text-align:center}
+.slot-top h2{margin:0;font-family:var(--ui);font-weight:700;font-size:clamp(24px,6vw,32px);letter-spacing:.06em;text-transform:uppercase;color:#ffe9a8;
+  text-shadow:0 0 8px rgba(255,120,170,.9),0 0 22px rgba(255,60,120,.6)}
+.slot-top small{display:block;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#ffb3cb;opacity:.85}
+.slot-window{padding:8px;border-radius:12px;background:linear-gradient(180deg,#d9d9d9,#8c8c8c 50%,#cfcfcf);box-shadow:inset 0 2px 6px rgba(0,0,0,.5)}
+.slot-window canvas{display:block;width:100%;aspect-ratio:5/3;border-radius:6px;background:#f4ecd6}
+.slot-msg{min-height:24px;text-align:center;font-size:18px;font-weight:700;letter-spacing:.04em;color:#ffe9a8}
+.slot-msg.big{color:#fff;text-shadow:0 0 10px #ff4f8b,0 0 24px #ffb000;animation:pop .35s ease-out}
+.slot-meters{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.slot-meters div,.bet-val{display:grid;justify-items:center;padding:6px 8px;border-radius:8px;background:#0d0206;border:1px solid rgba(255,120,160,.35)}
+.slot-meters small,.bet-val small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#ffb3cb}
+.slot-meters b,.bet-val b{font-family:'Courier New',monospace;font-size:22px;color:#ff5d5d;text-shadow:0 0 6px rgba(255,60,60,.7);font-variant-numeric:tabular-nums}
+.slot-meters div:last-child b{color:#7dff9a;text-shadow:0 0 6px rgba(80,255,130,.6)}
+.slot-bet{display:grid;grid-template-columns:44px 1fr 44px minmax(110px,1.1fr);gap:8px;align-items:stretch}
+.slot-bet .icon-btn{width:auto;height:auto;font-size:24px}
+.bet-val b{font-size:19px;color:#ffe9a8;text-shadow:none}
+.btn.spin{font-size:19px;background:linear-gradient(180deg,#ff6b8f,#c21847);color:#fff;border-color:#6d0a22;box-shadow:0 3px 0 #6d0a22,0 8px 18px rgba(255,40,100,.35)}
+.btn.spin:disabled{filter:grayscale(.6) brightness(.8);cursor:default}
+.paytable summary{cursor:pointer;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#ffb3cb}
+.paytable .rules{margin:8px 0}
+#payList{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pay-row{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;background:rgba(0,0,0,.35);font-size:14px}
+.pay-row img{width:34px;height:34px}
+.slot-note{margin:0;font-size:13px;color:rgba(255,220,230,.7);text-align:center}
+@media (max-width:420px){.slot{padding:12px 10px}.slot-bet{grid-template-columns:40px 1fr 40px}.btn.spin{grid-column:1/-1;padding:14px}#payList{grid-template-columns:1fr}}
 .icon-btn svg{width:22px;height:22px}
 #menuBtn .short{display:none}
 
@@ -384,6 +418,7 @@ legend{padding:0;margin-bottom:8px}
       <small>Steeldart · Double Out</small>
     </div>
     <div class="actions">
+      <button class="btn ghost icon-btn" id="arcadeBtn" type="button" aria-label="Spielhalle" data-i18n-aria="arc.btn" data-i18n-title="arc.btn" title="Spielhalle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg></button>
       <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
       <button class="btn ghost" id="menuBtn" type="button"><span class="long" data-i18n="menu.long">Neues Spiel</span><span class="short" data-i18n="menu.short">Menü</span></button>
     </div>
@@ -510,6 +545,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span data-i18n="starter.opp">Gegner</span></label>
       </div>
     </fieldset>
+    <button type="button" class="arc-card" id="arcadeCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg><span><b data-i18n="arc.btn">Spielhalle</b><small id="arcadeCardCash"></small></span><i aria-hidden="true">›</i></button>
     <details class="howto">
       <summary data-i18n="howto">So wird gespielt</summary>
       <p class="rules" data-i18n-html="rules.aim"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
@@ -519,6 +555,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.darts"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.</p>
       <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
       <p class="rules" data-i18n-html="rules.cpu"></p>
+      <p class="rules" data-i18n-html="rules.arcade"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -537,6 +574,34 @@ legend{padding:0;margin-bottom:8px}
       <button type="button" class="btn ghost" id="toMenu" data-i18n="btn.settings">Einstellungen</button>
       <button type="button" class="btn" id="rematch" data-i18n="btn.rematch">Revanche</button>
     </div>
+  </div>
+</div>
+
+<div class="overlay" id="arcade" role="dialog" aria-modal="true" aria-labelledby="arcTitle" hidden>
+  <div class="slot">
+    <div class="slot-top">
+      <h2 id="arcTitle" data-i18n="arc.title">Heinz’ Früchteparade</h2>
+      <small data-i18n="arc.sub">5 Walzen · 10 Linien · 95 % Auszahlung</small>
+    </div>
+    <div class="slot-window"><canvas id="slotCv" aria-label="Walzen" role="img"></canvas></div>
+    <div class="slot-msg" id="slotMsg" aria-live="polite"></div>
+    <div class="slot-meters">
+      <div><small data-i18n="arc.credit">Guthaben</small><b id="slotCredit">0,00 €</b></div>
+      <div><small data-i18n="arc.win">Gewinn</small><b id="slotWin">0,00 €</b></div>
+    </div>
+    <div class="slot-bet">
+      <button type="button" class="btn ghost icon-btn" id="betDown" aria-label="Einsatz senken" data-i18n-aria="arc.less">−</button>
+      <div class="bet-val"><small data-i18n="arc.bet">Einsatz</small><b id="slotBet">0,10 €</b><small id="slotLine"></small></div>
+      <button type="button" class="btn ghost icon-btn" id="betUp" aria-label="Einsatz erhöhen" data-i18n-aria="arc.more">+</button>
+      <button type="button" class="btn spin" id="spinBtn" data-i18n="arc.spin">Drehen</button>
+    </div>
+    <details class="paytable">
+      <summary data-i18n="arc.pay">Gewinnplan</summary>
+      <p class="rules" data-i18n="arc.payx">Gewinne zählen auf 10 Linien von links nach rechts, als Vielfaches des Linieneinsatzes. Kirschen zahlen schon ab zwei.</p>
+      <div id="payList"></div>
+    </details>
+    <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.</p>
+    <div class="row"><button type="button" class="btn ghost" id="arcClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
   </div>
 </div>
 
@@ -685,6 +750,17 @@ const I18N = {
     'v.gameon': 'Los geht’s!', 'v.req': 'Du brauchst {n}.', 'v.reqopp': '{name} braucht {n}.', 'v.noscore': 'Keine Punkte.', 'v.bust': 'Überworfen.',
     'v.180': 'Einhundert… achtzig!', 'v.win.leg': 'Und das Leg geht an dich!', 'v.win.match': 'Und das Match! Glückwunsch!',
     'v.winopp.leg': 'Das Leg geht an {name}.', 'v.winopp.match': 'Das Match geht an {name}.',
+    'arc.btn': 'Spielhalle', 'arc.title': 'Heinz’ Früchteparade', 'arc.sub': '5 Walzen · 10 Linien · 95 % Auszahlung',
+    'arc.credit': 'Guthaben', 'arc.win': 'Gewinn', 'arc.bet': 'Einsatz', 'arc.perline': '{v} pro Linie', 'arc.spin': 'Drehen',
+    'arc.less': 'Einsatz senken', 'arc.more': 'Einsatz erhöhen', 'arc.pay': 'Gewinnplan', 'arc.back': 'Zurück in die Kneipe',
+    'arc.payx': 'Gewinne zählen auf 10 Linien von links nach rechts, als Vielfaches des Linieneinsatzes. Kirschen zahlen schon ab zwei.',
+    'arc.note': 'Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.',
+    'arc.nocash': 'Zu wenig Guthaben. Gewinn ein Match in der Kneipe – das bringt 100 €.', 'arc.hello': 'Einsatz wählen und drehen. Viel Glück!',
+    'arc.lose': ['Leider nichts. Nächste Runde?', 'Knapp daneben ist auch vorbei.', 'Die Walzen sind heute launisch.'],
+    'arc.won': 'Gewinn {v}!', 'arc.line': 'Linie {n}: {k}× {s}', 'arc.jackpot': 'HAUPTGEWINN! Fünf Siebener – {v}!', 'arc.card': 'Guthaben {v}',
+    'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle',
+    'sym.cherry': 'Kirsche', 'sym.lemon': 'Zitrone', 'sym.orange': 'Orange', 'sym.plum': 'Pflaume', 'sym.grape': 'Traube', 'sym.melon': 'Melone', 'sym.bell': 'Glocke', 'sym.seven': 'Sieben',
+    'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu 100 € für jedes gewonnene Match.',
     'w.greet': ['Moin! Wirf ’ne Runde mit.', 'Die Scheibe ist frisch gebürstet. Blamier sie nicht.', 'Schuhe abputzen, Pfeile schärfen, rein da!'],
     'w.start': ['Oche frei! Und bitte nicht die Lampe treffen.', 'Gegen {name}? Ich hol schon mal den Verbandskasten.', 'Erst werfen, dann trinken. Andersrum hatten wir schon – wurde teuer.', 'Wer verliert, zahlt die Runde. Steht so im Grundgesetz.'],
     'w.bust': ['Überworfen! Mathe war wohl nicht dein Leistungskurs.', 'Zu viel des Guten – wie meine zweite Portion Schnitzel.', 'Erst rechnen, dann werfen! Soll ich dir ’nen Bierdeckel geben?', 'Überworfen. Die Scheibe lacht dich aus. Ich auch.'],
@@ -765,6 +841,17 @@ const I18N = {
     'v.gameon': 'Game on!', 'v.req': 'You require {n}.', 'v.reqopp': '{name}, you require {n}.', 'v.noscore': 'No score.', 'v.bust': 'Bust!',
     'v.180': 'One hundred and… eighty!', 'v.win.leg': 'Game shot, and the leg!', 'v.win.match': 'Game shot, and the match!',
     'v.winopp.leg': 'Game shot, and the leg to {name}!', 'v.winopp.match': 'Game shot, and the match to {name}!',
+    'arc.btn': 'Arcade', 'arc.title': 'Heinz’s Fruit Parade', 'arc.sub': '5 reels · 10 lines · 95% payout',
+    'arc.credit': 'Credit', 'arc.win': 'Win', 'arc.bet': 'Bet', 'arc.perline': '{v} per line', 'arc.spin': 'Spin',
+    'arc.less': 'Lower bet', 'arc.more': 'Raise bet', 'arc.pay': 'Paytable', 'arc.back': 'Back to the pub',
+    'arc.payx': 'Wins count on 10 lines from left to right, as multiples of the line bet. Cherries already pay from two.',
+    'arc.note': 'Play money with no real value – nothing is paid out. Every match you win in the pub earns €100.',
+    'arc.nocash': 'Not enough credit. Win a match in the pub – that’s €100.', 'arc.hello': 'Pick your bet and spin. Good luck!',
+    'arc.lose': ['Nothing this time. Another spin?', 'So close, and yet…', 'The reels are moody tonight.'],
+    'arc.won': 'You win {v}!', 'arc.line': 'Line {n}: {k}× {s}', 'arc.jackpot': 'JACKPOT! Five sevens – {v}!', 'arc.card': 'Credit {v}',
+    'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade',
+    'sym.cherry': 'cherry', 'sym.lemon': 'lemon', 'sym.orange': 'orange', 'sym.plum': 'plum', 'sym.grape': 'grapes', 'sym.melon': 'melon', 'sym.bell': 'bell', 'sym.seven': 'seven',
+    'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). It runs on play money: €20 to start, plus €100 for every match you win.',
     'w.greet': ['Evening! Fancy a game?', 'Board’s freshly brushed. Don’t embarrass it.', 'Wipe your feet, sharpen your darts, off you go!'],
     'w.start': ['Oche’s all yours. Please mind the lamp.', 'Against {name}? I’ll fetch the first-aid kit.', 'Throw first, drink later. The other way round got expensive.', 'Loser buys the round. It’s in the constitution.'],
     'w.bust': ['Bust! Maths wasn’t your strong subject, was it?', 'Too much of a good thing – like my second schnitzel.', 'Count first, then throw! Want a beer mat to do the sums?', 'Bust. The board’s laughing at you. So am I.'],
@@ -1021,6 +1108,20 @@ const sfx = (() => {
     setStyle(k) { style = k; },
     get muted() { return muted; },
     setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : .8; },
+    // Spielhalle: Walzen-Ticken, Walzenstopp, Münzregen, Hauptgewinn
+    tick() { if (!ok()) return; const t = ac.currentTime; nz(t, .018, 'highpass', 3500, .8, .05); },
+    reelStop() {
+      if (!ok()) return; const t = ac.currentTime;
+      nz(t, .05, 'bandpass', 1700, 2, .22); tone(t, .09, 'square', 210, 120, .05);
+    },
+    coins(n) {
+      if (!ok()) return; const t = ac.currentTime;
+      for (let i = 0; i < n; i++) { const at = t + i * .075, f = 1300 + (i % 4) * 260; tone(at, .12, 'square', f, f * 1.01, .035); tone(at + .02, .1, 'sine', f * 2, f * 2, .02); }
+    },
+    jackpot() {
+      if (!ok()) return; const t = ac.currentTime;
+      [523, 659, 784, 1047, 784, 1047, 1319].forEach((f, i) => tone(t + i * .13, .22, 'square', f, f, .06));
+    },
     whoosh() {
       if (!ok()) return; const t = ac.currentTime;
       const f = nz(t, .17, 'bandpass', 500, 2.2, .16, .07);
@@ -3000,7 +3101,7 @@ function cpuBoostTag(g) {
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1) return;
-  if (!menu.hidden) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  if (!menu.hidden || arcade.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const kind = cpuBoostKind(g, !!f && f.seq.length === 1);
   const sigma = g.opp.sigma * cpuMult(kind);
@@ -3095,7 +3196,11 @@ function win(g, p, h) {
   g.hist[p].push({ score: sum, rest: 0, bust: false });
   g.legs[p]++;
   const matchWon = g.legs[p] >= g.legsToWin;
-  if (matchWon && p === 0) { bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi') unlock('pro'); }
+  if (matchWon && p === 0) {
+    bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi') unlock('pro');
+    arcade.addCash(10000);
+    setTimeout(() => toast(t('toast.cash'), t('toast.cashx', { v: arcade.fmt(10000) })), 3400);
+  }
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
   if (p === 1) { V.focus('aim'); V.opponentTo('aside'); }
@@ -3305,6 +3410,251 @@ function toast(title, text) {
   el.hidden = false; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
   clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 4500);
 }
+/* ---------- Spielhalle: Heinz’ Früchteparade (5 Walzen, 10 Linien, 95 % Auszahlung) ---------- */
+const arcade = (() => {
+  const SYM = ['cherry', 'lemon', 'orange', 'plum', 'grape', 'melon', 'bell', 'seven'];
+  // Je Walze 32 Felder. Mit diesen Streifen und dem Gewinnplan liegt die Auszahlung rechnerisch bei 95,2 %,
+  // fünf Siebener fallen etwa einmal in 100.000 Drehs.
+  const COUNT = { cherry: 8, lemon: 6, orange: 5, plum: 4, grape: 3, melon: 2, bell: 2, seven: 2 };
+  const PAY = {   // Vielfaches des Linieneinsatzes für 2, 3, 4, 5 gleiche Symbole von links
+    cherry: [0, 0, 2, 12, 30, 100], lemon: [0, 0, 0, 20, 50, 150], orange: [0, 0, 0, 20, 60, 200], plum: [0, 0, 0, 32, 90, 300],
+    grape: [0, 0, 0, 50, 150, 400], melon: [0, 0, 0, 80, 250, 600], bell: [0, 0, 0, 100, 300, 800], seven: [0, 0, 0, 150, 500, 1000]
+  };
+  const LINES = [[1, 1, 1, 1, 1], [0, 0, 0, 0, 0], [2, 2, 2, 2, 2], [0, 1, 2, 1, 0], [2, 1, 0, 1, 2], [0, 0, 1, 2, 2], [2, 2, 1, 0, 0], [1, 0, 0, 0, 1], [1, 2, 2, 2, 1], [1, 2, 1, 0, 1]];
+  const LINE_COL = ['#ff3b5c', '#ffb000', '#2ec4ff', '#7dff6a', '#ff6bff', '#ff7a00', '#00e0b8', '#b388ff', '#ffe600', '#ff4f8b'];
+  const BETS = [1, 2, 5, 10, 20, 50, 100, 200, 500];   // Cent pro Linie → 10 Cent bis 50 € je Dreh
+  const L = 32, START_CASH = 2000;
+  const base = []; for (const k of SYM) for (let i = 0; i < COUNT[k]; i++) base.push(k);
+  // Feste, gut gemischte Streifen je Walze
+  const strips = [11, 23, 37, 51, 73].map(seed => {
+    const a = base.slice(); let x = seed;
+    for (let i = a.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) & 0x7fffffff; const j = x % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  });
+  const mod = n => ((n % L) + L) % L;
+
+  const el = $('#arcade'), cv = $('#slotCv'), g = cv.getContext('2d');
+  let cash = START_CASH, betIdx = 0, spinning = false, raf = 0, W = 0, H = 0, cw = 0, ch = 0, imgs = {}, wins = [], showWin = 0, lastTick = 0;
+  try { const c = localStorage.getItem('dk-cash'); if (c !== null && isFinite(+c)) cash = Math.max(0, Math.round(+c)); else localStorage.setItem('dk-cash', String(START_CASH)); } catch (e) {}
+  try { const b = +localStorage.getItem('dk-bet'); if (b >= 0 && b < BETS.length) betIdx = b; } catch (e) {}
+  const pos = strips.map((_, i) => (i * 7) % L), reels = pos.map(p => ({ p, from: p, to: p, t0: 0, dur: 0, done: true }));
+  const save = () => { try { localStorage.setItem('dk-cash', String(cash)); localStorage.setItem('dk-bet', String(betIdx)); } catch (e) {} };
+  const fmt = c => new Intl.NumberFormat(lang === 'de' ? 'de-DE' : 'en-IE', { style: 'currency', currency: 'EUR' }).format(c / 100);
+
+  /* Symbole einmal pro Größe vorzeichnen */
+  function drawSym(k, s) {
+    const c = document.createElement('canvas'); c.width = c.height = s;
+    const x = c.getContext('2d'), TAU = Math.PI * 2;
+    x.translate(s / 2, s / 2); x.scale(s / 100, s / 100);
+    const shine = (cx, cy, r) => { const gr = x.createRadialGradient(cx - r * .35, cy - r * .4, r * .05, cx, cy, r); gr.addColorStop(0, 'rgba(255,255,255,.75)'); gr.addColorStop(.35, 'rgba(255,255,255,0)'); x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r, 0, TAU); x.fill(); };
+    const ball = (cx, cy, r, c1, c2) => { const gr = x.createRadialGradient(cx - r * .3, cy - r * .3, r * .1, cx, cy, r); gr.addColorStop(0, c1); gr.addColorStop(1, c2); x.fillStyle = gr; x.beginPath(); x.arc(cx, cy, r, 0, TAU); x.fill(); x.strokeStyle = 'rgba(0,0,0,.35)'; x.lineWidth = 2; x.stroke(); shine(cx, cy, r); };
+    const leaf = (cx, cy, rot, len = 22) => { x.save(); x.translate(cx, cy); x.rotate(rot); x.fillStyle = '#2f9e3a'; x.strokeStyle = '#1b5e22'; x.lineWidth = 2; x.beginPath(); x.moveTo(0, 0); x.quadraticCurveTo(len * .5, -len * .45, len, 0); x.quadraticCurveTo(len * .5, len * .45, 0, 0); x.fill(); x.stroke(); x.restore(); };
+    if (k === 'cherry') {
+      x.strokeStyle = '#3d7a1f'; x.lineWidth = 4; x.lineCap = 'round';
+      x.beginPath(); x.moveTo(-18, 12); x.quadraticCurveTo(-8, -20, 8, -34); x.moveTo(20, 16); x.quadraticCurveTo(14, -14, 8, -34); x.stroke();
+      leaf(8, -34, -.4, 26);
+      ball(-20, 22, 20, '#ff5a5a', '#9c0010'); ball(20, 26, 20, '#ff5a5a', '#9c0010');
+    } else if (k === 'lemon') {
+      x.save(); x.rotate(-.35);
+      const gr = x.createRadialGradient(-12, -12, 4, 0, 0, 44); gr.addColorStop(0, '#fff7a8'); gr.addColorStop(1, '#e0b400');
+      x.fillStyle = gr; x.strokeStyle = '#a07e00'; x.lineWidth = 2.5;
+      x.beginPath(); x.moveTo(-44, 0); x.quadraticCurveTo(-40, -34, 0, -32); x.quadraticCurveTo(40, -34, 44, 0); x.quadraticCurveTo(40, 34, 0, 32); x.quadraticCurveTo(-40, 34, -44, 0); x.fill(); x.stroke();
+      shine(-4, -6, 30); x.restore();
+    } else if (k === 'orange') {
+      ball(0, 6, 38, '#ffc46b', '#e06a00');
+      x.fillStyle = 'rgba(160,70,0,.35)'; for (let i = 0; i < 26; i++) { const a = i * 2.4, r = 8 + (i * 13) % 26; x.beginPath(); x.arc(Math.cos(a) * r, 6 + Math.sin(a) * r, 1.3, 0, TAU); x.fill(); }
+      leaf(2, -30, -.5, 24); x.fillStyle = '#5b3a12'; x.fillRect(-2, -36, 4, 8);
+    } else if (k === 'plum') {
+      x.save(); x.rotate(.2);
+      const gr = x.createRadialGradient(-12, -8, 4, 0, 4, 42); gr.addColorStop(0, '#c77dff'); gr.addColorStop(1, '#4a0d73');
+      x.fillStyle = gr; x.beginPath(); x.ellipse(0, 6, 34, 40, 0, 0, TAU); x.fill(); x.strokeStyle = 'rgba(0,0,0,.35)'; x.lineWidth = 2; x.stroke();
+      x.strokeStyle = 'rgba(40,0,60,.5)'; x.lineWidth = 2; x.beginPath(); x.moveTo(-4, -32); x.quadraticCurveTo(-14, 6, -2, 44); x.stroke();
+      shine(-6, 0, 30); x.restore();
+      x.strokeStyle = '#5b3a12'; x.lineWidth = 4; x.beginPath(); x.moveTo(0, -32); x.lineTo(6, -44); x.stroke(); leaf(6, -42, -.3, 20);
+    } else if (k === 'grape') {
+      const pts = [[-18, -14], [0, -16], [18, -14], [-9, 2], [9, 2], [-18, 16], [0, 18], [18, 16], [-9, 32], [9, 32], [0, 44]];
+      for (const [px, py] of pts) ball(px, py, 12, '#b692ff', '#4b1f8f');
+      x.strokeStyle = '#5b3a12'; x.lineWidth = 4; x.beginPath(); x.moveTo(0, -26); x.lineTo(2, -40); x.stroke(); leaf(2, -34, -.6, 26);
+    } else if (k === 'melon') {
+      x.save(); x.translate(0, -8);
+      x.fillStyle = '#1f7a2a'; x.beginPath(); x.arc(0, 0, 46, 0, Math.PI); x.fill();
+      x.fillStyle = '#b8f0a0'; x.beginPath(); x.arc(0, 0, 40, 0, Math.PI); x.fill();
+      const gr = x.createLinearGradient(0, 0, 0, 36); gr.addColorStop(0, '#ff7a7a'); gr.addColorStop(1, '#e8233a');
+      x.fillStyle = gr; x.beginPath(); x.arc(0, 0, 35, 0, Math.PI); x.fill();
+      x.fillStyle = '#1a1a1a'; for (const [sx, sy] of [[-18, 10], [-6, 18], [8, 12], [20, 8], [0, 26], [-14, 24], [14, 24]]) { x.beginPath(); x.ellipse(sx, sy, 2.4, 4, .3, 0, TAU); x.fill(); }
+      x.strokeStyle = 'rgba(0,0,0,.35)'; x.lineWidth = 2; x.beginPath(); x.arc(0, 0, 46, 0, Math.PI); x.closePath(); x.stroke();
+      x.restore();
+    } else if (k === 'bell') {
+      const gr = x.createLinearGradient(-40, 0, 40, 0); gr.addColorStop(0, '#9a6a00'); gr.addColorStop(.35, '#ffe27a'); gr.addColorStop(1, '#b07c00');
+      x.fillStyle = gr; x.strokeStyle = '#6b4a00'; x.lineWidth = 2.5;
+      x.beginPath(); x.moveTo(-36, 28); x.quadraticCurveTo(-30, 18, -28, -6); x.quadraticCurveTo(-26, -38, 0, -38); x.quadraticCurveTo(26, -38, 28, -6); x.quadraticCurveTo(30, 18, 36, 28); x.closePath(); x.fill(); x.stroke();
+      x.fillStyle = '#c99400'; x.fillRect(-40, 26, 80, 8); x.strokeRect(-40, 26, 80, 8);
+      x.fillStyle = '#7a5200'; x.beginPath(); x.arc(0, 40, 7, 0, TAU); x.fill();
+      x.fillStyle = '#ffe27a'; x.beginPath(); x.arc(0, -42, 5, 0, TAU); x.fill();
+    } else if (k === 'seven') {
+      x.font = "italic 900 96px 'Barlow Condensed', 'Arial Black', Impact, sans-serif"; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.lineJoin = 'round'; x.lineWidth = 12; x.strokeStyle = '#7a4a00'; x.strokeText('7', 2, 6);
+      x.lineWidth = 7; x.strokeStyle = '#ffd24a'; x.strokeText('7', 2, 6);
+      const gr = x.createLinearGradient(0, -40, 0, 44); gr.addColorStop(0, '#ff6b6b'); gr.addColorStop(.5, '#e0001b'); gr.addColorStop(1, '#8a0010');
+      x.fillStyle = gr; x.fillText('7', 2, 6);
+    }
+    return c;
+  }
+  function resize() {
+    const r = cv.getBoundingClientRect(); if (!r.width) return;
+    const d = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.width = Math.round(r.width * d); H = cv.height = Math.round(r.width * .6 * d);
+    cw = W / 5; ch = H / 3;
+    const s = Math.round(Math.min(cw, ch) * .82);
+    for (const k of SYM) imgs[k] = drawSym(k, s);
+    draw(performance.now());
+  }
+
+  function draw(now) {
+    if (!W) return;
+    g.clearRect(0, 0, W, H);
+    for (let r = 0; r < 5; r++) {
+      const x0 = r * cw, pr = reels[r].p, base = Math.floor(pr), fr = pr - base;
+      g.save(); g.beginPath(); g.rect(x0, 0, cw, H); g.clip();
+      g.fillStyle = '#f7f0dc'; g.fillRect(x0, 0, cw, H);
+      const fast = !reels[r].done;
+      for (let k = -1; k <= 3; k++) {
+        const sym = strips[r][mod(base + k)], img = imgs[sym], y = (k - fr) * ch;
+        if (!img) continue;
+        const iw = img.width, ih = fast ? img.height * 1.25 : img.height;
+        g.globalAlpha = fast ? .8 : 1;
+        g.drawImage(img, x0 + (cw - iw) / 2, y + (ch - ih) / 2, iw, ih);
+      }
+      g.globalAlpha = 1;
+      // Walzenwölbung: oben und unten dunkler
+      const sh = g.createLinearGradient(0, 0, 0, H);
+      sh.addColorStop(0, 'rgba(0,0,0,.45)'); sh.addColorStop(.18, 'rgba(0,0,0,0)'); sh.addColorStop(.82, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,.45)');
+      g.fillStyle = sh; g.fillRect(x0, 0, cw, H);
+      g.restore();
+      if (r) { g.fillStyle = '#6b6b6b'; g.fillRect(x0 - 1, 0, 2, H); }
+    }
+    // Gewinnlinien nacheinander zeigen
+    if (wins.length && !spinning) {
+      const w = wins[Math.floor(Math.max(0, now - showWin) / 1300) % wins.length], ln = LINES[w.line];
+      g.lineWidth = Math.max(3, W / 180); g.lineJoin = 'round'; g.strokeStyle = LINE_COL[w.line];
+      g.shadowColor = LINE_COL[w.line]; g.shadowBlur = 10;
+      g.beginPath(); ln.forEach((row, r) => { const px = r * cw + cw / 2, py = row * ch + ch / 2; r ? g.lineTo(px, py) : g.moveTo(px, py); }); g.stroke();
+      for (let r = 0; r < w.k; r++) { const pad = W / 120; g.strokeRect(r * cw + pad, ln[r] * ch + pad, cw - pad * 2, ch - pad * 2); }
+      g.shadowBlur = 0;
+    }
+  }
+
+  function loop(now) {
+    raf = 0;
+    if (el.hidden) return;
+    let moving = false;
+    reels.forEach((rl, r) => {
+      if (rl.done) return;
+      const k = Math.min(1, (now - rl.t0) / rl.dur);
+      // schnell anlaufen, weich abbremsen, kurz nachfedern
+      const e = 1 - Math.pow(1 - k, 3), over = k > .92 ? Math.sin((k - .92) / .08 * Math.PI) * .08 : 0;
+      const before = Math.floor(rl.p);
+      rl.p = rl.from + (rl.to - rl.from) * e - over;
+      if (Math.floor(rl.p) !== before && now - lastTick > 45) { lastTick = now; sfx.tick(); }
+      if (k >= 1) { rl.done = true; rl.p = rl.to; sfx.reelStop(); }
+      else moving = true;
+    });
+    draw(now);
+    if (spinning && !moving) finish();
+    if (moving || wins.length) raf = requestAnimationFrame(loop);
+  }
+  const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+
+  function paint() {
+    $('#slotCredit').textContent = fmt(cash);
+    $('#slotBet').textContent = fmt(BETS[betIdx] * LINES.length);
+    $('#slotLine').textContent = t('arc.perline', { v: fmt(BETS[betIdx]) });
+    $('#betDown').disabled = spinning || betIdx === 0;
+    $('#betUp').disabled = spinning || betIdx === BETS.length - 1;
+    $('#spinBtn').disabled = spinning;
+    $('#arcadeCardCash').textContent = t('arc.card', { v: fmt(cash) });
+  }
+  function msg(text, big = false) { const m = $('#slotMsg'); m.textContent = text; m.classList.toggle('big', big); }
+
+  function spin() {
+    if (spinning) return;
+    sfx.init();
+    const bet = BETS[betIdx] * LINES.length;
+    if (cash < bet) { msg(t('arc.nocash')); sfx.bust(); return; }
+    cash -= bet; save();
+    spinning = true; wins = []; $('#slotWin').textContent = fmt(0); msg(t('arc.hello'));
+    const now = performance.now();
+    reels.forEach((rl, r) => {
+      const stop = Math.floor(Math.random() * L), from = Math.round(rl.p);
+      // Walzen laufen nach unten: Index sinkt bis zum Zielfeld, mehrere volle Umdrehungen
+      rl.from = from; rl.to = from - (L * (2 + r) + mod(from - stop)); rl.t0 = now; rl.dur = 900 + r * 320; rl.done = false;
+    });
+    paint(); kick();
+  }
+
+  function finish() {
+    spinning = false;
+    reels.forEach(rl => { rl.p = mod(Math.round(rl.p)); });
+    const grid = reels.map((rl, r) => [0, 1, 2].map(k => strips[r][mod(rl.p + k)]));
+    const lineBet = BETS[betIdx];
+    let total = 0, jackpot = false;
+    LINES.forEach((ln, i) => {
+      const s0 = grid[0][ln[0]]; let k = 1;
+      while (k < 5 && grid[k][ln[k]] === s0) k++;
+      const pay = PAY[s0][k] * lineBet;
+      if (pay) { wins.push({ line: i, k, sym: s0, pay }); total += pay; if (s0 === 'seven' && k === 5) jackpot = true; }
+    });
+    cash += total; save();
+    $('#slotWin').textContent = fmt(total);
+    showWin = performance.now();
+    if (jackpot) { msg(t('arc.jackpot', { v: fmt(total) }), true); sfx.jackpot(); sfx.cheer(2.6); sfx.claps(4); }
+    else if (total) {
+      const best = wins.slice().sort((a, b) => b.pay - a.pay)[0];
+      const big = total >= lineBet * LINES.length * 10;
+      msg(t('arc.won', { v: fmt(total) }) + ' · ' + t('arc.line', { n: best.line + 1, k: best.k, s: t('sym.' + best.sym) }), big);
+      sfx.coins(Math.min(14, 3 + Math.round(Math.log2(1 + total / (lineBet * LINES.length)) * 3)));
+      if (big) sfx.cheer(1.2);
+    } else msg(t('arc.lose'));
+    paint(); kick();
+  }
+
+  function renderPays() {
+    $('#payList').innerHTML = SYM.slice().reverse().map(k => {
+      const c = drawSym(k, 68).toDataURL(), p = PAY[k];
+      const parts = [2, 3, 4, 5].filter(n => p[n]).map(n => `${n}× <b>${p[n]}</b>`).join(' · ');
+      return `<div class="pay-row"><img src="${c}" alt="${t('sym.' + k)}"><span>${parts}</span></div>`;
+    }).join('');
+  }
+
+  function open() {
+    sfx.init();
+    el.hidden = false; sfx.setStyle('automat');
+    if (!$('#payList').children.length) renderPays();
+    paint(); msg(cash < BETS[0] * LINES.length ? t('arc.nocash') : t('arc.hello'));
+    requestAnimationFrame(() => { resize(); kick(); $('#spinBtn').focus({ preventScroll: true }); });
+  }
+  function close() { if (spinning) return; el.hidden = true; wins = []; sfx.setStyle(boardKey); }
+
+  $('#spinBtn').addEventListener('click', spin);
+  $('#betDown').addEventListener('click', () => { if (!spinning && betIdx > 0) { betIdx--; save(); paint(); sfx.tick(); } });
+  $('#betUp').addEventListener('click', () => { if (!spinning && betIdx < BETS.length - 1) { betIdx++; save(); paint(); sfx.tick(); } });
+  $('#arcClose').addEventListener('click', close);
+  $('#arcadeBtn').addEventListener('click', open);
+  $('#arcadeCard').addEventListener('click', open);
+  document.addEventListener('keydown', e => {
+    if (el.hidden) return;
+    if (e.key === 'Escape') { e.stopImmediatePropagation(); close(); }
+    else if ((e.key === ' ' || e.code === 'Space') && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLElement && e.target.closest('summary'))) { e.preventDefault(); spin(); }
+  }, true);
+  new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv);
+  paint();
+  return {
+    get open() { return !el.hidden; },
+    addCash(c) { cash += c; save(); paint(); },
+    fmt, paint, relang() { if ($('#payList').children.length) renderPays(); paint(); }
+  };
+})();
+
 // Pfeil-Symbol für das Menü
 function dartIcon(k) {
   const L = DART_LOOK[k], c = document.createElement('canvas'); c.width = 180; c.height = 52;
@@ -3390,7 +3740,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
