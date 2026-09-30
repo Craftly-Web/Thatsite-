@@ -189,8 +189,8 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .chip.board-chip span{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:10px;align-items:center;height:100%}
 .board-chip img,.board-chip .ph{grid-row:span 2;width:40px;height:40px;border-radius:50%;display:block;background:#111}
 .board-chip img.automat{border-radius:6px}
-.chip.board-chip.dart-chip span{grid-template-columns:62px minmax(0,1fr)}
-.board-chip img.dart{width:62px;height:19px;border-radius:0;background:none}
+.chip.board-chip.dart-chip span{grid-template-columns:68px minmax(0,1fr)}
+.board-chip img.dart{width:68px;height:20px;border-radius:0;background:none}
 .board-chip b{font-weight:400;min-width:0}
 .board-chip small{min-width:0}
 .board-chip small svg{width:10px;height:10px;vertical-align:-1px;margin-right:3px}
@@ -763,10 +763,43 @@ function t(key, vars = {}) {
 /* ---------- Sound (Web Audio, alles synthetisch) ---------- */
 const sfx = (() => {
   let ac = null, master = null, noise = null, muted = false, amb = null;
+  // Handy: iOS schaltet Web Audio mit dem Stumm-Schalter ab. Als Medien-Wiedergabe markieren
+  // und ein stilles <audio> mitlaufen lassen, dann klingt es wie ein Video.
+  let media = null;
+  function silentWav() {
+    const n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer);
+    const str = (o, x) => { for (let i = 0; i < x.length; i++) b[o + i] = x.charCodeAt(i); };
+    str(0, 'RIFF'); v.setUint32(4, 36 + n, true); str(8, 'WAVEfmt ');
+    v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true);
+    str(36, 'data'); v.setUint32(40, n, true); b.fill(128, 44);
+    let bin = ''; for (let i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return 'data:audio/wav;base64,' + btoa(bin);
+  }
+  function unlockMedia() {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    try {
+      if (!media) {
+        media = document.createElement('audio');
+        media.setAttribute('x-webkit-airplay', 'deny'); media.setAttribute('playsinline', '');
+        media.preload = 'auto'; media.loop = true; media.src = silentWav();
+        document.addEventListener('visibilitychange', () => {
+          try { if (document.hidden) media.pause(); else wake(); } catch (e) {}
+        });
+      }
+      if (media.paused && !document.hidden) { const pr = media.play(); if (pr && pr.catch) pr.catch(() => {}); }
+    } catch (e) {}
+  }
+  function wake() {
+    if (!ac || ac.state === 'running' || ac.state === 'closed') return;
+    try { const pr = ac.resume(); if (pr && pr.catch) pr.catch(() => {}); } catch (e) {}
+  }
   function init() {
-    if (ac) { if (ac.state === 'suspended') ac.resume(); return; }
+    unlockMedia();
+    if (ac) { wake(); return; }
     try {
       ac = new (window.AudioContext || window.webkitAudioContext)();
+      wake();
       master = ac.createGain(); master.gain.value = muted ? 0 : .8; master.connect(ac.destination);
       const len = ac.sampleRate * 2;
       noise = ac.createBuffer(1, len, ac.sampleRate);
@@ -917,6 +950,7 @@ const sfx = (() => {
   }
   return {
     init,
+    get state() { return ac ? ac.state : 'none'; },
     get muted() { return muted; },
     setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : .8; },
     whoosh() {
@@ -1569,9 +1603,17 @@ const voice = (() => {
     try { pickVoice(); } catch (e) {}
     if ('onvoiceschanged' in synth) synth.onvoiceschanged = () => { try { pickVoice(); } catch (e) {} };
   }
+  // iOS spricht erst, nachdem einmal innerhalb einer Berührung gesprochen wurde
+  let unlocked = false;
+  function unlock() {
+    if (unlocked || !synth) return;
+    unlocked = true;
+    try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; synth.speak(u); } catch (e) {}
+  }
   function say(text, opts = {}) {
     if (!synth || sfx.muted) return;
     try {
+      if (synth.paused) synth.resume();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = v ? v.lang : 'en-GB'; if (v) u.voice = v;
       u.pitch = opts.pitch ?? 1; u.rate = opts.rate ?? .95; u.volume = 1;
@@ -1581,8 +1623,13 @@ const voice = (() => {
     } catch (e) {}
   }
   function stop() { try { if (synth) synth.cancel(); } catch (e) {} wirt.talking(false); }
-  return { say, stop };
+  return { say, stop, unlock };
 })();
+
+// Erste Berührung schaltet Ton und Stimme frei (Handys erlauben das nur bei einer Geste)
+['touchend', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, () => {
+  sfx.init(); voice.unlock();
+}, { capture: true, passive: true }));
 
 // Zahlen so, wie ein britischer Caller sie ruft: "one hundred and forty"
 function words(n) {
@@ -1639,6 +1686,47 @@ const DART_INFO = {
   blitz:  { name: 'Blitzpfeil', skill: 'Schnellwurf', desc: 'Schnell werfen = perfekt', req: 'Triple 20', need: 5, stat: 't20', flight: '#f2c230', edge: '#6b5200', stripe: '#141414', barrel: '#4d5158' },
   alt:    { name: 'Stammtischpfeil', skill: 'Alt eingesessen', desc: 'Dauerhaft ruhige Hand', req: 'Matchsiege', need: 3, stat: 'wins', flight: '#1f6b45', edge: '#0c3320', stripe: '#e2b457', barrel: '#b8893a' }
 };
+// Aussehen der Pfeile: Barrel, farbige Ringe, Schaft und Flight-Aufdruck; 'cpu' ist der Gegner
+const DART_LOOK = {
+  kneipe: { barrel: '#8d929a', groove: '#3b3e44', accent: '#c9302c', shaft: '#161616', cap: '#c9302c', flight: '#c9302c', border: '#f4efe4', motif: 'dk' },
+  blitz:  { barrel: '#2b2d33', groove: '#0c0d10', accent: '#f2c230', shaft: '#f2c230', cap: '#141414', flight: '#161616', border: '#f2c230', motif: 'bolt' },
+  alt:    { barrel: '#c99a45', groove: '#5a3d12', accent: '#1f6b45', shaft: '#1f6b45', cap: '#e2b457', flight: '#1f6b45', border: '#e2b457', motif: 'oak' },
+  cpu:    { barrel: '#8d929a', groove: '#3b3e44', accent: '#2d63b8', shaft: '#122c58', cap: '#f2c94c', flight: '#2d63b8', border: '#f4efe4', motif: 'stars' }
+};
+// Flight-Grafik: Drachenform (unten Schaftseite, oben Heck) mit Rand, Motiv und Glanz
+function drawFlightArt(g, key, w, h) {
+  const L = DART_LOOK[key], TAU2 = Math.PI * 2;
+  const kite = [[.5, 0], [.972, .263], [1, .789], [.5, 1], [0, .789], [.028, .263]].map(([u, v]) => [u * w, (1 - v) * h]);
+  g.save();
+  g.beginPath(); kite.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath();
+  g.fillStyle = L.flight; g.fill(); g.clip();
+  g.strokeStyle = L.border; g.lineWidth = w * .09; g.stroke();
+  g.fillStyle = L.border; g.strokeStyle = L.border;
+  const cx = w / 2, cy = h * .45;
+  if (L.motif === 'dk') {
+    g.font = `700 ${w * .34}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('DK', cx, cy);
+    g.lineWidth = w * .03; g.beginPath(); g.moveTo(w * .25, h * .72); g.lineTo(cx, h * .64); g.lineTo(w * .75, h * .72); g.stroke();
+  } else if (L.motif === 'bolt') {
+    g.beginPath();
+    [[.56, .12], [.3, .5], [.47, .5], [.38, .86], [.72, .42], [.54, .42], [.66, .12]].forEach(([u, v], i) => i ? g.lineTo(u * w, v * h) : g.moveTo(u * w, v * h));
+    g.closePath(); g.fill();
+  } else if (L.motif === 'oak') {
+    g.save(); g.translate(cx, cy); g.rotate(-.25);
+    for (let k = -2; k <= 2; k++) { g.beginPath(); g.ellipse(k * w * .045, -Math.abs(k) * h * .02, w * .07, h * .045, k * .35, 0, TAU2); g.fill(); }
+    g.lineWidth = w * .025; g.beginPath(); g.moveTo(0, -h * .02); g.lineTo(0, h * .2); g.stroke();
+    g.restore();
+    g.font = `700 ${w * .13}px 'Barlow Condensed', sans-serif`; g.textAlign = 'center'; g.fillText('1987', cx, h * .22);
+  } else if (L.motif === 'stars') {
+    const star = (x, y, r) => { g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; g.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } g.closePath(); g.fill(); };
+    star(cx, cy, w * .14); star(w * .3, h * .7, w * .08); star(w * .7, h * .7, w * .08);
+  }
+  const gl = g.createLinearGradient(0, 0, w, h);
+  gl.addColorStop(0, 'rgba(255,255,255,.28)'); gl.addColorStop(.45, 'rgba(255,255,255,0)'); gl.addColorStop(1, 'rgba(0,0,0,.18)');
+  g.fillStyle = gl; g.fillRect(0, 0, w, h);
+  g.restore();
+}
+
 let stats = { t20: 0, wins: 0 };
 try { Object.assign(stats, JSON.parse(localStorage.getItem('dk-stats') || '{}')); } catch (e) {}
 const dartUnlocked = k => !DART_INFO[k].req || (stats[DART_INFO[k].stat] || 0) >= DART_INFO[k].need;
@@ -2225,47 +2313,52 @@ function makeView3d() {
   }
   pendant(0, 2.5, true); pendant(-1.8, 3.4, false); pendant(1.5, 4.2, false);
 
-  /* Darts */
+  /* Darts: Stahlspitze, Barrel mit Griffrillen und farbigen Ringen, Alu-Schaft, bedruckte Flights */
+  const lathe = (pts, seg) => new T.LatheGeometry(pts.map(([r, z]) => new T.Vector2(r, z)), seg).rotateX(Math.PI / 2);
   const dartParts = {
-    tip: new T.CylinderGeometry(.0006, .0013, .03, 8).rotateX(Math.PI / 2).translate(0, 0, .015),
-    barrel: new T.CylinderGeometry(.0037, .0035, .046, 18).rotateX(Math.PI / 2).translate(0, 0, .053),
-    grip: new T.CylinderGeometry(.0039, .0039, .004, 18).rotateX(Math.PI / 2),
-    shaft: new T.CylinderGeometry(.0016, .0019, .036, 10).rotateX(Math.PI / 2).translate(0, 0, .094),
+    tip: lathe([[0, 0], [.0005, .002], [.001, .02], [.0012, .026], [.0019, .0275], [.0019, .03], [0, .03]], 12),
+    barrel: lathe([[0, .029], [.0024, .029], [.0033, .033], [.0038, .041], [.0039, .056], [.0036, .068], [.0027, .076], [.002, .078], [0, .078]], 28),
+    groove: new T.TorusGeometry(.00392, .00045, 6, 28),
+    ring: new T.CylinderGeometry(.00398, .00398, .0022, 28).rotateX(Math.PI / 2),
+    shaft: lathe([[0, .078], [.0019, .078], [.0017, .082], [.0016, .104], [.0021, .106], [.0021, .112], [0, .112]], 16),
+    cap: new T.TorusGeometry(.0021, .0005, 6, 16),
     flight: (() => {
-      const s = new T.Shape();
-      s.moveTo(0, 0); s.lineTo(.017, .01); s.lineTo(.018, .03); s.lineTo(0, .038); s.lineTo(-.018, .03); s.lineTo(-.017, .01); s.lineTo(0, 0);
-      return new T.ShapeGeometry(s).rotateX(Math.PI / 2).translate(0, 0, .106);
+      const sh = new T.Shape();
+      sh.moveTo(0, 0); sh.lineTo(.017, .01); sh.lineTo(.018, .03); sh.lineTo(0, .038); sh.lineTo(-.018, .03); sh.lineTo(-.017, .01); sh.lineTo(0, 0);
+      const fg = new T.ShapeGeometry(sh), uv = fg.attributes.uv, pos = fg.attributes.position;
+      for (let k = 0; k < uv.count; k++) uv.setXY(k, (pos.getX(k) + .018) / .036, pos.getY(k) / .038);
+      return fg.rotateX(Math.PI / 2).translate(0, 0, .104);
     })()
   };
-  const dartMats = {
-    steel: std({ color: '#d0d3d8', metalness: .95, roughness: .25 }),
-    tungsten: std({ color: '#7d828a', metalness: .9, roughness: .32 }),
-    knurl: std({ color: '#3f4349', metalness: .8, roughness: .5 }),
-    shaft: std({ color: '#111', roughness: .4 }),
-    cpuFlight: std({ color: '#2d63b8', roughness: .55, side: T.DoubleSide }),
-    sets: {}
-  };
-  // Materialien je Pfeil-Set: Flight-Farbe und Barrel (Messing beim Stammtischpfeil)
-  function setMats(key) {
-    if (!dartMats.sets[key]) {
-      const d = DART_INFO[key];
-      dartMats.sets[key] = {
-        flight: std({ color: d.flight, roughness: .55, side: T.DoubleSide }),
-        barrel: std({ color: d.barrel, metalness: .9, roughness: key === 'alt' ? .28 : .32 })
-      };
-    }
-    return dartMats.sets[key];
+  const steelMat = std({ color: '#d7dade', metalness: .95, roughness: .22 });
+  const lookMats = {};
+  function mats(key) {
+    if (lookMats[key]) return lookMats[key];
+    const L = DART_LOOK[key];
+    const c = document.createElement('canvas'); c.width = c.height = 256;
+    drawFlightArt(c.getContext('2d'), key, 256, 256);
+    const ft = new T.CanvasTexture(c); ft.encoding = T.sRGBEncoding; ft.anisotropy = aniso;
+    return (lookMats[key] = {
+      barrel: std({ color: L.barrel, metalness: .92, roughness: key === 'alt' ? .24 : .3 }),
+      groove: std({ color: L.groove, metalness: .8, roughness: .5 }),
+      ring: std({ color: L.accent, metalness: .55, roughness: .3 }),
+      shaft: std({ color: L.shaft, metalness: .65, roughness: .32 }),
+      cap: std({ color: L.cap, metalness: .7, roughness: .3 }),
+      flight: std({ map: ft, roughness: .42, metalness: .05, side: T.DoubleSide })
+    });
   }
   function makeDart(owner, set = 'kneipe') {
-    const sm = setMats(set), flightMat = owner === 1 ? dartMats.cpuFlight : sm.flight;
+    const m = mats(owner === 1 ? 'cpu' : set);
     const g = new T.Group();
-    const add = (geo, mat) => { const m = new T.Mesh(geo, mat); m.castShadow = true; g.add(m); return m; };
-    add(dartParts.tip, dartMats.steel);
-    add(dartParts.barrel, owner === 1 ? dartMats.tungsten : sm.barrel);
-    for (let i = 0; i < 5; i++) add(dartParts.grip, dartMats.knurl).position.z = .038 + i * .007;
-    add(dartParts.shaft, dartMats.shaft);
-    add(dartParts.flight, flightMat);
-    add(dartParts.flight, flightMat).rotation.z = Math.PI / 2;
+    const add = (geo, mat, z = 0) => { const me = new T.Mesh(geo, mat); me.castShadow = true; me.position.z = z; g.add(me); return me; };
+    add(dartParts.tip, steelMat);
+    add(dartParts.barrel, m.barrel);
+    for (let k = 0; k < 5; k++) add(dartParts.groove, m.groove, .043 + k * .0035);
+    add(dartParts.ring, m.ring, .0375); add(dartParts.ring, m.ring, .0625);
+    add(dartParts.shaft, m.shaft);
+    add(dartParts.cap, m.cap, .109);
+    add(dartParts.flight, m.flight);
+    add(dartParts.flight, m.flight).rotation.z = Math.PI / 2;
     g.scale.setScalar(1.25);   // etwas größer, damit man die Pfeile gut sieht
     return g;
   }
@@ -2620,6 +2713,7 @@ function drawCross(x, y, steady, lift, unrest, kind, quick) {
 
 function frame(now) {
   V.render(now);
+  if (aim.active && !(S && !S.over && S.turn === 0)) aim.active = false;
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
     drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind(), b.quick || 0);
@@ -2724,6 +2818,7 @@ function triggerAdrenaline(g, why) {
 
 function beginTurn() {
   const g = S;
+  aim.active = false;   // beim Zugwechsel nie mit altem Fadenkreuz weiterzielen
   g.visit = []; g.visitState = 'open'; g.turnStart = g.scores[g.turn]; g.darts = []; g.busy = false;
   renderTafel();
   V.focus(g.turn === 0 ? 'aim' : 'hall');
@@ -3041,16 +3136,23 @@ function toast(title, text) {
 }
 // Pfeil-Symbol für das Menü
 function dartIcon(k) {
-  const d = DART_INFO[k], c = document.createElement('canvas'); c.width = 170; c.height = 52;
-  const g = c.getContext('2d'); g.translate(6, 26);
-  g.fillStyle = '#c9ccd2'; g.beginPath(); g.moveTo(0, 0); g.lineTo(30, -2.5); g.lineTo(30, 2.5); g.closePath(); g.fill();
-  const gr = g.createLinearGradient(0, -7, 0, 7); gr.addColorStop(0, '#f2f2f2'); gr.addColorStop(.45, d.barrel); gr.addColorStop(1, '#1b1b1b');
-  g.fillStyle = gr; g.fillRect(30, -7, 46, 14);
-  g.fillStyle = 'rgba(0,0,0,.35)'; for (let i = 0; i < 6; i++) g.fillRect(36 + i * 6.5, -7, 2, 14);
-  g.fillStyle = '#161616'; g.fillRect(76, -3, 32, 6);
-  g.fillStyle = d.flight; g.beginPath(); g.moveTo(102, 0); g.lineTo(118, -20); g.lineTo(156, -20); g.lineTo(150, 0); g.lineTo(156, 20); g.lineTo(118, 20); g.closePath(); g.fill();
-  g.strokeStyle = d.edge; g.lineWidth = 2; g.stroke();
-  g.strokeStyle = d.stripe; g.lineWidth = 3; g.beginPath(); g.moveTo(120, -10); g.lineTo(146, -10); g.moveTo(120, 10); g.lineTo(146, 10); g.stroke();
+  const L = DART_LOOK[k], c = document.createElement('canvas'); c.width = 180; c.height = 52;
+  const g = c.getContext('2d'); g.translate(4, 26);
+  // Spitze
+  const tg = g.createLinearGradient(0, -3, 0, 3); tg.addColorStop(0, '#f2f3f5'); tg.addColorStop(1, '#8a8e94');
+  g.fillStyle = tg; g.beginPath(); g.moveTo(0, 0); g.lineTo(30, -2.2); g.lineTo(33, -3.4); g.lineTo(33, 3.4); g.lineTo(30, 2.2); g.closePath(); g.fill();
+  // Barrel mit Torpedo-Profil, Rillen und Ringen
+  const bg = g.createLinearGradient(0, -8, 0, 8); bg.addColorStop(0, '#fbfbfb'); bg.addColorStop(.35, L.barrel); bg.addColorStop(1, '#141414');
+  g.fillStyle = bg; g.beginPath(); g.moveTo(33, -3.6); g.quadraticCurveTo(44, -8, 60, -8); g.lineTo(76, -7); g.quadraticCurveTo(84, -5, 86, -3); g.lineTo(86, 3); g.quadraticCurveTo(84, 5, 76, 7); g.lineTo(60, 8); g.quadraticCurveTo(44, 8, 33, 3.6); g.closePath(); g.fill();
+  g.fillStyle = L.groove; for (let i = 0; i < 5; i++) g.fillRect(50 + i * 4.5, -7.8, 1.6, 15.6);
+  g.fillStyle = L.accent; g.fillRect(43, -7.3, 3.2, 14.6); g.fillRect(74, -7.2, 3.2, 14.4);
+  // Schaft mit Abschlussring
+  const sg = g.createLinearGradient(0, -3, 0, 3); sg.addColorStop(0, 'rgba(255,255,255,.55)'); sg.addColorStop(.4, L.shaft); sg.addColorStop(1, '#050505');
+  g.fillStyle = sg; g.fillRect(86, -2.8, 34, 5.6);
+  g.fillStyle = L.cap; g.fillRect(116, -3.6, 4, 7.2);
+  // Flight: dieselbe Grafik wie in 3D, quer gelegt
+  const f = document.createElement('canvas'); f.width = f.height = 128; drawFlightArt(f.getContext('2d'), k, 128, 128);
+  g.save(); g.translate(114, 0); g.rotate(Math.PI / 2); g.drawImage(f, -23, -60, 46, 60); g.restore();
   return c.toDataURL();
 }
 const dartIcons = {};
