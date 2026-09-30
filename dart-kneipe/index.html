@@ -831,7 +831,7 @@ const I18N = {
     'bk.pick': 'Wähle dein Sondersymbol', 'bk.pickx': 'Es breitet sich in den Freispielen über ganze Walzen aus und zahlt auf allen 10 Linien. Seltene Symbole bringen mehr Freispiele.',
     'bk.payx': 'Drei oder mehr Bücher irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Büchern neue dazu. Die Schatztruhe ist Joker und ersetzt jedes Symbol außer dem Buch.',
     'bk.spins': '{n} Freispiele', 'bk.top': '5 Walzen: {m}×', 'bk.wild': 'Joker: ersetzt alle Symbole außer dem Buch', 'bk.scatter': 'Irgendwo · × Gesamteinsatz · startet Freispiele',
-    'bk.trigger': '{n} Bücher! Freispiele gewonnen.', 'bk.retrigger': 'Noch mal drei Bücher: +{n} Freispiele!',
+    'bk.tense': 'Zwei Bücher … kommt das dritte?', 'bk.trigger': '{n} Bücher! Freispiele gewonnen.', 'bk.retrigger': 'Noch mal drei Bücher: +{n} Freispiele!',
     'bk.fs': 'Freispiel {i} von {n} · Sondersymbol: {s}', 'bk.fsrun': 'Freispiele …', 'bk.expand': '{s} breitet sich aus: {v}!',
     'bk.fsend': 'Freispiele vorbei – insgesamt {v} gewonnen!', 'bk.fsnone': 'Freispiele vorbei. Diesmal wollte das Buch nicht.',
     'bsym.ten': 'Zehn', 'bsym.jack': 'Bube', 'bsym.queen': 'Dame', 'bsym.king': 'König', 'bsym.ace': 'Ass', 'bsym.amphora': 'Amphore', 'bsym.owl': 'Eule',
@@ -931,7 +931,7 @@ const I18N = {
     'bk.pick': 'Choose your special symbol', 'bk.pickx': 'During free spins it spreads over whole reels and pays on all 10 lines. Rare symbols give more free spins.',
     'bk.payx': 'Three or more books anywhere pay a multiple of the total bet and start free spins; three books during free spins add more. The treasure chest is wild and stands in for every symbol except the book.',
     'bk.spins': '{n} free spins', 'bk.top': '5 reels: {m}×', 'bk.wild': 'Wild: stands in for all symbols except the book', 'bk.scatter': 'Anywhere · × total bet · starts free spins',
-    'bk.trigger': '{n} books! Free spins won.', 'bk.retrigger': 'Three books again: +{n} free spins!',
+    'bk.tense': 'Two books… will the third one come?', 'bk.trigger': '{n} books! Free spins won.', 'bk.retrigger': 'Three books again: +{n} free spins!',
     'bk.fs': 'Free spin {i} of {n} · special symbol: {s}', 'bk.fsrun': 'Free spins …', 'bk.expand': '{s} spreads out: {v}!',
     'bk.fsend': 'Free spins over – {v} won in total!', 'bk.fsnone': 'Free spins over. The book wasn’t in the mood.',
     'bsym.ten': 'Ten', 'bsym.jack': 'Jack', 'bsym.queen': 'Queen', 'bsym.king': 'King', 'bsym.ace': 'Ace', 'bsym.amphora': 'Amphora', 'bsym.owl': 'Owl',
@@ -1073,18 +1073,11 @@ const sfx = (() => {
       if (Math.random() < .5) { const f = 3000 + Math.random() * 1800; tone(at, .06, 'sine', f, f, .006 * lvl, out); }
     }
   }
-  function tapBg() {
-    // Zapfhahn weiter hinten: Zischen mit leichtem Gluckern
-    const t = ac.currentTime, out = spot(.45), dur = 2.2 + Math.random();
-    nz(t, dur, 'bandpass', 1600, .7, .04, .2, out);
-    const f = nz(t, dur, 'lowpass', 420, .9, .025, .3, out);
-    f.frequency.setValueAtTime(420, t); f.frequency.linearRampToValueAtTime(300, t + dur);
-  }
   function ambience() {
     if (amb) return;
     const t = ac.currentTime;
     amb = ac.createGain(); amb.gain.setValueAtTime(.0001, t); amb.gain.exponentialRampToValueAtTime(1, t + 3); amb.connect(master);
-    const events = [[clinkBg, 4], [cough, 2], [shaker, 1.5], [tapBg, 1.5]];
+    const events = [[clinkBg, 4], [cough, 2], [shaker, 1.5]];
     const total = events.reduce((a, e) => a + e[1], 0);
     const next = () => setTimeout(() => {
       if (ok() && !document.hidden) {
@@ -1253,6 +1246,30 @@ const sfx = (() => {
       if (!ok()) return; const t = ac.currentTime;
       for (let i = 0; i < 5; i++) { const b = t + i * .8; tone(b, .16, 'sine', 72, 44, .55); tone(b + .22, .14, 'sine', 64, 42, .38); }
     },
+    // Spannung im Bücher-Automaten: tiefer Puls und ein langsam steigender Ton, bis stop() kommt
+    suspense() {
+      if (!ok()) return { stop() {} };
+      const t = ac.currentTime, out = ac.createGain();
+      out.gain.setValueAtTime(.0001, t); out.gain.exponentialRampToValueAtTime(.07, t + .4); out.connect(master);
+      const o1 = ac.createOscillator(), o2 = ac.createOscillator(); o1.type = 'sawtooth'; o2.type = 'sine';
+      o1.frequency.setValueAtTime(110, t); o1.frequency.exponentialRampToValueAtTime(330, t + 6);
+      o2.frequency.setValueAtTime(220, t); o2.frequency.exponentialRampToValueAtTime(660, t + 6);
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(500, t); lp.frequency.exponentialRampToValueAtTime(2400, t + 6);
+      const trem = ac.createGain(); trem.gain.value = .6;
+      const lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.setValueAtTime(5, t); lfo.frequency.linearRampToValueAtTime(11, t + 6); lg.gain.value = .4;
+      lfo.connect(lg); lg.connect(trem.gain);
+      o1.connect(lp); o2.connect(lp); lp.connect(trem); trem.connect(out);
+      [o1, o2, lfo].forEach(o => o.start(t));
+      let beat = 0; const pulse = setInterval(() => { if (ok()) { const b = ac.currentTime; tone(b, .14, 'sine', 70, 42, .4); } if (++beat > 20) clearInterval(pulse); }, 520);
+      return {
+        stop() {
+          clearInterval(pulse);
+          const e = ac.currentTime;
+          out.gain.cancelScheduledValues(e); out.gain.setValueAtTime(Math.max(.0001, out.gain.value), e); out.gain.exponentialRampToValueAtTime(.0001, e + .25);
+          [o1, o2, lfo].forEach(o => o.stop(e + .3));
+        }
+      };
+    },
     // Aufladeton für die Präzision
     powerup() {
       if (!ok()) return; const t = ac.currentTime;
@@ -1305,22 +1322,6 @@ const sfx = (() => {
           o.connect(lp); o.start(t + start); o.stop(t + start + len + .05);
         }
       }
-    },
-    pour(dur) {
-      if (!ok()) return; const t = ac.currentTime;
-      const s = loopNoise(t);
-      const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1700; bp.Q.value = .6;
-      const g = ac.createGain();
-      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.05, t + .15);
-      g.gain.setValueAtTime(.05, t + dur - .3); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 480;
-      const g2 = ac.createGain(); g2.gain.value = 0;
-      const lfo = ac.createOscillator(); lfo.frequency.value = 7.5;
-      const lg = ac.createGain(); lg.gain.value = .05;
-      lfo.connect(lg); lg.connect(g2.gain);
-      s.connect(bp); bp.connect(g); g.connect(master);
-      s.connect(lp); lp.connect(g2); g2.connect(master);
-      s.stop(t + dur + .05); lfo.start(t); lfo.stop(t + dur + .05);
     },
     clink() {
       if (!ok()) return; const t = ac.currentTime;
@@ -1503,7 +1504,6 @@ const wirt = (() => {
     if (act.name === 'pour') {
       if (u < 6.15) fill = clamp01((u - 1.7) / 2.8);
       const f = act.fired;
-      if (!f.hiss && u >= 1.65) { f.hiss = 1; if (onScreen) sfx.pour(2.9); }
       if (!f.clink && u >= 5.95) { f.clink = 1; if (onScreen) sfx.clink(); }
       if (!f.slide && u >= 6.15) { f.slide = 1; slide = { x0: 118, t0: now }; if (onScreen) sfx.slide(); }
       if (!f.fresh && u >= 6.9) { f.fresh = 1; fill = 0; }
@@ -3789,7 +3789,7 @@ const bookSlot = (() => {
 
   const el = $('#bookSlot'), cv = $('#bookCv'), g = cv.getContext('2d');
   let betIdx = 0, spinning = false, raf = 0, W = 0, H = 0, cw = 0, ch = 0, imgs = {}, wins = [], showWin = 0, lastTick = 0;
-  let fs = null, picking = false, expand = null, timer = 0;
+  let fs = null, picking = false, expand = null, timer = 0, tense = null;   // tense: Spannung bei zwei Büchern
   try { const b = +localStorage.getItem('dk-bet-book'); if (b >= 0 && b < BETS.length) betIdx = b; } catch (e) {}
   const reels = strips.map((st, i) => ({ p: (i * 11) % st.length, from: 0, to: 0, t0: 0, dur: 0, done: true, L: st.length }));
   const fmt = c => arcade.fmt(c);
@@ -3897,6 +3897,27 @@ const bookSlot = (() => {
     return out;
   }
   const bookCount = grid => Math.min(5, grid.reduce((a, col) => a + col.filter(v => v === 'book').length, 0));
+  const booksOn = r => [0, 1, 2].filter(q => strips[r][mod(Math.round(reels[r].p) + q, reels[r].L)] === 'book').length;
+
+  // Zwei Bücher liegen, mindestens eine Walze dreht noch: die restlichen Walzen laufen langsamer und
+  // länger aus, leuchten golden, dazu steigende Musik. Die Zielfelder ändern sich nicht.
+  function checkTension(now) {
+    if (tense) return;
+    const stopped = reels.map((rl, r) => rl.done ? r : -1).filter(r => r >= 0);
+    const open = reels.map((rl, r) => rl.done ? -1 : r).filter(r => r >= 0);
+    if (!open.length || stopped.reduce((a, r) => a + booksOn(r), 0) < 2) return;
+    tense = { t0: now, reels: open, snd: sfx.suspense() };
+    open.forEach((r, i) => {
+      const rl = reels[r], cur = rl.p;
+      rl.from = cur; rl.to = rl.to - rl.L * 2 - (i ? rl.L : 0);
+      rl.t0 = now; rl.dur = 2100 + i * 1500;
+    });
+    msg(t('bk.tense'), true);
+  }
+  function endTension() {
+    if (!tense) return;
+    tense.snd.stop(); tense = null;
+  }
 
   function resize() {
     const r = cv.getBoundingClientRect(); if (!r.width) return;
@@ -3941,6 +3962,24 @@ const bookSlot = (() => {
       const sh = g.createLinearGradient(0, 0, 0, H);
       sh.addColorStop(0, 'rgba(0,0,0,.5)'); sh.addColorStop(.18, 'rgba(0,0,0,0)'); sh.addColorStop(.82, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,.5)');
       g.fillStyle = sh; g.fillRect(x0, 0, cw, H);
+      if (tense) {
+        const pulse = .5 + .5 * Math.sin((now - tense.t0) / 110);
+        if (!rl.done) {
+          // Walze, auf die alle hoffen: warmes Licht von unten und ein pulsierender Goldrahmen
+          const glow = g.createLinearGradient(0, H, 0, 0);
+          glow.addColorStop(0, `rgba(255,190,80,${.25 + .25 * pulse})`); glow.addColorStop(1, 'rgba(255,190,80,0)');
+          g.fillStyle = glow; g.fillRect(x0, 0, cw, H);
+          g.strokeStyle = `rgba(255,220,120,${.6 + .4 * pulse})`; g.lineWidth = Math.max(4, W / 110);
+          g.shadowColor = '#ffcc55'; g.shadowBlur = 18 + 14 * pulse; g.strokeRect(x0 + 3, 3, cw - 6, H - 6); g.shadowBlur = 0;
+        } else {
+          for (let q = 0; q < 3; q++) {
+            if (strips[r][mod(Math.round(rl.p) + q, rl.L)] !== 'book') continue;
+            g.fillStyle = `rgba(255,214,120,${.18 + .22 * pulse})`; g.fillRect(x0, q * ch, cw, ch);
+            const img = imgs.book, sc = 1 + .08 * pulse, iw = img.width * sc, ih = img.height * sc;
+            g.drawImage(img, x0 + (cw - iw) / 2, q * ch + (ch - ih) / 2, iw, ih);
+          }
+        }
+      }
       g.restore();
       if (r) { g.fillStyle = '#c9a14a'; g.fillRect(x0 - 1, 0, 2, H); }
     }
@@ -3968,8 +4007,10 @@ const bookSlot = (() => {
       if (k >= 1) {
         rl.done = true; rl.p = mod(rl.to, rl.L); sfx.reelStop();
         if ([0, 1, 2].some(q => strips[r][mod(rl.p + q, rl.L)] === 'book')) sfx.charge();
+        checkTension(now);
       } else moving = true;
     });
+    if (!moving) endTension();
     draw(now);
     if (spinning && !moving) settle();
     if (moving || wins.length || expand) raf = requestAnimationFrame(loop);
@@ -3993,7 +4034,7 @@ const bookSlot = (() => {
   function msg(text, big = false) { const m = $('#bkMsg'); m.textContent = text; m.classList.toggle('big', big); }
 
   function startSpin() {
-    spinning = true; wins = []; expand = null;
+    spinning = true; wins = []; expand = null; endTension();
     const now = performance.now();
     reels.forEach((rl, r) => {
       const stop = Math.floor(Math.random() * rl.L), from = Math.round(rl.p);
@@ -4018,7 +4059,7 @@ const bookSlot = (() => {
   }
 
   function settle() {
-    spinning = false;
+    spinning = false; msg('');
     const gr = grid(), lineBet = fs ? fs.lineBet : BETS[betIdx];
     wins = lineWins(gr);
     let total = wins.reduce((a, w) => a + w.mult * lineBet, 0);
