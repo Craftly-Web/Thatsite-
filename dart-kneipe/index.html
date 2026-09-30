@@ -109,6 +109,35 @@ body::after{
 .btn.ghost{background:rgba(20,12,6,.6);color:var(--ink);border-color:rgba(233,201,140,.35);box-shadow:none}
 .btn:focus-visible,.chip input:focus-visible + span{outline:2px solid #ffd66b;outline-offset:2px}
 .icon-btn{width:44px;height:44px;padding:0;display:grid;place-items:center}
+/* Pokertisch */
+.arc-card.pk-card{background:linear-gradient(90deg,rgba(20,90,55,.6),rgba(10,40,25,.6));border-color:rgba(120,220,160,.45)}
+.arc-card.pk-card svg,.arc-card.pk-card i{color:#8fe3b0}
+.pk{width:min(100%,960px);display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:16px;font-family:var(--ui);color:var(--ink);
+  background:linear-gradient(180deg,#2a1a10,#160d07);border:3px solid #7a5230;box-shadow:0 0 0 2px #24130a,0 20px 40px rgba(0,0,0,.6)}
+.pk-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pk-head h2{margin:0;font-family:var(--chalkf,'Cabin Sketch'),cursive;font-size:clamp(22px,5vw,30px);color:var(--brass)}
+.pk-head small{display:block;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#cdb68a}
+.pk-cash{display:grid;justify-items:end;padding:4px 10px;border-radius:8px;background:#0d0804;border:1px solid rgba(233,201,140,.3)}
+.pk-cash small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#cdb68a}
+.pk-cash b{font-family:'Courier New',monospace;font-size:19px;color:#7dff9a}
+.pk-stage{position:relative;border-radius:12px;overflow:hidden;background:#140c06}
+.pk-stage canvas{display:block;width:100%;touch-action:none;user-select:none;-webkit-user-select:none}
+.pk-sit{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;text-align:center;background:rgba(10,6,3,.72)}
+.pk-sit h3{margin:0;font-family:var(--chalkf,'Cabin Sketch'),cursive;font-size:28px;color:var(--brass)}
+.pk-sit p{margin:0;max-width:440px;font-size:15px;color:#e8dcc4}
+.pk-sit .chips{justify-content:center}
+.pk-warn{color:#ffb3a8 !important;min-height:1.2em}
+.pk-msg{min-height:22px;text-align:center;font-size:17px;font-weight:700;color:#f3d487}
+.pk-actions{display:grid;grid-template-columns:1fr 1.2fr 1.6fr 1.3fr;gap:8px;align-items:stretch}
+.pk-actions .btn{padding:10px 8px;font-size:15px}
+.pk-raise{display:grid;gap:4px}
+.pk-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.pk-presets button,.pk-amt button{font:600 13px/1 var(--ui);letter-spacing:.05em;padding:6px 4px;border-radius:6px;cursor:pointer;color:var(--ink);background:rgba(20,12,6,.8);border:1px solid rgba(233,201,140,.35)}
+.pk-amt{display:grid;grid-template-columns:34px 1fr 34px;align-items:center;gap:4px}
+.pk-amt b{text-align:center;font-family:'Courier New',monospace;font-size:17px;color:#ffe9a8}
+.pk-actions button:disabled{opacity:.45;cursor:default}
+.pk-tip{margin:0;text-align:center;font-size:13px;color:#cdb68a}
+@media (max-width:620px){.pk{padding:8px 6px}.pk-actions{grid-template-columns:1fr 1fr}.pk-raise{grid-column:1/-1;grid-row:1}.pk-actions #pkRaise{grid-column:1/-1}}
 /* Spielhalle */
 .arc-card{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:12px;width:100%;padding:11px 14px;border-radius:8px;cursor:pointer;text-align:left;
   font-family:var(--ui);color:var(--ink);background:linear-gradient(90deg,rgba(120,20,40,.55),rgba(40,10,30,.55));border:1px solid rgba(255,120,160,.45)}
@@ -447,6 +476,7 @@ legend{padding:0;margin-bottom:8px}
       <small>Steeldart · Double Out</small>
     </div>
     <div class="actions">
+      <button class="btn ghost icon-btn" id="pokerBtn" type="button" aria-label="Pokertisch" data-i18n-aria="pk.btn" data-i18n-title="pk.btn" title="Pokertisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg></button>
       <button class="btn ghost icon-btn" id="arcadeBtn" type="button" aria-label="Spielhalle" data-i18n-aria="arc.btn" data-i18n-title="arc.btn" title="Spielhalle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg></button>
       <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
       <button class="btn ghost" id="menuBtn" type="button"><span class="long" data-i18n="menu.long">Neues Spiel</span><span class="short" data-i18n="menu.short">Menü</span></button>
@@ -574,6 +604,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span data-i18n="starter.opp">Gegner</span></label>
       </div>
     </fieldset>
+    <button type="button" class="arc-card pk-card" id="pokerCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg><span><b data-i18n="pk.btn">Pokertisch</b><small data-i18n="pk.cardx">Texas Hold’em mit Heinz als Geber</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card" id="arcadeCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg><span><b data-i18n="arc.btn">Spielhalle</b><small id="arcadeCardCash"></small></span><i aria-hidden="true">›</i></button>
     <details class="howto">
       <summary data-i18n="howto">So wird gespielt</summary>
@@ -585,6 +616,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
       <p class="rules" data-i18n-html="rules.cpu"></p>
       <p class="rules" data-i18n-html="rules.arcade"></p>
+      <p class="rules" data-i18n-html="rules.poker"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -670,6 +702,37 @@ legend{padding:0;margin-bottom:8px}
     <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.</p>
     <div class="row"><button type="button" class="btn ghost" id="bkClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
   </div>
+  </div>
+</div>
+
+<div class="overlay" id="poker" role="dialog" aria-modal="true" aria-labelledby="pkTitle" hidden>
+  <div class="pk">
+    <div class="pk-head">
+      <div><h2 id="pkTitle" data-i18n="pk.title">Heinz’ Pokerrunde</h2><small id="pkSub"></small></div>
+      <div class="pk-cash"><small data-i18n="arc.credit">Guthaben</small><b id="pkCash">0,00 €</b></div>
+    </div>
+    <div class="pk-stage">
+      <canvas id="pkCv" aria-label="Pokertisch" role="img"></canvas>
+      <div class="pk-sit" id="pkSit">
+        <h3 id="pkSitTitle" data-i18n="pk.sit">Setz dich an den Tisch</h3>
+        <p data-i18n="pk.sitx">Texas Hold’em gegen Tante Gerda, Kalle und Otto. Das Buy-in kommt vom Spielhallen-Guthaben; was du beim Aufstehen vor dir hast, geht zurück aufs Guthaben.</p>
+        <div class="chips" id="pkBuyins"></div>
+        <p class="pk-warn" id="pkSitMsg"></p>
+        <button type="button" class="btn" id="pkSitBtn" data-i18n="pk.sitdown">Hinsetzen</button>
+      </div>
+    </div>
+    <div class="pk-msg" id="pkMsg" aria-live="polite"></div>
+    <div class="pk-actions" id="pkActions" hidden>
+      <button type="button" class="btn ghost" id="pkFold" data-i18n="pk.fold">Passen</button>
+      <button type="button" class="btn ghost" id="pkCall">Checken</button>
+      <div class="pk-raise">
+        <div class="pk-presets"><button type="button" data-p="half" data-i18n="pk.half">½ Pot</button><button type="button" data-p="pot" data-i18n="pk.pot">Pot</button><button type="button" data-p="max" data-i18n="pk.max">All-in</button></div>
+        <div class="pk-amt"><button type="button" id="pkLess" aria-label="Weniger" data-i18n-aria="arc.less">−</button><b id="pkAmt"></b><button type="button" id="pkMore" aria-label="Mehr" data-i18n-aria="arc.more">+</button></div>
+      </div>
+      <button type="button" class="btn" id="pkRaise">Erhöhen</button>
+    </div>
+    <p class="pk-tip" data-i18n="pk.tip">Karten gedrückt halten zum Anschauen · Chips vom Stapel in die Mitte ziehen zum Setzen</p>
+    <div class="row"><button type="button" class="btn ghost" id="pkLeave" data-i18n="pk.leave">Aufstehen</button></div>
   </div>
 </div>
 
@@ -827,6 +890,16 @@ const I18N = {
     'arc.lose': ['Leider nichts. Nächste Runde?', 'Knapp daneben ist auch vorbei.', 'Die Walzen sind heute launisch.'],
     'arc.won': 'Gewinn {v}!', 'arc.line': 'Linie {n}: {k}× {s}', 'arc.jackpot': 'HAUPTGEWINN! Fünf Siebener – {v}!', 'arc.card': 'Guthaben {v}',
     'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle',
+    'pk.btn': 'Pokertisch', 'pk.cardx': 'Texas Hold’em mit Heinz als Geber', 'pk.title': 'Heinz’ Pokerrunde', 'pk.sub': 'Texas Hold’em · Blinds {sb} / {bb}',
+    'pk.sit': 'Setz dich an den Tisch', 'pk.sitx': 'Texas Hold’em gegen Tante Gerda, Kalle und Otto. Das Buy-in kommt vom Spielhallen-Guthaben; was du beim Aufstehen vor dir hast, geht zurück aufs Guthaben.',
+    'pk.sitdown': 'Hinsetzen', 'pk.rebuy': 'Nachkaufen', 'pk.leave': 'Aufstehen', 'pk.buyin': 'Buy-in {v}', 'pk.nocash': 'Zu wenig Guthaben für dieses Buy-in. Gewinn ein Match in der Kneipe!',
+    'pk.bust': 'Deine Chips sind weg. Nachkaufen?', 'pk.fold': 'Passen', 'pk.check': 'Checken', 'pk.call': 'Mitgehen {v}', 'pk.bet': 'Setzen {v}', 'pk.raise': 'Erhöhen auf {v}', 'pk.allin': 'All-in {v}',
+    'pk.half': '½ Pot', 'pk.pot': 'Pot', 'pk.max': 'All-in', 'pk.tip': 'Karten gedrückt halten zum Anschauen · Chips vom Stapel in die Mitte ziehen zum Setzen',
+    'pk.turn': 'Du bist dran.', 'pk.think': '{name} überlegt …', 'pk.deal': 'Heinz mischt und gibt …', 'pk.you': 'Deine Hand: {h}', 'pk.rebuyopp': '{name} kauft für 10 € nach.',
+    'pk.a.fold': 'Passt', 'pk.a.check': 'Check', 'pk.a.call': 'Geht mit', 'pk.a.bet': 'Setzt {v}', 'pk.a.raise': 'Erhöht auf {v}', 'pk.a.allin': 'All-in!', 'pk.a.sb': 'Small Blind', 'pk.a.bb': 'Big Blind',
+    'pk.win': '{name} gewinnt {v}.', 'pk.winhand': '{name} gewinnt {v} mit {h}.', 'pk.youwin': 'Du gewinnst {v}!', 'pk.youwinhand': 'Du gewinnst {v} mit {h}!',
+    'pk.h': ['Höchste Karte', 'Ein Paar', 'Zwei Paare', 'Drilling', 'Straße', 'Flush', 'Full House', 'Vierling', 'Straight Flush'], 'pk.royal': 'Royal Flush',
+    'rules.poker': '<strong>Pokertisch:</strong> Texas Hold’em gegen Tante Gerda (vorsichtig), Kalle (blufft gern) und Otto (rechnet), Heinz gibt. Buy-in 5 bis 50 € vom Spielhallen-Guthaben, Blinds 10/20 Cent. Karten gedrückt halten zum Anschauen, Chips in die Mitte ziehen oder die Knöpfe nutzen.',
     'bk.title': 'Buch der Weisen', 'bk.sub': '5 Walzen · 10 Linien · Freispiele mit Sondersymbol',
     'bk.pick': 'Wähle dein Sondersymbol', 'bk.pickx': 'Es breitet sich in den Freispielen über ganze Walzen aus und zahlt auf allen 10 Linien. Seltene Symbole bringen mehr Freispiele.',
     'bk.payx': 'Drei oder mehr Bücher irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Büchern neue dazu. Die Schatztruhe ist Joker und ersetzt jedes Symbol außer dem Buch.',
@@ -927,6 +1000,16 @@ const I18N = {
     'arc.lose': ['Nothing this time. Another spin?', 'So close, and yet…', 'The reels are moody tonight.'],
     'arc.won': 'You win {v}!', 'arc.line': 'Line {n}: {k}× {s}', 'arc.jackpot': 'JACKPOT! Five sevens – {v}!', 'arc.card': 'Credit {v}',
     'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade',
+    'pk.btn': 'Poker table', 'pk.cardx': 'Texas Hold’em with Heinz dealing', 'pk.title': 'Heinz’s poker night', 'pk.sub': 'Texas Hold’em · blinds {sb} / {bb}',
+    'pk.sit': 'Take a seat', 'pk.sitx': 'Texas Hold’em against Aunt Gerda, Kalle and Otto. The buy-in comes from your arcade credit; whatever is in front of you when you get up goes back to it.',
+    'pk.sitdown': 'Sit down', 'pk.rebuy': 'Buy in again', 'pk.leave': 'Get up', 'pk.buyin': 'Buy-in {v}', 'pk.nocash': 'Not enough credit for this buy-in. Win a match in the pub!',
+    'pk.bust': 'You’re out of chips. Buy in again?', 'pk.fold': 'Fold', 'pk.check': 'Check', 'pk.call': 'Call {v}', 'pk.bet': 'Bet {v}', 'pk.raise': 'Raise to {v}', 'pk.allin': 'All-in {v}',
+    'pk.half': '½ pot', 'pk.pot': 'Pot', 'pk.max': 'All-in', 'pk.tip': 'Press and hold your cards to look · drag chips from your stack to the middle to bet',
+    'pk.turn': 'Your turn.', 'pk.think': '{name} is thinking…', 'pk.deal': 'Heinz shuffles and deals…', 'pk.you': 'Your hand: {h}', 'pk.rebuyopp': '{name} buys in again for €10.',
+    'pk.a.fold': 'Folds', 'pk.a.check': 'Check', 'pk.a.call': 'Calls', 'pk.a.bet': 'Bets {v}', 'pk.a.raise': 'Raises to {v}', 'pk.a.allin': 'All-in!', 'pk.a.sb': 'Small blind', 'pk.a.bb': 'Big blind',
+    'pk.win': '{name} wins {v}.', 'pk.winhand': '{name} wins {v} with {h}.', 'pk.youwin': 'You win {v}!', 'pk.youwinhand': 'You win {v} with {h}!',
+    'pk.h': ['High card', 'One pair', 'Two pair', 'Three of a kind', 'Straight', 'Flush', 'Full house', 'Four of a kind', 'Straight flush'], 'pk.royal': 'Royal flush',
+    'rules.poker': '<strong>Poker table:</strong> Texas Hold’em against Aunt Gerda (careful), Kalle (loves a bluff) and Otto (does the maths), with Heinz dealing. Buy in for €5 to €50 from your arcade credit, blinds 10/20 cents. Press and hold your cards to look, drag chips to the middle or use the buttons.',
     'bk.title': 'Tome of the Sages', 'bk.sub': '5 reels · 10 lines · free spins with a special symbol',
     'bk.pick': 'Choose your special symbol', 'bk.pickx': 'During free spins it spreads over whole reels and pays on all 10 lines. Rare symbols give more free spins.',
     'bk.payx': 'Three or more books anywhere pay a multiple of the total bet and start free spins; three books during free spins add more. The treasure chest is wild and stands in for every symbol except the book.',
@@ -1242,6 +1325,12 @@ const sfx = (() => {
     setStyle(k) { style = k; },
     get muted() { return muted; },
     setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : .8; },
+    // Pokertisch: Karte über den Filz schnippen, Chips klackern
+    card() { if (!ok()) return; const t = ac.currentTime; nz(t, .07, 'bandpass', 2600, .9, .1, .003); nz(t + .02, .05, 'highpass', 5000, .7, .05); },
+    chips(n = 4) {
+      if (!ok()) return; const t = ac.currentTime;
+      for (let i = 0; i < n; i++) { const at = t + i * (.035 + Math.random() * .03); nz(at, .03, 'bandpass', 3000 + Math.random() * 1500, 4, .16); tone(at, .04, 'sine', 2400 + Math.random() * 600, 2000, .03); }
+    },
     // Spielhalle: Walzen-Ticken, Walzenstopp, Münzregen, Hauptgewinn
     tick() { if (!ok()) return; const t = ac.currentTime; nz(t, .018, 'highpass', 3500, .8, .05); },
     reelStop() {
@@ -3242,7 +3331,7 @@ function cpuBoostTag(g) {
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1) return;
-  if (!menu.hidden || arcade.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  if (!menu.hidden || arcade.open || poker.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const kind = cpuBoostKind(g, !!f && f.seq.length === 1);
   const sigma = g.opp.sigma * cpuMult(kind);
@@ -4217,6 +4306,706 @@ const bookSlot = (() => {
   return { relang() { if ($('#bkPayList').children.length) renderPays(); paint(); } };
 })();
 
+/* ---------- Pokertisch: Texas Hold'em, Heinz gibt, Gerda, Kalle und Otto spielen mit ---------- */
+const poker = (() => {
+  const SB = 10, BB = 20, OPP_STACK = 1000, BUYINS = [500, 1000, 2000, 5000];   // alles in Cent
+  const SUIT = ['♠', '♥', '♦', '♣'], RANK = { 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
+  const rankLabel = r => RANK[r] || String(r);
+  const ORDER = ['you', 'gerda', 'kalle', 'otto'];   // im Uhrzeigersinn um den Tisch
+  // Spielstil: tight = wie viel Stärke zusätzlich zum Mitgehen verlangt wird, raise = ab wann erhöht wird, bluff = Bluffrate
+  const STYLE = {
+    gerda: { lvl: 'anfaenger', tight: .08, raise: .74, bluff: .03, hair: '#d8d0dc', shirt: '#7a3b69', skin: '#f0c9a8', look: 'curls' },
+    kalle: { lvl: 'stammgast', tight: -.08, raise: .58, bluff: .2, hair: '#3b2a1e', shirt: '#2f5d8a', skin: '#e8b890', look: 'cap' },
+    otto:  { lvl: 'verein', tight: 0, raise: .64, bluff: .07, hair: '#6b4a2b', shirt: '#9b2226', skin: '#eab998', look: 'glasses' }
+  };
+  // Zwei Anordnungen in virtuellen Koordinaten: quer für große Bildschirme, hoch fürs Handy
+  const LAYOUT = {
+    land: {
+      W: 1000, H: 640, table: [500, 318, 410, 222], board: [500, 300], pot: [500, 384], deck: [262, 180], heinz: [150, 70], cw: 58,
+      seats: {
+        you:   { cards: [470, 468], bet: [500, 418], stack: [612, 482], label: [290, 560], dealer: [396, 470] },
+        gerda: { fig: [48, 318], cards: [196, 318], bet: [306, 352], stack: [196, 402], label: [124, 452], dealer: [206, 258] },
+        kalle: { fig: [500, 54], cards: [500, 158], bet: [500, 224], stack: [612, 160], label: [650, 58], dealer: [408, 166] },
+        otto:  { fig: [952, 318], cards: [804, 318], bet: [694, 352], stack: [804, 402], label: [876, 452], dealer: [794, 258] }
+      }
+    },
+    port: {
+      W: 700, H: 940, table: [350, 440, 300, 340], board: [350, 440], pot: [350, 530], deck: [218, 196], heinz: [100, 76], cw: 64,
+      seats: {
+        you:   { cards: [322, 752], bet: [350, 640], stack: [512, 760], label: [150, 820], dealer: [210, 746] },
+        gerda: { fig: [62, 236], cards: [146, 352], bet: [176, 560], stack: [126, 440], label: [128, 496], dealer: [164, 276] },
+        kalle: { fig: [350, 54], cards: [350, 190], bet: [350, 300], stack: [478, 186], label: [540, 60], dealer: [262, 200] },
+        otto:  { fig: [638, 236], cards: [554, 352], bet: [524, 560], stack: [574, 440], label: [572, 496], dealer: [536, 276] }
+      }
+    }
+  };
+
+  const el = $('#poker'), cv = $('#pkCv'), g = cv.getContext('2d');
+  let L = LAYOUT.land, scale = 1, dpr = 1, raf = 0, dirty = true;
+  let players = [], board = [], deck = [], pot = 0, dealer = 0, high = 0, minRaise = BB, street = 0;
+  let session = 0, seated = false, waiting = null, raiseTo = 0, peeked = false, peek = false, drag = null, buyIdx = 1;
+  const anims = [], flying = [];
+  const figs = {};
+
+  const fmt = c => arcade.fmt(c);
+  const P = id => players.find(p => p.id === id);
+  const you = () => P('you');
+  const nameOf = id => id === 'you' ? t('you') : t('lvl.' + STYLE[id].lvl);
+  const store = v => { try { if (v == null) localStorage.removeItem('dk-poker'); else localStorage.setItem('dk-poker', String(v)); } catch (e) {} };
+  // Hat jemand beim letzten Mal den Tisch verlassen, ohne aufzustehen, kommen die Chips zurück aufs Guthaben
+  try { const v = +localStorage.getItem('dk-poker'); if (v > 0) { arcade.addCash(v); } localStorage.removeItem('dk-poker'); } catch (e) {}
+
+  /* ---------- Karten und Bewertung ---------- */
+  function newDeck() {
+    const d = [];
+    for (let s = 0; s < 4; s++) for (let r = 2; r <= 14; r++) d.push({ r, s });
+    for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
+    return d;
+  }
+  const COMB = [];
+  (function build(start, pick) { if (pick.length === 5) { COMB.push(pick.slice()); return; } for (let i = start; i < 7; i++) { pick.push(i); build(i + 1, pick); pick.pop(); } })(0, []);
+  function score5(cs) {
+    const rs = cs.map(c => c.r).sort((a, b) => b - a);
+    const flush = cs.every(c => c.s === cs[0].s);
+    const cnt = {}; for (const r of rs) cnt[r] = (cnt[r] || 0) + 1;
+    const grp = Object.keys(cnt).map(r => [cnt[r], +r]).sort((a, b) => b[0] - a[0] || b[1] - a[1]);
+    let str = 0;
+    if (grp.length === 5) { if (rs[0] - rs[4] === 4) str = rs[0]; else if (rs[0] === 14 && rs[1] === 5) str = 5; }
+    let cat, kick;
+    if (str && flush) { cat = 8; kick = [str]; }
+    else if (grp[0][0] === 4) { cat = 7; kick = [grp[0][1], grp[1][1]]; }
+    else if (grp[0][0] === 3 && grp[1][0] === 2) { cat = 6; kick = [grp[0][1], grp[1][1]]; }
+    else if (flush) { cat = 5; kick = rs; }
+    else if (str) { cat = 4; kick = [str]; }
+    else if (grp[0][0] === 3) { cat = 3; kick = grp.map(x => x[1]); }
+    else if (grp[0][0] === 2 && grp[1][0] === 2) { cat = 2; kick = grp.map(x => x[1]); }
+    else if (grp[0][0] === 2) { cat = 1; kick = grp.map(x => x[1]); }
+    else { cat = 0; kick = rs; }
+    let v = cat; for (let i = 0; i < 5; i++) v = v * 15 + (kick[i] || 0);
+    return v;
+  }
+  function best(cards) {
+    if (cards.length < 5) {
+      // Vor dem Flop nur Paar oder hohe Karte
+      const rs = cards.map(c => c.r).sort((a, b) => b - a), pair = rs.length > 1 && rs[0] === rs[1];
+      return (pair ? 1 : 0) * 759375 + rs[0] * 50625 + (rs[1] || 0) * 3375;
+    }
+    if (cards.length === 5) return score5(cards);
+    let b = -1;
+    for (const c of COMB) { if (c[4] >= cards.length) continue; const v = score5(c.map(i => cards[i])); if (v > b) b = v; }
+    return b;
+  }
+  function handName(v) {
+    const cat = Math.floor(v / 759375), top = Math.floor(v / 50625) % 15;   // 15^5 und 15^4
+    const names = I18N[lang]['pk.h'] || I18N.de['pk.h'];
+    if (cat === 8 && top === 14) return t('pk.royal');
+    return names[cat] + ' · ' + rankLabel(top);
+  }
+  // Gewinnchance per Monte Carlo gegen zufällige Hände der Gegner, die noch dabei sind
+  function equity(hole, bd, nOpp, iters = 200) {
+    const known = new Set(hole.concat(bd).map(c => c.r * 4 + c.s));
+    const rest = []; for (let s = 0; s < 4; s++) for (let r = 2; r <= 14; r++) if (!known.has(r * 4 + s)) rest.push({ r, s });
+    const need = 2 * nOpp + (5 - bd.length);
+    let win = 0;
+    for (let it = 0; it < iters; it++) {
+      for (let i = 0; i < need; i++) { const j = i + Math.floor(Math.random() * (rest.length - i)); [rest[i], rest[j]] = [rest[j], rest[i]]; }
+      const full = bd.concat(rest.slice(2 * nOpp, need));
+      const me = best(hole.concat(full));
+      let top = 0, tie = 1;
+      for (let o = 0; o < nOpp; o++) {
+        const v = best([rest[2 * o], rest[2 * o + 1]].concat(full));
+        if (v > top) { top = v; tie = 1; } else if (v === top) tie++;
+      }
+      if (me > top) win += 1; else if (me === top) win += 1 / (tie + 1);
+    }
+    return win / iters;
+  }
+
+  /* ---------- Zeichnen ---------- */
+  const cardCache = new Map();
+  function cardImg(c, w, face) {
+    const px = Math.round(w * scale * dpr), key = (face ? c.r * 4 + c.s : 'b') + '@' + px;
+    if (cardCache.has(key)) return cardCache.get(key);
+    const h = Math.round(px * 1.42), k = document.createElement('canvas'); k.width = px; k.height = h;
+    const x = k.getContext('2d'), r = px * .1;
+    x.beginPath(); x.roundRect ? x.roundRect(1, 1, px - 2, h - 2, r) : x.rect(1, 1, px - 2, h - 2);
+    if (face) {
+      x.fillStyle = '#fbf8f0'; x.fill(); x.strokeStyle = '#8a8272'; x.lineWidth = Math.max(1, px / 60); x.stroke();
+      const red = c.s === 1 || c.s === 2; x.fillStyle = red ? '#c8102e' : '#161616';
+      x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.font = `700 ${px * .3}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; x.fillText(rankLabel(c.r), px * .2, h * .13);
+      x.font = `${px * .24}px 'DejaVu Sans', 'Segoe UI Symbol', sans-serif`; x.fillText(SUIT[c.s], px * .2, h * .3);
+      x.font = `${px * .62}px 'DejaVu Sans', 'Segoe UI Symbol', sans-serif`; x.fillText(SUIT[c.s], px * .58, h * .6);
+    } else {
+      const gr = x.createLinearGradient(0, 0, px, h); gr.addColorStop(0, '#7a1020'); gr.addColorStop(1, '#3d0610');
+      x.fillStyle = gr; x.fill(); x.strokeStyle = '#f3e3c2'; x.lineWidth = px * .05; x.stroke();
+      x.strokeStyle = 'rgba(243,227,194,.35)'; x.lineWidth = px * .02;
+      for (let i = -h; i < px + h; i += px * .14) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i + h, h); x.moveTo(i + h, 0); x.lineTo(i, h); x.stroke(); }
+      x.fillStyle = '#f3e3c2'; x.font = `700 ${px * .3}px 'Barlow Condensed', sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('DK', px / 2, h / 2);
+    }
+    cardCache.set(key, k);
+    return k;
+  }
+  function drawCard(c, x, y, w, face, rot = 0, alpha = 1, lift = 0) {
+    const img = cardImg(c, w, face), h = w * 1.42;
+    g.save(); g.globalAlpha = alpha; g.translate(x, y); g.rotate(rot);
+    g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 6 + lift * 16; g.shadowOffsetY = 2 + lift * 10;
+    g.drawImage(img, -w / 2, -h / 2 - lift * 14, w, h);
+    g.restore();
+  }
+  const CHIP = [[2500, '#151515', '#e2b457'], [500, '#1f8a3a', '#f4efe4'], [100, '#1f4fb8', '#f4efe4'], [50, '#c0392b', '#f4efe4'], [10, '#efe9dc', '#2f5d8a']];
+  function drawChips(x, y, amount, sz = 1) {
+    if (amount <= 0) return;
+    const cols = []; let rest = amount;
+    for (const [v, c1, c2] of CHIP) { const n = Math.floor(rest / v); rest -= n * v; if (n) cols.push([Math.min(n, 12), c1, c2]); }
+    const r = 13 * sz, dx = r * 2.1, x0 = x - (cols.length - 1) * dx / 2;
+    cols.forEach(([n, c1, c2], i) => {
+      for (let k = 0; k < n; k++) {
+        const cx = x0 + i * dx, cy = y - k * 3.6 * sz;
+        g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(cx, cy + 3 * sz, r, r * .55, 0, 0, Math.PI * 2); g.fill();
+        g.fillStyle = c1; g.beginPath(); g.ellipse(cx, cy, r, r * .55, 0, 0, Math.PI * 2); g.fill();
+        g.strokeStyle = c2; g.lineWidth = 2.4 * sz; g.setLineDash([3.2 * sz, 3.6 * sz]); g.beginPath(); g.ellipse(cx, cy, r * .82, r * .45, 0, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
+      }
+    });
+  }
+  function label(x, y, lines, hl) {
+    g.font = "600 19px 'Barlow Condensed', 'Arial Narrow', sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const w = Math.max(...lines.map(l => g.measureText(l).width)) + 18, h = lines.length * 21 + 8;
+    g.fillStyle = hl ? 'rgba(90,60,10,.9)' : 'rgba(12,8,4,.78)'; g.strokeStyle = hl ? '#ffd66b' : 'rgba(233,201,140,.35)'; g.lineWidth = 1.5;
+    g.beginPath(); g.roundRect ? g.roundRect(x - w / 2, y - h / 2, w, h, 7) : g.rect(x - w / 2, y - h / 2, w, h); g.fill(); g.stroke();
+    lines.forEach((l, i) => { g.fillStyle = i ? '#ffd66b' : '#f1ede2'; g.fillText(l, x, y - h / 2 + 14 + i * 21); });
+  }
+
+  // Arme mit zwei Gelenken: Schulter → Ellbogen → Hand, Ellbogen knickt nach außen
+  function drawArm(sh, hand, len, width, sleeve, skin, bend) {
+    const dx = hand[0] - sh[0], dy = hand[1] - sh[1]; let d = Math.hypot(dx, dy) || 1;
+    let hx = hand[0], hy = hand[1];
+    if (d > len * 1.98) { hx = sh[0] + dx / d * len * 1.98; hy = sh[1] + dy / d * len * 1.98; d = len * 1.98; }
+    const a = Math.atan2(hy - sh[1], hx - sh[0]), b = Math.acos(Math.min(1, d / (2 * len)));
+    const ex = sh[0] + Math.cos(a + bend * b) * len, ey = sh[1] + Math.sin(a + bend * b) * len;
+    g.lineCap = 'round';
+    g.strokeStyle = 'rgba(0,0,0,.25)'; g.lineWidth = width + 4; g.beginPath(); g.moveTo(sh[0], sh[1]); g.lineTo(ex, ey); g.lineTo(hx, hy); g.stroke();
+    g.strokeStyle = sleeve; g.lineWidth = width; g.beginPath(); g.moveTo(sh[0], sh[1]); g.lineTo(ex, ey); g.stroke();
+    g.strokeStyle = sleeve; g.lineWidth = width * .92; g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex + (hx - ex) * .55, ey + (hy - ey) * .55); g.stroke();
+    g.strokeStyle = skin; g.lineWidth = width * .62; g.beginPath(); g.moveTo(ex + (hx - ex) * .5, ey + (hy - ey) * .5); g.lineTo(hx, hy); g.stroke();
+    // Hand mit angedeuteten Fingern
+    const ha = Math.atan2(hy - ey, hx - ex);
+    g.save(); g.translate(hx, hy); g.rotate(ha);
+    g.fillStyle = skin; g.beginPath(); g.ellipse(width * .25, 0, width * .62, width * .5, 0, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = 'rgba(120,70,40,.35)'; g.lineWidth = 1.5;
+    for (const o of [-.28, 0, .28]) { g.beginPath(); g.moveTo(width * .5, o * width); g.lineTo(width * .85, o * width * 1.1); g.stroke(); }
+    g.beginPath(); g.ellipse(width * .1, -width * .5, width * .28, width * .16, -.6, 0, Math.PI * 2); g.fillStyle = skin; g.fill();
+    g.restore();
+  }
+
+  function figure(id) {
+    const f = figs[id]; if (!f) return;
+    const [x, y] = f.pos, ang = Math.atan2(L.table[1] - y, L.table[0] - x) - Math.PI / 2;
+    const st = id === 'heinz' ? { shirt: '#1f5a36', skin: '#f2c9a0', hair: '#eeeeee', look: 'heinz' } : STYLE[id];
+    const p = P(id), out = p && p.folded;
+    g.save(); g.translate(x, y); g.rotate(ang); g.globalAlpha = out ? .75 : 1;
+    // Schultern und Oberkörper
+    const sg = g.createLinearGradient(-60, 0, 60, 0); sg.addColorStop(0, st.shirt); sg.addColorStop(.5, lighten(st.shirt)); sg.addColorStop(1, st.shirt);
+    g.fillStyle = sg; g.beginPath(); g.ellipse(0, 6, 62, 30, 0, 0, Math.PI * 2); g.fill();
+    if (st.look === 'heinz') { g.fillStyle = '#fbf8f0'; g.beginPath(); g.moveTo(-14, -14); g.lineTo(14, -14); g.lineTo(0, 30); g.closePath(); g.fill(); g.fillStyle = '#b3261e'; g.fillRect(-8, -12, 16, 7); }
+    // Kopf
+    g.fillStyle = st.skin; g.beginPath(); g.arc(0, -16, 27, 0, Math.PI * 2); g.fill();
+    g.fillStyle = st.hair;
+    if (st.look === 'curls') for (let i = 0; i < 9; i++) { const a = Math.PI + i * Math.PI / 8; g.beginPath(); g.arc(Math.cos(a) * 24, -16 + Math.sin(a) * 24, 9, 0, Math.PI * 2); g.fill(); }
+    else if (st.look === 'cap') { g.beginPath(); g.arc(0, -20, 28, Math.PI, 0); g.fill(); g.fillStyle = '#1b3a73'; g.beginPath(); g.arc(0, -22, 28, Math.PI * 1.05, -Math.PI * .05); g.fill(); g.fillRect(-26, -24, 52, 6); g.beginPath(); g.ellipse(0, -18, 30, 7, 0, 0, Math.PI); g.fill(); }
+    else if (st.look === 'glasses') { g.beginPath(); g.arc(0, -22, 27, Math.PI * 1.05, -Math.PI * .05); g.fill(); }
+    else if (st.look === 'heinz') { g.beginPath(); g.arc(-22, -18, 10, 0, Math.PI * 2); g.arc(22, -18, 10, 0, Math.PI * 2); g.fill(); }
+    // Gesicht (zeigt zum Tisch)
+    g.fillStyle = '#2a1a10'; g.beginPath(); g.arc(-9, -12, 2.6, 0, Math.PI * 2); g.arc(9, -12, 2.6, 0, Math.PI * 2); g.fill();
+    if (st.look === 'glasses') { g.strokeStyle = '#1a1a1a'; g.lineWidth = 2; g.beginPath(); g.arc(-9, -12, 6.5, 0, Math.PI * 2); g.moveTo(15.5, -12); g.arc(9, -12, 6.5, 0, Math.PI * 2); g.moveTo(-2.5, -12); g.lineTo(2.5, -12); g.stroke(); }
+    if (st.look === 'heinz') { g.fillStyle = '#eeeeee'; g.beginPath(); g.ellipse(-8, -2, 9, 4, .2, 0, Math.PI * 2); g.ellipse(8, -2, 9, 4, -.2, 0, Math.PI * 2); g.fill(); }
+    else { g.strokeStyle = '#8a4a3a'; g.lineWidth = 2; g.beginPath(); g.arc(0, -4, 6, .2, Math.PI - .2); g.stroke(); }
+    g.restore();
+  }
+  function lighten(hex) { const n = parseInt(hex.slice(1), 16), f = v => Math.min(255, Math.round(v * 1.35 + 20)); return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; }
+  // Schulterpunkte einer Figur in Tisch-Koordinaten
+  function shoulder(id, side) {
+    const f = figs[id], [x, y] = f.pos, ang = Math.atan2(L.table[1] - y, L.table[0] - x) - Math.PI / 2, lx = side === 'L' ? 46 : -46, ly = 4;
+    return [x + Math.cos(ang) * lx - Math.sin(ang) * ly, y + Math.sin(ang) * lx + Math.cos(ang) * ly];
+  }
+
+  function draw() {
+    const [tx, ty, rx, ry] = L.table;
+    g.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+    // Raum
+    const bg = g.createRadialGradient(tx, ty, 50, tx, ty, Math.max(L.W, L.H) * .75); bg.addColorStop(0, '#3a2414'); bg.addColorStop(1, '#120a05');
+    g.fillStyle = bg; g.fillRect(0, 0, L.W, L.H);
+    // Lichtkegel der Lampe über dem Tisch
+    const lamp = g.createRadialGradient(tx, ty - ry * .2, 20, tx, ty, rx * 1.2); lamp.addColorStop(0, 'rgba(255,220,150,.18)'); lamp.addColorStop(1, 'rgba(255,220,150,0)');
+    // Figuren hinter dem Tisch
+    ['heinz', 'gerda', 'kalle', 'otto'].forEach(figure);
+    // Tisch: Holzrand, Polster, Filz
+    g.fillStyle = '#3a1f0e'; g.beginPath(); g.ellipse(tx, ty + 8, rx + 30, ry + 30, 0, 0, Math.PI * 2); g.fill();
+    const wood = g.createLinearGradient(0, ty - ry - 30, 0, ty + ry + 30); wood.addColorStop(0, '#8a5a30'); wood.addColorStop(.5, '#5a3418'); wood.addColorStop(1, '#3a1f0e');
+    g.fillStyle = wood; g.beginPath(); g.ellipse(tx, ty, rx + 28, ry + 28, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#1a0f08'; g.beginPath(); g.ellipse(tx, ty, rx + 6, ry + 6, 0, 0, Math.PI * 2); g.fill();
+    const felt = g.createRadialGradient(tx, ty - ry * .25, 20, tx, ty, Math.max(rx, ry)); felt.addColorStop(0, '#2c8a57'); felt.addColorStop(.7, '#176b40'); felt.addColorStop(1, '#0d4027');
+    g.fillStyle = felt; g.beginPath(); g.ellipse(tx, ty, rx, ry, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = lamp; g.fillRect(0, 0, L.W, L.H);
+    g.strokeStyle = 'rgba(226,180,87,.45)'; g.lineWidth = 2; g.beginPath(); g.ellipse(tx, ty, rx * .64, ry * .6, 0, 0, Math.PI * 2); g.stroke();
+    g.fillStyle = 'rgba(226,180,87,.22)'; g.font = "700 30px 'Cabin Sketch', cursive"; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('DART KNEIPE', tx, ty - ry * .38);
+    // Stapel des Gebers
+    const [dx, dy] = L.deck;
+    for (let i = 0; i < 4; i++) drawCard({ r: 2, s: 0 }, dx + i * .6, dy - i * .8, L.cw * .9, false, -.4);
+    // Board
+    const bw = L.cw * 1.12, bx0 = L.board[0] - bw * 2;
+    for (let i = 0; i < 5; i++) {
+      const x = bx0 + i * bw, y = L.board[1];
+      if (board[i]) drawCard(board[i], x, y, L.cw, true);
+      else { g.strokeStyle = 'rgba(255,255,255,.14)'; g.lineWidth = 2; g.strokeRect(x - L.cw / 2, y - L.cw * .71, L.cw, L.cw * 1.42); }
+    }
+    // Pot
+    if (pot > 0) { drawChips(L.pot[0], L.pot[1], pot, 1); g.fillStyle = '#ffe9a8'; g.font = "700 20px 'Barlow Condensed', sans-serif"; g.fillText('Pot ' + fmt(pot), L.pot[0], L.pot[1] + 30); }
+    // Spieler: Stapel, Einsätze, Karten, Namen
+    for (const p of players) {
+      const S = L.seats[p.id];
+      drawChips(S.stack[0], S.stack[1], Math.min(p.stack, 30000), .9);
+      if (p.bet > 0) { drawChips(S.bet[0], S.bet[1], p.bet, .8); g.fillStyle = '#f1ede2'; g.font = "600 17px 'Barlow Condensed', sans-serif"; g.fillText(fmt(p.bet), S.bet[0], S.bet[1] + 22); }
+      if (players[dealer] === p) { g.fillStyle = '#fbf8f0'; g.beginPath(); g.arc(S.dealer[0], S.dealer[1], 13, 0, Math.PI * 2); g.fill(); g.fillStyle = '#161616'; g.font = "700 16px 'Barlow Condensed', sans-serif"; g.fillText('D', S.dealer[0], S.dealer[1] + 1); }
+      if (!p.folded && p.cards.length && !p.mucking) {
+        const mine = p.id === 'you', w = mine ? L.cw * 1.3 : L.cw * .82;
+        const lifted = mine && peek, face = p.shown || lifted;
+        p.cards.forEach((c, i) => {
+          if (p.dealt <= i) return;
+          const off = (i ? 1 : -1) * w * .42;
+          drawCard(c, S.cards[0] + off, S.cards[1] + (lifted ? -8 : 0), w, face, (i ? .09 : -.09) * (lifted ? 1.6 : 1), 1, lifted ? 1 : 0);
+        });
+      }
+      if (p.id !== 'you') label(S.label[0], S.label[1], [nameOf(p.id) + ' · ' + fmt(p.stack), p.say || ''].filter(Boolean), waiting === null && p.thinking);
+      else label(S.label[0], S.label[1], [fmt(p.stack), p.say || ''].filter(Boolean), !!waiting);
+    }
+    // Arme der Gegner und des Gebers liegen über dem Tisch
+    for (const id of ['heinz', 'gerda', 'kalle', 'otto']) {
+      const f = figs[id]; if (!f) continue;
+      const st = id === 'heinz' ? { shirt: '#fbf8f0', skin: '#f2c9a0' } : STYLE[id];
+      for (const side of ['L', 'R']) drawArm(shoulder(id, side), f.hand[side], id === 'heinz' ? 92 : 74, 18, st.shirt, st.skin, side === 'L' ? -1 : 1);
+    }
+    // Fliegende Karten und Chips
+    for (const it of flying) {
+      if (it.card) drawCard(it.card, it.x, it.y, it.w, it.face, it.rot || 0, it.alpha ?? 1);
+      else drawChips(it.x, it.y, it.amount, .8);
+    }
+    // Deine Hände von unten
+    const yh = figs.you.hand, sl = '#3b5e8c', sk = '#f0c29a';
+    drawArm([L.W * .2, L.H + 170], yh.L, 190, 46, sl, sk, 1);
+    drawArm([L.W * .8, L.H + 170], yh.R, 190, 46, sl, sk, -1);
+    if (drag && drag.amount) drawChips(yh.R[0] - 6, yh.R[1] - 34, drag.amount, .8);   // Chips zwischen den Fingern
+    dirty = false;
+  }
+
+  /* ---------- Animation ---------- */
+  const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+  const lerp = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+  function tween(dur, step) { return new Promise(res => { anims.push({ t0: performance.now(), dur, step, res }); kick(); }); }
+  const wait = ms => new Promise(res => setTimeout(res, ms));
+  function moveHand(id, side, to, dur = 260) { const f = figs[id], from = f.hand[side].slice(); return tween(dur, k => { f.hand[side] = lerp(from, to, k); }); }
+  function loop(now) {
+    raf = 0;
+    if (el.hidden) return;
+    for (let i = anims.length - 1; i >= 0; i--) {
+      const a = anims[i], k = Math.min(1, (now - a.t0) / a.dur);
+      a.step(ease(k));
+      if (k >= 1) { anims.splice(i, 1); a.res(); }
+    }
+    draw();
+    if (anims.length || dirty) raf = requestAnimationFrame(loop);
+  }
+  function kick() { dirty = true; if (!raf && !el.hidden) raf = requestAnimationFrame(loop); }
+
+  // Ruheposition der Hände: vor der Figur auf dem Tischrand
+  function restOf(id, side) {
+    const f = figs[id], [x, y] = f.pos, ang = Math.atan2(L.table[1] - y, L.table[0] - x) - Math.PI / 2;
+    const lx = side === 'L' ? 36 : -36, ly = id === 'heinz' ? 112 : 110;
+    return [x + Math.cos(ang) * lx - Math.sin(ang) * ly, y + Math.sin(ang) * lx + Math.cos(ang) * ly];
+  }
+  function youRest(side) { const S = L.seats.you; return side === 'L' ? [S.cards[0] - L.cw * 1.35, S.cards[1] + 70] : [S.stack[0] + 10, S.stack[1] + 48]; }
+  function placeFigures() {
+    for (const id of ['heinz', 'gerda', 'kalle', 'otto']) {
+      figs[id] = figs[id] || { hand: {} };
+      figs[id].pos = id === 'heinz' ? L.heinz : L.seats[id].fig;
+      figs[id].hand.L = restOf(id, 'L'); figs[id].hand.R = restOf(id, 'R');
+    }
+    figs.heinz.hand.L = [L.deck[0] - 8, L.deck[1] + 10];
+    figs.you = figs.you || { hand: {} };
+    figs.you.hand.L = youRest('L'); figs.you.hand.R = youRest('R');
+  }
+
+  function resize() {
+    const r = cv.parentElement.getBoundingClientRect(); if (!r.width) return;
+    const portrait = r.width < 620;
+    L = portrait ? LAYOUT.port : LAYOUT.land;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const maxH = window.innerHeight * (portrait ? .56 : .66);
+    let w = r.width, h = w * L.H / L.W;
+    if (h > maxH) { h = maxH; w = h * L.W / L.H; }
+    cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.margin = '0 auto';
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    scale = w / L.W; cardCache.clear();
+    placeFigures(); kick();
+  }
+
+  // Kartenposition eines Spielers (i = 0/1) für Austeilen und Aufdecken
+  const cardSpot = (id, i) => { const S = L.seats[id], w = id === 'you' ? L.cw * 1.3 : L.cw * .82; return [S.cards[0] + (i ? 1 : -1) * w * .42, S.cards[1]]; };
+
+  /* ---------- Aktionen mit Armbewegungen ---------- */
+  async function dealTo(p, i) {
+    const card = p.cards[i], to = cardSpot(p.id, i), from = L.deck.slice();
+    const it = { card, x: from[0], y: from[1], w: p.id === 'you' ? L.cw * 1.3 : L.cw * .82, face: false, rot: -.4 };
+    flying.push(it); sfx.card();
+    const hand = figs.heinz.hand.R.slice();
+    await tween(230, k => { const q = lerp(from, to, k); it.x = q[0]; it.y = q[1]; it.rot = -.4 * (1 - k); figs.heinz.hand.R = lerp(hand, lerp(from, to, Math.min(1, k * 1.2)), Math.min(1, k * 1.5)); });
+    flying.splice(flying.indexOf(it), 1); p.dealt = i + 1;
+    await moveHand('heinz', 'R', restOf('heinz', 'R'), 120);
+  }
+  async function dealBoard(n) {
+    board.push(...deck.splice(0, n).slice(0)); const start = board.length - n;
+    for (let i = start; i < board.length; i++) {
+      const c = board[i]; board[i] = null;
+      const bw = L.cw * 1.12, to = [L.board[0] - bw * 2 + i * bw, L.board[1]], from = L.deck.slice();
+      const it = { card: c, x: from[0], y: from[1], w: L.cw, face: false };
+      flying.push(it); sfx.card();
+      await tween(260, k => { const q = lerp(from, to, k); it.x = q[0]; it.y = q[1]; it.face = k > .6; figs.heinz.hand.R = lerp(restOf('heinz', 'R'), q, Math.min(1, k * 1.3)); });
+      flying.splice(flying.indexOf(it), 1); board[i] = c;
+    }
+    await moveHand('heinz', 'R', restOf('heinz', 'R'), 200);
+  }
+  // Chips vom eigenen Stapel zum Einsatzplatz schieben
+  async function pushChips(p, amount) {
+    const S = L.seats[p.id], side = 'R', from = S.stack.slice(), to = S.bet.slice();
+    if (p.id === 'you' && drag && drag.release) { from[0] = drag.release[0]; from[1] = drag.release[1]; }
+    await moveHand(p.id, side, from, p.id === 'you' ? 160 : 240);
+    const it = { amount, x: from[0], y: from[1] }; flying.push(it); sfx.chips(Math.min(8, 2 + Math.round(amount / 100)));
+    await tween(320, k => { const q = lerp(from, to, k); it.x = q[0]; it.y = q[1]; figs[p.id].hand[side] = [q[0], q[1] + 10]; });
+    flying.splice(flying.indexOf(it), 1);
+    p.stack -= amount; p.bet += amount; p.total += amount; if (p.stack === 0) p.allIn = true;
+    if (p.id === 'you' && players.includes(p)) store(p.stack);
+    moveHand(p.id, side, p.id === 'you' ? youRest('R') : restOf(p.id, side), 240);
+  }
+  async function knock(p) {
+    const S = L.seats[p.id], spot = [(S.cards[0] + S.bet[0]) / 2, (S.cards[1] + S.bet[1]) / 2], back = p.id === 'you' ? youRest('R') : restOf(p.id, 'R');
+    await moveHand(p.id, 'R', spot, 200);
+    for (let i = 0; i < 2; i++) { sfx.tick(); await tween(90, k => { figs[p.id].hand.R = [spot[0], spot[1] - 10 * Math.sin(k * Math.PI)]; }); }
+    await moveHand(p.id, 'R', back, 200);
+  }
+  async function foldAnim(p) {
+    const at = cardSpot(p.id, 0), back = p.id === 'you' ? youRest('L') : restOf(p.id, 'L');
+    await moveHand(p.id, 'L', at, 200);
+    p.mucking = true;
+    const its = p.cards.map((c, i) => ({ card: c, x: cardSpot(p.id, i)[0], y: cardSpot(p.id, i)[1], w: p.id === 'you' ? L.cw * 1.3 : L.cw * .82, face: false }));
+    flying.push(...its); sfx.card();
+    const to = L.deck;
+    const froms = its.map(it => [it.x, it.y]);
+    await tween(380, k => { its.forEach((it, i) => { const q = lerp(froms[i], to, k); it.x = q[0]; it.y = q[1]; it.alpha = 1 - k * .8; it.rot = k * 1.2; }); figs[p.id].hand.L = lerp(at, lerp(at, to, .35), Math.sin(k * Math.PI)); });
+    its.forEach(it => flying.splice(flying.indexOf(it), 1));
+    await moveHand(p.id, 'L', back, 200);
+  }
+  async function showCards(p) {
+    const at = cardSpot(p.id, 0), back = p.id === 'you' ? youRest('L') : restOf(p.id, 'L');
+    await moveHand(p.id, 'L', at, 200); sfx.card(); p.shown = true; kick();
+    await moveHand(p.id, 'L', back, 200);
+  }
+  async function collectBets() {
+    const moving = players.filter(p => p.bet > 0);
+    if (!moving.length) return;
+    const its = moving.map(p => ({ amount: p.bet, x: L.seats[p.id].bet[0], y: L.seats[p.id].bet[1], from: L.seats[p.id].bet.slice() }));
+    moving.forEach(p => { p.bet = 0; });
+    flying.push(...its); sfx.chips(6);
+    const hand = figs.heinz.hand.R.slice();
+    await tween(420, k => { its.forEach(it => { const q = lerp(it.from, L.pot, k); it.x = q[0]; it.y = q[1]; }); figs.heinz.hand.R = lerp(hand, L.pot, Math.sin(k * Math.PI) * .8); });
+    its.forEach(it => { flying.splice(flying.indexOf(it), 1); pot += it.amount; });
+    figs.heinz.hand.R = restOf('heinz', 'R');
+  }
+  async function award(p, amount) {
+    const to = L.seats[p.id].stack, it = { amount, x: L.pot[0], y: L.pot[1] };
+    pot -= amount; flying.push(it); sfx.chips(10);
+    const side = 'R', start = p.id === 'you' ? youRest('R') : restOf(p.id, side);
+    await moveHand(p.id, side, L.pot, 260);
+    await tween(420, k => { const q = lerp(L.pot, to, k); it.x = q[0]; it.y = q[1]; figs[p.id].hand[side] = [q[0], q[1] + 8]; });
+    flying.splice(flying.indexOf(it), 1); p.stack += amount;
+    if (p.id === 'you' && players.includes(p)) store(p.stack);
+    await moveHand(p.id, side, start, 220);
+  }
+
+  /* ---------- Spielablauf ---------- */
+  const alive = () => players.filter(p => !p.folded);
+  const canAct = () => players.filter(p => !p.folded && !p.allIn);
+  const potTotal = () => pot + players.reduce((a, p) => a + p.bet, 0);
+  const next = i => (i + 1) % players.length;
+  const say = (p, text) => { p.say = text; kick(); };
+  function msg(text) { $('#pkMsg').textContent = text; }
+
+  async function act(p, a, tok) {
+    const toCall = high - p.bet;
+    if (a.a === 'fold') { say(p, t('pk.a.fold')); p.folded = true; await foldAnim(p); return; }
+    if (a.a === 'check' || (a.a === 'call' && toCall === 0)) { say(p, t('pk.a.check')); await knock(p); return; }
+    if (a.a === 'call') {
+      const amt = Math.min(toCall, p.stack);
+      say(p, amt === p.stack ? t('pk.a.allin') : t('pk.a.call')); await pushChips(p, amt); return;
+    }
+    // Setzen oder Erhöhen auf a.to (Gesamteinsatz dieser Setzrunde)
+    const maxTo = p.bet + p.stack;
+    let to = Math.min(Math.max(a.to, high + minRaise), maxTo);
+    if (to <= high) { return act(p, { a: 'call' }, tok); }
+    if (to - high >= minRaise) minRaise = to - high;
+    const wasBet = high === 0;
+    high = to;
+    say(p, to === maxTo ? t('pk.a.allin') : t(wasBet ? 'pk.a.bet' : 'pk.a.raise', { v: fmt(to) }));
+    await pushChips(p, to - p.bet);
+  }
+
+  function decide(p) {
+    const st = STYLE[p.id], toCall = high - p.bet, potNow = potTotal();
+    const opp = alive().length - 1;
+    const eq = equity(p.cards, board, Math.max(1, opp), street === 0 ? 160 : 220);
+    const strength = Math.min(1, eq * (opp + 1) / 2) - st.tight + (Math.random() - .5) * .12;
+    const odds = toCall / (potNow + toCall);
+    const r = Math.random();
+    const size = f => high + Math.max(minRaise, Math.round(potNow * f / BB) * BB);
+    if (toCall === 0) {
+      if (strength > st.raise || r < st.bluff) return { a: 'raise', to: size(.5 + Math.random() * .35) };
+      return { a: 'check' };
+    }
+    if (strength > st.raise + .14 && r < .65) return { a: 'raise', to: size(.6 + Math.random() * .5) };
+    if (eq > odds - .02 + st.tight * .5 || (toCall <= BB && strength > .3)) return { a: 'call' };
+    if (r < st.bluff * .35) return { a: 'raise', to: size(.7) };
+    return { a: 'fold' };
+  }
+
+  // Warten, bis du handelst (Knopf oder Chips in die Mitte ziehen)
+  function yourTurn() {
+    const p = you(), toCall = high - p.bet;
+    raiseTo = Math.min(p.bet + p.stack, Math.max(high + minRaise, BB * 2));
+    msg(t('pk.turn') + (peeked ? ' ' + t('pk.you', { h: handName(best(p.cards.concat(board))) }) : ''));
+    return new Promise(res => { waiting = res; paintActions(); kick(); });
+  }
+  function paintActions() {
+    const p = you(), box = $('#pkActions');
+    box.hidden = !waiting && !(p && seated && !p.folded);
+    if (!p) return;
+    const toCall = high - p.bet, maxTo = p.bet + p.stack, minTo = Math.min(maxTo, high + minRaise);
+    raiseTo = Math.max(minTo, Math.min(raiseTo, maxTo));
+    const on = !!waiting;
+    $('#pkFold').disabled = !on || toCall === 0;
+    $('#pkCall').disabled = !on;
+    $('#pkCall').textContent = toCall === 0 ? t('pk.check') : toCall >= p.stack ? t('pk.allin', { v: fmt(p.stack) }) : t('pk.call', { v: fmt(toCall) });
+    const canRaise = on && maxTo > high && p.stack > toCall;
+    $('#pkRaise').disabled = !canRaise;
+    $('#pkRaise').textContent = raiseTo >= maxTo ? t('pk.allin', { v: fmt(maxTo) }) : t(high === 0 ? 'pk.bet' : 'pk.raise', { v: fmt(raiseTo) });
+    $('#pkAmt').textContent = fmt(raiseTo);
+    box.querySelectorAll('.pk-presets button, .pk-amt button').forEach(b => { b.disabled = !canRaise; });
+  }
+  function answer(a) { if (!waiting) return; const r = waiting; waiting = null; paintActions(); r(a); }
+
+  async function bettingRound(first, tok) {
+    let need = new Set(canAct());
+    if (alive().length < 2) return;
+    let i = first;
+    for (let guard = 0; guard < 60 && need.size && alive().length > 1; guard++) {
+      const p = players[i];
+      if (need.has(p)) {
+        // Alle anderen sind all-in und der Einsatz ist gedeckt: nichts mehr zu tun
+        if (canAct().length === 1 && p.bet >= high) { need.delete(p); i = next(i); continue; }
+        let a;
+        if (p.id === 'you') a = await yourTurn();
+        else { p.thinking = true; msg(t('pk.think', { name: nameOf(p.id) })); kick(); await wait(550 + Math.random() * 650); a = decide(p); p.thinking = false; }
+        if (tok !== session) return;
+        const before = high;
+        await act(p, a, tok);
+        if (tok !== session) return;
+        need.delete(p);
+        if (high > before) need = new Set(canAct().filter(q => q !== p));
+      }
+      i = next(i);
+    }
+  }
+
+  async function playHand() {
+    const tok = session;
+    // Gegner ohne Chips kaufen nach
+    for (const p of players) if (p.id !== 'you' && p.stack < BB) { p.stack += OPP_STACK; msg(t('pk.rebuyopp', { name: nameOf(p.id) })); await wait(900); }
+    if (tok !== session) return;
+    deck = newDeck(); board = []; pot = 0; high = 0; minRaise = BB; street = 0; peeked = false;
+    for (const p of players) Object.assign(p, { cards: [], dealt: 0, folded: false, allIn: false, bet: 0, total: 0, shown: false, mucking: false, say: '' });
+    dealer = next(dealer);
+    msg(t('pk.deal')); kick();
+    const sb = players[next(dealer)], bb = players[next(next(dealer))];
+    say(sb, t('pk.a.sb')); await pushChips(sb, Math.min(SB, sb.stack));
+    say(bb, t('pk.a.bb')); await pushChips(bb, Math.min(BB, bb.stack));
+    high = BB;
+    for (let r = 0; r < 2; r++) for (let k = 1; k <= 4; k++) { const p = players[(dealer + k) % 4]; p.cards[r] = deck.pop(); await dealTo(p, r); if (tok !== session) return; }
+    await bettingRound(next(next(next(dealer))), tok);
+    for (const n of [3, 1, 1]) {
+      if (tok !== session) return;
+      await collectBets();
+      if (alive().length < 2) break;
+      street++; high = 0; minRaise = BB; players.forEach(p => { if (!p.folded && !p.allIn) p.say = ''; });
+      deck.pop();   // Brennkarte
+      await dealBoard(n);
+      if (tok !== session) return;
+      if (canAct().length > 1) await bettingRound(next(dealer), tok);
+    }
+    if (tok !== session) return;
+    await collectBets();
+    await showdown(tok);
+  }
+
+  async function showdown(tok) {
+    const live = alive();
+    if (live.length === 1) {
+      const w = live[0], amount = pot;
+      msg(w.id === 'you' ? t('pk.youwin', { v: fmt(amount) }) : t('pk.win', { name: nameOf(w.id), v: fmt(amount) }));
+      await award(w, amount);
+      return finishHand(tok);
+    }
+    for (const p of live) if (p.id !== 'you') await showCards(p); else { p.shown = true; kick(); }
+    const val = new Map(live.map(p => [p, best(p.cards.concat(board))]));
+    live.forEach(p => { p.say = handName(val.get(p)); });
+    // Haupt- und Nebentöpfe nach Einsatzhöhe
+    const levels = [...new Set(players.map(p => p.total).filter(v => v > 0))].sort((a, b) => a - b);
+    let prev = 0; const results = [];
+    for (const lv of levels) {
+      const part = players.reduce((a, p) => a + Math.max(0, Math.min(p.total, lv) - prev), 0);
+      let elig = live.filter(p => p.total >= lv);
+      if (!elig.length) elig = [live.reduce((a, p) => p.total > a.total ? p : a)];
+      const top = Math.max(...elig.map(p => val.get(p))), win = elig.filter(p => val.get(p) === top);
+      const share = Math.floor(part / win.length / 10) * 10; let rest = part - share * win.length;
+      win.forEach(p => results.push([p, share + (rest > 0 ? (rest -= 10, 10) : 0)]));
+      prev = lv;
+    }
+    const sum = new Map(); results.forEach(([p, v]) => sum.set(p, (sum.get(p) || 0) + v));
+    // Rundungsreste landen beim ersten Gewinner
+    const paid = [...sum.values()].reduce((a, b) => a + b, 0);
+    if (paid !== pot && sum.size) { const f = sum.keys().next().value; sum.set(f, sum.get(f) + pot - paid); }
+    const texts = [];
+    for (const [p, v] of sum) {
+      if (tok !== session) return;
+      texts.push(p.id === 'you' ? t('pk.youwinhand', { v: fmt(v), h: handName(val.get(p)) }) : t('pk.winhand', { name: nameOf(p.id), v: fmt(v), h: handName(val.get(p)) }));
+      msg(texts.join(' '));
+      await award(p, v);
+    }
+    if ([...sum.keys()].some(p => p.id === 'you')) { sfx.coins(10); }
+    return finishHand(tok);
+  }
+
+  async function finishHand(tok) {
+    await wait(2600);
+    if (tok !== session) return;
+    const p = you();
+    if (p.stack < BB) { showSit(true); return; }
+    playHand();
+  }
+
+  /* ---------- Hinsetzen, Aufstehen ---------- */
+  function showSit(rebuy) {
+    $('#pkSit').hidden = false; $('#pkActions').hidden = true;
+    $('#pkSitTitle').textContent = rebuy ? t('pk.bust') : t('pk.sit');
+    $('#pkSitBtn').textContent = rebuy ? t('pk.rebuy') : t('pk.sitdown');
+    $('#pkBuyins').innerHTML = BUYINS.map((v, i) => `<label class="chip"><input type="radio" name="pkbuy" value="${i}"${i === buyIdx ? ' checked' : ''}><span>${fmt(v)}</span></label>`).join('');
+    $('#pkSitMsg').textContent = arcade.cash < BUYINS[buyIdx] ? t('pk.nocash') : '';
+  }
+  function sitDown() {
+    const v = BUYINS[buyIdx];
+    if (arcade.cash < v) { $('#pkSitMsg').textContent = t('pk.nocash'); sfx.bust(); return; }
+    sfx.init();
+    arcade.addCash(-v); paintCash();
+    if (!players.length) players = ORDER.map(id => ({ id, stack: id === 'you' ? 0 : OPP_STACK, cards: [], dealt: 0, bet: 0, total: 0 }));
+    you().stack += v; store(you().stack);
+    seated = true; session++;
+    $('#pkSit').hidden = true;
+    playHand();
+  }
+  function leave() {
+    session++;
+    if (waiting) { const r = waiting; waiting = null; r({ a: 'fold' }); }
+    anims.splice(0).forEach(a => a.res()); flying.length = 0;
+    const p = you();
+    if (seated && p) { arcade.addCash(p.stack); p.stack = 0; store(null); }
+    seated = false; players = []; board = []; pot = 0;
+    el.hidden = true; sfx.setStyle(boardKey);
+  }
+  function paintCash() { $('#pkCash').textContent = fmt(arcade.cash); $('#pkSub').textContent = t('pk.sub', { sb: fmt(SB), bb: fmt(BB) }); }
+  function open() {
+    sfx.init();
+    el.hidden = false; paintCash();
+    if (!seated) showSit(false);
+    requestAnimationFrame(() => { resize(); kick(); });
+  }
+
+  /* ---------- Bedienung ---------- */
+  $('#pokerBtn').addEventListener('click', open);
+  $('#pokerCard').addEventListener('click', open);
+  $('#pkLeave').addEventListener('click', leave);
+  $('#pkSitBtn').addEventListener('click', sitDown);
+  $('#pkBuyins').addEventListener('change', e => { buyIdx = +e.target.value; $('#pkSitMsg').textContent = arcade.cash < BUYINS[buyIdx] ? t('pk.nocash') : ''; });
+  $('#pkFold').addEventListener('click', () => answer({ a: 'fold' }));
+  $('#pkCall').addEventListener('click', () => answer({ a: 'call' }));
+  $('#pkRaise').addEventListener('click', () => answer({ a: 'raise', to: raiseTo }));
+  $('#pkLess').addEventListener('click', () => { raiseTo -= BB; paintActions(); });
+  $('#pkMore').addEventListener('click', () => { raiseTo += BB; paintActions(); });
+  el.querySelector('.pk-presets').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const p = you(), potNow = potTotal() + (high - p.bet);
+    raiseTo = b.dataset.p === 'max' ? p.bet + p.stack : high + Math.round(potNow * (b.dataset.p === 'half' ? .5 : 1) / BB) * BB;
+    paintActions();
+  });
+  document.addEventListener('keydown', e => { if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); leave(); } }, true);
+
+  // Zeiger in Tisch-Koordinaten
+  const toTable = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * L.W, (e.clientY - r.top) / r.height * L.H]; };
+  const near = (a, b, d) => Math.hypot(a[0] - b[0], a[1] - b[1]) < d;
+  cv.addEventListener('pointerdown', e => {
+    const p = you(); if (!seated || !p || p.folded) return;
+    const pt = toTable(e), S = L.seats.you;
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    // Karten anheben und anschauen
+    if (p.dealt === 2 && Math.abs(pt[0] - S.cards[0]) < L.cw * 1.5 && Math.abs(pt[1] - S.cards[1]) < L.cw * 1.1) {
+      peek = true;
+      if (!peeked) { peeked = true; }
+      msg(t('pk.you', { h: handName(best(p.cards.concat(board))) }));
+      moveHand('you', 'L', [S.cards[0] - L.cw * .5, S.cards[1] + L.cw * .75], 160);
+      moveHand('you', 'R', [S.cards[0] + L.cw * .6, S.cards[1] + L.cw * .75], 160);
+      e.preventDefault(); return;
+    }
+    // Chips vom Stapel greifen
+    if (waiting && near(pt, S.stack, 70)) {
+      const toCall = high - p.bet, maxTo = p.bet + p.stack;
+      const to = raiseTo > high && maxTo > high ? raiseTo : high;
+      drag = { amount: Math.max(0, Math.min(to - p.bet, p.stack)) || Math.min(toCall, p.stack), to };
+      figs.you.hand.R = pt; kick(); e.preventDefault();
+    }
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!drag) return;
+    figs.you.hand.R = toTable(e); kick();
+  });
+  const release = e => {
+    if (peek) { peek = false; moveHand('you', 'L', youRest('L'), 180); moveHand('you', 'R', youRest('R'), 180); kick(); }
+    if (!drag) return;
+    const pt = toTable(e), [tx, ty, rx, ry] = L.table, S = L.seats.you;
+    const inPot = ((pt[0] - tx) / rx) ** 2 + ((pt[1] - ty) / ry) ** 2 < .8 && pt[1] < S.cards[1] - L.cw * .6;
+    const d = drag; drag = null;
+    if (inPot && waiting) {
+      d.release = pt; drag = { release: pt };
+      answer(d.to > high ? { a: 'raise', to: d.to } : { a: 'call' });
+      setTimeout(() => { drag = null; }, 700);
+    } else moveHand('you', 'R', youRest('R'), 200);
+  };
+  cv.addEventListener('pointerup', release);
+  cv.addEventListener('pointercancel', release);
+  new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv.parentElement);
+
+  return {
+    get open() { return !el.hidden; },
+    relang() { paintCash(); if (!el.hidden && !seated) showSit(false); if (waiting) paintActions(); kick(); }
+  };
+})();
+
 // Pfeil-Symbol für das Menü
 function dartIcon(k) {
   const L = DART_LOOK[k], c = document.createElement('canvas'); c.width = 180; c.height = 52;
@@ -4302,7 +5091,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
