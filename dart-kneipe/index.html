@@ -398,7 +398,7 @@ body.adrenaline .adr-fx{opacity:1;animation:heartbeat .8s ease-in-out infinite}
 .legs{font-size:17px;letter-spacing:.2em;color:rgba(241,237,226,.82);min-height:1.2em}
 .ppd{font-family:var(--ui);font-size:15px;letter-spacing:.06em;color:rgba(241,237,226,.78);font-variant-numeric:tabular-nums}
 .ppd b{font-weight:700;color:var(--chalk);font-size:17px}
-.cpu-tag{font-family:var(--ui);font-size:12px;letter-spacing:.04em;color:#ffd66b;min-height:16px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cpu-tag{font-family:var(--ui);font-size:12px;line-height:1.25;letter-spacing:.04em;color:#ffd66b;min-height:16px;margin-top:2px;overflow-wrap:anywhere}
 .hint{font-size:16px;color:var(--muted);text-align:center;min-height:1.4em;letter-spacing:.03em;text-wrap:balance;max-width:60ch}
 
 /* Tresen mit Wirt */
@@ -684,6 +684,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="level" id="lvlB" value="stammgast" checked><span><span data-i18n="lvl.stammgast">Kalle</span><small data-i18n="lvl.stammgast.l">Stammgast</small></span></label>
         <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span><span data-i18n="lvl.verein">Otto</span><small data-i18n="lvl.verein.l">Vereinsspieler</small></span></label>
         <label class="chip"><input type="radio" name="level" id="lvlD" value="profi"><span><span data-i18n="lvl.profi">Die Maschine</span><small data-i18n="lvl.profi.l">Profi</small></span></label>
+        <label class="chip"><input type="radio" name="level" id="lvlE" value="phantom"><span><span data-i18n="lvl.phantom">Das Phantom</span><small data-i18n="lvl.phantom.l">Legende</small></span></label>
       </div>
       <p class="prize-note" id="prizeNote"></p>
     </fieldset>
@@ -713,6 +714,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.blackjack"></p>
       <p class="rules" data-i18n-html="rules.cards"></p>
       <p class="rules" data-i18n-html="rules.drinks"></p>
+      <p class="rules" data-i18n-html="rules.phantom"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -975,6 +977,46 @@ function cpuTarget(rest, dartsLeft) {
   return best;
 }
 
+// Das Phantom: punktet bewusst nicht über die Triple 20, sondern wählt je nach Lage.
+// Checkouts sucht es ebenfalls lieber ohne T20, mit Vorliebe für D16, D20, D8 und das Bull.
+const memoAlt = new Map();
+function finishAlt(rest, darts) {
+  if (rest < 2 || rest > 170) return null;
+  const key = rest * 4 + darts;
+  if (memoAlt.has(key)) return memoAlt.get(key);
+  const s2 = t => sCost(t) + (t.n === 20 && t.m === 3 ? .35 : 0) - (t.n === 19 && t.m === 3 ? .1 : 0);
+  let best = null;
+  const consider = seq => {
+    const c = seq.slice(0, -1).reduce((a, t) => a + s2(t), 0) + dCost(seq[seq.length - 1]);
+    if (!best || c < best.cost - 1e-9) best = { seq, cost: c };
+  };
+  if (DMAP[rest]) consider([DMAP[rest]]);
+  if (!best && darts >= 2) for (const a of THROWS) { const d = DMAP[rest - a.v]; if (d) consider([a, d]); }
+  if (!best && darts >= 3) for (const a of THROWS) for (const b of THROWS) { const d = DMAP[rest - a.v - b.v]; if (d) consider([a, b, d]); }
+  memoAlt.set(key, best);
+  return best;
+}
+const LEGEND_PREF = { 19: 4, 18: 2, 17: 0, 16: -1, 20: -4, 25: -2 };
+const LEGEND_SCORE = [19, 18, 17, 16, 20].map(n => THROWS.find(t => t.n === n && t.m === 3)).concat(THROWS.find(t => t.l === 'Bull'));
+function legendTarget(rest, left, visit) {
+  const f = finishAlt(rest, left);
+  if (f) return f.seq[0];
+  if (rest <= 170) return cpuTarget(rest, left);   // kein Checkout möglich: sauber stellen
+  let best = null, bv = -Infinity;
+  for (const t of LEGEND_SCORE) {
+    const r2 = rest - t.v;
+    let v = t.v + LEGEND_PREF[t.n];
+    const now = left > 1 && finishAlt(r2, left - 1), next = finishAlt(r2, 3);
+    if (now) v += 60 - now.seq.length * 8;          // noch in dieser Aufnahme auschecken
+    else if (next) v += 30 - next.seq.length * 6;   // Finish für die nächste Aufnahme stellen
+    else if (r2 <= 170) v -= 25;                    // Reste ohne Checkout wie 169 oder 159 meidet es
+    if (visit.some(h => h.n === t.n && h.m === 3)) v -= 6;   // eigene Pfeile verdecken das Feld: ausweichen
+    v += (Math.random() - .5) * 6;
+    if (v > bv) { bv = v; best = t; }
+  }
+  return best;
+}
+
 function gauss2() {
   let u = 0; while (u === 0) u = Math.random();
   const v = Math.random(), m = Math.sqrt(-2 * Math.log(u));
@@ -1005,8 +1047,8 @@ const I18N = {
     'rules.cpu': '<strong>Gegner:</strong> Jeder Gegner wählt jede Aufnahme zufällig eine der Pfeil-Fähigkeiten – Präzision, Schnellwurf, ruhige Hand, Glück oder Übung – und hat sie mit voller Wirkung, nur für diese Aufnahme. Präzision heißt ein präziser Dart, Schnellwurf alle drei Darts, Übung ein voll eingeworfener Standardpfeil (+50 %). Adrenalin bekommt er unter denselben Bedingungen wie du, ebenfalls voll. Was er gerade hat, steht an der Tafel unter seinem Namen.',
     'rules.legs': '<strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.',
     'btn.resume': 'Zurück zum Spiel', 'btn.start': 'Anwerfen', 'btn.settings': 'Einstellungen', 'btn.rematch': 'Revanche',
-    'lvl.anfaenger': 'Tante Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'Die Maschine',
-    'lvl.anfaenger.l': 'Anfängerin', 'lvl.stammgast.l': 'Stammgast', 'lvl.verein.l': 'Vereinsspieler', 'lvl.profi.l': 'Profi',
+    'lvl.anfaenger': 'Tante Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'Die Maschine', 'lvl.phantom': 'Das Phantom',
+    'lvl.anfaenger.l': 'Anfängerin', 'lvl.stammgast.l': 'Stammgast', 'lvl.verein.l': 'Vereinsspieler', 'lvl.profi.l': 'Profi', 'lvl.phantom.l': 'Legende',
     'board.classic': 'Klassik', 'board.classic.d': 'Sisal im Kneipenlicht',
     'board.wood': 'Holz', 'board.wood.d': 'Eiche mit Brandzahlen', 'board.wood.r': 'Gewinne ein Match',
     'board.automat': 'Dartautomat', 'board.automat.d': 'Soft-Tip mit Lauflicht', 'board.automat.r': 'Wirf 100+ in einer Aufnahme',
@@ -1086,6 +1128,13 @@ const I18N = {
     'w.flash': ['1987, Kreisliga-Finale. Ich seh’s noch vor mir!', 'So hab ich früher geworfen. Ganz ruhig.', 'Das ist der alte Heinz in dir!'],
     'w.focus': 'Volle Konzentration! Jetzt sitzt jeder Pfeil.', 'w.beer': ['Siehste, das Pils hilft!', 'Bierglück! Prost!', 'Ein Pils mehr, ein Doppel mehr.'],
     'prize.note': 'Preisgeld je gewonnenem Leg gegen {name}: {v}',
+    'prize.phantom': ' · Schlagbar nur mit voll eingeworfenem Standardpfeil oder mit 3 Energys.',
+    'ph.lock': 'Unschlagbar', 'ph.open': 'Angreifbar', 'ph.aim': '{s} · Ziel {l}',
+    'hint.phlock': 'Das Phantom ist unschlagbar – außer mit voll eingeworfenem Standardpfeil (+50 %) oder mindestens 3 Energys.',
+    'hint.phopen': 'Das Phantom ist angreifbar – zeig, was du kannst!',
+    'w.phantom': 'Das Phantom … Gegen den gewinnst du nur mit voll eingeworfenem Standardpfeil oder drei Energys intus.',
+    'w.phopen': 'Drei Energys! Jetzt ist das Phantom angreifbar.',
+    'rules.phantom': '<strong>Das Phantom:</strong> Die Legende der Kneipe. Es punktet selten über die Triple 20, sondern wählt je nach Lage die 19, 18, 17, 16 oder das Bull: Es meidet Reste ohne Checkout, stellt sich Finishes zurecht und weicht aus, wenn eigene Pfeile das Feld verdecken. Normalerweise ist es unschlagbar. Angreifbar wird es nur, wenn du mit dem voll eingeworfenen Standardpfeil (+50 %) spielst oder mindestens 3 Energys getrunken hast – dann wirft es nur noch wie ein sehr starker Profi. Jedes gewonnene Leg bringt 50 €.',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Beim dritten Krug gibt es den Profi-Heinz-Flashback, 10 Pfeile mit dem besten Aim im Spiel, die du per Knopf selbst einsetzt. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
     'cr.block': 'Skatblock', 'cr.game': 'Spiel', 'cr.resume': 'Weiter geht’s.', 'cr.switching': 'Gleich – die Karten sind noch unterwegs …',
@@ -1167,8 +1216,8 @@ const I18N = {
     'rules.cpu': '<strong>Opponent:</strong> Every opponent picks one of the dart abilities at random each visit – precision, quick throw, steady hand, luck or practice – at full strength, valid for that visit only. Precision means one precise dart, quick throw all three darts, practice a fully broken-in standard dart (+50%). Adrenaline kicks in under the same conditions as yours, also at full strength. Whatever they have right now shows on the scoreboard under their name.',
     'rules.legs': '<strong>Legs:</strong> First to win the chosen number of legs takes the match. The first throw alternates every leg.',
     'btn.resume': 'Back to game', 'btn.start': 'Game on', 'btn.settings': 'Settings', 'btn.rematch': 'Rematch',
-    'lvl.anfaenger': 'Auntie Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'The Machine',
-    'lvl.anfaenger.l': 'Beginner', 'lvl.stammgast.l': 'Regular', 'lvl.verein.l': 'Club player', 'lvl.profi.l': 'Pro',
+    'lvl.anfaenger': 'Auntie Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'The Machine', 'lvl.phantom': 'The Phantom',
+    'lvl.anfaenger.l': 'Beginner', 'lvl.stammgast.l': 'Regular', 'lvl.verein.l': 'Club player', 'lvl.profi.l': 'Pro', 'lvl.phantom.l': 'Legend',
     'board.classic': 'Classic', 'board.classic.d': 'Sisal in pub light',
     'board.wood': 'Wood', 'board.wood.d': 'Oak with burnt numbers', 'board.wood.r': 'Win a match',
     'board.automat': 'Dart machine', 'board.automat.d': 'Soft tip with chaser lights', 'board.automat.r': 'Score 100+ in one visit',
@@ -1247,6 +1296,13 @@ const I18N = {
     'w.flash': ['1987, county league final. I can still see it!', 'That’s how I used to throw. Nice and calm.', 'That’s the old Heinz in you!'],
     'w.focus': 'Full focus! Every dart sits now.', 'w.beer': ['See, the lager helps!', 'Beer luck! Cheers!', 'One more lager, one more double.'],
     'prize.note': 'Prize money per leg won against {name}: {v}',
+    'prize.phantom': ' · Only beatable with a fully broken-in standard dart or 3 energy drinks.',
+    'ph.lock': 'Unbeatable', 'ph.open': 'Vulnerable', 'ph.aim': '{s} · aim {l}',
+    'hint.phlock': 'The Phantom is unbeatable – unless you have a fully broken-in standard dart (+50%) or at least 3 energy drinks.',
+    'hint.phopen': 'The Phantom is vulnerable – show what you’ve got!',
+    'w.phantom': 'The Phantom… You only beat him with a fully broken-in standard dart or three energy drinks inside you.',
+    'w.phopen': 'Three energy drinks! Now the Phantom is vulnerable.',
+    'rules.phantom': '<strong>The Phantom:</strong> The pub’s legend. It rarely scores on treble 20 and instead picks 19, 18, 17, 16 or the bull depending on the situation: it avoids leaves without a checkout, sets up finishes and switches when its own darts cover the bed. Normally it is unbeatable. It only becomes vulnerable if you play the fully broken-in standard dart (+50%) or have had at least 3 energy drinks – then it throws like a very strong pro. Every leg you win earns €50.',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): the third mug brings the Pro Heinz flashback, 10 darts with the best aim in the game that you use with a button. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
     'cr.block': 'Score sheet', 'cr.game': 'Game', 'cr.resume': 'On we go.', 'cr.switching': 'One moment – the cards are still moving…',
@@ -3520,13 +3576,18 @@ const LEVELS = {
   anfaenger: { name: 'Tante Gerda', sigma: 30, label: 'Anfängerin' },
   stammgast: { name: 'Kalle', sigma: 18.5, label: 'Stammgast' },
   verein:    { name: 'Otto', sigma: 12, label: 'Vereinsspieler' },
-  profi:     { name: 'Die Maschine', sigma: 10, label: 'Profi' }
+  profi:     { name: 'Die Maschine', sigma: 10, label: 'Profi' },
+  phantom:   { name: 'Das Phantom', sigma: 1.6, label: 'Legende' }
 };
 for (const k of Object.keys(LEVELS)) Object.defineProperties(LEVELS[k], {
   name: { get: () => t('lvl.' + k) }, label: { get: () => t('lvl.' + k + '.l') }
 });
 // Preisgeld je gewonnenem Leg (Cent): bei 6 gewonnenen Legs gegen Tante Gerda also 15 €
-const LEG_PRIZE = { anfaenger: 250, stammgast: 500, verein: 1000, profi: 2500 };
+const LEG_PRIZE = { anfaenger: 250, stammgast: 500, verein: 1000, profi: 2500, phantom: 5000 };
+// Das Phantom ist unschlagbar – außer du spielst den voll eingeworfenen Standardpfeil oder hast mindestens 3 Energys intus
+const LEGEND = 'phantom', LEGEND_OPEN_SIGMA = 7;   // unschlagbar: im Schnitt 9,4 Darts pro Leg; angreifbar: rund 16
+const legendOpen = () => !!S && ((S.dartSet === 'standard' && stdLevel() >= STD_MAX - 1e-9) || drinks.energy >= DRINK.energy.max);
+const legendSigma = () => legendOpen() ? LEGEND_OPEN_SIGMA : LEVELS[LEGEND].sigma;
 let S = null;
 
 function newGame(o) {
@@ -3547,7 +3608,7 @@ function newGame(o) {
   };
   endEl.hidden = true; menu.hidden = true;
   V.setOpponent(o.level);
-  wirt.say(t('w.start', { name: S.opp.name }));
+  wirt.say(o.level === LEGEND ? t('w.phantom') : t('w.start', { name: S.opp.name }));
   voice.stop();
   voice.say(t('v.gameon'));
   startLeg();
@@ -3618,6 +3679,7 @@ function cpuShuffle(g) {
 // Zu Beginn seiner Aufnahme: Adrenalin wie beim Spieler, Schnellwurf sofort zünden
 function cpuBoostStart(g) {
   const c = g.cpu, name = g.opp.name;
+  if (g.level === LEGEND) { hint(t(legendOpen() ? 'hint.phopen' : 'hint.phlock')); renderTafel(); return; }   // das Phantom braucht keine Fähigkeiten
   cpuShuffle(g);
   if (c.adrLeft === 0) {
     let why = null;
@@ -3663,6 +3725,7 @@ function cpuBoostUse(g, kind) {
 
 // Was der Gegner gerade hat, steht an der Tafel unter seinem Namen
 function cpuBoostTag(g) {
+  if (g.level === LEGEND) { const st = t(legendOpen() ? 'ph.open' : 'ph.lock'); return g.legendAim ? t('ph.aim', { s: st, l: g.legendAim }) : st; }
   const c = g.cpu, set = cpuSet(g);
   if (c.adrLeft > 0) return t('cpu.adr', { n: c.adrLeft });
   let tag = '';
@@ -3679,9 +3742,12 @@ function cpuDart() {
   if (!g || g.over || g.turn !== 1) return;
   if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open || drinkShop.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
-  const kind = cpuBoostKind(g, !!f && f.seq.length === 1);
-  const sigma = g.opp.sigma * cpuMult(kind);
-  const a = aimOf(cpuTarget(g.scores[1], left)), [gx, gy] = gauss2();
+  const legend = g.level === LEGEND;
+  const kind = legend ? 'none' : cpuBoostKind(g, !!f && f.seq.length === 1);
+  const sigma = legend ? legendSigma() : g.opp.sigma * cpuMult(kind);
+  const target = legend ? legendTarget(g.scores[1], left, g.visit) : cpuTarget(g.scores[1], left);
+  if (legend) { g.legendAim = target.l; renderTafel(); }
+  const a = aimOf(target), [gx, gy] = gauss2();
   const tx = a.x + gx * sigma, ty = a.y + gy * sigma;
   // In 3D fliegt der Dart kurz verzögert von rechts ins Bild
   V.cpuThrow(() => { if (S === g && !g.over && g.turn === 1) { cpuBoostUse(g, kind); throwAt(1, tx, ty); } });
@@ -3788,7 +3854,7 @@ function win(g, p, h) {
     setTimeout(() => toast(t('toast.cash'), t('toast.cashx', { v: arcade.fmt(prize) })), 3400);
   }
   if (matchWon && p === 0) {
-    bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi') unlock('pro');
+    bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi' || g.level === LEGEND) unlock('pro');
   }
   if (matchWon && drinks.bound) {
     resetDrinks();
@@ -6849,16 +6915,18 @@ const drinkShop = (() => {
       if (Math.random() < drinks.energy / D.max) { drinks.focusOn = true; text = t('dr.focus'); say = t('w.focus'); sfx.powerup(); }
       else text += ' ' + t('dr.nofocus');
     }
+    if (k === 'energy' && drinks.energy >= D.max && S && !S.over && S.level === LEGEND) say = t('w.phopen');
     if (k === 'brew' && drinks.brew >= D.max) { drinks.flash = FLASH_DARTS; text = t('dr.flash'); say = t('w.flash'); sfx.powerup(); }
     else sfx.charge();
     saveDrinks();
+    if (S) renderTafel();
     $('#drMsg').textContent = text;
     wirt.react('talk', say, k !== 'energy');   // Bier wird gezapft
     render(); renderSkills();
   }
   function renderPrize() {
     const lvl = document.querySelector('#menuForm input[name="level"]:checked');
-    if (lvl) $('#prizeNote').textContent = t('prize.note', { name: t('lvl.' + lvl.value), v: fmt(LEG_PRIZE[lvl.value]) });
+    if (lvl) $('#prizeNote').textContent = t('prize.note', { name: t('lvl.' + lvl.value), v: fmt(LEG_PRIZE[lvl.value]) }) + (lvl.value === LEGEND ? t('prize.phantom') : '');
   }
   function open() { sfx.init(); aim.active = false; $('#drMsg').textContent = ''; render(); el.hidden = false; $('#drLeave').focus({ preventScroll: true }); }
   function close() { el.hidden = true; renderSkills(); }
