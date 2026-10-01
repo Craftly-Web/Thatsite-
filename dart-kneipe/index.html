@@ -138,6 +138,22 @@ body::after{
 .pk-actions button:disabled{opacity:.45;cursor:default}
 .pk-tip{margin:0;text-align:center;font-size:13px;color:#cdb68a}
 @media (max-width:620px){.pk{padding:8px 6px}.pk-actions{grid-template-columns:1fr 1fr}.pk-raise{grid-column:1/-1;grid-row:1}.pk-actions #pkRaise{grid-column:1/-1}}
+/* Blackjack */
+.arc-card.bj-card{background:linear-gradient(90deg,rgba(20,70,100,.6),rgba(10,30,45,.6));border-color:rgba(120,190,230,.45)}
+.arc-card.bj-card svg,.arc-card.bj-card i{color:#8fd0f0}
+.bj-chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.bj-chip{width:52px;height:52px;border-radius:50%;cursor:pointer;font:700 15px/1 var(--ui);color:#fff;border:4px dashed rgba(255,255,255,.8);box-shadow:0 0 0 3px #111,0 4px 10px rgba(0,0,0,.5)}
+.bj-chip.c10{background:#efe9dc;color:#2f5d8a;border-color:#2f5d8a}.bj-chip.c50{background:#c0392b}.bj-chip.c100{background:#1f4fb8}.bj-chip.c500{background:#1f8a3a}.bj-chip.c2500{background:#151515;border-color:#e2b457;color:#e2b457}
+.bj-chip:active{transform:translateY(2px)}
+.bj-betline{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.3fr;gap:8px;margin-top:8px;align-items:stretch}
+.bj-betval{display:grid;justify-items:center;padding:4px 8px;border-radius:8px;background:#0d0804;border:1px solid rgba(233,201,140,.3)}
+.bj-betval small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#cdb68a}
+.bj-betval b{font-family:'Courier New',monospace;font-size:18px;color:#ffe9a8}
+.bj-play{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+#bjIns{grid-template-columns:1fr 1fr}
+.bj-play .btn,.bj-betline .btn{padding:11px 6px;font-size:15px}
+.bj-play .btn:disabled,.bj-betline .btn:disabled{opacity:.45;cursor:default}
+@media (max-width:620px){.bj-betline{grid-template-columns:1fr 1fr}.bj-play{grid-template-columns:1fr 1fr}.bj-chip{width:48px;height:48px}}
 /* Spielhalle */
 .arc-card{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:12px;width:100%;padding:11px 14px;border-radius:8px;cursor:pointer;text-align:left;
   font-family:var(--ui);color:var(--ink);background:linear-gradient(90deg,rgba(120,20,40,.55),rgba(40,10,30,.55));border:1px solid rgba(255,120,160,.45)}
@@ -430,6 +446,8 @@ legend{padding:0;margin-bottom:8px}
   .plank small{display:none}
   .actions .btn{padding:9px 12px;font-size:14px}
   .actions .icon-btn{width:40px;height:40px;padding:0}
+  /* Auf schmalen Handys nur ein Spiele-Knopf im Kopf; Poker und Blackjack gibt es über die Karten im Menü */
+  #pokerBtn,#blackjackBtn{display:none}
   #menuBtn .long{display:none}
   #menuBtn .short{display:inline}
   .bar-frame{width:min(100%, 340px)}
@@ -476,6 +494,7 @@ legend{padding:0;margin-bottom:8px}
       <small>Steeldart · Double Out</small>
     </div>
     <div class="actions">
+      <button class="btn ghost icon-btn" id="blackjackBtn" type="button" aria-label="Blackjack" data-i18n-aria="bj.btn" data-i18n-title="bj.btn" title="Blackjack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg></button>
       <button class="btn ghost icon-btn" id="pokerBtn" type="button" aria-label="Pokertisch" data-i18n-aria="pk.btn" data-i18n-title="pk.btn" title="Pokertisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg></button>
       <button class="btn ghost icon-btn" id="arcadeBtn" type="button" aria-label="Spielhalle" data-i18n-aria="arc.btn" data-i18n-title="arc.btn" title="Spielhalle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg></button>
       <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
@@ -604,6 +623,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span data-i18n="starter.opp">Gegner</span></label>
       </div>
     </fieldset>
+    <button type="button" class="arc-card bj-card" id="blackjackCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg><span><b data-i18n="bj.btn">Blackjack</b><small data-i18n="bj.cardx">Gegen Heinz als Bank · Blackjack zahlt 3:2</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card pk-card" id="pokerCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg><span><b data-i18n="pk.btn">Pokertisch</b><small data-i18n="pk.cardx">Texas Hold’em mit Heinz als Geber</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card" id="arcadeCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg><span><b data-i18n="arc.btn">Spielhalle</b><small id="arcadeCardCash"></small></span><i aria-hidden="true">›</i></button>
     <details class="howto">
@@ -617,6 +637,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.cpu"></p>
       <p class="rules" data-i18n-html="rules.arcade"></p>
       <p class="rules" data-i18n-html="rules.poker"></p>
+      <p class="rules" data-i18n-html="rules.blackjack"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -702,6 +723,38 @@ legend{padding:0;margin-bottom:8px}
     <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.</p>
     <div class="row"><button type="button" class="btn ghost" id="bkClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
   </div>
+  </div>
+</div>
+
+<div class="overlay" id="bj" role="dialog" aria-modal="true" aria-labelledby="bjTitle" hidden>
+  <div class="pk bj">
+    <div class="pk-head">
+      <div><h2 id="bjTitle" data-i18n="bj.title">Heinz’ Blackjack</h2><small id="bjSub"></small></div>
+      <div class="pk-cash"><small data-i18n="arc.credit">Guthaben</small><b id="bjCash">0,00 €</b></div>
+    </div>
+    <div class="pk-stage"><canvas id="bjCv" aria-label="Blackjack-Tisch" role="img"></canvas></div>
+    <div class="pk-msg" id="bjMsg" aria-live="polite"></div>
+    <div class="bj-row" id="bjBetting">
+      <div class="bj-chips" id="bjChips"></div>
+      <div class="bj-betline">
+        <span class="bj-betval"><small data-i18n="bj.bet">Einsatz</small><b id="bjBet">0,00 €</b></span>
+        <button type="button" class="btn ghost" id="bjClear" data-i18n="bj.clear">Löschen</button>
+        <button type="button" class="btn ghost" id="bjRepeat"></button>
+        <button type="button" class="btn" id="bjDeal" data-i18n="bj.deal">Geben</button>
+      </div>
+    </div>
+    <div class="bj-play" id="bjPlay" hidden>
+      <button type="button" class="btn" id="bjHit" data-i18n="bj.hit">Karte</button>
+      <button type="button" class="btn ghost" id="bjStand" data-i18n="bj.stand">Stehen</button>
+      <button type="button" class="btn ghost" id="bjDouble" data-i18n="bj.double">Verdoppeln</button>
+      <button type="button" class="btn ghost" id="bjSplit" data-i18n="bj.split">Teilen</button>
+    </div>
+    <div class="bj-play" id="bjIns" hidden>
+      <button type="button" class="btn" id="bjInsYes" data-i18n="bj.insyes">Versichern</button>
+      <button type="button" class="btn ghost" id="bjInsNo" data-i18n="bj.insnobtn">Nein danke</button>
+    </div>
+    <p class="pk-tip" data-i18n="bj.tip">Auf den Filz tippen = Karte · seitlich wischen = stehen</p>
+    <div class="row"><button type="button" class="btn ghost" id="bjLeave" data-i18n="bj.leave">Zurück in die Kneipe</button></div>
   </div>
 </div>
 
@@ -890,6 +943,15 @@ const I18N = {
     'arc.lose': ['Leider nichts. Nächste Runde?', 'Knapp daneben ist auch vorbei.', 'Die Walzen sind heute launisch.'],
     'arc.won': 'Gewinn {v}!', 'arc.line': 'Linie {n}: {k}× {s}', 'arc.jackpot': 'HAUPTGEWINN! Fünf Siebener – {v}!', 'arc.card': 'Guthaben {v}',
     'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle',
+    'bj.btn': 'Blackjack', 'bj.cardx': 'Gegen Heinz als Bank · Blackjack zahlt 3:2', 'bj.title': 'Heinz’ Blackjack',
+    'bj.sub': '6 Decks · Bank steht auf Soft 17 · Einsatz 0,10–50 €', 'bj.felt1': 'BLACKJACK ZAHLT 3 ZU 2', 'bj.felt2': 'Bank zieht bis 16 und steht ab 17 · Versicherung zahlt 2 zu 1',
+    'bj.place': 'Setz deine Chips und drück „Geben“.', 'bj.bet': 'Einsatz', 'bj.clear': 'Löschen', 'bj.repeat': 'Wieder {v}', 'bj.deal': 'Geben',
+    'bj.hit': 'Karte', 'bj.stand': 'Stehen', 'bj.double': 'Verdoppeln', 'bj.split': 'Teilen', 'bj.insyes': 'Versichern', 'bj.insnobtn': 'Nein danke',
+    'bj.insq': 'Die Bank zeigt ein Ass. Versicherung für {v}?', 'bj.insno': 'Kein Blackjack bei der Bank – weiter geht’s.', 'bj.dealerbj': 'Die Bank hat Blackjack.',
+    'bj.turn': 'Du hast {v}. Tippen = Karte, wischen = stehen.', 'bj.think': 'überlegt …', 'bj.a.hit': 'Karte!', 'bj.a.stand': 'Steht', 'bj.a.double': 'Verdoppelt', 'bj.a.split': 'Teilt',
+    'bj.bust': 'Überkauft', 'bj.win': 'Gewonnen', 'bj.lose': 'Verloren', 'bj.push': 'Unentschieden', 'bj.net+': '+{v}', 'bj.shuffle': 'Heinz mischt einen neuen Schlitten …',
+    'bj.dealing': 'Heinz gibt …', 'bj.max': 'Höchsteinsatz 50 €.', 'bj.tip': 'Auf den Filz tippen = Karte · seitlich wischen = stehen', 'bj.leave': 'Zurück in die Kneipe',
+    'rules.blackjack': '<strong>Blackjack:</strong> Gegen Heinz als Bank, Tante Gerda und Kalle spielen mit. Sechs Decks, die Bank zieht bis 16 und steht ab 17 (auch auf Soft 17), Blackjack zahlt 3:2, Versicherung 2:1. Verdoppeln auf zwei Karten, einmal Teilen. Einsatz 10 Cent bis 50 € vom Spielhallen-Guthaben. Wie im Casino: auf den Filz tippen für eine Karte, seitlich wischen zum Stehen.',
     'pk.btn': 'Pokertisch', 'pk.cardx': 'Texas Hold’em mit Heinz als Geber', 'pk.title': 'Heinz’ Pokerrunde', 'pk.sub': 'Texas Hold’em · Blinds {sb} / {bb}',
     'pk.sit': 'Setz dich an den Tisch', 'pk.sitx': 'Texas Hold’em gegen Tante Gerda, Kalle und Otto. Das Buy-in kommt vom Spielhallen-Guthaben; was du beim Aufstehen vor dir hast, geht zurück aufs Guthaben.',
     'pk.sitdown': 'Hinsetzen', 'pk.rebuy': 'Nachkaufen', 'pk.leave': 'Aufstehen', 'pk.buyin': 'Buy-in {v}', 'pk.nocash': 'Zu wenig Guthaben für dieses Buy-in. Gewinn ein Match in der Kneipe!',
@@ -1000,6 +1062,15 @@ const I18N = {
     'arc.lose': ['Nothing this time. Another spin?', 'So close, and yet…', 'The reels are moody tonight.'],
     'arc.won': 'You win {v}!', 'arc.line': 'Line {n}: {k}× {s}', 'arc.jackpot': 'JACKPOT! Five sevens – {v}!', 'arc.card': 'Credit {v}',
     'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade',
+    'bj.btn': 'Blackjack', 'bj.cardx': 'Heinz is the bank · blackjack pays 3:2', 'bj.title': 'Heinz’s blackjack',
+    'bj.sub': '6 decks · dealer stands on soft 17 · bets €0.10–50', 'bj.felt1': 'BLACKJACK PAYS 3 TO 2', 'bj.felt2': 'Dealer draws to 16 and stands on 17 · insurance pays 2 to 1',
+    'bj.place': 'Place your chips and press “Deal”.', 'bj.bet': 'Bet', 'bj.clear': 'Clear', 'bj.repeat': 'Again {v}', 'bj.deal': 'Deal',
+    'bj.hit': 'Hit', 'bj.stand': 'Stand', 'bj.double': 'Double', 'bj.split': 'Split', 'bj.insyes': 'Insure', 'bj.insnobtn': 'No thanks',
+    'bj.insq': 'The dealer shows an ace. Insurance for {v}?', 'bj.insno': 'No blackjack for the dealer – play on.', 'bj.dealerbj': 'The dealer has blackjack.',
+    'bj.turn': 'You have {v}. Tap = hit, swipe = stand.', 'bj.think': 'thinking…', 'bj.a.hit': 'Hit!', 'bj.a.stand': 'Stands', 'bj.a.double': 'Doubles', 'bj.a.split': 'Splits',
+    'bj.bust': 'Bust', 'bj.win': 'Win', 'bj.lose': 'Lose', 'bj.push': 'Push', 'bj.net+': '+{v}', 'bj.shuffle': 'Heinz shuffles a fresh shoe…',
+    'bj.dealing': 'Heinz deals…', 'bj.max': 'Maximum bet €50.', 'bj.tip': 'Tap the felt = hit · swipe sideways = stand', 'bj.leave': 'Back to the pub',
+    'rules.blackjack': '<strong>Blackjack:</strong> Against Heinz as the bank, with Aunt Gerda and Kalle at the table. Six decks, the dealer draws to 16 and stands on all 17s, blackjack pays 3:2, insurance 2:1. Double on two cards, split once. Bets from 10 cents to €50 from your arcade credit. Just like a casino: tap the felt for a card, swipe sideways to stand.',
     'pk.btn': 'Poker table', 'pk.cardx': 'Texas Hold’em with Heinz dealing', 'pk.title': 'Heinz’s poker night', 'pk.sub': 'Texas Hold’em · blinds {sb} / {bb}',
     'pk.sit': 'Take a seat', 'pk.sitx': 'Texas Hold’em against Aunt Gerda, Kalle and Otto. The buy-in comes from your arcade credit; whatever is in front of you when you get up goes back to it.',
     'pk.sitdown': 'Sit down', 'pk.rebuy': 'Buy in again', 'pk.leave': 'Get up', 'pk.buyin': 'Buy-in {v}', 'pk.nocash': 'Not enough credit for this buy-in. Win a match in the pub!',
@@ -3331,7 +3402,7 @@ function cpuBoostTag(g) {
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1) return;
-  if (!menu.hidden || arcade.open || poker.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  if (!menu.hidden || arcade.open || poker.open || blackjack.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const kind = cpuBoostKind(g, !!f && f.seq.length === 1);
   const sigma = g.opp.sigma * cpuMult(kind);
@@ -4306,11 +4377,124 @@ const bookSlot = (() => {
   return { relang() { if ($('#bkPayList').children.length) renderPays(); paint(); } };
 })();
 
+/* ---------- Tischzeichnungen für Poker und Blackjack: Karten, Chips, Arme, Figuren ---------- */
+const felt = (() => {
+  const SUIT = ['♠', '♥', '♦', '♣'], RANK = { 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
+  const rankLabel = r => RANK[r] || String(r);
+  const HEINZ = { shirt: '#1f5a36', skin: '#f2c9a0', hair: '#eeeeee', look: 'heinz' };
+  const cache = new Map();
+  // Kartenbild in Pixelbreite px, einmal gezeichnet und wiederverwendet
+  function cardImg(c, px, face) {
+    const key = (face ? c.r * 4 + c.s : 'b') + '@' + px;
+    if (cache.has(key)) return cache.get(key);
+    const h = Math.round(px * 1.42), k = document.createElement('canvas'); k.width = px; k.height = h;
+    const x = k.getContext('2d'), r = px * .1;
+    x.beginPath(); x.roundRect ? x.roundRect(1, 1, px - 2, h - 2, r) : x.rect(1, 1, px - 2, h - 2);
+    if (face) {
+      x.fillStyle = '#fbf8f0'; x.fill(); x.strokeStyle = '#8a8272'; x.lineWidth = Math.max(1, px / 60); x.stroke();
+      const red = c.s === 1 || c.s === 2; x.fillStyle = red ? '#c8102e' : '#161616';
+      x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.font = `700 ${px * .3}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; x.fillText(rankLabel(c.r), px * .2, h * .13);
+      x.font = `${px * .24}px 'DejaVu Sans', 'Segoe UI Symbol', sans-serif`; x.fillText(SUIT[c.s], px * .2, h * .3);
+      x.font = `${px * .62}px 'DejaVu Sans', 'Segoe UI Symbol', sans-serif`; x.fillText(SUIT[c.s], px * .58, h * .6);
+    } else {
+      const gr = x.createLinearGradient(0, 0, px, h); gr.addColorStop(0, '#7a1020'); gr.addColorStop(1, '#3d0610');
+      x.fillStyle = gr; x.fill(); x.strokeStyle = '#f3e3c2'; x.lineWidth = px * .05; x.stroke();
+      x.strokeStyle = 'rgba(243,227,194,.35)'; x.lineWidth = px * .02;
+      for (let i = -h; i < px + h; i += px * .14) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i + h, h); x.moveTo(i + h, 0); x.lineTo(i, h); x.stroke(); }
+      x.fillStyle = '#f3e3c2'; x.font = `700 ${px * .3}px 'Barlow Condensed', sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('DK', px / 2, h / 2);
+    }
+    if (cache.size > 400) cache.clear();
+    cache.set(key, k);
+    return k;
+  }
+  function card(g, c, x, y, w, px, face, rot = 0, alpha = 1, lift = 0) {
+    const img = cardImg(c, px, face), h = w * 1.42;
+    g.save(); g.globalAlpha = alpha; g.translate(x, y); g.rotate(rot);
+    g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 6 + lift * 16; g.shadowOffsetY = 2 + lift * 10;
+    g.drawImage(img, -w / 2, -h / 2 - lift * 14, w, h);
+    g.restore();
+  }
+  const CHIP = [[2500, '#151515', '#e2b457'], [500, '#1f8a3a', '#f4efe4'], [100, '#1f4fb8', '#f4efe4'], [50, '#c0392b', '#f4efe4'], [10, '#efe9dc', '#2f5d8a']];
+  function chips(g, x, y, amount, sz = 1) {
+    if (amount <= 0) return;
+    const cols = []; let rest = amount;
+    for (const [v, c1, c2] of CHIP) { const n = Math.floor(rest / v); rest -= n * v; if (n) cols.push([Math.min(n, 12), c1, c2]); }
+    if (rest > 0) cols.push([1, '#e9e3d4', '#8a7a5a']);   // Restcents (z. B. 5 Cent bei 3:2) als kleiner Chip
+    const r = 13 * sz, dx = r * 2.1, x0 = x - (cols.length - 1) * dx / 2;
+    cols.forEach(([n, c1, c2], i) => {
+      for (let k = 0; k < n; k++) {
+        const cx = x0 + i * dx, cy = y - k * 3.6 * sz;
+        g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(cx, cy + 3 * sz, r, r * .55, 0, 0, Math.PI * 2); g.fill();
+        g.fillStyle = c1; g.beginPath(); g.ellipse(cx, cy, r, r * .55, 0, 0, Math.PI * 2); g.fill();
+        g.strokeStyle = c2; g.lineWidth = 2.4 * sz; g.setLineDash([3.2 * sz, 3.6 * sz]); g.beginPath(); g.ellipse(cx, cy, r * .82, r * .45, 0, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
+      }
+    });
+  }
+  function label(g, x, y, lines, hl) {
+    g.font = "600 19px 'Barlow Condensed', 'Arial Narrow', sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const w = Math.max(...lines.map(l => g.measureText(l).width)) + 18, h = lines.length * 21 + 8;
+    g.fillStyle = hl ? 'rgba(90,60,10,.9)' : 'rgba(12,8,4,.78)'; g.strokeStyle = hl ? '#ffd66b' : 'rgba(233,201,140,.35)'; g.lineWidth = 1.5;
+    g.beginPath(); g.roundRect ? g.roundRect(x - w / 2, y - h / 2, w, h, 7) : g.rect(x - w / 2, y - h / 2, w, h); g.fill(); g.stroke();
+    lines.forEach((l, i) => { g.fillStyle = i ? '#ffd66b' : '#f1ede2'; g.fillText(l, x, y - h / 2 + 14 + i * 21); });
+  }
+
+  // Arme mit zwei Gelenken: Schulter → Ellbogen → Hand, Ellbogen knickt nach außen
+  function arm(g, sh, hand, len, width, sleeve, skin, bend) {
+    const dx = hand[0] - sh[0], dy = hand[1] - sh[1]; let d = Math.hypot(dx, dy) || 1;
+    let hx = hand[0], hy = hand[1];
+    if (d > len * 1.98) { hx = sh[0] + dx / d * len * 1.98; hy = sh[1] + dy / d * len * 1.98; d = len * 1.98; }
+    const a = Math.atan2(hy - sh[1], hx - sh[0]), b = Math.acos(Math.min(1, d / (2 * len)));
+    const ex = sh[0] + Math.cos(a + bend * b) * len, ey = sh[1] + Math.sin(a + bend * b) * len;
+    g.lineCap = 'round';
+    g.strokeStyle = 'rgba(0,0,0,.25)'; g.lineWidth = width + 4; g.beginPath(); g.moveTo(sh[0], sh[1]); g.lineTo(ex, ey); g.lineTo(hx, hy); g.stroke();
+    g.strokeStyle = sleeve; g.lineWidth = width; g.beginPath(); g.moveTo(sh[0], sh[1]); g.lineTo(ex, ey); g.stroke();
+    g.strokeStyle = sleeve; g.lineWidth = width * .92; g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex + (hx - ex) * .55, ey + (hy - ey) * .55); g.stroke();
+    g.strokeStyle = skin; g.lineWidth = width * .62; g.beginPath(); g.moveTo(ex + (hx - ex) * .5, ey + (hy - ey) * .5); g.lineTo(hx, hy); g.stroke();
+    // Hand mit angedeuteten Fingern
+    const ha = Math.atan2(hy - ey, hx - ex);
+    g.save(); g.translate(hx, hy); g.rotate(ha);
+    g.fillStyle = skin; g.beginPath(); g.ellipse(width * .25, 0, width * .62, width * .5, 0, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = 'rgba(120,70,40,.35)'; g.lineWidth = 1.5;
+    for (const o of [-.28, 0, .28]) { g.beginPath(); g.moveTo(width * .5, o * width); g.lineTo(width * .85, o * width * 1.1); g.stroke(); }
+    g.beginPath(); g.ellipse(width * .1, -width * .5, width * .28, width * .16, -.6, 0, Math.PI * 2); g.fillStyle = skin; g.fill();
+    g.restore();
+  }
+
+  function lighten(hex) { const n = parseInt(hex.slice(1), 16), f = v => Math.min(255, Math.round(v * 1.35 + 20)); return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; }
+  // Figur von oben, das Gesicht zeigt zum Tisch (ang dreht die Figur dorthin)
+  function figure(g, x, y, ang, st, faded) {
+    g.save(); g.translate(x, y); g.rotate(ang); g.globalAlpha = faded ? .75 : 1;
+    // Schultern und Oberkörper
+    const sg = g.createLinearGradient(-60, 0, 60, 0); sg.addColorStop(0, st.shirt); sg.addColorStop(.5, lighten(st.shirt)); sg.addColorStop(1, st.shirt);
+    g.fillStyle = sg; g.beginPath(); g.ellipse(0, 6, 62, 30, 0, 0, Math.PI * 2); g.fill();
+    if (st.look === 'heinz') { g.fillStyle = '#fbf8f0'; g.beginPath(); g.moveTo(-14, -14); g.lineTo(14, -14); g.lineTo(0, 30); g.closePath(); g.fill(); g.fillStyle = '#b3261e'; g.fillRect(-8, -12, 16, 7); }
+    // Kopf
+    g.fillStyle = st.skin; g.beginPath(); g.arc(0, -16, 27, 0, Math.PI * 2); g.fill();
+    g.fillStyle = st.hair;
+    if (st.look === 'curls') for (let i = 0; i < 9; i++) { const a = Math.PI + i * Math.PI / 8; g.beginPath(); g.arc(Math.cos(a) * 24, -16 + Math.sin(a) * 24, 9, 0, Math.PI * 2); g.fill(); }
+    else if (st.look === 'cap') { g.beginPath(); g.arc(0, -20, 28, Math.PI, 0); g.fill(); g.fillStyle = '#1b3a73'; g.beginPath(); g.arc(0, -22, 28, Math.PI * 1.05, -Math.PI * .05); g.fill(); g.fillRect(-26, -24, 52, 6); g.beginPath(); g.ellipse(0, -18, 30, 7, 0, 0, Math.PI); g.fill(); }
+    else if (st.look === 'glasses') { g.beginPath(); g.arc(0, -22, 27, Math.PI * 1.05, -Math.PI * .05); g.fill(); }
+    else if (st.look === 'heinz') { g.beginPath(); g.arc(-22, -18, 10, 0, Math.PI * 2); g.arc(22, -18, 10, 0, Math.PI * 2); g.fill(); }
+    // Gesicht (zeigt zum Tisch)
+    g.fillStyle = '#2a1a10'; g.beginPath(); g.arc(-9, -12, 2.6, 0, Math.PI * 2); g.arc(9, -12, 2.6, 0, Math.PI * 2); g.fill();
+    if (st.look === 'glasses') { g.strokeStyle = '#1a1a1a'; g.lineWidth = 2; g.beginPath(); g.arc(-9, -12, 6.5, 0, Math.PI * 2); g.moveTo(15.5, -12); g.arc(9, -12, 6.5, 0, Math.PI * 2); g.moveTo(-2.5, -12); g.lineTo(2.5, -12); g.stroke(); }
+    if (st.look === 'heinz') { g.fillStyle = '#eeeeee'; g.beginPath(); g.ellipse(-8, -2, 9, 4, .2, 0, Math.PI * 2); g.ellipse(8, -2, 9, 4, -.2, 0, Math.PI * 2); g.fill(); }
+    else { g.strokeStyle = '#8a4a3a'; g.lineWidth = 2; g.beginPath(); g.arc(0, -4, 6, .2, Math.PI - .2); g.stroke(); }
+    g.restore();
+  }
+  // Schulterpunkt einer Figur an (x, y) mit Drehung ang
+  function shoulder(x, y, ang, side) {
+    const lx = side === 'L' ? 46 : -46, ly = 4;
+    return [x + Math.cos(ang) * lx - Math.sin(ang) * ly, y + Math.sin(ang) * lx + Math.cos(ang) * ly];
+  }
+  return { SUIT, rankLabel, HEINZ, cardImg, card, chips, label, arm, figure, shoulder };
+})();
+
 /* ---------- Pokertisch: Texas Hold'em, Heinz gibt, Gerda, Kalle und Otto spielen mit ---------- */
 const poker = (() => {
   const SB = 10, BB = 20, OPP_STACK = 1000, BUYINS = [500, 1000, 2000, 5000];   // alles in Cent
-  const SUIT = ['♠', '♥', '♦', '♣'], RANK = { 11: 'J', 12: 'Q', 13: 'K', 14: 'A' };
-  const rankLabel = r => RANK[r] || String(r);
+  const rankLabel = felt.rankLabel;
   const ORDER = ['you', 'gerda', 'kalle', 'otto'];   // im Uhrzeigersinn um den Tisch
   // Spielstil: tight = wie viel Stärke zusätzlich zum Mitgehen verlangt wird, raise = ab wann erhöht wird, bluff = Bluffrate
   const STYLE = {
@@ -4422,107 +4606,15 @@ const poker = (() => {
   }
 
   /* ---------- Zeichnen ---------- */
-  const cardCache = new Map();
-  function cardImg(c, w, face) {
-    const px = Math.round(w * scale * dpr), key = (face ? c.r * 4 + c.s : 'b') + '@' + px;
-    if (cardCache.has(key)) return cardCache.get(key);
-    const h = Math.round(px * 1.42), k = document.createElement('canvas'); k.width = px; k.height = h;
-    const x = k.getContext('2d'), r = px * .1;
-    x.beginPath(); x.roundRect ? x.roundRect(1, 1, px - 2, h - 2, r) : x.rect(1, 1, px - 2, h - 2);
-    if (face) {
-      x.fillStyle = '#fbf8f0'; x.fill(); x.strokeStyle = '#8a8272'; x.lineWidth = Math.max(1, px / 60); x.stroke();
-      const red = c.s === 1 || c.s === 2; x.fillStyle = red ? '#c8102e' : '#161616';
-      x.textAlign = 'center'; x.textBaseline = 'middle';
-      x.font = `700 ${px * .3}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; x.fillText(rankLabel(c.r), px * .2, h * .13);
-      x.font = `${px * .24}px 'DejaVu Sans', 'Segoe UI Symbol', sans-serif`; x.fillText(SUIT[c.s], px * .2, h * .3);
-      x.font = `${px * .62}px 'DejaVu Sans', 'Segoe UI Symbol', sans-serif`; x.fillText(SUIT[c.s], px * .58, h * .6);
-    } else {
-      const gr = x.createLinearGradient(0, 0, px, h); gr.addColorStop(0, '#7a1020'); gr.addColorStop(1, '#3d0610');
-      x.fillStyle = gr; x.fill(); x.strokeStyle = '#f3e3c2'; x.lineWidth = px * .05; x.stroke();
-      x.strokeStyle = 'rgba(243,227,194,.35)'; x.lineWidth = px * .02;
-      for (let i = -h; i < px + h; i += px * .14) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i + h, h); x.moveTo(i + h, 0); x.lineTo(i, h); x.stroke(); }
-      x.fillStyle = '#f3e3c2'; x.font = `700 ${px * .3}px 'Barlow Condensed', sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('DK', px / 2, h / 2);
-    }
-    cardCache.set(key, k);
-    return k;
-  }
-  function drawCard(c, x, y, w, face, rot = 0, alpha = 1, lift = 0) {
-    const img = cardImg(c, w, face), h = w * 1.42;
-    g.save(); g.globalAlpha = alpha; g.translate(x, y); g.rotate(rot);
-    g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 6 + lift * 16; g.shadowOffsetY = 2 + lift * 10;
-    g.drawImage(img, -w / 2, -h / 2 - lift * 14, w, h);
-    g.restore();
-  }
-  const CHIP = [[2500, '#151515', '#e2b457'], [500, '#1f8a3a', '#f4efe4'], [100, '#1f4fb8', '#f4efe4'], [50, '#c0392b', '#f4efe4'], [10, '#efe9dc', '#2f5d8a']];
-  function drawChips(x, y, amount, sz = 1) {
-    if (amount <= 0) return;
-    const cols = []; let rest = amount;
-    for (const [v, c1, c2] of CHIP) { const n = Math.floor(rest / v); rest -= n * v; if (n) cols.push([Math.min(n, 12), c1, c2]); }
-    const r = 13 * sz, dx = r * 2.1, x0 = x - (cols.length - 1) * dx / 2;
-    cols.forEach(([n, c1, c2], i) => {
-      for (let k = 0; k < n; k++) {
-        const cx = x0 + i * dx, cy = y - k * 3.6 * sz;
-        g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(cx, cy + 3 * sz, r, r * .55, 0, 0, Math.PI * 2); g.fill();
-        g.fillStyle = c1; g.beginPath(); g.ellipse(cx, cy, r, r * .55, 0, 0, Math.PI * 2); g.fill();
-        g.strokeStyle = c2; g.lineWidth = 2.4 * sz; g.setLineDash([3.2 * sz, 3.6 * sz]); g.beginPath(); g.ellipse(cx, cy, r * .82, r * .45, 0, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
-      }
-    });
-  }
-  function label(x, y, lines, hl) {
-    g.font = "600 19px 'Barlow Condensed', 'Arial Narrow', sans-serif"; g.textAlign = 'center'; g.textBaseline = 'middle';
-    const w = Math.max(...lines.map(l => g.measureText(l).width)) + 18, h = lines.length * 21 + 8;
-    g.fillStyle = hl ? 'rgba(90,60,10,.9)' : 'rgba(12,8,4,.78)'; g.strokeStyle = hl ? '#ffd66b' : 'rgba(233,201,140,.35)'; g.lineWidth = 1.5;
-    g.beginPath(); g.roundRect ? g.roundRect(x - w / 2, y - h / 2, w, h, 7) : g.rect(x - w / 2, y - h / 2, w, h); g.fill(); g.stroke();
-    lines.forEach((l, i) => { g.fillStyle = i ? '#ffd66b' : '#f1ede2'; g.fillText(l, x, y - h / 2 + 14 + i * 21); });
-  }
-
-  // Arme mit zwei Gelenken: Schulter → Ellbogen → Hand, Ellbogen knickt nach außen
-  function drawArm(sh, hand, len, width, sleeve, skin, bend) {
-    const dx = hand[0] - sh[0], dy = hand[1] - sh[1]; let d = Math.hypot(dx, dy) || 1;
-    let hx = hand[0], hy = hand[1];
-    if (d > len * 1.98) { hx = sh[0] + dx / d * len * 1.98; hy = sh[1] + dy / d * len * 1.98; d = len * 1.98; }
-    const a = Math.atan2(hy - sh[1], hx - sh[0]), b = Math.acos(Math.min(1, d / (2 * len)));
-    const ex = sh[0] + Math.cos(a + bend * b) * len, ey = sh[1] + Math.sin(a + bend * b) * len;
-    g.lineCap = 'round';
-    g.strokeStyle = 'rgba(0,0,0,.25)'; g.lineWidth = width + 4; g.beginPath(); g.moveTo(sh[0], sh[1]); g.lineTo(ex, ey); g.lineTo(hx, hy); g.stroke();
-    g.strokeStyle = sleeve; g.lineWidth = width; g.beginPath(); g.moveTo(sh[0], sh[1]); g.lineTo(ex, ey); g.stroke();
-    g.strokeStyle = sleeve; g.lineWidth = width * .92; g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex + (hx - ex) * .55, ey + (hy - ey) * .55); g.stroke();
-    g.strokeStyle = skin; g.lineWidth = width * .62; g.beginPath(); g.moveTo(ex + (hx - ex) * .5, ey + (hy - ey) * .5); g.lineTo(hx, hy); g.stroke();
-    // Hand mit angedeuteten Fingern
-    const ha = Math.atan2(hy - ey, hx - ex);
-    g.save(); g.translate(hx, hy); g.rotate(ha);
-    g.fillStyle = skin; g.beginPath(); g.ellipse(width * .25, 0, width * .62, width * .5, 0, 0, Math.PI * 2); g.fill();
-    g.strokeStyle = 'rgba(120,70,40,.35)'; g.lineWidth = 1.5;
-    for (const o of [-.28, 0, .28]) { g.beginPath(); g.moveTo(width * .5, o * width); g.lineTo(width * .85, o * width * 1.1); g.stroke(); }
-    g.beginPath(); g.ellipse(width * .1, -width * .5, width * .28, width * .16, -.6, 0, Math.PI * 2); g.fillStyle = skin; g.fill();
-    g.restore();
-  }
-
+  const drawCard = (c, x, y, w, face, rot = 0, alpha = 1, lift = 0) => felt.card(g, c, x, y, w, Math.round(w * scale * dpr), face, rot, alpha, lift);
+  const drawChips = (x, y, amount, sz = 1) => felt.chips(g, x, y, amount, sz);
+  const label = (x, y, lines, hl) => felt.label(g, x, y, lines, hl);
+  const drawArm = (...a) => felt.arm(g, ...a);
   function figure(id) {
     const f = figs[id]; if (!f) return;
-    const [x, y] = f.pos, ang = Math.atan2(L.table[1] - y, L.table[0] - x) - Math.PI / 2;
-    const st = id === 'heinz' ? { shirt: '#1f5a36', skin: '#f2c9a0', hair: '#eeeeee', look: 'heinz' } : STYLE[id];
-    const p = P(id), out = p && p.folded;
-    g.save(); g.translate(x, y); g.rotate(ang); g.globalAlpha = out ? .75 : 1;
-    // Schultern und Oberkörper
-    const sg = g.createLinearGradient(-60, 0, 60, 0); sg.addColorStop(0, st.shirt); sg.addColorStop(.5, lighten(st.shirt)); sg.addColorStop(1, st.shirt);
-    g.fillStyle = sg; g.beginPath(); g.ellipse(0, 6, 62, 30, 0, 0, Math.PI * 2); g.fill();
-    if (st.look === 'heinz') { g.fillStyle = '#fbf8f0'; g.beginPath(); g.moveTo(-14, -14); g.lineTo(14, -14); g.lineTo(0, 30); g.closePath(); g.fill(); g.fillStyle = '#b3261e'; g.fillRect(-8, -12, 16, 7); }
-    // Kopf
-    g.fillStyle = st.skin; g.beginPath(); g.arc(0, -16, 27, 0, Math.PI * 2); g.fill();
-    g.fillStyle = st.hair;
-    if (st.look === 'curls') for (let i = 0; i < 9; i++) { const a = Math.PI + i * Math.PI / 8; g.beginPath(); g.arc(Math.cos(a) * 24, -16 + Math.sin(a) * 24, 9, 0, Math.PI * 2); g.fill(); }
-    else if (st.look === 'cap') { g.beginPath(); g.arc(0, -20, 28, Math.PI, 0); g.fill(); g.fillStyle = '#1b3a73'; g.beginPath(); g.arc(0, -22, 28, Math.PI * 1.05, -Math.PI * .05); g.fill(); g.fillRect(-26, -24, 52, 6); g.beginPath(); g.ellipse(0, -18, 30, 7, 0, 0, Math.PI); g.fill(); }
-    else if (st.look === 'glasses') { g.beginPath(); g.arc(0, -22, 27, Math.PI * 1.05, -Math.PI * .05); g.fill(); }
-    else if (st.look === 'heinz') { g.beginPath(); g.arc(-22, -18, 10, 0, Math.PI * 2); g.arc(22, -18, 10, 0, Math.PI * 2); g.fill(); }
-    // Gesicht (zeigt zum Tisch)
-    g.fillStyle = '#2a1a10'; g.beginPath(); g.arc(-9, -12, 2.6, 0, Math.PI * 2); g.arc(9, -12, 2.6, 0, Math.PI * 2); g.fill();
-    if (st.look === 'glasses') { g.strokeStyle = '#1a1a1a'; g.lineWidth = 2; g.beginPath(); g.arc(-9, -12, 6.5, 0, Math.PI * 2); g.moveTo(15.5, -12); g.arc(9, -12, 6.5, 0, Math.PI * 2); g.moveTo(-2.5, -12); g.lineTo(2.5, -12); g.stroke(); }
-    if (st.look === 'heinz') { g.fillStyle = '#eeeeee'; g.beginPath(); g.ellipse(-8, -2, 9, 4, .2, 0, Math.PI * 2); g.ellipse(8, -2, 9, 4, -.2, 0, Math.PI * 2); g.fill(); }
-    else { g.strokeStyle = '#8a4a3a'; g.lineWidth = 2; g.beginPath(); g.arc(0, -4, 6, .2, Math.PI - .2); g.stroke(); }
-    g.restore();
+    const [x, y] = f.pos, ang = Math.atan2(L.table[1] - y, L.table[0] - x) - Math.PI / 2, p = P(id);
+    felt.figure(g, x, y, ang, id === 'heinz' ? felt.HEINZ : STYLE[id], !!(p && p.folded));
   }
-  function lighten(hex) { const n = parseInt(hex.slice(1), 16), f = v => Math.min(255, Math.round(v * 1.35 + 20)); return `rgb(${f(n >> 16)},${f((n >> 8) & 255)},${f(n & 255)})`; }
   // Schulterpunkte einer Figur in Tisch-Koordinaten
   function shoulder(id, side) {
     const f = figs[id], [x, y] = f.pos, ang = Math.atan2(L.table[1] - y, L.table[0] - x) - Math.PI / 2, lx = side === 'L' ? 46 : -46, ly = 4;
@@ -4544,8 +4636,8 @@ const poker = (() => {
     const wood = g.createLinearGradient(0, ty - ry - 30, 0, ty + ry + 30); wood.addColorStop(0, '#8a5a30'); wood.addColorStop(.5, '#5a3418'); wood.addColorStop(1, '#3a1f0e');
     g.fillStyle = wood; g.beginPath(); g.ellipse(tx, ty, rx + 28, ry + 28, 0, 0, Math.PI * 2); g.fill();
     g.fillStyle = '#1a0f08'; g.beginPath(); g.ellipse(tx, ty, rx + 6, ry + 6, 0, 0, Math.PI * 2); g.fill();
-    const felt = g.createRadialGradient(tx, ty - ry * .25, 20, tx, ty, Math.max(rx, ry)); felt.addColorStop(0, '#2c8a57'); felt.addColorStop(.7, '#176b40'); felt.addColorStop(1, '#0d4027');
-    g.fillStyle = felt; g.beginPath(); g.ellipse(tx, ty, rx, ry, 0, 0, Math.PI * 2); g.fill();
+    const cloth = g.createRadialGradient(tx, ty - ry * .25, 20, tx, ty, Math.max(rx, ry)); cloth.addColorStop(0, '#2c8a57'); cloth.addColorStop(.7, '#176b40'); cloth.addColorStop(1, '#0d4027');
+    g.fillStyle = cloth; g.beginPath(); g.ellipse(tx, ty, rx, ry, 0, 0, Math.PI * 2); g.fill();
     g.fillStyle = lamp; g.fillRect(0, 0, L.W, L.H);
     g.strokeStyle = 'rgba(226,180,87,.45)'; g.lineWidth = 2; g.beginPath(); g.ellipse(tx, ty, rx * .64, ry * .6, 0, 0, Math.PI * 2); g.stroke();
     g.fillStyle = 'rgba(226,180,87,.22)'; g.font = "700 30px 'Cabin Sketch', cursive"; g.textAlign = 'center'; g.textBaseline = 'middle';
@@ -4646,7 +4738,7 @@ const poker = (() => {
     if (h > maxH) { h = maxH; w = h * L.W / L.H; }
     cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.margin = '0 auto';
     cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-    scale = w / L.W; cardCache.clear();
+    scale = w / L.W;
     placeFigures(); kick();
   }
 
@@ -5006,6 +5098,451 @@ const poker = (() => {
   };
 })();
 
+/* ---------- Blackjack: Heinz ist die Bank, Tante Gerda und Kalle spielen mit ---------- */
+const blackjack = (() => {
+  const DECKS = 6, MIN_BET = 10, MAX_BET = 5000, NPC_STACK = 5000;   // Cent
+  const CHIP_VALUES = [10, 50, 100, 500, 2500];
+  const NPC = {
+    kalle: { lvl: 'stammgast', shirt: '#2f5d8a', skin: '#e8b890', hair: '#3b2a1e', look: 'cap', bets: [100, 200, 500, 1000] },
+    gerda: { lvl: 'anfaenger', shirt: '#7a3b69', skin: '#f0c9a8', hair: '#d8d0dc', look: 'curls', bets: [50, 100, 100, 200] }
+  };
+  const ORDER = ['kalle', 'you', 'gerda'];   // Heinz gibt von seiner Linken: erst Kalle, dann du, dann Gerda
+  const LAYOUT = {
+    land: {
+      W: 1000, H: 640, table: [500, 64, 440, 520], heinz: [500, 32], dealer: [500, 168], shoe: [822, 126], tray: [178, 122], rack: [500, 96], cw: 56,
+      seats: {
+        kalle: { fig: [900, 450], cards: [742, 312], bet: [752, 402], label: [882, 560] },
+        you:   { cards: [500, 382], bet: [500, 486], label: [170, 604] },
+        gerda: { fig: [100, 450], cards: [258, 312], bet: [248, 402], label: [118, 560] }
+      }
+    },
+    port: {
+      W: 700, H: 940, table: [350, 84, 336, 650], heinz: [350, 44], dealer: [350, 200], shoe: [572, 150], tray: [128, 150], rack: [350, 118], cw: 62,
+      seats: {
+        kalle: { fig: [628, 596], cards: [530, 450], bet: [524, 556], label: [592, 700] },
+        you:   { cards: [350, 606], bet: [350, 712], label: [120, 890] },
+        gerda: { fig: [72, 596], cards: [170, 450], bet: [176, 556], label: [108, 700] }
+      }
+    }
+  };
+
+  const el = $('#bj'), cv = $('#bjCv'), g = cv.getContext('2d');
+  let L = LAYOUT.land, scale = 1, dpr = 1, raf = 0, dirty = true;
+  let shoe = [], seats = [], dealer = { cards: [], hidden: true }, phase = 'bet', bet = 0, lastBet = 100, waiting = null, insWait = null, running = false;
+  const anims = [], flying = [], figs = {};
+  const fmt = c => arcade.fmt(c);
+  const nameOf = id => id === 'you' ? t('you') : t('lvl.' + NPC[id].lvl);
+  const store = v => { try { if (!v) localStorage.removeItem('dk-bj'); else localStorage.setItem('dk-bj', String(v)); } catch (e) {} };
+  // Einsätze, die beim Schließen der Seite noch auf dem Tisch lagen, kommen zurück
+  try { const v = +localStorage.getItem('dk-bj'); if (v > 0) arcade.addCash(v); localStorage.removeItem('dk-bj'); } catch (e) {}
+
+  /* ---------- Regeln ---------- */
+  function newShoe() {
+    const s = [];
+    for (let d = 0; d < DECKS; d++) for (let su = 0; su < 4; su++) for (let r = 2; r <= 14; r++) s.push({ r, s: su });
+    for (let i = s.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [s[i], s[j]] = [s[j], s[i]]; }
+    return s;
+  }
+  const cardVal = c => c.r === 14 ? 11 : Math.min(10, c.r);
+  function value(cards) {
+    let total = 0, aces = 0;
+    for (const c of cards) { total += cardVal(c); if (c.r === 14) aces++; }
+    while (total > 21 && aces) { total -= 10; aces--; }
+    return { total, soft: aces > 0 && total <= 21 };
+  }
+  const isBJ = h => h.cards.length === 2 && !h.split && value(h.cards).total === 21;
+  const dealerBJ = () => dealer.cards.length === 2 && value(dealer.cards).total === 21;
+  const seat = id => seats.find(s => s.id === id);
+  const draw1 = () => { if (!shoe.length) shoe = newShoe(); return shoe.pop(); };
+  function handText(h) {
+    const v = value(h.cards);
+    if (isBJ(h)) return 'Blackjack!';
+    if (v.total > 21) return t('bj.bust');
+    return (v.soft && v.total < 21 ? 'Soft ' : '') + v.total;
+  }
+  // Einfache Grundstrategie der Stammgäste
+  function npcMove(h, up) {
+    const v = value(h.cards), d = cardVal(up) === 11 ? 11 : cardVal(up);
+    if (h.cards.length === 2 && !h.split && h.cards[0].r === h.cards[1].r && (h.cards[0].r === 14 || h.cards[0].r === 8)) return 'split';
+    if (h.cards.length === 2 && (v.total === 11 || (v.total === 10 && d < 10)) && !v.soft) return 'double';
+    if (v.soft) return v.total >= 19 || (v.total === 18 && d < 9) ? 'stand' : 'hit';
+    if (v.total >= 17) return 'stand';
+    if (v.total >= 13) return d <= 6 ? 'stand' : 'hit';
+    if (v.total === 12) return d >= 4 && d <= 6 ? 'stand' : 'hit';
+    return 'hit';
+  }
+
+  /* ---------- Zeichnen ---------- */
+  const px = w => Math.round(w * scale * dpr);
+  const drawCard = (c, x, y, w, face, rot = 0, alpha = 1) => felt.card(g, c, x, y, w, px(w), face, rot, alpha, 0);
+  const figAng = id => { const f = figs[id]; return Math.atan2(L.table[1] + L.table[3] * .45 - f.pos[1], L.table[0] - f.pos[0]) - Math.PI / 2; };
+  const heinzAng = 0;
+  function handOffset(s, i) { return (i - (s.hands.length - 1) / 2) * L.cw * 1.75; }
+  function cardPos(s, hi, ci) { const S = L.seats[s.id], o = handOffset(s, hi); return [S.cards[0] + o + ci * L.cw * .34, S.cards[1] - ci * L.cw * .26]; }
+  function betPos(s, hi) { const S = L.seats[s.id]; return [S.bet[0] + handOffset(s, hi), S.bet[1]]; }
+  function dealerPos(i) { const n = Math.max(2, dealer.cards.length); return [L.dealer[0] + (i - (n - 1) / 2) * L.cw * 1.08, L.dealer[1]]; }
+
+  function drawTable() {
+    const [tx, ty, rx, ry] = L.table;
+    const bg = g.createRadialGradient(tx, ty + ry * .4, 60, tx, ty + ry * .4, Math.max(L.W, L.H) * .8); bg.addColorStop(0, '#3a2414'); bg.addColorStop(1, '#120a05');
+    g.fillStyle = bg; g.fillRect(0, 0, L.W, L.H);
+    felt.figure(g, L.heinz[0], L.heinz[1], heinzAng, felt.HEINZ, false);
+    for (const id of ['kalle', 'gerda']) if (figs[id]) felt.figure(g, figs[id].pos[0], figs[id].pos[1], figAng(id), NPC[id], false);
+    // Halbmond-Tisch: gerade Kante bei Heinz, runder Rand zu den Spielern
+    const half = (r1, r2) => { g.beginPath(); g.moveTo(tx - r1, ty); g.ellipse(tx, ty, r1, r2, 0, Math.PI, 0, true); g.closePath(); };
+    g.fillStyle = '#3a1f0e'; half(rx + 34, ry + 34); g.fill();
+    const wood = g.createLinearGradient(0, ty, 0, ty + ry + 34); wood.addColorStop(0, '#8a5a30'); wood.addColorStop(1, '#3a1f0e');
+    g.fillStyle = wood; half(rx + 30, ry + 30); g.fill();
+    g.fillStyle = '#1a0f08'; half(rx + 6, ry + 6); g.fill();
+    const fl = g.createRadialGradient(tx, ty + ry * .35, 40, tx, ty + ry * .3, Math.max(rx, ry)); fl.addColorStop(0, '#2a7fa0'); fl.addColorStop(.7, '#16566f'); fl.addColorStop(1, '#0c3345');
+    g.fillStyle = fl; half(rx, ry); g.fill();
+    // Aufdruck auf dem Filz
+    g.save(); g.fillStyle = 'rgba(243,212,135,.75)'; g.font = "700 26px 'Cabin Sketch', cursive"; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const ft = L === LAYOUT.port ? .37 : .46;   // im Hochformat höher, damit die Karten der Stammgäste frei bleiben
+    g.fillText(t('bj.felt1'), tx, ty + ry * ft);
+    g.fillStyle = 'rgba(241,237,226,.55)'; g.font = "600 17px 'Barlow Condensed', sans-serif";
+    g.fillText(t('bj.felt2'), tx, ty + ry * (ft + .07));
+    g.strokeStyle = 'rgba(243,212,135,.45)'; g.lineWidth = 2; g.beginPath(); g.ellipse(tx, ty, rx * .62, ry * .62, 0, Math.PI * .08, Math.PI * .92); g.stroke();
+    g.restore();
+    // Kartenschlitten, Ablage und Chip-Kasten der Bank
+    const [sx, sy] = L.shoe;
+    g.fillStyle = '#2a1a10'; g.fillRect(sx - 44, sy - 40, 88, 80); g.fillStyle = '#5a3418'; g.fillRect(sx - 40, sy - 36, 80, 72);
+    drawCard({ r: 2, s: 0 }, sx - 6, sy + 4, L.cw * .9, false, -.25);
+    const [dx, dy] = L.tray; g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(dx - 40, dy - 34, 80, 68);
+    if (discard) for (let i = 0; i < Math.min(discard, 8); i++) drawCard({ r: 2, s: 0 }, dx, dy - i * 1.4, L.cw * .9, false, .3);
+    const [rkx, rky] = L.rack; g.fillStyle = '#1a0f08'; g.fillRect(rkx - 150, rky - 20, 300, 40);
+    ['#151515', '#1f8a3a', '#1f4fb8', '#c0392b', '#efe9dc', '#c0392b', '#1f4fb8', '#1f8a3a'].forEach((c, i) => { g.fillStyle = c; g.fillRect(rkx - 140 + i * 35, rky - 14, 30, 28); g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(rkx - 140 + i * 35, rky - 14, 30, 5); });
+  }
+  let discard = 0;
+
+  function draw() {
+    if (!figs.you) return;   // noch keine Größe bekannt
+    g.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+    drawTable();
+    // Bank
+    dealer.cards.forEach((c, i) => { const [x, y] = dealerPos(i); drawCard(c, x, y, L.cw, !(i === 1 && dealer.hidden)); });
+    if (dealer.cards.length >= 2) felt.label(g, L.dealer[0], L.dealer[1] + L.cw * 1.02, [dealer.hidden ? '?' : handText({ cards: dealer.cards })]);
+    // Plätze
+    for (const s of seats) {
+      const S = L.seats[s.id];
+      if (!s.hands.length) { g.strokeStyle = 'rgba(243,212,135,.55)'; g.lineWidth = 2.5; g.beginPath(); g.arc(S.bet[0], S.bet[1], 30, 0, Math.PI * 2); g.stroke(); }
+      s.hands.forEach((h, hi) => {
+        const [bx, by] = betPos(s, hi);
+        g.strokeStyle = h === activeHand ? '#ffd66b' : 'rgba(243,212,135,.55)'; g.lineWidth = h === activeHand ? 4 : 2.5; g.beginPath(); g.arc(bx, by, 30, 0, Math.PI * 2); g.stroke();
+        if (!h.gone) felt.chips(g, bx, by + 6, h.bet, .8);
+        if (h.win) felt.chips(g, bx + 44, by + 6, h.win, .8);
+        h.cards.forEach((c, ci) => { if (ci < h.shown) { const [x, y] = cardPos(s, hi, ci); drawCard(c, x, y, L.cw, true, ci === 2 && h.doubled ? Math.PI / 2 : 0); } });
+        if (h.shown >= 2) { const [x, y] = cardPos(s, hi, h.cards.length - 1); felt.label(g, x + L.cw * .9, y - L.cw * .55, [h.result || handText(h)], h === activeHand); }
+      });
+      if (s.id !== 'you') felt.label(g, S.label[0], S.label[1], [nameOf(s.id) + ' · ' + fmt(s.stack), s.say || ''].filter(Boolean));
+    }
+    felt.label(g, L.seats.you.label[0], L.seats.you.label[1], [t('arc.credit') + ' ' + fmt(arcade.cash)], !!waiting);
+    // Arme: Heinz, die Stammgäste, dann deine
+    const sk = felt.HEINZ.skin;
+    for (const side of ['L', 'R']) felt.arm(g, felt.shoulder(L.heinz[0], L.heinz[1], heinzAng, side), figs.heinz.hand[side], 96, 18, '#fbf8f0', sk, side === 'L' ? -1 : 1);
+    for (const id of ['kalle', 'gerda']) { const f = figs[id], a = figAng(id); for (const side of ['L', 'R']) felt.arm(g, felt.shoulder(f.pos[0], f.pos[1], a, side), f.hand[side], 76, 18, NPC[id].shirt, NPC[id].skin, side === 'L' ? -1 : 1); }
+    for (const it of flying) { if (it.card) drawCard(it.card, it.x, it.y, L.cw, it.face, it.rot || 0, it.alpha ?? 1); else felt.chips(g, it.x, it.y, it.amount, .8); }
+    const yh = figs.you.hand;
+    felt.arm(g, [L.W * .22, L.H + 170], yh.L, 190, 46, '#3b5e8c', '#f0c29a', 1);
+    felt.arm(g, [L.W * .78, L.H + 170], yh.R, 190, 46, '#3b5e8c', '#f0c29a', -1);
+    dirty = false;
+  }
+  let activeHand = null;
+
+  /* ---------- Animation ---------- */
+  const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+  const lerp = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+  function tween(dur, step) { return new Promise(res => { anims.push({ t0: performance.now(), dur, step, res }); kick(); }); }
+  const wait = ms => new Promise(res => setTimeout(res, ms));
+  function moveHand(id, side, to, dur = 240) { const f = figs[id], from = f.hand[side].slice(); return tween(dur, k => { f.hand[side] = lerp(from, to, k); }); }
+  function loop(now) {
+    raf = 0;
+    if (el.hidden) return;
+    for (let i = anims.length - 1; i >= 0; i--) { const a = anims[i], k = Math.min(1, (now - a.t0) / a.dur); a.step(ease(k)); if (k >= 1) { anims.splice(i, 1); a.res(); } }
+    draw();
+    if (anims.length || dirty) raf = requestAnimationFrame(loop);
+  }
+  function kick() { dirty = true; if (!raf && !el.hidden) raf = requestAnimationFrame(loop); }
+  function restOf(id, side) {
+    if (id === 'heinz') return side === 'L' ? [L.shoe[0] - 40, L.shoe[1] + 30] : [L.heinz[0] - 30, L.heinz[1] + 110];
+    if (id === 'you') { const S = L.seats.you; return side === 'L' ? [S.bet[0] - 140, S.bet[1] + 70] : [S.bet[0] + 140, S.bet[1] + 70]; }
+    const f = figs[id], a = figAng(id), lx = side === 'L' ? 36 : -36, ly = 104;
+    return [f.pos[0] + Math.cos(a) * lx - Math.sin(a) * ly, f.pos[1] + Math.sin(a) * lx + Math.cos(a) * ly];
+  }
+  function place() {
+    for (const id of ['heinz', 'kalle', 'gerda', 'you']) {
+      figs[id] = figs[id] || { hand: {} };
+      if (L.seats[id] && L.seats[id].fig) figs[id].pos = L.seats[id].fig;
+    }
+    for (const id of ['heinz', 'kalle', 'gerda', 'you']) { figs[id].hand.L = restOf(id, 'L'); figs[id].hand.R = restOf(id, 'R'); }
+  }
+  function resize() {
+    const r = cv.parentElement.getBoundingClientRect(); if (!r.width) return;
+    const portrait = r.width < 620;
+    L = portrait ? LAYOUT.port : LAYOUT.land;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const maxH = window.innerHeight * (portrait ? .56 : .64);
+    let w = r.width, h = w * L.H / L.W;
+    if (h > maxH) { h = maxH; w = h * L.W / L.H; }
+    cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.margin = '0 auto';
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    scale = w / L.W;
+    place(); kick();
+  }
+
+  /* ---------- Bewegungen mit Armen ---------- */
+  // Heinz zieht eine Karte aus dem Schlitten und legt sie hin
+  async function deal(to, face, onLand) {
+    const c = draw1(), from = [L.shoe[0] - 6, L.shoe[1] + 4], it = { card: c, x: from[0], y: from[1], face: false, rot: -.25 };
+    flying.push(it); sfx.card();
+    const h0 = figs.heinz.hand.R.slice();
+    await tween(240, k => { const q = lerp(from, to, k); it.x = q[0]; it.y = q[1]; it.rot = -.25 * (1 - k); it.face = face && k > .5; figs.heinz.hand.R = lerp(h0, q, Math.min(1, k * 1.3)); });
+    flying.splice(flying.indexOf(it), 1);
+    onLand(c);
+    moveHand('heinz', 'R', restOf('heinz', 'R'), 140);
+    return c;
+  }
+  const dealToHand = (s, h) => deal(cardPos(s, s.hands.indexOf(h), h.cards.length), true, c => { h.cards.push(c); h.shown = h.cards.length; kick(); });
+  const dealToDealer = face => deal(dealerPos(dealer.cards.length), face, c => { dealer.cards.push(c); kick(); });
+  // Chips vom Rand in den Setzkreis schieben (Spieler) – du mit der rechten Hand
+  async function pushBet(s, h, amount, offset = 0) {
+    const id = s.id, side = id === 'you' ? 'R' : 'L', [bx, by] = betPos(s, s.hands.indexOf(h)), from = restOf(id, side), to = [bx + offset, by];
+    const it = { amount, x: from[0], y: from[1] }; flying.push(it); sfx.chips(3);
+    await tween(300, k => { const q = lerp(from, to, k); it.x = q[0]; it.y = q[1]; figs[id].hand[side] = [q[0], q[1] + 12]; });
+    flying.splice(flying.indexOf(it), 1);
+    await moveHand(id, side, from, 200);
+  }
+  // Handzeichen: Tippen = Karte, Wischen = Stehen
+  async function signal(s, kind) {
+    const side = s.id === 'you' ? 'R' : 'L', h = s.hands[0], [x, y] = cardPos(s, s.hands.indexOf(activeHand || h), 0), back = restOf(s.id, side);
+    const spot = [x + L.cw * .2, y + L.cw * 1.1];
+    await moveHand(s.id, side, spot, 180);
+    if (kind === 'hit') for (let i = 0; i < 2; i++) { sfx.tick(); await tween(90, k => { figs[s.id].hand[side] = [spot[0], spot[1] - 12 * Math.sin(k * Math.PI)]; }); }
+    else await tween(420, k => { figs[s.id].hand[side] = [spot[0] + Math.sin(k * Math.PI * 2) * 34, spot[1]]; });
+    moveHand(s.id, side, back, 180);
+  }
+  async function payOut(s, h, amount) {
+    const [bx, by] = betPos(s, s.hands.indexOf(h)), to = [bx + 44, by + 6], from = L.rack.slice(), it = { amount, x: from[0], y: from[1] };
+    flying.push(it); sfx.chips(5);
+    const h0 = figs.heinz.hand.R.slice();
+    await tween(360, k => { const q = lerp(from, to, k); it.x = q[0]; it.y = q[1]; figs.heinz.hand.R = lerp(h0, [q[0], q[1] - 12], Math.min(1, k * 1.2)); });
+    flying.splice(flying.indexOf(it), 1); h.win = amount; kick();
+    moveHand('heinz', 'R', restOf('heinz', 'R'), 180);
+  }
+  async function takeBet(s, h) {
+    const [bx, by] = betPos(s, s.hands.indexOf(h)), it = { amount: h.bet, x: bx, y: by }; h.gone = true; flying.push(it); sfx.chips(4);
+    const h0 = figs.heinz.hand.R.slice();
+    await tween(360, k => { const q = lerp([bx, by], L.rack, k); it.x = q[0]; it.y = q[1]; figs.heinz.hand.R = lerp(h0, [q[0], q[1] + 10], Math.min(1, k * 1.4)); });
+    flying.splice(flying.indexOf(it), 1);
+    moveHand('heinz', 'R', restOf('heinz', 'R'), 180);
+  }
+  // Heinz räumt die Karten in die Ablage
+  async function sweep() {
+    const its = [];
+    for (const s of seats) s.hands.forEach((h, hi) => h.cards.forEach((c, ci) => { const [x, y] = cardPos(s, hi, ci); its.push({ card: c, x, y, face: true, from: [x, y] }); }));
+    dealer.cards.forEach((c, i) => { const [x, y] = dealerPos(i); its.push({ card: c, x, y, face: !(i === 1 && dealer.hidden), from: [x, y] }); });
+    seats.forEach(s => { s.hands = []; }); dealer.cards = [];
+    flying.push(...its); sfx.card();
+    const h0 = figs.heinz.hand.L.slice();
+    await tween(520, k => { its.forEach(it => { const q = lerp(it.from, L.tray, k); it.x = q[0]; it.y = q[1]; it.rot = k * .3; }); figs.heinz.hand.L = lerp(h0, L.tray, Math.sin(k * Math.PI) * .9); });
+    its.forEach(it => flying.splice(flying.indexOf(it), 1)); discard += its.length;
+    figs.heinz.hand.L = restOf('heinz', 'L'); kick();
+  }
+
+  /* ---------- Ablauf einer Runde ---------- */
+  function msg(text) { $('#bjMsg').textContent = text; }
+  function paintUI() {
+    const bettingPhase = phase === 'bet';
+    $('#bjBetting').hidden = !bettingPhase;
+    $('#bjPlay').hidden = bettingPhase || !waiting;
+    $('#bjIns').hidden = !insWait;
+    $('#bjBet').textContent = fmt(bet);
+    $('#bjDeal').disabled = !bettingPhase || bet < MIN_BET || bet > arcade.cash;
+    $('#bjRepeat').disabled = !bettingPhase || lastBet > arcade.cash;
+    $('#bjRepeat').textContent = t('bj.repeat', { v: fmt(lastBet) });
+    $('#bjLeave').disabled = running;
+    $('#bjCash').textContent = fmt(arcade.cash - (bettingPhase ? bet : 0));
+    if (waiting) {
+      const h = activeHand, v = value(h.cards), two = h.cards.length === 2;
+      $('#bjDouble').disabled = !two || arcade.cash < h.bet || v.total >= 21;
+      $('#bjSplit').disabled = !(two && cardVal(h.cards[0]) === cardVal(h.cards[1]) && seat('you').hands.length < 2 && arcade.cash >= h.bet);
+    }
+    kick();
+  }
+  function ask() { return new Promise(res => { waiting = res; paintUI(); }); }
+  function answer(a) { if (!waiting) return; const r = waiting; waiting = null; paintUI(); r(a); }
+
+  async function playHand(s, h, up) {
+    activeHand = h; kick();
+    while (true) {
+      const v = value(h.cards);
+      if (v.total >= 21 || isBJ(h) || h.doubled || (h.split && h.cards[0].r === 14 && h.cards.length === 2)) break;
+      let move;
+      if (s.id === 'you') { msg(t('bj.turn', { v: handText(h) })); move = await ask(); }
+      else { s.say = t('bj.think'); kick(); await wait(500 + Math.random() * 500); move = npcMove(h, up); }
+      if (move === 'double' && (s.id === 'you' ? arcade.cash < h.bet : s.stack < h.bet)) move = 'hit';
+      if (move === 'hit') { s.say = t('bj.a.hit'); await signal(s, 'hit'); await dealToHand(s, h); }
+      else if (move === 'stand') { s.say = t('bj.a.stand'); await signal(s, 'stand'); break; }
+      else if (move === 'double') {
+        s.say = t('bj.a.double');
+        if (s.id === 'you') { arcade.addCash(-h.bet); stake(h.bet); } else s.stack -= h.bet;
+        await pushBet(s, h, h.bet, 30); h.bet *= 2; h.doubled = true;
+        await dealToHand(s, h); break;
+      } else if (move === 'split') {
+        s.say = t('bj.a.split');
+        if (s.id === 'you') { arcade.addCash(-h.bet); stake(h.bet); } else s.stack -= h.bet;
+        const h2 = { cards: [h.cards.pop()], bet: h.bet, shown: 1, split: true };
+        h.split = true; h.shown = 1;
+        s.hands.push(h2); kick();
+        await pushBet(s, h2, h2.bet);
+        await dealToHand(s, h); await dealToHand(s, h2);
+        await playHand(s, h, up);
+        await playHand(s, h2, up);
+        return;
+      }
+    }
+    if (value(h.cards).total > 21) { h.result = t('bj.bust'); await takeBet(s, h); }
+    activeHand = null; kick();
+  }
+
+  let onTable = 0;
+  function stake(v) { onTable += v; store(onTable); }
+
+  async function round() {
+    running = true; phase = 'play'; paintUI();
+    if (shoe.length < DECKS * 52 * .25) { shoe = newShoe(); discard = 0; msg(t('bj.shuffle')); await wait(900); }
+    // Einsätze: du vom Guthaben, die Stammgäste aus ihrem Stapel
+    const you = seat('you');
+    arcade.addCash(-bet); onTable = 0; stake(bet); lastBet = bet;
+    for (const s of seats) {
+      if (s.id !== 'you' && s.stack < 100) { s.stack += NPC_STACK; msg(t('pk.rebuyopp', { name: nameOf(s.id) })); }
+      const b = s.id === 'you' ? bet : Math.min(s.stack, NPC[s.id].bets[Math.floor(Math.random() * 4)]);
+      if (s.id !== 'you') s.stack -= b;
+      s.hands = [{ cards: [], bet: b, shown: 0 }]; s.say = '';
+    }
+    bet = 0; paintUI();
+    await Promise.all(seats.filter(s => s.id !== 'you').map(s => pushBet(s, s.hands[0], s.hands[0].bet)));
+    await pushBet(you, you.hands[0], you.hands[0].bet);
+    msg(t('bj.dealing'));
+    dealer = { cards: [], hidden: true };
+    for (let r = 0; r < 2; r++) {
+      for (const id of ORDER) { const s = seat(id); await dealToHand(s, s.hands[0]); }
+      await dealToDealer(r === 0);
+    }
+    const up = dealer.cards[0];
+    // Versicherung, wenn die Bank ein Ass zeigt
+    let ins = 0;
+    if (up.r === 14 && !isBJ(you.hands[0])) {
+      const half = Math.floor(you.hands[0].bet / 2);
+      if (arcade.cash >= half && half > 0) {
+        msg(t('bj.insq', { v: fmt(half) }));
+        const yes = await new Promise(res => { insWait = res; paintUI(); });
+        insWait = null; paintUI();
+        if (yes) { ins = half; arcade.addCash(-half); stake(half); }
+      }
+    }
+    // Bank schaut bei Ass oder Zehn nach Blackjack
+    if (cardVal(up) >= 10 && dealerBJ()) {
+      await moveHand('heinz', 'L', dealerPos(1), 200); dealer.hidden = false; sfx.card(); kick(); await moveHand('heinz', 'L', restOf('heinz', 'L'), 200);
+      msg(t('bj.dealerbj'));
+      if (ins) arcade.addCash(ins * 3);
+    } else {
+      if (ins) msg(t('bj.insno'));
+      for (const id of ORDER) { const s = seat(id); for (const h of s.hands.slice()) if (s.hands.includes(h) && !h.done) { await playHand(s, h, up); } }
+      // Bank zieht bis 17, steht auch auf Soft 17
+      const live = seats.some(s => s.hands.some(h => value(h.cards).total <= 21 && !isBJ(h)));
+      await moveHand('heinz', 'L', dealerPos(1), 200); dealer.hidden = false; sfx.card(); kick(); await moveHand('heinz', 'L', restOf('heinz', 'L'), 200);
+      if (live) while (value(dealer.cards).total < 17) { await wait(350); await dealToDealer(true); }
+      kick();
+    }
+    await settle();
+    onTable = 0; store(0);
+    await wait(1600);
+    await sweep();
+    running = false; phase = 'bet'; seats.forEach(s => { s.say = ''; });
+    if (lastBet <= arcade.cash) bet = 0;
+    msg(t('bj.place')); paintUI();
+  }
+
+  async function settle() {
+    const dv = value(dealer.cards).total, dbj = dealerBJ();
+    let net = 0, texts = [];
+    for (const id of ORDER) {
+      const s = seat(id);
+      for (const h of s.hands) {
+        const v = value(h.cards).total, bj = isBJ(h);
+        let ret = 0;
+        if (v > 21) { ret = 0; }
+        else if (bj && !dbj) { ret = Math.round(h.bet * 2.5); h.result = 'Blackjack!'; }
+        else if (dbj && !bj) { ret = 0; h.result = t('bj.lose'); }
+        else if (bj && dbj) { ret = h.bet; h.result = t('bj.push'); }
+        else if (dv > 21 || v > dv) { ret = h.bet * 2; h.result = t('bj.win'); }
+        else if (v === dv) { ret = h.bet; h.result = t('bj.push'); }
+        else { ret = 0; h.result = t('bj.lose'); }
+        const stakeAmt = h.bet;
+        if (ret > stakeAmt) await payOut(s, h, ret - stakeAmt);
+        else if (ret === 0 && !h.gone) await takeBet(s, h);
+        if (s.id === 'you') { arcade.addCash(ret); net += ret - stakeAmt; texts.push(h.result); }
+        else s.stack += ret;
+      }
+    }
+    msg(texts.join(' · ') + (net > 0 ? ' · ' + t('bj.net+', { v: fmt(net) }) : ''));
+    if (net > 0) sfx.coins(Math.min(12, 4 + Math.round(net / 100)));
+    paintUI();
+  }
+
+  /* ---------- Bedienung ---------- */
+  function open() {
+    sfx.init(); el.hidden = false;
+    if (!seats.length) { seats = ORDER.map(id => ({ id, stack: id === 'you' ? 0 : NPC_STACK, hands: [], say: '' })); shoe = newShoe(); }
+    if (!running) { phase = 'bet'; msg(t('bj.place')); }
+    $('#bjSub').textContent = t('bj.sub');
+    renderChips(); paintUI();
+    requestAnimationFrame(() => { resize(); kick(); });
+  }
+  function close() { if (running) return; el.hidden = true; bet = 0; sfx.setStyle(boardKey); }
+  function renderChips() {
+    $('#bjChips').innerHTML = CHIP_VALUES.map(v => `<button type="button" class="bj-chip c${v}" data-v="${v}" aria-label="${fmt(v)}">${v >= 100 ? v / 100 : fmt(v).replace(/\s?€/, '')}</button>`).join('');
+  }
+  $('#bjChips').addEventListener('click', e => {
+    const b = e.target.closest('button[data-v]'); if (!b || phase !== 'bet') return;
+    const v = +b.dataset.v;
+    if (bet + v > MAX_BET || bet + v > arcade.cash) { msg(bet + v > MAX_BET ? t('bj.max') : t('arc.nocash')); sfx.bust(); return; }
+    bet += v; sfx.chips(2);
+    // Deine Hand legt den Chip in den Kreis
+    const S = L.seats.you; moveHand('you', 'R', [S.bet[0] + 16, S.bet[1] + 14], 160).then(() => moveHand('you', 'R', restOf('you', 'R'), 200));
+    previewBet(); paintUI();
+  });
+  function previewBet() { const you = seat('you'); if (you && phase === 'bet') { you.hands = bet ? [{ cards: [], bet, shown: 0 }] : []; kick(); } }
+  $('#bjClear').addEventListener('click', () => { if (phase !== 'bet') return; bet = 0; previewBet(); paintUI(); });
+  $('#bjRepeat').addEventListener('click', () => { if (phase !== 'bet' || lastBet > arcade.cash) return; bet = Math.min(lastBet, MAX_BET); previewBet(); paintUI(); });
+  $('#bjDeal').addEventListener('click', () => { if (phase === 'bet' && bet >= MIN_BET && bet <= arcade.cash) { seat('you').hands = []; round(); } });
+  $('#bjHit').addEventListener('click', () => answer('hit'));
+  $('#bjStand').addEventListener('click', () => answer('stand'));
+  $('#bjDouble').addEventListener('click', () => answer('double'));
+  $('#bjSplit').addEventListener('click', () => answer('split'));
+  $('#bjInsYes').addEventListener('click', () => { if (insWait) insWait(true); });
+  $('#bjInsNo').addEventListener('click', () => { if (insWait) insWait(false); });
+  $('#bjLeave').addEventListener('click', close);
+  $('#blackjackBtn').addEventListener('click', open);
+  $('#blackjackCard').addEventListener('click', open);
+  document.addEventListener('keydown', e => { if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); close(); } }, true);
+  // Handzeichen wie im Casino: auf den Filz tippen = Karte, seitlich wischen = stehen
+  let gesture = null;
+  cv.addEventListener('pointerdown', e => { if (waiting) gesture = { x: e.clientX, y: e.clientY, t: performance.now() }; });
+  cv.addEventListener('pointerup', e => {
+    if (!gesture || !waiting) { gesture = null; return; }
+    const dx = e.clientX - gesture.x, dy = e.clientY - gesture.y, dt = performance.now() - gesture.t; gesture = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) answer('stand');
+    else if (Math.hypot(dx, dy) < 12 && dt < 450) answer('hit');
+  });
+  new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv.parentElement);
+  return {
+    get open() { return !el.hidden; },
+    relang() { if (!el.hidden) { $('#bjSub').textContent = t('bj.sub'); renderChips(); paintUI(); } }
+  };
+})();
+
 // Pfeil-Symbol für das Menü
 function dartIcon(k) {
   const L = DART_LOOK[k], c = document.createElement('canvas'); c.width = 180; c.height = 52;
@@ -5091,7 +5628,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
