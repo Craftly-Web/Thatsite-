@@ -1131,17 +1131,17 @@ const I18N = {
     'dr.title': 'Heinz’ Kneipentrunk', 'dr.btn': 'Kneipentrunk', 'dr.bar': 'Theke', 'dr.cardx': 'Pils, Energy und Eigenbräu – wirkt ein ganzes Match', 'dr.sub': 'Frisch gezapft · bezahlt vom Spielhallen-Guthaben',
     'dr.pils': 'Frisches Pils', 'dr.pils.d': 'Je betrunkener du wirst, desto mehr wackeln und streuen die Pfeile. Dafür rutscht ein knapp verfehlter Dart öfter ins anvisierte Doppel oder Triple.',
     'dr.energy': 'Energy Drink', 'dr.energy.d': 'Jeder Energy erhöht die Chance auf „Volle Konzentration“: eine ruhige Hand für das ganze Match, je mehr Energy, desto ruhiger. Der Zielkreis streut trotzdem noch etwas.',
-    'dr.brew': 'Heinz’ Eigenbräu', 'dr.brew.d': 'Beim dritten Krug kommt der „Profi-Heinz-Flashback“: 10 Pfeile mit dem besten Aim im ganzen Spiel. Welche Darts das sind, entscheidest du per Knopf.',
+    'dr.brew': 'Heinz’ Eigenbräu', 'dr.brew.d': 'Jeder Krug bringt „Profi-Heinz-Flashback“-Pfeile mit dem besten Aim im ganzen Spiel: 1 Krug 2 Pfeile, 2 Krüge 5, 3 Krüge 10. Welche Darts das sind, entscheidest du per Knopf.',
     'dr.buy': 'Kaufen · {v}', 'dr.max': 'Maximum erreicht', 'dr.poor': 'Zu wenig Guthaben · {v}',
     'dr.pils.0': 'Noch stocknüchtern', 'dr.pils.s': 'Rausch {n}/5 · Pfeile streuen +{a} % · Bierglück {b} %',
     'dr.energy.0': 'Noch kein Energy · erster: {c} % Chance', 'dr.energy.s': '{n}/3 · noch keine Konzentration · nächster: {c} %', 'dr.energy.on': '{n}/3 · Volle Konzentration aktiv',
-    'dr.brew.0': 'Noch kein Krug · 3 bis zum Flashback', 'dr.brew.s': '{n}/3 Krüge · noch {m} bis zum Flashback', 'dr.brew.on': 'Flashback: {f} von 10 Pfeilen übrig', 'dr.brew.done': 'Flashback aufgebraucht',
+    'dr.brew.0': 'Noch kein Krug · der erste bringt 2 Flashback-Pfeile', 'dr.brew.next': 'nächster Krug +{a}', 'dr.brew.on': 'Flashback: {f} Pfeile übrig', 'dr.brew.done': 'Flashback aufgebraucht',
     'dr.now': 'Gilt sofort für das laufende Match und verfliegt an dessen Ende.', 'dr.next': 'Gilt für dein nächstes Match und verfliegt an dessen Ende.',
     'dr.got.pils': 'Prost! Pils Nummer {n}.', 'dr.got.energy': 'Zisch! Energy Nummer {n}.', 'dr.got.brew': 'Krug {n} von Heinz’ Eigenbräu.',
-    'dr.focus': 'Volle Konzentration! Deine Hand wird ruhig.', 'dr.nofocus': 'Noch keine Konzentration – vielleicht beim nächsten.', 'dr.flash': 'Profi-Heinz-Flashback! 10 Pfeile mit dem besten Aim der Kneipe.',
+    'dr.focus': 'Volle Konzentration! Deine Hand wird ruhig.', 'dr.nofocus': 'Noch keine Konzentration – vielleicht beim nächsten.', 'dr.flash': 'Profi-Heinz-Flashback! +{a} Pfeile mit dem besten Aim der Kneipe – jetzt {n}.',
     'dr.gone': 'Der Trunk ist verflogen – neues Match, klarer Kopf.',
     'dr.chip.pils': 'Pils {n}/5', 'dr.chip.energy': 'Energy {n}/3', 'dr.chip.focus': 'Konzentration {n}/3', 'dr.chip.brew': 'Eigenbräu {n}/3',
-    'fl.name': 'Profi-Flashback', 'fl.left': '{n}/10', 'fl.armed': 'scharf · {n}/10', 'fl.wait': '{n}/10',
+    'fl.name': 'Profi-Flashback', 'fl.left': '× {n}', 'fl.armed': 'scharf · × {n}', 'fl.wait': '× {n}',
     'hint.flash': 'Flashback scharf: Dein nächster Dart fliegt wie bei Heinz in seinen besten Jahren.', 'hint.flashcancel': 'Flashback zurückgelegt.', 'hint.beer': 'Bierglück! Der Dart rutscht noch ins {l}.',
     'w.pils': ['Ein frisches Pils, bitteschön!', 'Prost! Aber zielen nicht vergessen.', 'Das zischt. Die Doppel werden größer, sagt man.'],
     'w.energy': ['Energy? Na, wenn’s hilft.', 'Da zittert gleich nichts mehr. Oder alles.', 'Zisch – und los!'],
@@ -1156,7 +1156,7 @@ const I18N = {
     'w.phantom': 'Das Phantom … Gegen den gewinnst du nur mit voll eingeworfenem Standardpfeil oder drei Energys intus.',
     'w.phopen': 'Drei Energys! Jetzt ist das Phantom angreifbar.',
     'rules.phantom': '<strong>Das Phantom:</strong> Die Legende der Kneipe. Es punktet selten über die Triple 20, sondern wählt je nach Lage die 19, 18, 17, 16 oder das Bull: Es meidet Reste ohne Checkout, stellt sich Finishes zurecht und weicht aus, wenn eigene Pfeile das Feld verdecken. Ganz fehlerfrei ist es nicht: In jedem Leg verpasst es seinen ersten Checkout-Dart, und meist rutscht ihm beim Punkten ein Pfeil ins Single. Trotzdem ist es normalerweise unschlagbar. Angreifbar wird es nur, wenn du mit dem voll eingeworfenen Standardpfeil (+50 %) spielst oder mindestens 3 Energys getrunken hast – dann wirft es nur noch wie ein sehr starker Profi. Jedes gewonnene Leg bringt 50 €.',
-    'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Beim dritten Krug gibt es den Profi-Heinz-Flashback, 10 Pfeile mit dem besten Aim im Spiel, die du per Knopf selbst einsetzt. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
+    'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Jeder Krug bringt Profi-Heinz-Flashback-Pfeile mit dem besten Aim im Spiel – 2 nach dem ersten, 5 nach dem zweiten, 10 nach dem dritten Krug –, die du per Knopf selbst einsetzt. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
     'cr.block': 'Skatblock', 'cr.game': 'Spiel', 'cr.resume': 'Weiter geht’s.', 'cr.switching': 'Gleich – die Karten sind noch unterwegs …',
     'rm.isout': 'draußen', 'rm.deal': 'Heinz gibt jedem 13 Karten.', 'rm.took': 'nimmt die Ablage', 'rm.cameout': 'kommt raus ({v})',
@@ -1299,17 +1299,17 @@ const I18N = {
     'dr.title': 'Heinz’s Pub Drinks', 'dr.btn': 'Pub drinks', 'dr.bar': 'Bar', 'dr.cardx': 'Lager, energy drinks and home brew – lasts a whole match', 'dr.sub': 'Freshly poured · paid from your arcade credit',
     'dr.pils': 'Fresh lager', 'dr.pils.d': 'The drunker you get, the more your darts wobble and scatter. In return, a near miss slips into the double or treble you aimed at more often.',
     'dr.energy': 'Energy drink', 'dr.energy.d': 'Every can raises the chance of “full focus”: a steady hand for the whole match, steadier with every can. The aim circle still spreads a little.',
-    'dr.brew': 'Heinz’s home brew', 'dr.brew.d': 'The third mug brings the “Pro Heinz flashback”: 10 darts with the best aim in the whole game. You pick which darts with a button.',
+    'dr.brew': 'Heinz’s home brew', 'dr.brew.d': 'Every mug brings “Pro Heinz flashback” darts with the best aim in the whole game: 1 mug 2 darts, 2 mugs 5, 3 mugs 10. You pick which darts with a button.',
     'dr.buy': 'Buy · {v}', 'dr.max': 'Maximum reached', 'dr.poor': 'Not enough credit · {v}',
     'dr.pils.0': 'Stone-cold sober', 'dr.pils.s': 'Tipsy {n}/5 · darts scatter +{a}% · beer luck {b}%',
     'dr.energy.0': 'No can yet · first one: {c}% chance', 'dr.energy.s': '{n}/3 · no focus yet · next one: {c}%', 'dr.energy.on': '{n}/3 · full focus active',
-    'dr.brew.0': 'No mug yet · 3 to the flashback', 'dr.brew.s': '{n}/3 mugs · {m} more to the flashback', 'dr.brew.on': 'Flashback: {f} of 10 darts left', 'dr.brew.done': 'Flashback used up',
+    'dr.brew.0': 'No mug yet · the first brings 2 flashback darts', 'dr.brew.next': 'next mug +{a}', 'dr.brew.on': 'Flashback: {f} darts left', 'dr.brew.done': 'Flashback used up',
     'dr.now': 'Works right away in this match and wears off when it ends.', 'dr.next': 'Works in your next match and wears off when it ends.',
     'dr.got.pils': 'Cheers! Lager number {n}.', 'dr.got.energy': 'Psssht! Energy drink number {n}.', 'dr.got.brew': 'Mug {n} of Heinz’s home brew.',
-    'dr.focus': 'Full focus! Your hand goes steady.', 'dr.nofocus': 'No focus yet – maybe with the next one.', 'dr.flash': 'Pro Heinz flashback! 10 darts with the best aim in the pub.',
+    'dr.focus': 'Full focus! Your hand goes steady.', 'dr.nofocus': 'No focus yet – maybe with the next one.', 'dr.flash': 'Pro Heinz flashback! +{a} darts with the best aim in the pub – {n} now.',
     'dr.gone': 'The drinks have worn off – new match, clear head.',
     'dr.chip.pils': 'Lager {n}/5', 'dr.chip.energy': 'Energy {n}/3', 'dr.chip.focus': 'Focus {n}/3', 'dr.chip.brew': 'Home brew {n}/3',
-    'fl.name': 'Pro flashback', 'fl.left': '{n}/10', 'fl.armed': 'armed · {n}/10', 'fl.wait': '{n}/10',
+    'fl.name': 'Pro flashback', 'fl.left': '× {n}', 'fl.armed': 'armed · × {n}', 'fl.wait': '× {n}',
     'hint.flash': 'Flashback armed: your next dart flies like Heinz in his prime.', 'hint.flashcancel': 'Flashback put away.', 'hint.beer': 'Beer luck! The dart slips into {l}.',
     'w.pils': ['A fresh lager, there you go!', 'Cheers! Don’t forget to aim.', 'That fizzes. They say the doubles get bigger.'],
     'w.energy': ['Energy drink? Well, if it helps.', 'Nothing will shake after that. Or everything.', 'Psssht – off you go!'],
@@ -1324,7 +1324,7 @@ const I18N = {
     'w.phantom': 'The Phantom… You only beat him with a fully broken-in standard dart or three energy drinks inside you.',
     'w.phopen': 'Three energy drinks! Now the Phantom is vulnerable.',
     'rules.phantom': '<strong>The Phantom:</strong> The pub’s legend. It rarely scores on treble 20 and instead picks 19, 18, 17, 16 or the bull depending on the situation: it avoids leaves without a checkout, sets up finishes and switches when its own darts cover the bed. It isn’t flawless: every leg it misses its first checkout dart, and usually one scoring dart slips into a single. Still, it is normally unbeatable. It only becomes vulnerable if you play the fully broken-in standard dart (+50%) or have had at least 3 energy drinks – then it throws like a very strong pro. Every leg you win earns €50.',
-    'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): the third mug brings the Pro Heinz flashback, 10 darts with the best aim in the game that you use with a button. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
+    'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): every mug brings Pro Heinz flashback darts with the best aim in the game – 2 after the first, 5 after the second, 10 after the third mug – that you use with a button. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
     'cr.block': 'Score sheet', 'cr.game': 'Game', 'cr.resume': 'On we go.', 'cr.switching': 'One moment – the cards are still moving…',
     'rm.isout': 'out', 'rm.deal': 'Heinz deals 13 cards each.', 'rm.took': 'takes the discard', 'rm.cameout': 'comes out ({v})',
@@ -3399,7 +3399,7 @@ const BOOSTS = {
 
 /* Heinz’ Kneipentrunk: gekaufte Getränke wirken ein ganzes Match (nur für dich, nicht für den Gegner) */
 const DRINK = { pils: { price: 500, max: 5 }, energy: { price: 1000, max: 3 }, brew: { price: 1000, max: 3 } };
-const FLASH_DARTS = 10;
+const FLASH_TOTAL = [0, 2, 5, 10];   // Flashback-Pfeile insgesamt nach 1, 2 und 3 Krügen Eigenbräu
 const PILS_MAGNET = .12, PILS_REACH = 32;   // je Pils 12 % Chance, dass ein knapp verfehlter Dart (bis 32 mm) ins anvisierte Doppel/Triple rutscht
 const PILS_SWAY = .5, PILS_SCATTER = .45;   // volle 5 Pils: 50 % mehr Wackeln, 45 % mehr Streuung
 const FOCUS_STEADY = .3, FOCUS_SCATTER = .1; // je Energy mit Konzentration: 30 % ruhigere Hand, aber nur 10 % weniger Streuung
@@ -6912,8 +6912,8 @@ const drinkShop = (() => {
       const c = Math.round(Math.min(n + 1, DRINK.energy.max) / DRINK.energy.max * 100);
       return n ? t('dr.energy.s', { n, c }) : t('dr.energy.0', { c });
     }
-    if (n >= DRINK.brew.max) return drinks.flash ? t('dr.brew.on', { f: drinks.flash }) : t('dr.brew.done');
-    return n ? t('dr.brew.s', { n, m: DRINK.brew.max - n }) : t('dr.brew.0');
+    if (!n) return t('dr.brew.0');
+    return (drinks.flash ? t('dr.brew.on', { f: drinks.flash }) : t('dr.brew.done')) + (n < DRINK.brew.max ? ' · ' + t('dr.brew.next', { a: FLASH_TOTAL[n + 1] - FLASH_TOTAL[n] }) : '');
   }
   function render() {
     $('#drCash').textContent = fmt(arcade.cash);
@@ -6940,7 +6940,7 @@ const drinkShop = (() => {
       else text += ' ' + t('dr.nofocus');
     }
     if (k === 'energy' && drinks.energy >= D.max && S && !S.over && S.level === LEGEND) say = t('w.phopen');
-    if (k === 'brew' && drinks.brew >= D.max) { drinks.flash = FLASH_DARTS; text = t('dr.flash'); say = t('w.flash'); sfx.powerup(); }
+    if (k === 'brew') { const add = FLASH_TOTAL[drinks.brew] - FLASH_TOTAL[drinks.brew - 1]; drinks.flash += add; text = t('dr.flash', { a: add, n: drinks.flash }); say = t('w.flash'); sfx.powerup(); }
     else sfx.charge();
     saveDrinks();
     if (S) renderTafel();
