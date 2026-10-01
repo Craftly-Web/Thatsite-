@@ -231,7 +231,15 @@ body.flashback .flash-fx{opacity:1}
 .slot-meters small,.bet-val small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#ffb3cb}
 .slot-meters b,.bet-val b{font-family:'Courier New',monospace;font-size:22px;color:#ff5d5d;text-shadow:0 0 6px rgba(255,60,60,.7);font-variant-numeric:tabular-nums}
 .slot-meters div:last-child b{color:#7dff9a;text-shadow:0 0 6px rgba(80,255,130,.6)}
-.slot-bet{display:grid;grid-template-columns:44px 1fr 44px minmax(110px,1.1fr);gap:8px;align-items:stretch}
+.slot-bet{display:grid;grid-template-columns:44px 1fr 44px minmax(76px,.7fr) minmax(110px,1.1fr);grid-template-areas:"down val up autos spin";gap:8px;align-items:stretch}
+.slot-bet>:nth-child(1){grid-area:down}.slot-bet>:nth-child(2){grid-area:val}.slot-bet>:nth-child(3){grid-area:up}.slot-bet .auto{grid-area:autos}.slot-bet .spin{grid-area:spin}
+.btn.auto{padding:8px 6px;font-size:15px;line-height:1.15}
+.btn.auto.on{background:linear-gradient(180deg,#ffd66b,#d18a1a);color:#2a170b;border-color:#7a4a00}
+.btn.auto:disabled{opacity:.45;cursor:default}
+.auto-pick{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px;border-radius:10px;background:rgba(0,0,0,.35);border:1px dashed rgba(255,214,107,.45)}
+.auto-pick span{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#ffe9a8;margin-right:4px}
+.auto-pick button{min-width:52px;padding:8px 10px;border-radius:8px;cursor:pointer;font:700 16px/1 var(--ui);color:#2a170b;background:linear-gradient(180deg,#ffe9a8,#e0a93a);border:1px solid #7a4a00}
+@media (max-width:480px){.slot-bet{grid-template-columns:44px 1fr 1fr 44px;grid-template-areas:"down val val up" "autos autos spin spin"}}
 .slot-bet .icon-btn{width:auto;height:auto;font-size:24px}
 .bet-val b{font-size:19px;color:#ffe9a8;text-shadow:none}
 .btn.spin{font-size:19px;background:linear-gradient(180deg,#ff6b8f,#c21847);color:#fff;border-color:#6d0a22;box-shadow:0 3px 0 #6d0a22,0 8px 18px rgba(255,40,100,.35)}
@@ -271,7 +279,7 @@ body.flashback .flash-fx{opacity:1}
 .bk-grid button:hover,.bk-grid button:focus-visible{background:rgba(201,161,74,.25);outline:none;border-color:#f3d487}
 .bk-grid img{width:52px;height:52px}
 .bk-grid b{font-size:15px;color:#f3d487}
-@media (max-width:420px){.slot{padding:12px 10px}.slot-bet{grid-template-columns:40px 1fr 40px}.btn.spin{grid-column:1/-1;padding:14px}#payList{grid-template-columns:1fr}}
+@media (max-width:420px){.slot{padding:12px 10px}.slot-bet{grid-template-columns:40px 1fr 1fr 40px;grid-template-areas:"down val val up" "autos autos spin spin"}.btn.spin{padding:14px}#payList{grid-template-columns:1fr}}
 .icon-btn svg{width:22px;height:22px}
 #menuBtn .short{display:none}
 
@@ -747,8 +755,10 @@ legend{padding:0;margin-bottom:8px}
       <button type="button" class="btn ghost icon-btn" id="betDown" aria-label="Einsatz senken" data-i18n-aria="arc.less">−</button>
       <div class="bet-val"><small data-i18n="arc.bet">Einsatz</small><b id="slotBet">0,10 €</b><small id="slotLine"></small></div>
       <button type="button" class="btn ghost icon-btn" id="betUp" aria-label="Einsatz erhöhen" data-i18n-aria="arc.more">+</button>
+      <button type="button" class="btn ghost auto" id="autoBtn">Auto</button>
       <button type="button" class="btn spin" id="spinBtn" data-i18n="arc.spin">Drehen</button>
     </div>
+    <div class="auto-pick" id="autoPick" hidden></div>
     <details class="paytable">
       <summary data-i18n="arc.pay">Gewinnplan</summary>
       <p class="rules" data-i18n="arc.payx">Gewinne zählen auf 10 Linien von links nach rechts, als Vielfaches des Linieneinsatzes. Kirschen zahlen schon ab zwei.</p>
@@ -780,8 +790,10 @@ legend{padding:0;margin-bottom:8px}
       <button type="button" class="btn ghost icon-btn" id="bkDown" aria-label="Einsatz senken" data-i18n-aria="arc.less">−</button>
       <div class="bet-val"><small data-i18n="arc.bet">Einsatz</small><b id="bkBet">0,10 €</b><small id="bkLine"></small></div>
       <button type="button" class="btn ghost icon-btn" id="bkUp" aria-label="Einsatz erhöhen" data-i18n-aria="arc.more">+</button>
+      <button type="button" class="btn ghost auto" id="bkAuto">Auto</button>
       <button type="button" class="btn spin" id="bkSpin" data-i18n="arc.spin">Drehen</button>
     </div>
+    <div class="auto-pick" id="bkAutoPick" hidden></div>
     <details class="paytable">
       <summary data-i18n="arc.pay">Gewinnplan</summary>
       <p class="rules" data-i18n="bk.payx">Drei oder mehr Bücher irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Büchern neue dazu. Die Schatztruhe ist Joker und ersetzt jedes Symbol außer dem Buch.</p>
@@ -990,7 +1002,7 @@ const I18N = {
     'rules.adr': '<strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.',
     'rules.darts': '<strong>Pfeile:</strong> Der Standardpfeil ist von Anfang an frei und lernt mit: Jeder Wurf macht ihn um 0,05 % ruhiger und genauer, Zielkreis eingeschlossen, bis zu +50 % nach 1000 Würfen. Der Fortschritt bleibt gespeichert. Der Anfängerpfeil ist ebenfalls frei: Er schwankt beim Zielen nur wenig, und mit „Viel Glück“ fliegt jeder Dart mit 33 % Wahrscheinlichkeit so präzise wie mit Adrenalin. Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Den Blitzpfeil gibt es für 5 Triple 20, den Stammtischpfeil für 3 Matchsiege.',
     'rules.boards': '<strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.',
-    'rules.cpu': '<strong>Gegner:</strong> Dein Gegner wirft mit demselben Pfeil-Set und hat dieselben Boni wie du – Adrenalin, Präzision, Schnellwurf, ruhige Hand, Glück oder Übung –, aber nur mit halber Wirkung. Die Maschine spielt anders: Sie wählt jede Aufnahme zufällig eine der vier Pfeil-Fähigkeiten, die nur für diese Aufnahme gilt. Was er gerade hat, steht an der Tafel unter seinem Namen.',
+    'rules.cpu': '<strong>Gegner:</strong> Jeder Gegner wählt jede Aufnahme zufällig eine der Pfeil-Fähigkeiten – Präzision, Schnellwurf, ruhige Hand, Glück oder Übung – und hat sie mit voller Wirkung, nur für diese Aufnahme. Präzision heißt ein präziser Dart, Schnellwurf alle drei Darts, Übung ein voll eingeworfener Standardpfeil (+50 %). Adrenalin bekommt er unter denselben Bedingungen wie du, ebenfalls voll. Was er gerade hat, steht an der Tafel unter seinem Namen.',
     'rules.legs': '<strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.',
     'btn.resume': 'Zurück zum Spiel', 'btn.start': 'Anwerfen', 'btn.settings': 'Einstellungen', 'btn.rematch': 'Revanche',
     'lvl.anfaenger': 'Tante Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'Die Maschine',
@@ -1000,10 +1012,10 @@ const I18N = {
     'board.automat': 'Dartautomat', 'board.automat.d': 'Soft-Tip mit Lauflicht', 'board.automat.r': 'Wirf 100+ in einer Aufnahme',
     'board.pro': 'Top Liga', 'board.pro.d': 'Turnierscheibe mit Ringlicht', 'board.pro.r': 'Besiege Otto oder Die Maschine',
     'dart.standard': 'Standardpfeil', 'dart.standard.s': 'Übung', 'dart.standard.d': 'Wird mit jedem Wurf genauer',
-    'std.state': '+{p} % · {n} Würfe', 'std.max': 'Ausgelernt: +50 %', 'cpu.std': 'Übung ½: +{p} %',
+    'std.state': '+{p} % · {n} Würfe', 'std.max': 'Ausgelernt: +50 %', 'cpu.std': 'Übung: +{p} %',
     'w.std': ['Dein Standardpfeil ist jetzt {p} % genauer. Übung macht den Meister!', '{p} % besser als am ersten Tag. Ich seh’s an deiner Hand.', 'Schon {p} % genauer – bald brauchst du keinen Wirt mehr, der zuguckt.'],
     'dart.anfaenger': 'Anfängerpfeil', 'dart.anfaenger.s': 'Viel Glück', 'dart.anfaenger.d': 'Ruhige Hand · 33 % Glückspfeil',
-    'luck.state': '33 % Glück pro Dart', 'luck.hit': 'Glückspfeil!', 'hint.luck': 'Glückspfeil! Der flog präzise wie mit Adrenalin.', 'cpu.luck': 'Glück ½',
+    'luck.state': '33 % Glück pro Dart', 'luck.hit': 'Glückspfeil!', 'hint.luck': 'Glückspfeil! Der flog präzise wie mit Adrenalin.', 'cpu.luck': 'Glück',
     'w.luck': ['Anfängerglück! Zählt trotzdem.', 'Glück gehabt – ich sag’s keinem.', 'Da hat wohl einer ein Kleeblatt in der Tasche.'],
     'dart.kneipe': 'Kneipenpfeil', 'dart.kneipe.s': 'Präzision', 'dart.kneipe.d': 'Präzision · jeder 3. Dart',
     'dart.blitz': 'Blitzpfeil', 'dart.blitz.s': 'Schnellwurf', 'dart.blitz.d': 'Schnell werfen = perfekt', 'dart.blitz.r': 'Triple 20',
@@ -1020,11 +1032,11 @@ const I18N = {
     'hint.legme': 'Leg an dich · Stand {a}:{b} · nächstes Leg gleich …', 'hint.legopp': 'Leg an {name} · Stand {a}:{b} · nächstes Leg gleich …',
     'hint.checkme': 'Checkout! Heinz zapft dir eins aufs Haus.', 'hint.checkopp': '{name} hat gecheckt.',
     'call.adr': 'Adrenalin!',
-    'hint.cpuadr': '{name} hat Adrenalin, halbe Wirkung – die nächsten 3 Darts sitzen besser.',
-    'hint.cpublitz': '{name} zündet einen Schnellwurf, halbe Wirkung.',
-    'hint.cpuset': '{name} setzt diese Aufnahme auf {s} (halbe Wirkung).',
-    'cpu.adr': 'Adrenalin ½ ({n})', 'cpu.blitz': 'Schnellwurf ½ ({n})', 'cpu.stock': 'Schnellwurf ½ bereit', 'cpu.prec': 'Präzision ½: {n}', 'cpu.alt': 'Ruhige Hand ½',
-    'w.cpuadr': ['Oha, {name} kriegt Puls! Aber nur halb so wild.', '{name} hat Adrenalin – halbe Portion, trotzdem aufpassen!', 'Guck mal, {name} schwitzt. Das ist Adrenalin, kein Bier.'],
+    'hint.cpuadr': '{name} hat Adrenalin – die nächsten 3 Darts sitzen deutlich besser.',
+    'hint.cpublitz': '{name} zündet einen Schnellwurf.',
+    'hint.cpuset': '{name} setzt diese Aufnahme auf {s}.',
+    'cpu.adr': 'Adrenalin ({n})', 'cpu.blitz': 'Schnellwurf ({n})', 'cpu.stock': 'Schnellwurf bereit', 'cpu.prec': 'Präzision: {n}', 'cpu.alt': 'Ruhige Hand',
+    'w.cpuadr': ['Oha, {name} kriegt Puls! Jetzt wird’s ernst.', '{name} hat Adrenalin – volle Portion, aufpassen!', 'Guck mal, {name} schwitzt. Das ist Adrenalin, kein Bier.'],
     'end.win': 'Game shot – du gewinnst!', 'end.lose': '{name} gewinnt',
     'end.textme': 'Du checkst {r} mit {d}, nach {n} Darts. {name} stand noch auf {o}.',
     'end.textopp': '{name} checkt {r} mit {d}, nach {n} Darts. Dir fehlten noch {o} Punkte.',
@@ -1075,6 +1087,7 @@ const I18N = {
     'w.focus': 'Volle Konzentration! Jetzt sitzt jeder Pfeil.', 'w.beer': ['Siehste, das Pils hilft!', 'Bierglück! Prost!', 'Ein Pils mehr, ein Doppel mehr.'],
     'prize.note': 'Preisgeld je gewonnenem Leg gegen {name}: {v}',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Beim dritten Krug gibt es den Profi-Heinz-Flashback, 10 Pfeile mit dem besten Aim im Spiel, die du per Knopf selbst einsetzt. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
+    'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
     'cr.block': 'Skatblock', 'cr.game': 'Spiel', 'cr.resume': 'Weiter geht’s.', 'cr.switching': 'Gleich – die Karten sind noch unterwegs …',
     'rm.isout': 'draußen', 'rm.deal': 'Heinz gibt jedem 13 Karten.', 'rm.took': 'nimmt die Ablage', 'rm.cameout': 'kommt raus ({v})',
     'rm.drawq': 'Zieh eine Karte: vom Stapel oder die oberste der Ablage.', 'rm.stock': 'Vom Stapel ziehen', 'rm.discardtake': 'Ablage nehmen',
@@ -1151,7 +1164,7 @@ const I18N = {
     'rules.adr': '<strong>Adrenaline:</strong> Your next 3 darts become very precise. If you start a visit at least 150 points behind, it kicks in by itself. When your opponent is on a finish – able to check out with three darts – the adrenaline button glows red and you trigger it whenever you like. Each happens once per leg.',
     'rules.darts': '<strong>Darts:</strong> The standard dart is free from the start and learns with you: every throw makes it 0.05% steadier and more accurate, aim circle included, up to +50% after 1000 throws. The progress is saved. The rookie dart is free too: it barely sways while you aim, and with “good luck” every dart has a 33% chance to fly as true as with adrenaline. The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. The lightning dart unlocks after 5 treble 20s, the regulars’ dart after 3 match wins.',
     'rules.boards': '<strong>Boards:</strong> The wooden board unlocks with your first match win, the dart machine with a visit of 100 or more, and the top league board by beating Otto or The Machine. Your browser remembers what you unlocked.',
-    'rules.cpu': '<strong>Opponent:</strong> Your opponent throws with the same dart set and gets the same bonuses as you – adrenaline, precision, quick throw, steady hand, luck or practice – but at half strength. The Machine plays differently: every visit it picks one of the four dart abilities at random, valid for that visit only. Whatever they have right now shows on the scoreboard under their name.',
+    'rules.cpu': '<strong>Opponent:</strong> Every opponent picks one of the dart abilities at random each visit – precision, quick throw, steady hand, luck or practice – at full strength, valid for that visit only. Precision means one precise dart, quick throw all three darts, practice a fully broken-in standard dart (+50%). Adrenaline kicks in under the same conditions as yours, also at full strength. Whatever they have right now shows on the scoreboard under their name.',
     'rules.legs': '<strong>Legs:</strong> First to win the chosen number of legs takes the match. The first throw alternates every leg.',
     'btn.resume': 'Back to game', 'btn.start': 'Game on', 'btn.settings': 'Settings', 'btn.rematch': 'Rematch',
     'lvl.anfaenger': 'Auntie Gerda', 'lvl.stammgast': 'Kalle', 'lvl.verein': 'Otto', 'lvl.profi': 'The Machine',
@@ -1161,10 +1174,10 @@ const I18N = {
     'board.automat': 'Dart machine', 'board.automat.d': 'Soft tip with chaser lights', 'board.automat.r': 'Score 100+ in one visit',
     'board.pro': 'Top League', 'board.pro.d': 'Tournament board with ring light', 'board.pro.r': 'Beat Otto or The Machine',
     'dart.standard': 'Standard dart', 'dart.standard.s': 'Practice', 'dart.standard.d': 'Gets more accurate with every throw',
-    'std.state': '+{p}% · {n} throws', 'std.max': 'Fully trained: +50%', 'cpu.std': 'Practice ½: +{p}%',
+    'std.state': '+{p}% · {n} throws', 'std.max': 'Fully trained: +50%', 'cpu.std': 'Practice: +{p}%',
     'w.std': ['Your standard dart is now {p}% more accurate. Practice makes perfect!', '{p}% better than on day one. I can see it in your hand.', 'Already {p}% more accurate – soon you won’t need a landlord watching.'],
     'dart.anfaenger': 'Rookie dart', 'dart.anfaenger.s': 'Good luck', 'dart.anfaenger.d': 'Steady hand · 33% lucky dart',
-    'luck.state': '33% luck per dart', 'luck.hit': 'Lucky dart!', 'hint.luck': 'Lucky dart! That one flew true, like adrenaline.', 'cpu.luck': 'Luck ½',
+    'luck.state': '33% luck per dart', 'luck.hit': 'Lucky dart!', 'hint.luck': 'Lucky dart! That one flew true, like adrenaline.', 'cpu.luck': 'Luck',
     'w.luck': ['Beginner’s luck! Still counts.', 'Lucky! I won’t tell a soul.', 'Someone’s got a four-leaf clover in their pocket.'],
     'dart.kneipe': 'Pub dart', 'dart.kneipe.s': 'Precision', 'dart.kneipe.d': 'Precision · every 3rd dart',
     'dart.blitz': 'Lightning dart', 'dart.blitz.s': 'Quick throw', 'dart.blitz.d': 'Throw fast = perfect', 'dart.blitz.r': 'Treble 20',
@@ -1181,11 +1194,11 @@ const I18N = {
     'hint.legme': 'Leg to you · {a}:{b} · next leg coming …', 'hint.legopp': 'Leg to {name} · {a}:{b} · next leg coming …',
     'hint.checkme': 'Checkout! Heinz pours you one on the house.', 'hint.checkopp': '{name} checked out.',
     'call.adr': 'Adrenaline!',
-    'hint.cpuadr': '{name} has adrenaline at half strength – the next 3 darts are sharper.',
-    'hint.cpublitz': '{name} fires up a quick throw at half strength.',
-    'hint.cpuset': '{name} goes with {s} this visit (half strength).',
-    'cpu.adr': 'Adrenaline ½ ({n})', 'cpu.blitz': 'Quick throw ½ ({n})', 'cpu.stock': 'Quick throw ½ ready', 'cpu.prec': 'Precision ½: {n}', 'cpu.alt': 'Steady hand ½',
-    'w.cpuadr': ['Whoa, {name}’s pulse is up! Only half as wild though.', '{name} has adrenaline – half a portion, still watch out!', 'Look, {name} is sweating. That’s adrenaline, not lager.'],
+    'hint.cpuadr': '{name} has adrenaline – the next 3 darts are much sharper.',
+    'hint.cpublitz': '{name} fires up a quick throw.',
+    'hint.cpuset': '{name} goes with {s} this visit.',
+    'cpu.adr': 'Adrenaline ({n})', 'cpu.blitz': 'Quick throw ({n})', 'cpu.stock': 'Quick throw ready', 'cpu.prec': 'Precision: {n}', 'cpu.alt': 'Steady hand',
+    'w.cpuadr': ['Whoa, {name}’s pulse is up! Now it gets serious.', '{name} has adrenaline – full portion, watch out!', 'Look, {name} is sweating. That’s adrenaline, not lager.'],
     'end.win': 'Game shot – you win!', 'end.lose': '{name} wins',
     'end.textme': 'You check out {r} with {d} after {n} darts. {name} was still on {o}.',
     'end.textopp': '{name} checks out {r} with {d} after {n} darts. You still needed {o}.',
@@ -1235,6 +1248,7 @@ const I18N = {
     'w.focus': 'Full focus! Every dart sits now.', 'w.beer': ['See, the lager helps!', 'Beer luck! Cheers!', 'One more lager, one more double.'],
     'prize.note': 'Prize money per leg won against {name}: {v}',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): the third mug brings the Pro Heinz flashback, 10 darts with the best aim in the game that you use with a button. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
+    'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
     'cr.block': 'Score sheet', 'cr.game': 'Game', 'cr.resume': 'On we go.', 'cr.switching': 'One moment – the cards are still moving…',
     'rm.isout': 'out', 'rm.deal': 'Heinz deals 13 cards each.', 'rm.took': 'takes the discard', 'rm.cameout': 'comes out ({v})',
     'rm.drawq': 'Draw a card: from the stock or the top of the discard pile.', 'rm.stock': 'Draw from stock', 'rm.discardtake': 'Take discard',
@@ -3586,14 +3600,13 @@ function beginTurn() {
   }
 }
 
-// Der Gegner bekommt dieselben Boni wie du, aber nur mit halber Wirkung
-const CPU_BOOST = .5, CPU_BLITZ = .15;   // Schnellwurf zählt für ihn wie eine fast perfekte Hand
-const cpuMult = kind => kind === 'none' ? 1 : kind === 'std' ? 1 - stdLevel() * CPU_BOOST : 1 - (1 - (kind === 'blitz' ? CPU_BLITZ : BOOSTS[kind === 'luck' ? 'adr' : kind].scatter)) * CPU_BOOST;
+// Der Gegner bekommt dieselben Boni wie du, mit voller Wirkung
+const CPU_BOOST = 1, CPU_BLITZ = .15;   // Schnellwurf zählt für ihn wie eine fast perfekte Hand
+const cpuMult = kind => kind === 'none' ? 1 : kind === 'std' ? 1 - STD_MAX * CPU_BOOST : 1 - (1 - (kind === 'blitz' ? CPU_BLITZ : BOOSTS[kind === 'luck' ? 'adr' : kind].scatter)) * CPU_BOOST;
 
-// Die Maschine spielt nicht mit deinem Pfeil-Set, sondern wählt jede Aufnahme zufällig eine Fähigkeit.
+// Jeder Gegner wählt jede Aufnahme zufällig eine der Pfeil-Fähigkeiten, voll wirksam.
 // Die gilt nur für diese Aufnahme: Präzision = ein präziser Dart, Schnellwurf = alle drei Darts.
-const SHUFFLE_LEVEL = 'profi';
-const cpuSet = g => g.level === SHUFFLE_LEVEL ? g.cpuSet : g.dartSet;
+const cpuSet = g => g.cpuSet;
 function cpuShuffle(g) {
   const c = g.cpu, sets = Object.keys(DART_INFO).filter(k => k !== g.cpuSet);
   g.cpuSet = sets[Math.floor(Math.random() * sets.length)];
@@ -3605,7 +3618,7 @@ function cpuShuffle(g) {
 // Zu Beginn seiner Aufnahme: Adrenalin wie beim Spieler, Schnellwurf sofort zünden
 function cpuBoostStart(g) {
   const c = g.cpu, name = g.opp.name;
-  if (g.level === SHUFFLE_LEVEL) cpuShuffle(g);
+  cpuShuffle(g);
   if (c.adrLeft === 0) {
     let why = null;
     if (!c.adrGapUsed && g.scores[1] - g.scores[0] >= ADR_GAP) { why = 'gap'; c.adrGapUsed = true; }
@@ -3629,13 +3642,12 @@ function cpuBoostKind(g, onDouble) {
   const c = g.cpu, set = cpuSet(g);
   if (c.adrLeft > 0) return 'adr';
   if (set === 'blitz' && c.blitzLeft > 0) return 'blitz';
-  // Präzise Pfeile spart er fürs Doppel auf, bei vollem Vorrat wirft er sie auch so;
-  // die Maschine setzt ihren einen präzisen Dart spätestens mit dem letzten Dart der Aufnahme
-  const last = g.level === SHUFFLE_LEVEL && g.visit.length === 2;
+  // Den einen präzisen Dart der Aufnahme spart er fürs Doppel auf, spätestens der letzte Dart bekommt ihn
+  const last = g.visit.length === 2;
   if (set === 'kneipe' && c.precStock > 0 && (onDouble || last || c.precStock >= 3)) return 'prec';
   if (set === 'alt') return 'alt';
   if (set === 'anfaenger' && Math.random() < LUCK) return 'luck';
-  if (set === 'standard' && stdLevel() > 0) return 'std';
+  if (set === 'standard') return 'std';   // sein Standardpfeil ist voll eingeworfen (+50 %)
   return 'none';
 }
 
@@ -3644,7 +3656,7 @@ function cpuBoostUse(g, kind) {
   if (kind === 'adr') c.adrLeft--;
   else if (kind === 'prec') c.precStock--;
   else if (kind === 'blitz') c.blitzLeft--;
-  if (g.level === SHUFFLE_LEVEL) return;   // die Maschine lädt nichts auf, sie wählt jede Aufnahme neu
+  return;   // nichts aufladen: jede Aufnahme gibt es eine neue Fähigkeit
   if (set === 'kneipe' && ++c.precProgress >= PREC_EVERY) { c.precProgress = 0; c.precStock++; }
   if (set === 'blitz' && kind !== 'adr' && kind !== 'blitz' && ++c.blitzProgress >= BLITZ_EVERY) { c.blitzProgress = 0; c.blitzStock++; }
 }
@@ -3658,8 +3670,8 @@ function cpuBoostTag(g) {
   else if (set === 'kneipe') tag = c.precStock > 0 ? t('cpu.prec', { n: c.precStock }) : '';
   else if (set === 'alt') tag = t('cpu.alt');
   else if (set === 'anfaenger') tag = t('cpu.luck');
-  else if (set === 'standard') tag = t('cpu.std', { p: pct(stdLevel() * CPU_BOOST) });
-  return tag || (g.level === SHUFFLE_LEVEL ? DART_INFO[set].skill + ' ½' : '');
+  else if (set === 'standard') tag = t('cpu.std', { p: pct(STD_MAX * CPU_BOOST) });
+  return tag || DART_INFO[set].skill;
 }
 
 function cpuDart() {
@@ -4032,6 +4044,43 @@ const SLOT_LINE_COL = ['#ff3b5c', '#ffb000', '#2ec4ff', '#7dff6a', '#ff6bff', '#
 const SLOT_BETS = [1, 2, 5, 10, 20, 50, 100, 200, 500];
 const arcadeBusy = [];   // jeder Automat meldet hier, ob gerade gedreht wird
 
+// Auto-Spin für beide Automaten: Anzahl wählen, dann dreht er von selbst, bis die Anzahl erreicht ist,
+// das Guthaben nicht mehr reicht, du stoppst oder den Automaten verlässt
+function autoSpin({ btn, pick, ready, spin, changed }) {
+  const COUNTS = [10, 25, 50, 100, Infinity];
+  let left = 0, timer = 0;
+  const label = () => {
+    btn.textContent = left ? t('auto.stop', { n: left === Infinity ? '∞' : left }) : t('auto.btn');
+    btn.classList.toggle('on', !!left); btn.setAttribute('aria-pressed', String(!!left));
+  };
+  function stop() { const was = !!left; left = 0; clearTimeout(timer); pick.hidden = true; label(); if (was) changed(); }
+  function start(n) { pick.hidden = true; left = n; label(); changed(); next(0); }
+  // Nächsten Dreh einplanen; während noch etwas läuft (Gewinnanzeige, Freispiele) wird kurz gewartet
+  function next(delay) {
+    clearTimeout(timer);
+    if (!left) return;
+    timer = setTimeout(() => {
+      if (!left) return;
+      const r = ready();
+      if (r === 'busy') { next(300); return; }
+      if (r !== 'ok') { stop(); spin(); return; }   // spin() meldet selbst, dass das Guthaben fehlt
+      if (left !== Infinity) left--;
+      label(); spin();
+      if (!left) changed();
+    }, delay);
+  }
+  function renderPick() {
+    pick.innerHTML = `<span>${t('auto.pick')}</span>` + COUNTS.map(n => `<button type="button" data-n="${n}">${n === Infinity ? '∞' : n}</button>`).join('');
+  }
+  btn.addEventListener('click', () => {
+    if (left) { stop(); return; }
+    sfx.init(); renderPick(); pick.hidden = !pick.hidden;
+  });
+  pick.addEventListener('click', e => { const b = e.target.closest('button[data-n]'); if (b) start(+b.dataset.n); });
+  label();
+  return { get on() { return left > 0; }, stop, next, relang() { label(); if (!pick.hidden) renderPick(); } };
+}
+
 const arcade = (() => {
   const SYM = ['cherry', 'lemon', 'orange', 'plum', 'grape', 'melon', 'bell', 'seven'];
   // Je Walze 32 Felder. Mit diesen Streifen und dem Gewinnplan liegt die Auszahlung rechnerisch bei 95,2 %,
@@ -4190,7 +4239,8 @@ const arcade = (() => {
     $('#slotLine').textContent = t('arc.perline', { v: fmt(BETS[betIdx]) });
     $('#betDown').disabled = spinning || betIdx === 0;
     $('#betUp').disabled = spinning || betIdx === BETS.length - 1;
-    $('#spinBtn').disabled = spinning;
+    $('#spinBtn').disabled = spinning || auto.on;
+    $('#betDown').disabled ||= auto.on; $('#betUp').disabled ||= auto.on;
     $('#arcadeCardCash').textContent = t('arc.card', { v: fmt(cash) });
   }
   function msg(text, big = false) { const m = $('#slotMsg'); m.textContent = text; m.classList.toggle('big', big); }
@@ -4234,6 +4284,7 @@ const arcade = (() => {
       sfx.coins(Math.min(14, 3 + Math.round(Math.log2(1 + total / (lineBet * LINES.length)) * 3)));
       if (big) sfx.cheer(1.2);
     } else msg(t('arc.lose'));
+    if (jackpot) auto.stop(); else auto.next(total ? 1600 : 550);
     paint(); kick();
   }
 
@@ -4245,10 +4296,15 @@ const arcade = (() => {
     }).join('');
   }
 
+  const auto = autoSpin({
+    btn: $('#autoBtn'), pick: $('#autoPick'), spin: () => spin(), changed: () => paint(),
+    ready: () => el.hidden || fruitEl.hidden ? 'stop' : spinning ? 'busy' : cash < BETS[betIdx] * LINES.length ? 'poor' : 'ok'
+  });
   const fruitEl = $('#fruitSlot'), bookEl = $('#bookSlot');
   const listeners = [];   // andere Automaten wollen wissen, wann sich das Guthaben ändert
   function show(which) {
     if (arcadeBusy.some(f => f())) return;
+    auto.stop();
     const book = which === 'book';
     fruitEl.hidden = book; bookEl.hidden = !book;
     sfx.setStyle(book ? 'book' : 'automat');   // Bücher-Automat mit antiker Musik, Früchte mit Elektro
@@ -4266,7 +4322,7 @@ const arcade = (() => {
     show(m);
     requestAnimationFrame(() => { resize(); kick(); (m === 'book' ? $('#bkSpin') : $('#spinBtn')).focus({ preventScroll: true }); });
   }
-  function close() { if (spinning || arcadeBusy.some(f => f())) return; el.hidden = true; wins = []; sfx.setStyle(boardKey); listeners.forEach(f => f(null)); }
+  function close() { if (spinning || arcadeBusy.some(f => f())) return; auto.stop(); el.hidden = true; wins = []; sfx.setStyle(boardKey); listeners.forEach(f => f(null)); }
   arcadeBusy.push(() => spinning);
 
   $('#spinBtn').addEventListener('click', spin);
@@ -4281,7 +4337,7 @@ const arcade = (() => {
   document.addEventListener('keydown', e => {
     if (el.hidden) return;
     if (e.key === 'Escape') { e.stopImmediatePropagation(); close(); }
-    else if (!fruitEl.hidden && (e.key === ' ' || e.code === 'Space') && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLElement && e.target.closest('summary'))) { e.preventDefault(); spin(); }
+    else if (!fruitEl.hidden && !auto.on && (e.key === ' ' || e.code === 'Space') && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLElement && e.target.closest('summary'))) { e.preventDefault(); spin(); }
   }, true);
   new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv);
   paint();
@@ -4290,7 +4346,7 @@ const arcade = (() => {
     get cash() { return cash; },
     addCash(c) { cash += c; save(); paint(); },
     onShow(f) { listeners.push(f); },
-    fmt, paint, relang() { if ($('#payList').children.length) renderPays(); paint(); }
+    fmt, paint, relang() { if ($('#payList').children.length) renderPays(); auto.relang(); paint(); }
   };
 })();
 
@@ -4552,9 +4608,9 @@ const bookSlot = (() => {
     $('#bkCredit').textContent = fmt(arcade.cash);
     $('#bkBet').textContent = fmt(lineBet * LINES.length);
     $('#bkLine').textContent = t('arc.perline', { v: fmt(lineBet) });
-    $('#bkDown').disabled = busy || betIdx === 0;
-    $('#bkUp').disabled = busy || betIdx === BETS.length - 1;
-    $('#bkSpin').disabled = busy;
+    $('#bkDown').disabled = busy || auto.on || betIdx === 0;
+    $('#bkUp').disabled = busy || auto.on || betIdx === BETS.length - 1;
+    $('#bkSpin').disabled = busy || auto.on;
     $('#bkSpin').textContent = fs ? t('bk.fsrun') : t('arc.spin');
     const bar = $('#bkFs');
     bar.hidden = !fs;
@@ -4634,7 +4690,7 @@ const bookSlot = (() => {
     if (fs) {
       if (fs.left > 0) timer = setTimeout(() => { expand = null; freeSpin(); }, delay + 700);
       else timer = setTimeout(endFree, delay + 600);
-    }
+    } else auto.next(lineTotal ? 1600 : 550);
     paint(); kick();
   }
 
@@ -4658,6 +4714,7 @@ const bookSlot = (() => {
     msg(w ? t('bk.fsend', { v: fmt(w) }) : t('bk.fsnone'), !!w);
     if (w) sfx.cheer(1.4);
     $('#bkWin').textContent = fmt(w);
+    auto.next(2200);   // nach den Freispielen läuft der Auto-Spin weiter
     paint(); kick();
   }
 
@@ -4672,23 +4729,28 @@ const bookSlot = (() => {
     $('#bkPayList').innerHTML = rows.join('');
   }
 
+  // Bei drei Büchern pausiert der Auto-Spin, bis du dein Symbol gewählt hast; die Freispiele laufen ohnehin von selbst
+  const auto = autoSpin({
+    btn: $('#bkAuto'), pick: $('#bkAutoPick'), spin: () => spin(), changed: () => paint(),
+    ready: () => $('#arcade').hidden || el.hidden ? 'stop' : spinning || fs || picking ? 'busy' : arcade.cash < BETS[betIdx] * LINES.length ? 'poor' : 'ok'
+  });
   $('#bkSpin').addEventListener('click', spin);
   $('#bkDown').addEventListener('click', () => { if (!spinning && !fs && betIdx > 0) { betIdx--; save(); paint(); sfx.tick(); } });
   $('#bkUp').addEventListener('click', () => { if (!spinning && !fs && betIdx < BETS.length - 1) { betIdx++; save(); paint(); sfx.tick(); } });
   const save = () => { try { localStorage.setItem('dk-bet-book', String(betIdx)); } catch (e) {} };
   document.addEventListener('keydown', e => {
     if ($('#arcade').hidden || el.hidden) return;
-    if ((e.key === ' ' || e.code === 'Space') && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLElement && e.target.closest('summary'))) { e.preventDefault(); spin(); }
+    if (!auto.on && (e.key === ' ' || e.code === 'Space') && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLElement && e.target.closest('summary'))) { e.preventDefault(); spin(); }
   });
   arcadeBusy.push(() => spinning || !!fs || picking);
   arcade.onShow(which => {
-    if (which !== 'book') { if (which === null) clearTimeout(timer); return; }
+    if (which !== 'book') { auto.stop(); if (which === null) clearTimeout(timer); return; }
     if (!$('#bkPayList').children.length) renderPays();
     paint(); if (!fs && !picking) msg(arcade.cash < BETS[0] * LINES.length ? t('arc.nocash') : t('arc.hello'));
     requestAnimationFrame(() => { resize(); kick(); });
   });
   new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv);
-  return { relang() { if ($('#bkPayList').children.length) renderPays(); paint(); } };
+  return { relang() { if ($('#bkPayList').children.length) renderPays(); auto.relang(); paint(); } };
 })();
 
 /* ---------- Tischzeichnungen für Poker und Blackjack: Karten, Chips, Arme, Figuren ---------- */
