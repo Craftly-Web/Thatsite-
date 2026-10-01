@@ -1017,6 +1017,27 @@ function legendTarget(rest, left, visit) {
   return best;
 }
 
+// Auch das Phantom ist nur ein Mensch: Jedes Leg verpasst es seinen ersten Checkout-Dart,
+// und in einer zufälligen Aufnahme der ersten drei greift ein Pfeil beim Punkten ins Single daneben
+const freshSlip = () => ({ finMissed: false, blunderDone: false, blunderVisit: Math.floor(Math.random() * 3), blunderDart: Math.floor(Math.random() * 3) });
+function legendSlip(st, target, rest, dartIdx, visitNo) {
+  if (target.m === 2 && rest === target.v && !st.finMissed) {
+    st.finMissed = true;
+    if (target.n === 25) return { x: (Math.random() - .5) * 6, y: -11.5 };   // am Bull vorbei: nur 25
+    // knapp am Doppel vorbei: halb ins Single darunter, halb aus dem Feld
+    const a = ORDER.indexOf(target.n) * Math.PI / 10 + (Math.random() - .5) * .1, r = Math.random() < .5 ? 174 : 157;
+    return { x: Math.sin(a) * r, y: -Math.cos(a) * r };
+  }
+  if (!st.blunderDone && rest > 170 && visitNo === st.blunderVisit && dartIdx === st.blunderDart) {
+    st.blunderDone = true;
+    const i = ORDER.indexOf(target.n === 25 ? 20 : target.n);
+    const n = Math.random() < .5 ? ORDER[i] : ORDER[(i + (Math.random() < .5 ? 19 : 1)) % 20];   // Single der Zahl oder ein Nachbar
+    const a = ORDER.indexOf(n) * Math.PI / 10 + (Math.random() - .5) * .12;
+    return { x: Math.sin(a) * 134, y: -Math.cos(a) * 134 };
+  }
+  return null;
+}
+
 function gauss2() {
   let u = 0; while (u === 0) u = Math.random();
   const v = Math.random(), m = Math.sqrt(-2 * Math.log(u));
@@ -1134,7 +1155,7 @@ const I18N = {
     'hint.phopen': 'Das Phantom ist angreifbar – zeig, was du kannst!',
     'w.phantom': 'Das Phantom … Gegen den gewinnst du nur mit voll eingeworfenem Standardpfeil oder drei Energys intus.',
     'w.phopen': 'Drei Energys! Jetzt ist das Phantom angreifbar.',
-    'rules.phantom': '<strong>Das Phantom:</strong> Die Legende der Kneipe. Es punktet selten über die Triple 20, sondern wählt je nach Lage die 19, 18, 17, 16 oder das Bull: Es meidet Reste ohne Checkout, stellt sich Finishes zurecht und weicht aus, wenn eigene Pfeile das Feld verdecken. Normalerweise ist es unschlagbar. Angreifbar wird es nur, wenn du mit dem voll eingeworfenen Standardpfeil (+50 %) spielst oder mindestens 3 Energys getrunken hast – dann wirft es nur noch wie ein sehr starker Profi. Jedes gewonnene Leg bringt 50 €.',
+    'rules.phantom': '<strong>Das Phantom:</strong> Die Legende der Kneipe. Es punktet selten über die Triple 20, sondern wählt je nach Lage die 19, 18, 17, 16 oder das Bull: Es meidet Reste ohne Checkout, stellt sich Finishes zurecht und weicht aus, wenn eigene Pfeile das Feld verdecken. Ganz fehlerfrei ist es nicht: In jedem Leg verpasst es seinen ersten Checkout-Dart, und meist rutscht ihm beim Punkten ein Pfeil ins Single. Trotzdem ist es normalerweise unschlagbar. Angreifbar wird es nur, wenn du mit dem voll eingeworfenen Standardpfeil (+50 %) spielst oder mindestens 3 Energys getrunken hast – dann wirft es nur noch wie ein sehr starker Profi. Jedes gewonnene Leg bringt 50 €.',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Beim dritten Krug gibt es den Profi-Heinz-Flashback, 10 Pfeile mit dem besten Aim im Spiel, die du per Knopf selbst einsetzt. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
     'cr.block': 'Skatblock', 'cr.game': 'Spiel', 'cr.resume': 'Weiter geht’s.', 'cr.switching': 'Gleich – die Karten sind noch unterwegs …',
@@ -1302,7 +1323,7 @@ const I18N = {
     'hint.phopen': 'The Phantom is vulnerable – show what you’ve got!',
     'w.phantom': 'The Phantom… You only beat him with a fully broken-in standard dart or three energy drinks inside you.',
     'w.phopen': 'Three energy drinks! Now the Phantom is vulnerable.',
-    'rules.phantom': '<strong>The Phantom:</strong> The pub’s legend. It rarely scores on treble 20 and instead picks 19, 18, 17, 16 or the bull depending on the situation: it avoids leaves without a checkout, sets up finishes and switches when its own darts cover the bed. Normally it is unbeatable. It only becomes vulnerable if you play the fully broken-in standard dart (+50%) or have had at least 3 energy drinks – then it throws like a very strong pro. Every leg you win earns €50.',
+    'rules.phantom': '<strong>The Phantom:</strong> The pub’s legend. It rarely scores on treble 20 and instead picks 19, 18, 17, 16 or the bull depending on the situation: it avoids leaves without a checkout, sets up finishes and switches when its own darts cover the bed. It isn’t flawless: every leg it misses its first checkout dart, and usually one scoring dart slips into a single. Still, it is normally unbeatable. It only becomes vulnerable if you play the fully broken-in standard dart (+50%) or have had at least 3 energy drinks – then it throws like a very strong pro. Every leg you win earns €50.',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): the third mug brings the Pro Heinz flashback, 10 darts with the best aim in the game that you use with a button. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
     'cr.block': 'Score sheet', 'cr.game': 'Game', 'cr.resume': 'On we go.', 'cr.switching': 'One moment – the cards are still moving…',
@@ -3577,7 +3598,7 @@ const LEVELS = {
   stammgast: { name: 'Kalle', sigma: 18.5, label: 'Stammgast' },
   verein:    { name: 'Otto', sigma: 12, label: 'Vereinsspieler' },
   profi:     { name: 'Die Maschine', sigma: 10, label: 'Profi' },
-  phantom:   { name: 'Das Phantom', sigma: 1.6, label: 'Legende' }
+  phantom:   { name: 'Das Phantom', sigma: 2, label: 'Legende' }
 };
 for (const k of Object.keys(LEVELS)) Object.defineProperties(LEVELS[k], {
   name: { get: () => t('lvl.' + k) }, label: { get: () => t('lvl.' + k + '.l') }
@@ -3585,7 +3606,7 @@ for (const k of Object.keys(LEVELS)) Object.defineProperties(LEVELS[k], {
 // Preisgeld je gewonnenem Leg (Cent): bei 6 gewonnenen Legs gegen Tante Gerda also 15 €
 const LEG_PRIZE = { anfaenger: 250, stammgast: 500, verein: 1000, profi: 2500, phantom: 5000 };
 // Das Phantom ist unschlagbar – außer du spielst den voll eingeworfenen Standardpfeil oder hast mindestens 3 Energys intus
-const LEGEND = 'phantom', LEGEND_OPEN_SIGMA = 7;   // unschlagbar: im Schnitt 9,4 Darts pro Leg; angreifbar: rund 16
+const LEGEND = 'phantom', LEGEND_OPEN_SIGMA = 7.5;   // mit seinen Patzern – unschlagbar: im Schnitt rund 11 Darts pro Leg; angreifbar: rund 18
 const legendOpen = () => !!S && ((S.dartSet === 'standard' && stdLevel() >= STD_MAX - 1e-9) || drinks.energy >= DRINK.energy.max);
 const legendSigma = () => legendOpen() ? LEGEND_OPEN_SIGMA : LEVELS[LEGEND].sigma;
 let S = null;
@@ -3620,6 +3641,7 @@ function startLeg() {
   g.scores = [g.start, g.start]; g.hist = [[], []]; g.turn = g.legStarter;
   g.over = false; g.adrGapUsed = false; g.adrFinishUsed = false; g.adrOffered = false; g.adrLeft = 0;
   g.cpu.adrGapUsed = false; g.cpu.adrFinishUsed = false; g.cpu.adrLeft = 0;
+  g.legendSlip = freshSlip();
   document.body.classList.remove('adrenaline');
   beginTurn();
 }
@@ -3748,7 +3770,9 @@ function cpuDart() {
   const target = legend ? legendTarget(g.scores[1], left, g.visit) : cpuTarget(g.scores[1], left);
   if (legend) { g.legendAim = target.l; renderTafel(); }
   const a = aimOf(target), [gx, gy] = gauss2();
-  const tx = a.x + gx * sigma, ty = a.y + gy * sigma;
+  let tx = a.x + gx * sigma, ty = a.y + gy * sigma;
+  const slip = legend && legendSlip(g.legendSlip, target, g.scores[1], g.visit.length, g.hist[1].length);
+  if (slip) { tx = slip.x; ty = slip.y; }
   // In 3D fliegt der Dart kurz verzögert von rechts ins Bild
   V.cpuThrow(() => { if (S === g && !g.over && g.turn === 1) { cpuBoostUse(g, kind); throwAt(1, tx, ty); } });
 }
