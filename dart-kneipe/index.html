@@ -151,6 +151,48 @@ body::after{
 .cr-score tfoot td{font-weight:700;color:#ffe9a8;border-bottom:none}
 .cr-money{display:flex;gap:8px;align-items:center;justify-content:center;font-size:14px;color:#cdb68a;cursor:pointer}
 .cr-money input{width:18px;height:18px;accent-color:#e2b457}
+/* Heinz’ Kneipentrunk */
+.arc-card.dr-card{background:linear-gradient(90deg,rgba(150,95,10,.6),rgba(60,35,5,.6));border-color:rgba(255,200,90,.5)}
+.arc-card.dr-card svg,.arc-card.dr-card i{color:#ffcf5a}
+.pk.dr{width:min(100%,860px)}
+.dr-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dr-item{display:grid;grid-template-rows:auto auto auto 1fr auto auto;gap:7px;padding:12px;border-radius:12px;background:linear-gradient(180deg,rgba(60,38,18,.85),rgba(24,14,7,.92));border:1px solid rgba(233,201,140,.3);text-align:center}
+.dr-item svg{width:84px;height:96px;margin:0 auto;display:block;filter:drop-shadow(0 6px 8px rgba(0,0,0,.5))}
+.dr-item h3{margin:0;font-family:var(--chalkf,'Cabin Sketch'),cursive;font-size:23px;color:var(--brass)}
+.dr-item p{margin:0;font-size:14px;line-height:1.35;color:#e8dcc4;text-align:left}
+.dr-state{font-size:14px;font-weight:700;color:#ffe9a8;min-height:2.6em}
+.dr-pips{display:flex;justify-content:center;gap:6px}
+.dr-pips i{width:15px;height:15px;border-radius:50%;border:2px solid rgba(233,201,140,.55)}
+.dr-pips i.on{background:var(--pip);border-color:var(--pip);box-shadow:0 0 8px var(--pip)}
+.dr-item.pils{--pip:#f2c230}.dr-item.energy{--pip:#9cff3a}.dr-item.brew{--pip:#e0954a}
+.dr-item .btn{width:100%;padding:11px 8px;font-size:15px}
+.dr-item .btn:disabled{opacity:.45;cursor:default}
+.dr-note{margin:0;text-align:center;font-size:13px;color:#cdb68a}
+@media (max-width:700px){
+  .dr-list{grid-template-columns:1fr;gap:8px}
+  .dr-item{grid-template-columns:64px 1fr;grid-template-rows:none;column-gap:12px;row-gap:5px;text-align:left;align-items:center;padding:10px}
+  .dr-item svg{width:60px;height:70px;grid-row:1 / span 3}
+  .dr-pips{justify-content:flex-start}
+  .dr-item p,.dr-state,.dr-item .btn{grid-column:1/-1}
+  .dr-state{min-height:0}
+  .dr-item h3{font-size:21px}
+}
+.prize-note{margin:8px 0 0;font-size:14px;color:#ffd66b}
+.drinkbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;width:min(100%,560px)}
+.drink-open{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;font:600 14px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:#ffe9a8;background:rgba(60,35,5,.75);border:1px solid rgba(255,200,90,.5);border-radius:999px;cursor:pointer}
+.drink-open svg{width:18px;height:18px}
+.drink-open:focus-visible{outline:2px solid #ffd66b;outline-offset:2px}
+.drink-chips{display:contents}
+.drink-chip{padding:4px 10px;border-radius:999px;font:600 13px/1.2 var(--ui);background:rgba(20,12,6,.7);border:1px solid var(--c);color:var(--c)}
+.flash-pill{padding:6px 12px;border-radius:999px;font:700 13px/1.2 var(--ui);letter-spacing:.06em;text-transform:uppercase;color:#ffe2a8;background:rgba(60,38,12,.85);border:1px solid #b8873a;cursor:pointer}
+.flash-pill b{font-family:'Courier New',monospace;letter-spacing:0}
+.flash-pill:disabled{opacity:.6;cursor:default}
+.flash-pill.ready{border-color:#ffcf7a;animation:flashpill 1s ease-in-out infinite alternate}
+.flash-pill.on{background:linear-gradient(180deg,#ffd98a,#d69a3c);color:#2a170b;border-color:#ffe2a8;box-shadow:0 0 14px rgba(255,207,122,.6)}
+.flash-pill:focus-visible{outline:2px solid #ffd66b;outline-offset:2px}
+@keyframes flashpill{from{box-shadow:0 0 3px rgba(255,207,122,.25)}to{box-shadow:0 0 16px rgba(255,207,122,.75)}}
+.flash-fx{position:fixed;inset:0;z-index:15;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 50%, rgba(150,100,40,0) 50%, rgba(120,75,25,.5) 100%);transition:opacity .4s}
+body.flashback .flash-fx{opacity:1}
 /* Blackjack */
 .arc-card.bj-card{background:linear-gradient(90deg,rgba(20,70,100,.6),rgba(10,30,45,.6));border-color:rgba(120,190,230,.45)}
 .arc-card.bj-card svg,.arc-card.bj-card i{color:#8fd0f0}
@@ -242,12 +284,12 @@ body::after{
 .board-col{grid-area:board;display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
 .board-wrap{
   position:relative;
-  width:min(100%, 720px, max(300px, calc(100vh - 215px)));
+  width:min(100%, 720px, max(300px, calc(100vh - 260px)));
   aspect-ratio:1;max-width:100%;
   border-radius:50%;
   box-shadow:0 26px 60px rgba(0,0,0,.7), 0 0 0 10px rgba(0,0,0,.2);
 }
-@supports (height:100dvh){.board-wrap{width:min(100%, 720px, max(300px, calc(100dvh - 215px)))}}
+@supports (height:100dvh){.board-wrap{width:min(100%, 720px, max(300px, calc(100dvh - 260px)))}}
 .board-wrap canvas{
   position:absolute;inset:0;width:100%;height:100%;border-radius:50%;
   touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
@@ -462,7 +504,7 @@ legend{padding:0;margin-bottom:8px}
   .actions .btn{padding:9px 12px;font-size:14px}
   .actions .icon-btn{width:40px;height:40px;padding:0}
   /* Auf schmalen Handys nur ein Spiele-Knopf im Kopf; Poker und Blackjack gibt es über die Karten im Menü */
-  #pokerBtn,#blackjackBtn,#cardroomBtn{display:none}
+  #pokerBtn,#blackjackBtn,#cardroomBtn,#drinksBtn{display:none}
   #menuBtn .long{display:none}
   #menuBtn .short{display:inline}
   .bar-frame{width:min(100%, 340px)}
@@ -490,6 +532,7 @@ legend{padding:0;margin-bottom:8px}
   .skill.prec.ready{animation:none;box-shadow:0 0 14px 2px rgba(127,227,245,.5)}
   .skill.blitz.ready{animation:none;box-shadow:0 0 14px 2px rgba(242,194,48,.5)}
   body.adrenaline .adr-fx{animation:none;opacity:.8}
+  .flash-pill.ready{animation:none;box-shadow:0 0 12px rgba(255,207,122,.6)}
   .skill.ready::after{animation:none;opacity:0}
   .skill.adr.ready{animation:none;box-shadow:0 0 14px 2px rgba(255,90,78,.5)}
 }
@@ -509,6 +552,7 @@ legend{padding:0;margin-bottom:8px}
       <small>Steeldart · Double Out</small>
     </div>
     <div class="actions">
+      <button class="btn ghost icon-btn" id="drinksBtn" type="button" aria-label="Kneipentrunk" data-i18n-aria="dr.btn" data-i18n-title="dr.btn" title="Kneipentrunk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 8h11v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M16 11h2.5a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H16"/><path d="M4.5 8c0-2.2 1.8-3.5 3.6-2.9C8.9 3.5 11.8 3.3 13 5c1.6-.6 3.4.6 3.2 3"/><path d="M8.5 11v6M12.5 11v6"/></svg></button>
       <button class="btn ghost icon-btn" id="cardroomBtn" type="button" aria-label="Kartentisch" data-i18n-aria="cr.btn" data-i18n-title="cr.btn" title="Kartentisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="9" height="13" rx="1.6" transform="rotate(-18 7 13.5)"/><rect x="7.5" y="4" width="9" height="13" rx="1.6"/><rect x="12.5" y="7" width="9" height="13" rx="1.6" transform="rotate(18 17 13.5)"/></svg></button>
       <button class="btn ghost icon-btn" id="blackjackBtn" type="button" aria-label="Blackjack" data-i18n-aria="bj.btn" data-i18n-title="bj.btn" title="Blackjack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg></button>
       <button class="btn ghost icon-btn" id="pokerBtn" type="button" aria-label="Pokertisch" data-i18n-aria="pk.btn" data-i18n-title="pk.btn" title="Pokertisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg></button>
@@ -544,6 +588,7 @@ legend{padding:0;margin-bottom:8px}
           <span class="skill-meter"><i id="adrFill"></i></span>
         </button>
       </div>
+      <div class="drinkbar" id="drinkbar"><button type="button" class="drink-open" id="drinkOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 8h11v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M16 11h2.5a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H16"/><path d="M4.5 8c0-2.2 1.8-3.5 3.6-2.9C8.9 3.5 11.8 3.3 13 5c1.6-.6 3.4.6 3.2 3"/><path d="M8.5 11v6M12.5 11v6"/></svg><span data-i18n="dr.bar">Theke</span></button><span class="drink-chips" id="drinkChips"></span><button type="button" class="flash-pill" id="flashBtn" aria-pressed="false" hidden disabled><span data-i18n="fl.name">Profi-Flashback</span> <b id="flashState"></b></button></div>
       <div class="hint" id="hint">Drücken &amp; halten, ausatmen – in der goldenen Atempause loslassen</div>
     </section>
 
@@ -583,6 +628,7 @@ legend{padding:0;margin-bottom:8px}
 </div>
 
 <div class="adr-fx" aria-hidden="true"></div>
+<div class="flash-fx" aria-hidden="true"></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <div class="overlay" id="menu" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
@@ -631,6 +677,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span><span data-i18n="lvl.verein">Otto</span><small data-i18n="lvl.verein.l">Vereinsspieler</small></span></label>
         <label class="chip"><input type="radio" name="level" id="lvlD" value="profi"><span><span data-i18n="lvl.profi">Die Maschine</span><small data-i18n="lvl.profi.l">Profi</small></span></label>
       </div>
+      <p class="prize-note" id="prizeNote"></p>
     </fieldset>
     <fieldset>
       <legend data-i18n="lg.throw">Anwurf</legend>
@@ -639,6 +686,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span data-i18n="starter.opp">Gegner</span></label>
       </div>
     </fieldset>
+    <button type="button" class="arc-card dr-card" id="drinksCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 8h11v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M16 11h2.5a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H16"/><path d="M4.5 8c0-2.2 1.8-3.5 3.6-2.9C8.9 3.5 11.8 3.3 13 5c1.6-.6 3.4.6 3.2 3"/><path d="M8.5 11v6M12.5 11v6"/></svg><span><b data-i18n="dr.title">Heinz’ Kneipentrunk</b><small data-i18n="dr.cardx">Pils, Energy und Eigenbräu – wirkt ein ganzes Match</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card cr-card" id="cardroomCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="9" height="13" rx="1.6" transform="rotate(-18 7 13.5)"/><rect x="7.5" y="4" width="9" height="13" rx="1.6"/><rect x="12.5" y="7" width="9" height="13" rx="1.6" transform="rotate(18 17 13.5)"/></svg><span><b data-i18n="cr.btn">Kartentisch</b><small data-i18n="cr.cardx">Skat und Rommé mit den Stammgästen</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card bj-card" id="blackjackCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg><span><b data-i18n="bj.btn">Blackjack</b><small data-i18n="bj.cardx">Gegen Heinz als Bank · Blackjack zahlt 3:2</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card pk-card" id="pokerCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg><span><b data-i18n="pk.btn">Pokertisch</b><small data-i18n="pk.cardx">Texas Hold’em mit Heinz als Geber</small></span><i aria-hidden="true">›</i></button>
@@ -656,6 +704,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.poker"></p>
       <p class="rules" data-i18n-html="rules.blackjack"></p>
       <p class="rules" data-i18n-html="rules.cards"></p>
+      <p class="rules" data-i18n-html="rules.drinks"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -705,7 +754,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n="arc.payx">Gewinne zählen auf 10 Linien von links nach rechts, als Vielfaches des Linieneinsatzes. Kirschen zahlen schon ab zwei.</p>
       <div id="payList"></div>
     </details>
-    <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.</p>
+    <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Leg in der Kneipe bringt Preisgeld: 2,50 € gegen Tante Gerda bis 25 € gegen Die Maschine.</p>
     <div class="row"><button type="button" class="btn ghost" id="arcClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
   </div>
   <div class="slot book" id="bookSlot" role="tabpanel" hidden>
@@ -738,7 +787,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n="bk.payx">Drei oder mehr Bücher irgendwo zahlen ein Vielfaches des Gesamteinsatzes und starten die Freispiele; in den Freispielen gibt es mit drei Büchern neue dazu. Die Schatztruhe ist Joker und ersetzt jedes Symbol außer dem Buch.</p>
       <div id="bkPayList"></div>
     </details>
-    <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.</p>
+    <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Leg in der Kneipe bringt Preisgeld: 2,50 € gegen Tante Gerda bis 25 € gegen Die Maschine.</p>
     <div class="row"><button type="button" class="btn ghost" id="bkClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
   </div>
   </div>
@@ -760,6 +809,19 @@ legend{padding:0;margin-bottom:8px}
     <details class="cr-score"><summary id="crScoreTitle">Skatblock</summary><div id="crScore"></div></details>
     <label class="cr-money"><input type="checkbox" id="crMoney"> <span data-i18n="cr.money">Um Geld spielen: 1 Cent pro Punkt vom Spielhallen-Guthaben</span></label>
     <div class="row"><button type="button" class="btn ghost" id="crLeave" data-i18n="cr.leave">Zurück in die Kneipe</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="drinks" role="dialog" aria-modal="true" aria-labelledby="drTitle" hidden>
+  <div class="pk dr">
+    <div class="pk-head">
+      <div><h2 id="drTitle" data-i18n="dr.title">Heinz’ Kneipentrunk</h2><small data-i18n="dr.sub">Frisch gezapft · bezahlt vom Spielhallen-Guthaben</small></div>
+      <div class="pk-cash"><small data-i18n="arc.credit">Guthaben</small><b id="drCash">0,00 €</b></div>
+    </div>
+    <div class="dr-list" id="drList"></div>
+    <div class="pk-msg" id="drMsg" aria-live="polite"></div>
+    <p class="dr-note" id="drNote"></p>
+    <div class="row"><button type="button" class="btn ghost" id="drLeave" data-i18n="cr.leave">Zurück in die Kneipe</button></div>
   </div>
 </div>
 
@@ -978,8 +1040,8 @@ const I18N = {
     'arc.credit': 'Guthaben', 'arc.win': 'Gewinn', 'arc.bet': 'Einsatz', 'arc.perline': '{v} pro Linie', 'arc.spin': 'Drehen',
     'arc.less': 'Einsatz senken', 'arc.more': 'Einsatz erhöhen', 'arc.pay': 'Gewinnplan', 'arc.back': 'Zurück in die Kneipe',
     'arc.payx': 'Gewinne zählen auf 10 Linien von links nach rechts, als Vielfaches des Linieneinsatzes. Kirschen zahlen schon ab zwei.',
-    'arc.note': 'Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.',
-    'arc.nocash': 'Zu wenig Guthaben. Gewinn ein Match in der Kneipe – das bringt 100 €.', 'arc.hello': 'Einsatz wählen und drehen. Viel Glück!',
+    'arc.note': 'Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Leg in der Kneipe bringt Preisgeld: 2,50 € gegen Tante Gerda bis 25 € gegen Die Maschine.',
+    'arc.nocash': 'Zu wenig Guthaben. Gewinn Legs in der Kneipe – jedes bringt Preisgeld.', 'arc.hello': 'Einsatz wählen und drehen. Viel Glück!',
     'arc.lose': ['Leider nichts. Nächste Runde?', 'Knapp daneben ist auch vorbei.', 'Die Walzen sind heute launisch.'],
     'arc.won': 'Gewinn {v}!', 'arc.line': 'Linie {n}: {k}× {s}', 'arc.jackpot': 'HAUPTGEWINN! Fünf Siebener – {v}!', 'arc.card': 'Guthaben {v}',
     'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle',
@@ -991,6 +1053,28 @@ const I18N = {
     'cr.declarer': '{name} spielt, gereizt bis {v}.', 'cr.plays': '{name} spielt {g}.', 'cr.yourturn': 'Du bist dran – tippe eine Karte an.',
     'cr.take': 'Skat aufnehmen', 'cr.hand': 'Hand spielen', 'cr.push': 'Wähle zwei Karten zum Drücken.', 'cr.pushbtn': 'Drücken', 'cr.choose': 'Spiel ansagen (gereizt bis {v}):',
     'cr.eyes': '{n} Augen', 'cr.won': '{name} gewinnt {g}: +{v}.', 'cr.lost': '{name} verliert {g}: −{s} (2 × {v}).', 'cr.overbid': 'überreizt', 'cr.next': 'Nächstes Spiel',
+    'dr.title': 'Heinz’ Kneipentrunk', 'dr.btn': 'Kneipentrunk', 'dr.bar': 'Theke', 'dr.cardx': 'Pils, Energy und Eigenbräu – wirkt ein ganzes Match', 'dr.sub': 'Frisch gezapft · bezahlt vom Spielhallen-Guthaben',
+    'dr.pils': 'Frisches Pils', 'dr.pils.d': 'Je betrunkener du wirst, desto mehr wackeln und streuen die Pfeile. Dafür rutscht ein knapp verfehlter Dart öfter ins anvisierte Doppel oder Triple.',
+    'dr.energy': 'Energy Drink', 'dr.energy.d': 'Jeder Energy erhöht die Chance auf „Volle Konzentration“: eine ruhige Hand für das ganze Match, je mehr Energy, desto ruhiger. Der Zielkreis streut trotzdem noch etwas.',
+    'dr.brew': 'Heinz’ Eigenbräu', 'dr.brew.d': 'Beim dritten Krug kommt der „Profi-Heinz-Flashback“: 10 Pfeile mit dem besten Aim im ganzen Spiel. Welche Darts das sind, entscheidest du per Knopf.',
+    'dr.buy': 'Kaufen · {v}', 'dr.max': 'Maximum erreicht', 'dr.poor': 'Zu wenig Guthaben · {v}',
+    'dr.pils.0': 'Noch stocknüchtern', 'dr.pils.s': 'Rausch {n}/5 · Pfeile streuen +{a} % · Bierglück {b} %',
+    'dr.energy.0': 'Noch kein Energy · erster: {c} % Chance', 'dr.energy.s': '{n}/3 · noch keine Konzentration · nächster: {c} %', 'dr.energy.on': '{n}/3 · Volle Konzentration aktiv',
+    'dr.brew.0': 'Noch kein Krug · 3 bis zum Flashback', 'dr.brew.s': '{n}/3 Krüge · noch {m} bis zum Flashback', 'dr.brew.on': 'Flashback: {f} von 10 Pfeilen übrig', 'dr.brew.done': 'Flashback aufgebraucht',
+    'dr.now': 'Gilt sofort für das laufende Match und verfliegt an dessen Ende.', 'dr.next': 'Gilt für dein nächstes Match und verfliegt an dessen Ende.',
+    'dr.got.pils': 'Prost! Pils Nummer {n}.', 'dr.got.energy': 'Zisch! Energy Nummer {n}.', 'dr.got.brew': 'Krug {n} von Heinz’ Eigenbräu.',
+    'dr.focus': 'Volle Konzentration! Deine Hand wird ruhig.', 'dr.nofocus': 'Noch keine Konzentration – vielleicht beim nächsten.', 'dr.flash': 'Profi-Heinz-Flashback! 10 Pfeile mit dem besten Aim der Kneipe.',
+    'dr.gone': 'Der Trunk ist verflogen – neues Match, klarer Kopf.',
+    'dr.chip.pils': 'Pils {n}/5', 'dr.chip.energy': 'Energy {n}/3', 'dr.chip.focus': 'Konzentration {n}/3', 'dr.chip.brew': 'Eigenbräu {n}/3',
+    'fl.name': 'Profi-Flashback', 'fl.left': '{n}/10', 'fl.armed': 'scharf · {n}/10', 'fl.wait': '{n}/10',
+    'hint.flash': 'Flashback scharf: Dein nächster Dart fliegt wie bei Heinz in seinen besten Jahren.', 'hint.flashcancel': 'Flashback zurückgelegt.', 'hint.beer': 'Bierglück! Der Dart rutscht noch ins {l}.',
+    'w.pils': ['Ein frisches Pils, bitteschön!', 'Prost! Aber zielen nicht vergessen.', 'Das zischt. Die Doppel werden größer, sagt man.'],
+    'w.energy': ['Energy? Na, wenn’s hilft.', 'Da zittert gleich nichts mehr. Oder alles.', 'Zisch – und los!'],
+    'w.brew': ['Mein Eigenbräu. Rezept vom Opa.', 'Vorsicht, das hat’s in sich!', 'Davon hab ich damals die Kreisliga gewonnen.'],
+    'w.flash': ['1987, Kreisliga-Finale. Ich seh’s noch vor mir!', 'So hab ich früher geworfen. Ganz ruhig.', 'Das ist der alte Heinz in dir!'],
+    'w.focus': 'Volle Konzentration! Jetzt sitzt jeder Pfeil.', 'w.beer': ['Siehste, das Pils hilft!', 'Bierglück! Prost!', 'Ein Pils mehr, ein Doppel mehr.'],
+    'prize.note': 'Preisgeld je gewonnenem Leg gegen {name}: {v}',
+    'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Beim dritten Krug gibt es den Profi-Heinz-Flashback, 10 Pfeile mit dem besten Aim im Spiel, die du per Knopf selbst einsetzt. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'cr.block': 'Skatblock', 'cr.game': 'Spiel', 'cr.resume': 'Weiter geht’s.', 'cr.switching': 'Gleich – die Karten sind noch unterwegs …',
     'rm.isout': 'draußen', 'rm.deal': 'Heinz gibt jedem 13 Karten.', 'rm.took': 'nimmt die Ablage', 'rm.cameout': 'kommt raus ({v})',
     'rm.drawq': 'Zieh eine Karte: vom Stapel oder die oberste der Ablage.', 'rm.stock': 'Vom Stapel ziehen', 'rm.discardtake': 'Ablage nehmen',
@@ -1028,7 +1112,7 @@ const I18N = {
     'bsym.ten': 'Zehn', 'bsym.jack': 'Bube', 'bsym.queen': 'Dame', 'bsym.king': 'König', 'bsym.ace': 'Ass', 'bsym.amphora': 'Amphore', 'bsym.owl': 'Eule',
     'bsym.helmet': 'Helm', 'bsym.bust': 'Büste', 'bsym.book': 'Buch', 'bsym.chest': 'Schatztruhe',
     'sym.cherry': 'Kirsche', 'sym.lemon': 'Zitrone', 'sym.orange': 'Orange', 'sym.plum': 'Pflaume', 'sym.grape': 'Traube', 'sym.melon': 'Melone', 'sym.bell': 'Glocke', 'sym.seven': 'Sieben',
-    'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Daneben steht das „Buch der Weisen“: drei Bücher starten Freispiele, die Schatztruhe ist Joker, und du wählst selbst das Sondersymbol, das sich über ganze Walzen ausbreitet (rund 95 % Auszahlung). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu 100 € für jedes gewonnene Match.',
+    'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Daneben steht das „Buch der Weisen“: drei Bücher starten Freispiele, die Schatztruhe ist Joker, und du wählst selbst das Sondersymbol, das sich über ganze Walzen ausbreitet (rund 95 % Auszahlung). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu Preisgeld für jedes gewonnene Leg (2,50 € bis 25 €, je nach Gegner).',
     'w.greet': ['Moin! Wirf ’ne Runde mit.', 'Die Scheibe ist frisch gebürstet. Blamier sie nicht.', 'Schuhe abputzen, Pfeile schärfen, rein da!'],
     'w.start': ['Oche frei! Und bitte nicht die Lampe treffen.', 'Gegen {name}? Ich hol schon mal den Verbandskasten.', 'Erst werfen, dann trinken. Andersrum hatten wir schon – wurde teuer.', 'Wer verliert, zahlt die Runde. Steht so im Grundgesetz.'],
     'w.bust': ['Überworfen! Mathe war wohl nicht dein Leistungskurs.', 'Zu viel des Guten – wie meine zweite Portion Schnitzel.', 'Erst rechnen, dann werfen! Soll ich dir ’nen Bierdeckel geben?', 'Überworfen. Die Scheibe lacht dich aus. Ich auch.'],
@@ -1116,8 +1200,8 @@ const I18N = {
     'arc.credit': 'Credit', 'arc.win': 'Win', 'arc.bet': 'Bet', 'arc.perline': '{v} per line', 'arc.spin': 'Spin',
     'arc.less': 'Lower bet', 'arc.more': 'Raise bet', 'arc.pay': 'Paytable', 'arc.back': 'Back to the pub',
     'arc.payx': 'Wins count on 10 lines from left to right, as multiples of the line bet. Cherries already pay from two.',
-    'arc.note': 'Play money with no real value – nothing is paid out. Every match you win in the pub earns €100.',
-    'arc.nocash': 'Not enough credit. Win a match in the pub – that’s €100.', 'arc.hello': 'Pick your bet and spin. Good luck!',
+    'arc.note': 'Play money with no real value – nothing is paid out. Every leg you win in the pub earns prize money: €2.50 against Auntie Gerda up to €25 against The Machine.',
+    'arc.nocash': 'Not enough credit. Win legs in the pub – each one earns prize money.', 'arc.hello': 'Pick your bet and spin. Good luck!',
     'arc.lose': ['Nothing this time. Another spin?', 'So close, and yet…', 'The reels are moody tonight.'],
     'arc.won': 'You win {v}!', 'arc.line': 'Line {n}: {k}× {s}', 'arc.jackpot': 'JACKPOT! Five sevens – {v}!', 'arc.card': 'Credit {v}',
     'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade',
@@ -1129,6 +1213,28 @@ const I18N = {
     'cr.declarer': '{name} plays, bid {v}.', 'cr.plays': '{name} plays {g}.', 'cr.yourturn': 'Your turn – tap a card.',
     'cr.take': 'Pick up the skat', 'cr.hand': 'Play hand', 'cr.push': 'Choose two cards to put away.', 'cr.pushbtn': 'Put away', 'cr.choose': 'Announce your game (bid {v}):',
     'cr.eyes': '{n} points', 'cr.won': '{name} wins {g}: +{v}.', 'cr.lost': '{name} loses {g}: −{s} (2 × {v}).', 'cr.overbid': 'overbid', 'cr.next': 'Next game',
+    'dr.title': 'Heinz’s Pub Drinks', 'dr.btn': 'Pub drinks', 'dr.bar': 'Bar', 'dr.cardx': 'Lager, energy drinks and home brew – lasts a whole match', 'dr.sub': 'Freshly poured · paid from your arcade credit',
+    'dr.pils': 'Fresh lager', 'dr.pils.d': 'The drunker you get, the more your darts wobble and scatter. In return, a near miss slips into the double or treble you aimed at more often.',
+    'dr.energy': 'Energy drink', 'dr.energy.d': 'Every can raises the chance of “full focus”: a steady hand for the whole match, steadier with every can. The aim circle still spreads a little.',
+    'dr.brew': 'Heinz’s home brew', 'dr.brew.d': 'The third mug brings the “Pro Heinz flashback”: 10 darts with the best aim in the whole game. You pick which darts with a button.',
+    'dr.buy': 'Buy · {v}', 'dr.max': 'Maximum reached', 'dr.poor': 'Not enough credit · {v}',
+    'dr.pils.0': 'Stone-cold sober', 'dr.pils.s': 'Tipsy {n}/5 · darts scatter +{a}% · beer luck {b}%',
+    'dr.energy.0': 'No can yet · first one: {c}% chance', 'dr.energy.s': '{n}/3 · no focus yet · next one: {c}%', 'dr.energy.on': '{n}/3 · full focus active',
+    'dr.brew.0': 'No mug yet · 3 to the flashback', 'dr.brew.s': '{n}/3 mugs · {m} more to the flashback', 'dr.brew.on': 'Flashback: {f} of 10 darts left', 'dr.brew.done': 'Flashback used up',
+    'dr.now': 'Works right away in this match and wears off when it ends.', 'dr.next': 'Works in your next match and wears off when it ends.',
+    'dr.got.pils': 'Cheers! Lager number {n}.', 'dr.got.energy': 'Psssht! Energy drink number {n}.', 'dr.got.brew': 'Mug {n} of Heinz’s home brew.',
+    'dr.focus': 'Full focus! Your hand goes steady.', 'dr.nofocus': 'No focus yet – maybe with the next one.', 'dr.flash': 'Pro Heinz flashback! 10 darts with the best aim in the pub.',
+    'dr.gone': 'The drinks have worn off – new match, clear head.',
+    'dr.chip.pils': 'Lager {n}/5', 'dr.chip.energy': 'Energy {n}/3', 'dr.chip.focus': 'Focus {n}/3', 'dr.chip.brew': 'Home brew {n}/3',
+    'fl.name': 'Pro flashback', 'fl.left': '{n}/10', 'fl.armed': 'armed · {n}/10', 'fl.wait': '{n}/10',
+    'hint.flash': 'Flashback armed: your next dart flies like Heinz in his prime.', 'hint.flashcancel': 'Flashback put away.', 'hint.beer': 'Beer luck! The dart slips into {l}.',
+    'w.pils': ['A fresh lager, there you go!', 'Cheers! Don’t forget to aim.', 'That fizzes. They say the doubles get bigger.'],
+    'w.energy': ['Energy drink? Well, if it helps.', 'Nothing will shake after that. Or everything.', 'Psssht – off you go!'],
+    'w.brew': ['My home brew. Grandpa’s recipe.', 'Careful, that one packs a punch!', 'That’s what won me the county league back then.'],
+    'w.flash': ['1987, county league final. I can still see it!', 'That’s how I used to throw. Nice and calm.', 'That’s the old Heinz in you!'],
+    'w.focus': 'Full focus! Every dart sits now.', 'w.beer': ['See, the lager helps!', 'Beer luck! Cheers!', 'One more lager, one more double.'],
+    'prize.note': 'Prize money per leg won against {name}: {v}',
+    'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): the third mug brings the Pro Heinz flashback, 10 darts with the best aim in the game that you use with a button. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'cr.block': 'Score sheet', 'cr.game': 'Game', 'cr.resume': 'On we go.', 'cr.switching': 'One moment – the cards are still moving…',
     'rm.isout': 'out', 'rm.deal': 'Heinz deals 13 cards each.', 'rm.took': 'takes the discard', 'rm.cameout': 'comes out ({v})',
     'rm.drawq': 'Draw a card: from the stock or the top of the discard pile.', 'rm.stock': 'Draw from stock', 'rm.discardtake': 'Take discard',
@@ -1166,7 +1272,7 @@ const I18N = {
     'bsym.ten': 'Ten', 'bsym.jack': 'Jack', 'bsym.queen': 'Queen', 'bsym.king': 'King', 'bsym.ace': 'Ace', 'bsym.amphora': 'Amphora', 'bsym.owl': 'Owl',
     'bsym.helmet': 'Helmet', 'bsym.bust': 'Bust', 'bsym.book': 'Book', 'bsym.chest': 'Treasure chest',
     'sym.cherry': 'cherry', 'sym.lemon': 'lemon', 'sym.orange': 'orange', 'sym.plum': 'plum', 'sym.grape': 'grapes', 'sym.melon': 'melon', 'sym.bell': 'bell', 'sym.seven': 'seven',
-    'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). Next to it stands the “Tome of the Sages”: three books start free spins, the treasure chest is wild, and you pick the special symbol that spreads over whole reels (about 95% payout). It runs on play money: €20 to start, plus €100 for every match you win.',
+    'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). Next to it stands the “Tome of the Sages”: three books start free spins, the treasure chest is wild, and you pick the special symbol that spreads over whole reels (about 95% payout). It runs on play money: €20 to start, plus prize money for every leg you win (€2.50 to €25, depending on the opponent).',
     'w.greet': ['Evening! Fancy a game?', 'Board’s freshly brushed. Don’t embarrass it.', 'Wipe your feet, sharpen your darts, off you go!'],
     'w.start': ['Oche’s all yours. Please mind the lamp.', 'Against {name}? I’ll fetch the first-aid kit.', 'Throw first, drink later. The other way round got expensive.', 'Loser buys the round. It’s in the constitution.'],
     'w.bust': ['Bust! Maths wasn’t your strong subject, was it?', 'Too much of a good thing – like my second schnitzel.', 'Count first, then throw! Want a beer mat to do the sums?', 'Bust. The board’s laughing at you. So am I.'],
@@ -3196,8 +3302,47 @@ const BOOSTS = {
   prec: { amp: .55, tremor: .45, scatter: .45 },
   adr:  { amp: .3, tremor: .2, scatter: .25 },
   alt:  { amp: .62, tremor: .55, scatter: .58 },  // Stammtischpfeil: dauerhaft ruhigere Hand
-  anf:  { amp: .5, tremor: .5, scatter: 1 }        // Anfängerpfeil: schwankt wenig, streut aber normal
+  anf:  { amp: .5, tremor: .5, scatter: 1 },       // Anfängerpfeil: schwankt wenig, streut aber normal
+  flash: { amp: .04, tremor: .05, scatter: .08 }   // Profi-Heinz-Flashback: das beste Aim im Spiel
 };
+
+/* Heinz’ Kneipentrunk: gekaufte Getränke wirken ein ganzes Match (nur für dich, nicht für den Gegner) */
+const DRINK = { pils: { price: 500, max: 5 }, energy: { price: 1000, max: 3 }, brew: { price: 1000, max: 3 } };
+const FLASH_DARTS = 10;
+const PILS_MAGNET = .12, PILS_REACH = 32;   // je Pils 12 % Chance, dass ein knapp verfehlter Dart (bis 32 mm) ins anvisierte Doppel/Triple rutscht
+const PILS_SWAY = .5, PILS_SCATTER = .45;   // volle 5 Pils: 50 % mehr Wackeln, 45 % mehr Streuung
+const FOCUS_STEADY = .3, FOCUS_SCATTER = .1; // je Energy mit Konzentration: 30 % ruhigere Hand, aber nur 10 % weniger Streuung
+const freshDrinks = () => ({ pils: 0, energy: 0, focusOn: false, brew: 0, flash: 0, armed: false, bound: false });
+let drinks = freshDrinks();
+// bound: gehört schon zu einem Match – nach einem Neuladen ist das Match weg, also auch der Trunk
+try { const v = JSON.parse(localStorage.getItem('dk-drinks') || 'null'); if (v && !v.bound) drinks = Object.assign(freshDrinks(), v, { armed: false }); } catch (e) {}
+const saveDrinks = () => { try { localStorage.setItem('dk-drinks', JSON.stringify(drinks)); } catch (e) {} };
+const anyDrink = () => drinks.pils > 0 || drinks.energy > 0 || drinks.brew > 0;
+function resetDrinks() { drinks = freshDrinks(); saveDrinks(); document.body.classList.remove('flashback'); }
+const drunk = () => drinks.pils / DRINK.pils.max;
+const focusLevel = () => drinks.focusOn ? drinks.energy : 0;
+
+// Pils macht wackelig, Konzentration ruhig; der Flashback ignoriert beides
+function drinkMods(kind, b, t, w) {
+  const d = drunk(), e = focusLevel();
+  if (kind === 'flash' || (!d && !e)) return b;
+  const steady = 1 - FOCUS_STEADY * e, k = (1 + PILS_SWAY * d) * steady;
+  const sx = d * 7 * Math.sin(t * .83 + w.ph[1]), sy = d * 5 * Math.sin(t * .61 + w.ph[3]);   // langsames Schwanken im Rausch
+  return Object.assign({}, b, { x: (b.x + sx) * k, y: (b.y + sy) * k, scatter: b.scatter * (1 + PILS_SCATTER * d) * (1 - FOCUS_SCATTER * e) });
+}
+
+// Bierglück: knapp am anvisierten Doppel oder Triple vorbei? Mit etwas Glück rutscht der Dart doch hinein.
+function pilsMagnet(ax, ay, lx, ly) {
+  if (!drinks.pils) return null;
+  const want = hit(ax, ay), got = hit(lx, ly);
+  if (want.m < 2 || want.n === 25 || (got.n === want.n && got.m === want.m)) return null;
+  if (Math.hypot(lx - ax, ly - ay) > PILS_REACH || Math.random() >= PILS_MAGNET * drinks.pils) return null;
+  const mid = ORDER.indexOf(want.n) * Math.PI / 10;
+  const off = Math.atan2(Math.sin(Math.atan2(ax, -ay) - mid), Math.cos(Math.atan2(ax, -ay) - mid));
+  const a = mid + off * .5 + (Math.random() - .5) * .05;
+  const r = (want.m === 3 ? (R.TI + R.TO) / 2 : (R.DI + R.DO) / 2) + (Math.random() - .5) * 3;
+  return { x: Math.sin(a) * r, y: -Math.cos(a) * r };
+}
  // Standardpfeil: jeder Wurf macht ihn 0,05 % ruhiger und genauer, bis +50 % (nach 1000 Würfen), dauerhaft gespeichert
 const STD_STEP = .0005, STD_MAX = .5;
 let stdThrows = 0;
@@ -3208,6 +3353,7 @@ const pct = v => (v * 100).toLocaleString(lang === 'de' ? 'de-DE' : 'en-GB', { m
 const LUCK = 1 / 3;      // Anfängerpfeil: jeder Dart hat ein Drittel Chance, so präzise wie mit Adrenalin zu fliegen
 const boostKind = () => {
   if (!S) return 'none';
+  if (drinks.armed && drinks.flash > 0) return 'flash';
   if (S.adrLeft > 0) return 'adr';
   if (S.dartSet === 'kneipe' && S.precArmed) return 'prec';
   if (S.dartSet === 'blitz' && S.blitzLeft > 0) return 'blitz';
@@ -3219,6 +3365,9 @@ const boostKind = () => {
 
 function breath(t, w, force) {
   const kind = force || boostKind();
+  return drinkMods(kind, breathBase(t, w, kind), t, w);
+}
+function breathBase(t, w, kind) {
   if (kind === 'blitz' && t <= QUICK) {
     // Schnellwurf aktiv und schnell losgelassen: perfektes Zielen, nur ein Hauch Zittern
     const p = w.ph;
@@ -3260,9 +3409,23 @@ function drawCross(x, y, steady, lift, unrest, kind, quick) {
   }
   // Farbiger Ring, solange eine Fähigkeit wirkt
   if (kind !== 'none') {
-    ctx.strokeStyle = { adr: 'rgba(255,90,78,.85)', prec: 'rgba(127,227,245,.85)', blitz: 'rgba(242,194,48,.9)', alt: 'rgba(111,211,154,.7)', anf: 'rgba(120,214,110,.6)', std: 'rgba(212,32,42,.6)' }[kind];
+    ctx.strokeStyle = { flash: 'rgba(255,207,122,.95)', adr: 'rgba(255,90,78,.85)', prec: 'rgba(127,227,245,.85)', blitz: 'rgba(242,194,48,.9)', alt: 'rgba(111,211,154,.7)', anf: 'rgba(120,214,110,.6)', std: 'rgba(212,32,42,.6)' }[kind];
     ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(X, Y, r * 1.55, 0, Math.PI * 2); ctx.stroke();
+  }
+  // Volle Konzentration: grünes Leuchten um den Zielkreis; im Pils-Rausch sieht man doppelt
+  if (kind !== 'flash') {
+    const now = performance.now(), d = drunk();
+    if (focusLevel()) {
+      const pulse = .5 + .5 * Math.sin(now / 260);
+      ctx.strokeStyle = `rgba(156,255,58,${.25 + .35 * pulse})`; ctx.lineWidth = 2 + 2 * pulse;
+      ctx.beginPath(); ctx.arc(X, Y, r * (1.2 + .25 * pulse), 0, Math.PI * 2); ctx.stroke();
+    }
+    if (d > .3) {
+      const o = d * 10 * Math.sin(now / 700);
+      ctx.strokeStyle = `rgba(243,239,230,${.22 * d})`; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(X + o, Y - o * .4, r, 0, Math.PI * 2); ctx.stroke();
+    }
   }
   // Schnellwurf: schrumpfender Ring zeigt, wie lange der perfekte Wurf noch geht
   if (quick > 0) {
@@ -3320,11 +3483,16 @@ canvas.addEventListener('pointerup', e => {
   aim.active = false;
   if (!canThrow()) return;
   // Anfängerpfeil: mit etwas Glück fliegt der Dart so ruhig und genau wie mit Adrenalin
-  const lucky = S.dartSet === 'anfaenger' && S.adrLeft === 0 && Math.random() < LUCK;
+  const flashing = boostKind() === 'flash';
+  const lucky = !flashing && S.dartSet === 'anfaenger' && S.adrLeft === 0 && Math.random() < LUCK;
   const b = breath((performance.now() - aim.t0) / 1000, aim.w, lucky ? 'adr' : undefined);
   if (S.dartSet === 'anfaenger') S.luckLast = lucky;
   const [gx, gy] = gauss2(), sc = b.scatter;
-  throwAt(0, aim.pos.x + b.x + gx * sc, aim.pos.y + b.y + gy * sc);
+  let tx = aim.pos.x + b.x + gx * sc, ty = aim.pos.y + b.y + gy * sc;
+  const beer = flashing ? null : pilsMagnet(aim.pos.x + b.x, aim.pos.y + b.y, tx, ty);
+  if (beer) { tx = beer.x; ty = beer.y; }
+  throwAt(0, tx, ty);
+  if (beer) { hint(t('hint.beer', { l: hit(tx, ty).l })); if (Math.random() < .4) wirt.say(t('w.beer')); }
   if (lucky) {
     sfx.charge(); hint(t('hint.luck'));
     if (Math.random() < .4) wirt.say(t('w.luck'));
@@ -3343,9 +3511,14 @@ const LEVELS = {
 for (const k of Object.keys(LEVELS)) Object.defineProperties(LEVELS[k], {
   name: { get: () => t('lvl.' + k) }, label: { get: () => t('lvl.' + k + '.l') }
 });
+// Preisgeld je gewonnenem Leg (Cent): bei 6 gewonnenen Legs gegen Tante Gerda also 15 €
+const LEG_PRIZE = { anfaenger: 250, stammgast: 500, verein: 1000, profi: 2500 };
 let S = null;
 
 function newGame(o) {
+  // Der Trunk gilt genau ein Match: Was schon zu einem Match gehörte, ist jetzt verflogen
+  if (drinks.bound) resetDrinks();
+  if (anyDrink()) { drinks.bound = true; saveDrinks(); }
   S = {
     start: o.start, level: o.level, opp: LEVELS[o.level],
     legsToWin: o.legs, legs: [0, 0], starter: o.starter, legStarter: o.starter,
@@ -3492,7 +3665,7 @@ function cpuBoostTag(g) {
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1) return;
-  if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open || drinkShop.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const kind = cpuBoostKind(g, !!f && f.seq.length === 1);
   const sigma = g.opp.sigma * cpuMult(kind);
@@ -3511,12 +3684,15 @@ function throwAt(p, x, y) {
   sfx.whoosh();
   if (p === 0) {
     // Fähigkeiten verbrauchen; normale Darts laden die Präzision auf
-    const wasAdr = g.adrLeft > 0;
+    // Ein Flashback-Pfeil geht vor allem anderen und verbraucht sonst nichts
+    const flashed = drinks.armed && drinks.flash > 0;
+    if (flashed) { drinks.flash--; drinks.armed = false; saveDrinks(); sfx.charge(); }
+    const wasAdr = !flashed && g.adrLeft > 0;
     if (wasAdr) { g.adrLeft--; if (!g.adrLeft) document.body.classList.remove('adrenaline'); }
     // Fähigkeit des Pfeil-Sets verbrauchen und aufladen
-    const set = g.dartSet, boosted = wasAdr || (set === 'blitz' && g.blitzLeft > 0);
-    if (!wasAdr && set === 'kneipe' && g.precArmed) { g.precArmed = false; g.precStock--; }
-    else if (!wasAdr && set === 'blitz' && g.blitzLeft > 0) g.blitzLeft--;
+    const set = g.dartSet, boosted = flashed || wasAdr || (set === 'blitz' && g.blitzLeft > 0);
+    if (!flashed && !wasAdr && set === 'kneipe' && g.precArmed) { g.precArmed = false; g.precStock--; }
+    else if (!flashed && !wasAdr && set === 'blitz' && g.blitzLeft > 0) g.blitzLeft--;
     if (set === 'kneipe' && ++g.precProgress >= PREC_EVERY) { g.precProgress = 0; g.precStock++; sfx.charge(); }
     if (set === 'blitz' && !boosted && ++g.blitzProgress >= BLITZ_EVERY) { g.blitzProgress = 0; g.blitzStock++; sfx.charge(); }
     if (set === 'standard' && stdLevel() < STD_MAX) {
@@ -3594,10 +3770,17 @@ function win(g, p, h) {
   g.hist[p].push({ score: sum, rest: 0, bust: false });
   g.legs[p]++;
   const matchWon = g.legs[p] >= g.legsToWin;
+  if (p === 0) {
+    const prize = LEG_PRIZE[g.level];
+    arcade.addCash(prize);
+    setTimeout(() => toast(t('toast.cash'), t('toast.cashx', { v: arcade.fmt(prize) })), 3400);
+  }
   if (matchWon && p === 0) {
     bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi') unlock('pro');
-    arcade.addCash(10000);
-    setTimeout(() => toast(t('toast.cash'), t('toast.cashx', { v: arcade.fmt(10000) })), 3400);
+  }
+  if (matchWon && drinks.bound) {
+    resetDrinks();
+    setTimeout(() => toast(t('dr.title'), ' ' + t('dr.gone')), 8200);
   }
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
@@ -3727,7 +3910,38 @@ function renderSkills() {
     : gapUsed ? t('adr.fin')
     : finUsed ? (gap > 0 ? t('adr.gap', { g: gap, m: ADR_GAP }) : t('adr.from', { m: ADR_GAP }))
     : gap > 0 ? t('adr.gapfin', { g: gap, m: ADR_GAP }) : t('adr.idle');
+  renderDrinks();
 }
+
+// Getränke unter den Fähigkeiten: Rausch, Konzentration und der Flashback-Knopf
+function renderDrinks() {
+  const chips = [];
+  if (drinks.pils) chips.push(['#f2c230', t('dr.chip.pils', { n: drinks.pils })]);
+  if (drinks.energy) chips.push(drinks.focusOn ? ['#9cff3a', t('dr.chip.focus', { n: drinks.energy })] : ['#cfe9b0', t('dr.chip.energy', { n: drinks.energy })]);
+  if (drinks.brew && drinks.brew < DRINK.brew.max) chips.push(['#e0954a', t('dr.chip.brew', { n: drinks.brew })]);
+  $('#drinkChips').innerHTML = chips.map(([c, s]) => `<span class="drink-chip" style="--c:${c}">${s}</span>`).join('');
+  const n = drinks.flash, fb = $('#flashBtn');
+  if (!n) drinks.armed = false;
+  const canUse = !!S && !S.over && S.turn === 0 && n > 0;
+  fb.hidden = !n;
+  fb.disabled = !canUse;
+  fb.classList.toggle('ready', canUse && !drinks.armed);
+  fb.classList.toggle('on', drinks.armed);
+  fb.setAttribute('aria-pressed', String(drinks.armed));
+  $('#flashState').textContent = drinks.armed ? t('fl.armed', { n }) : canUse ? t('fl.left', { n }) : t('fl.wait', { n });
+  document.body.classList.toggle('flashback', drinks.armed);
+}
+
+// Profi-Flashback selbst einsetzen: antippen macht den nächsten Dart zum Flashback-Dart
+$('#flashBtn').addEventListener('click', () => {
+  const g = S;
+  if (!g || g.over || g.turn !== 0 || drinks.flash <= 0) return;
+  sfx.init();
+  drinks.armed = !drinks.armed;
+  if (drinks.armed) { sfx.powerup(); hint(t('hint.flash')); wirt.say(t('w.flash')); }
+  else hint(t('hint.flashcancel'));
+  renderSkills();
+});
 
 // Adrenalin selbst einsetzen, sobald der Gegner auf einem Finish steht
 $('#adrBox').addEventListener('click', () => {
@@ -6515,6 +6729,90 @@ const cardroom = (() => {
   };
 })();
 
+/* ---------- Heinz’ Kneipentrunk: Getränke für Spielhallen-Guthaben, sie wirken ein ganzes Match ---------- */
+const drinkShop = (() => {
+  const el = $('#drinks'), fmt = c => arcade.fmt(c);
+  const ICON = {
+    pils: `<svg viewBox="0 0 84 96" aria-hidden="true"><defs><linearGradient id="drBeer" x1="0" x2="1"><stop offset="0" stop-color="#c97a06"/><stop offset=".5" stop-color="#ffd34f"/><stop offset="1" stop-color="#c97a06"/></linearGradient></defs>
+      <path d="M24 16h36l-4 50c-1 8-5 11-6 15H34c-1-4-5-7-6-15z" fill="url(#drBeer)"/>
+      <g fill="#fff8e0" opacity=".7"><circle cx="36" cy="44" r="1.6"/><circle cx="46" cy="58" r="1.3"/><circle cx="40" cy="70" r="1.1"/><circle cx="50" cy="36" r="1.4"/></g>
+      <path d="M21 16c-2-5 3-9 8-7 3-5 11-5 14-1 4-4 12-3 14 2 5-1 8 4 6 7-1 2-3 2-5 2H25c-2 0-3-1-4-3z" fill="#fffaf0"/>
+      <path d="M24 16h36l-4 50c-1 8-5 11-6 15H34c-1-4-5-7-6-15z" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+      <path d="M38 81h8v6h-8zM28 87h28a2 2 0 0 1 0 4H28a2 2 0 0 1 0-4z" fill="#e6eef2" opacity=".85"/></svg>`,
+    energy: `<svg viewBox="0 0 84 96" aria-hidden="true"><defs><linearGradient id="drCan" x1="0" x2="1"><stop offset="0" stop-color="#0b1608"/><stop offset=".45" stop-color="#2b3d22"/><stop offset="1" stop-color="#0b1608"/></linearGradient></defs>
+      <rect x="23" y="9" width="38" height="6" rx="3" fill="#c9d2d8"/>
+      <rect x="21" y="13" width="42" height="76" rx="7" fill="url(#drCan)" stroke="#9cff3a" stroke-width="2"/>
+      <path d="M47 22 32 53h10l-6 27 19-35H44l6-23z" fill="#9cff3a"/>
+      <rect x="25" y="18" width="5" height="66" rx="2.5" fill="rgba(255,255,255,.14)"/></svg>`,
+    brew: `<svg viewBox="0 0 84 96" aria-hidden="true"><defs><linearGradient id="drMug" x1="0" x2="1"><stop offset="0" stop-color="#5e3a1d"/><stop offset=".5" stop-color="#b07a48"/><stop offset="1" stop-color="#4f2f16"/></linearGradient></defs>
+      <path d="M60 36h7a10 10 0 0 1 10 10v12a10 10 0 0 1-10 10h-7" fill="none" stroke="#6e4524" stroke-width="7"/>
+      <path d="M13 22h48v60a6 6 0 0 1-6 6H19a6 6 0 0 1-6-6z" fill="url(#drMug)"/>
+      <path d="M13 34h48M13 76h48" stroke="#3a2412" stroke-width="2.5"/>
+      <path d="M11 22c-1-6 5-9 10-7 3-6 13-6 17-1 4-5 14-4 16 1 6-2 10 3 8 7H11z" fill="#f4ead8"/>
+      <text x="37" y="63" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="22" fill="#f0d8a8">H</text></svg>`
+  };
+  // Wie es um das jeweilige Getränk steht
+  function state(k) {
+    const n = drinks[k];
+    if (k === 'pils') return n ? t('dr.pils.s', { n, a: Math.round(PILS_SCATTER * drunk() * 100), b: Math.round(PILS_MAGNET * n * 100) }) : t('dr.pils.0');
+    if (k === 'energy') {
+      if (drinks.focusOn) return t('dr.energy.on', { n });
+      const c = Math.round(Math.min(n + 1, DRINK.energy.max) / DRINK.energy.max * 100);
+      return n ? t('dr.energy.s', { n, c }) : t('dr.energy.0', { c });
+    }
+    if (n >= DRINK.brew.max) return drinks.flash ? t('dr.brew.on', { f: drinks.flash }) : t('dr.brew.done');
+    return n ? t('dr.brew.s', { n, m: DRINK.brew.max - n }) : t('dr.brew.0');
+  }
+  function render() {
+    $('#drCash').textContent = fmt(arcade.cash);
+    $('#drList').innerHTML = Object.keys(DRINK).map(k => {
+      const D = DRINK[k], n = drinks[k], full = n >= D.max, poor = arcade.cash < D.price;
+      const pips = Array.from({ length: D.max }, (_, i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('');
+      const label = full ? t('dr.max') : poor ? t('dr.poor', { v: fmt(D.price) }) : t('dr.buy', { v: fmt(D.price) });
+      return `<article class="dr-item ${k}">${ICON[k]}<h3>${t('dr.' + k)}</h3><div class="dr-pips" aria-label="${n}/${D.max}">${pips}</div><p>${t('dr.' + k + '.d')}</p>` +
+        `<div class="dr-state">${state(k)}</div><button type="button" class="btn" data-k="${k}"${full || poor ? ' disabled' : ''}>${label}</button></article>`;
+    }).join('');
+    $('#drNote').textContent = t(S && !S.over ? 'dr.now' : 'dr.next');
+  }
+  function buy(k) {
+    const D = DRINK[k];
+    if (drinks[k] >= D.max || arcade.cash < D.price) return;
+    sfx.init();
+    arcade.addCash(-D.price);
+    drinks[k]++;
+    if (S && !S.over) drinks.bound = true;   // im laufenden Match gekauft: wirkt sofort, verfliegt an dessen Ende
+    let text = t('dr.got.' + k, { n: drinks[k] }), say = t('w.' + k);
+    if (k === 'energy' && !drinks.focusOn) {
+      // Je mehr Energy, desto eher: 33 %, 67 %, beim dritten sicher
+      if (Math.random() < drinks.energy / D.max) { drinks.focusOn = true; text = t('dr.focus'); say = t('w.focus'); sfx.powerup(); }
+      else text += ' ' + t('dr.nofocus');
+    }
+    if (k === 'brew' && drinks.brew >= D.max) { drinks.flash = FLASH_DARTS; text = t('dr.flash'); say = t('w.flash'); sfx.powerup(); }
+    else sfx.charge();
+    saveDrinks();
+    $('#drMsg').textContent = text;
+    wirt.react('talk', say, k !== 'energy');   // Bier wird gezapft
+    render(); renderSkills();
+  }
+  function renderPrize() {
+    const lvl = document.querySelector('#menuForm input[name="level"]:checked');
+    if (lvl) $('#prizeNote').textContent = t('prize.note', { name: t('lvl.' + lvl.value), v: fmt(LEG_PRIZE[lvl.value]) });
+  }
+  function open() { sfx.init(); aim.active = false; $('#drMsg').textContent = ''; render(); el.hidden = false; $('#drLeave').focus({ preventScroll: true }); }
+  function close() { el.hidden = true; renderSkills(); }
+  $('#drList').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b && !b.disabled) buy(b.dataset.k); });
+  $('#drLeave').addEventListener('click', close);
+  $('#drinksBtn').addEventListener('click', open);
+  $('#drinksCard').addEventListener('click', open);
+  $('#drinkOpen').addEventListener('click', open);
+  $('#menuForm').addEventListener('change', e => { if (e.target.name === 'level') renderPrize(); });
+  document.addEventListener('keydown', e => { if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); close(); } }, true);
+  return {
+    get open() { return !el.hidden; },
+    relang() { renderPrize(); if (!el.hidden) render(); }
+  };
+})();
+
 // Pfeil-Symbol für das Menü
 function dartIcon(k) {
   const L = DART_LOOK[k], c = document.createElement('canvas'); c.width = 180; c.height = 52;
@@ -6600,7 +6898,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
