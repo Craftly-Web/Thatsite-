@@ -702,7 +702,7 @@ legend{padding:0;margin-bottom:8px}
     <button type="button" class="arc-card" id="arcadeCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg><span><b data-i18n="arc.btn">Spielhalle</b><small id="arcadeCardCash"></small></span><i aria-hidden="true">›</i></button>
     <details class="howto">
       <summary data-i18n="howto">So wird gespielt</summary>
-      <p class="rules" data-i18n-html="rules.aim"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
+      <p class="rules" data-i18n-html="rules.aim"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Die Hand beruhigt sich schnell: Schon in der ersten Atempause ist das Fadenkreuz klein und du triffst recht genau; wer länger hält, wird nur noch ein wenig ruhiger. Am Handy sitzt das Fadenkreuz über deinem Finger.</p>
       <p class="rules" data-i18n-html="rules.do"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
       <p class="rules" data-i18n-html="rules.prec"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
       <p class="rules" data-i18n-html="rules.adr"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
@@ -1059,7 +1059,7 @@ const I18N = {
     'menu.intro': 'Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz ruft die Punkte, also Ton an!',
     'lg.start': 'Startwert', 'lg.legs': 'Legs zum Sieg', 'lg.darts': 'Pfeile', 'lg.board': 'Scheibe', 'lg.opp': 'Gegner', 'lg.throw': 'Anwurf',
     'starter.me': 'Du', 'starter.opp': 'Gegner', 'howto': 'So wird gespielt',
-    'rules.aim': '<strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Je länger du hältst, desto ruhiger und genauer wird die Hand, und das Fadenkreuz wird kleiner. Geduld zahlt sich aus. Am Handy sitzt das Fadenkreuz über deinem Finger.',
+    'rules.aim': '<strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Die Hand beruhigt sich schnell: Schon in der ersten Atempause ist das Fadenkreuz klein und du triffst recht genau; wer länger hält, wird nur noch ein wenig ruhiger. Am Handy sitzt das Fadenkreuz über deinem Finger.',
     'rules.do': '<strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.',
     'rules.prec': '<strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.',
     'rules.adr': '<strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.',
@@ -1228,7 +1228,7 @@ const I18N = {
     'menu.intro': 'One leg against a regular from the bar. First to hit exactly zero wins. Heinz calls the scores, so turn the sound on!',
     'lg.start': 'Starting score', 'lg.legs': 'Legs to win', 'lg.darts': 'Darts', 'lg.board': 'Board', 'lg.opp': 'Opponent', 'lg.throw': 'First throw',
     'starter.me': 'You', 'starter.opp': 'Opponent', 'howto': 'How to play',
-    'rules.aim': '<strong>Throwing:</strong> Press and hold on the board. The crosshair breathes with you: it rises and grows as you breathe in and sinks as you breathe out. In the short pause between breaths it glows gold and nearly stands still – release then. The longer you hold, the steadier your hand and the smaller the crosshair. Patience pays. On phones the crosshair sits above your finger.',
+    'rules.aim': '<strong>Throwing:</strong> Press and hold on the board. The crosshair breathes with you: it rises and grows as you breathe in and sinks as you breathe out. In the short pause between breaths it glows gold and nearly stands still – release then. Your hand settles quickly: by the first pause the crosshair is already small and fairly accurate; holding longer only steadies it a little more. On phones the crosshair sits above your finger.',
     'rules.do': '<strong>Double out:</strong> Your last dart must hit a double; the bull counts as a double. Going below zero, to one, or to zero without a double is a bust, and the whole visit doesn’t count.',
     'rules.prec': '<strong>Precision:</strong> Every 3rd dart you throw earns you a precise dart. They are saved, so you can keep them until the end of the match, for a checkout for example. Tap the button and your next dart is precise; tap again to cancel.',
     'rules.adr': '<strong>Adrenaline:</strong> Your next 3 darts become very precise. If you start a visit at least 150 points behind, it kicks in by itself. When your opponent is on a finish – able to check out with three darts – the adrenaline button glows red and you trigger it whenever you like. Each happens once per leg.',
@@ -3380,7 +3380,7 @@ const BREATH_START = 22, BREATH_MIN = 8; // Hub des Atems (mm)
 const TREMOR_START = 15, TREMOR_MIN = 4.5;   // Zittern in der Atempause (mm)
 const SCATTER_START = 15, SCATTER_MIN = 5.5; // unsichtbare Streuung beim Loslassen in der Atempause (mm)
 const SCATTER_MOVING = 14;               // unsichtbare Streuung beim Loslassen mitten im Atemzug (mm)
-const CALM_TIME = 3.2;                   // so schnell beruhigt sich die Hand (s)
+const CALM_TIME = .45;                   // so schnell beruhigt sich die Hand (s): schon in der ersten Atempause ist der Zielkreis klein
 const smooth = k => k < 0 ? 0 : k > 1 ? 1 : k * k * (3 - 2 * k);
 
 // Fähigkeiten: Präzision lädt sich mit 12 Darts auf, Adrenalin gibt es bei 150 Punkten Rückstand
@@ -3594,9 +3594,9 @@ canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') ho
 
 /* ---------- Spiel ---------- */
 const LEVELS = {
-  anfaenger: { name: 'Tante Gerda', sigma: 30, label: 'Anfängerin' },
-  stammgast: { name: 'Kalle', sigma: 18.5, label: 'Stammgast' },
-  verein:    { name: 'Otto', sigma: 12, label: 'Vereinsspieler' },
+  anfaenger: { name: 'Tante Gerda', sigma: 34, label: 'Anfängerin' },
+  stammgast: { name: 'Kalle', sigma: 21.5, label: 'Stammgast' },
+  verein:    { name: 'Otto', sigma: 14, label: 'Vereinsspieler' },
   profi:     { name: 'Die Maschine', sigma: 10, label: 'Profi' },
   phantom:   { name: 'Das Phantom', sigma: 2, label: 'Legende' }
 };
