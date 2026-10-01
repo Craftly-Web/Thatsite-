@@ -138,6 +138,19 @@ body::after{
 .pk-actions button:disabled{opacity:.45;cursor:default}
 .pk-tip{margin:0;text-align:center;font-size:13px;color:#cdb68a}
 @media (max-width:620px){.pk{padding:8px 6px}.pk-actions{grid-template-columns:1fr 1fr}.pk-raise{grid-column:1/-1;grid-row:1}.pk-actions #pkRaise{grid-column:1/-1}}
+/* Kartentisch */
+.arc-card.cr-card{background:linear-gradient(90deg,rgba(110,70,20,.6),rgba(45,28,10,.6));border-color:rgba(230,190,120,.45)}
+.arc-card.cr-card svg,.arc-card.cr-card i{color:#f0c878}
+.cr-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cr-actions .btn{flex:1 1 130px;padding:10px 8px;font-size:15px}
+.cr-actions .btn:disabled{opacity:.45;cursor:default}
+.cr-score summary{cursor:pointer;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#cdb68a;text-align:center}
+.cr-score table{width:100%;margin-top:6px;border-collapse:collapse;font-family:var(--ui);font-size:15px;color:var(--ink)}
+.cr-score th,.cr-score td{padding:3px 6px;text-align:right;border-bottom:1px solid rgba(233,201,140,.18)}
+.cr-score th:nth-child(2),.cr-score td:nth-child(2){text-align:left}
+.cr-score tfoot td{font-weight:700;color:#ffe9a8;border-bottom:none}
+.cr-money{display:flex;gap:8px;align-items:center;justify-content:center;font-size:14px;color:#cdb68a;cursor:pointer}
+.cr-money input{width:18px;height:18px;accent-color:#e2b457}
 /* Blackjack */
 .arc-card.bj-card{background:linear-gradient(90deg,rgba(20,70,100,.6),rgba(10,30,45,.6));border-color:rgba(120,190,230,.45)}
 .arc-card.bj-card svg,.arc-card.bj-card i{color:#8fd0f0}
@@ -449,7 +462,7 @@ legend{padding:0;margin-bottom:8px}
   .actions .btn{padding:9px 12px;font-size:14px}
   .actions .icon-btn{width:40px;height:40px;padding:0}
   /* Auf schmalen Handys nur ein Spiele-Knopf im Kopf; Poker und Blackjack gibt es über die Karten im Menü */
-  #pokerBtn,#blackjackBtn{display:none}
+  #pokerBtn,#blackjackBtn,#cardroomBtn{display:none}
   #menuBtn .long{display:none}
   #menuBtn .short{display:inline}
   .bar-frame{width:min(100%, 340px)}
@@ -496,6 +509,7 @@ legend{padding:0;margin-bottom:8px}
       <small>Steeldart · Double Out</small>
     </div>
     <div class="actions">
+      <button class="btn ghost icon-btn" id="cardroomBtn" type="button" aria-label="Kartentisch" data-i18n-aria="cr.btn" data-i18n-title="cr.btn" title="Kartentisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="9" height="13" rx="1.6" transform="rotate(-18 7 13.5)"/><rect x="7.5" y="4" width="9" height="13" rx="1.6"/><rect x="12.5" y="7" width="9" height="13" rx="1.6" transform="rotate(18 17 13.5)"/></svg></button>
       <button class="btn ghost icon-btn" id="blackjackBtn" type="button" aria-label="Blackjack" data-i18n-aria="bj.btn" data-i18n-title="bj.btn" title="Blackjack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg></button>
       <button class="btn ghost icon-btn" id="pokerBtn" type="button" aria-label="Pokertisch" data-i18n-aria="pk.btn" data-i18n-title="pk.btn" title="Pokertisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg></button>
       <button class="btn ghost icon-btn" id="arcadeBtn" type="button" aria-label="Spielhalle" data-i18n-aria="arc.btn" data-i18n-title="arc.btn" title="Spielhalle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg></button>
@@ -625,6 +639,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span data-i18n="starter.opp">Gegner</span></label>
       </div>
     </fieldset>
+    <button type="button" class="arc-card cr-card" id="cardroomCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="9" height="13" rx="1.6" transform="rotate(-18 7 13.5)"/><rect x="7.5" y="4" width="9" height="13" rx="1.6"/><rect x="12.5" y="7" width="9" height="13" rx="1.6" transform="rotate(18 17 13.5)"/></svg><span><b data-i18n="cr.btn">Kartentisch</b><small data-i18n="cr.cardx">Skat und Rommé mit den Stammgästen</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card bj-card" id="blackjackCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg><span><b data-i18n="bj.btn">Blackjack</b><small data-i18n="bj.cardx">Gegen Heinz als Bank · Blackjack zahlt 3:2</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card pk-card" id="pokerCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg><span><b data-i18n="pk.btn">Pokertisch</b><small data-i18n="pk.cardx">Texas Hold’em mit Heinz als Geber</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card" id="arcadeCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg><span><b data-i18n="arc.btn">Spielhalle</b><small id="arcadeCardCash"></small></span><i aria-hidden="true">›</i></button>
@@ -640,6 +655,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.arcade"></p>
       <p class="rules" data-i18n-html="rules.poker"></p>
       <p class="rules" data-i18n-html="rules.blackjack"></p>
+      <p class="rules" data-i18n-html="rules.cards"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -725,6 +741,25 @@ legend{padding:0;margin-bottom:8px}
     <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Match in der Kneipe bringt 100 €.</p>
     <div class="row"><button type="button" class="btn ghost" id="bkClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
   </div>
+  </div>
+</div>
+
+<div class="overlay" id="cardroom" role="dialog" aria-modal="true" aria-labelledby="crTitle" hidden>
+  <div class="pk cr">
+    <div class="pk-head">
+      <div><h2 id="crTitle" data-i18n="cr.title">Heinz’ Kartentisch</h2><small id="crSub"></small></div>
+      <div class="pk-cash"><small data-i18n="arc.credit">Guthaben</small><b id="crCash">0,00 €</b></div>
+    </div>
+    <div class="arc-tabs" role="tablist">
+      <button type="button" role="tab" id="tabSkat" aria-selected="true">Skat</button>
+      <button type="button" role="tab" id="tabRomme" aria-selected="false">Rommé</button>
+    </div>
+    <div class="pk-stage"><canvas id="crCv" aria-label="Kartentisch" role="img"></canvas></div>
+    <div class="pk-msg" id="crMsg" aria-live="polite"></div>
+    <div class="cr-actions" id="crActions" hidden></div>
+    <details class="cr-score"><summary id="crScoreTitle">Skatblock</summary><div id="crScore"></div></details>
+    <label class="cr-money"><input type="checkbox" id="crMoney"> <span data-i18n="cr.money">Um Geld spielen: 1 Cent pro Punkt vom Spielhallen-Guthaben</span></label>
+    <div class="row"><button type="button" class="btn ghost" id="crLeave" data-i18n="cr.leave">Zurück in die Kneipe</button></div>
   </div>
 </div>
 
@@ -948,6 +983,22 @@ const I18N = {
     'arc.lose': ['Leider nichts. Nächste Runde?', 'Knapp daneben ist auch vorbei.', 'Die Walzen sind heute launisch.'],
     'arc.won': 'Gewinn {v}!', 'arc.line': 'Linie {n}: {k}× {s}', 'arc.jackpot': 'HAUPTGEWINN! Fünf Siebener – {v}!', 'arc.card': 'Guthaben {v}',
     'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle',
+    'cr.btn': 'Kartentisch', 'cr.cardx': 'Skat und Rommé mit den Stammgästen', 'cr.title': 'Heinz’ Kartentisch',
+    'cr.subskat': 'Skat zu dritt mit Otto und Kalle · Reizen, Skat, Farbspiel, Grand, Null', 'cr.subromme': 'Rommé zu viert mit Otto, Gerda und Kalle · Rauskommen ab 40 Punkten',
+    'cr.money': 'Um Geld spielen: 1 Cent pro Punkt vom Spielhallen-Guthaben', 'cr.leave': 'Zurück in die Kneipe', 'cr.decl': 'spielt', 'cr.bidval': 'gereizt bis {v}',
+    'cr.suit3': 'Kreuz', 'cr.suit0': 'Pik', 'cr.suit1': 'Herz', 'cr.suit2': 'Karo', 'cr.deal': 'Heinz mischt, {name} gibt.', 'cr.bidding': 'Es wird gereizt.',
+    'cr.bid': 'Reizen: {v}', 'cr.pass': 'Passe', 'cr.yes': 'Ja – {v}', 'cr.yesword': 'Ja', 'cr.play18': 'Für 18 spielen', 'cr.allpass': 'Alle passen – eingepasst, neu geben.',
+    'cr.declarer': '{name} spielt, gereizt bis {v}.', 'cr.plays': '{name} spielt {g}.', 'cr.yourturn': 'Du bist dran – tippe eine Karte an.',
+    'cr.take': 'Skat aufnehmen', 'cr.hand': 'Hand spielen', 'cr.push': 'Wähle zwei Karten zum Drücken.', 'cr.pushbtn': 'Drücken', 'cr.choose': 'Spiel ansagen (gereizt bis {v}):',
+    'cr.eyes': '{n} Augen', 'cr.won': '{name} gewinnt {g}: +{v}.', 'cr.lost': '{name} verliert {g}: −{s} (2 × {v}).', 'cr.overbid': 'überreizt', 'cr.next': 'Nächstes Spiel',
+    'cr.block': 'Skatblock', 'cr.game': 'Spiel', 'cr.resume': 'Weiter geht’s.', 'cr.switching': 'Gleich – die Karten sind noch unterwegs …',
+    'rm.isout': 'draußen', 'rm.deal': 'Heinz gibt jedem 13 Karten.', 'rm.took': 'nimmt die Ablage', 'rm.cameout': 'kommt raus ({v})',
+    'rm.drawq': 'Zieh eine Karte: vom Stapel oder die oberste der Ablage.', 'rm.stock': 'Vom Stapel ziehen', 'rm.discardtake': 'Ablage nehmen',
+    'rm.play': 'Karten wählen: auslegen, an eine Auslage anlegen (Auslage antippen) oder eine Karte abwerfen.', 'rm.play40': 'Zum Rauskommen brauchst du 40 Punkte – ausgelegt: {v}.',
+    'rm.meld': 'Auslegen', 'rm.discardbtn': 'Abwerfen', 'rm.sortsuit': 'Nach Farbe sortieren', 'rm.sortrank': 'Nach Wert sortieren', 'rm.undo': 'Zurücknehmen', 'rm.done': 'Fertig',
+    'rm.invalid': 'Das ist weder ein Satz noch eine Reihe.', 'rm.need40': 'Zum Rauskommen brauchst du mindestens 40 Punkte.', 'rm.nofit': 'Passt da nicht dran.',
+    'rm.youout': 'Du bist raus!', 'rm.out': '{name} ist raus.', 'rm.handromme': 'Hand-Rommé – Minuspunkte doppelt!', 'rm.pens': 'Deine Minuspunkte: {v}.', 'rm.table': 'Rommé-Tabelle (Minuspunkte)',
+    'rules.cards': '<strong>Kartentisch:</strong> Skat zu dritt mit Otto und Kalle nach den echten Regeln: Reizen, Skat aufnehmen oder Hand, zwei Karten drücken, Farbspiel, Grand oder Null, Spielwert nach Spitzen, Schneider und Schwarz, verloren zählt doppelt. Rommé zu viert mit Gerda: zwei Decks mit sechs Jokern, Sätze und Reihen, Rauskommen ab 40 Punkten, Hand-Rommé zählt doppelt. Wahlweise um 1 Cent pro Punkt.',
     'bj.btn': 'Blackjack', 'bj.cardx': 'Gegen Heinz als Bank · Blackjack zahlt 3:2', 'bj.title': 'Heinz’ Blackjack',
     'bj.sub': '6 Decks · Bank steht auf Soft 17 · Einsatz 0,10–50 €', 'bj.felt1': 'BLACKJACK ZAHLT 3 ZU 2', 'bj.felt2': 'Bank zieht bis 16 und steht ab 17 · Versicherung zahlt 2 zu 1',
     'bj.place': 'Setz deine Chips und drück „Geben“.', 'bj.bet': 'Einsatz', 'bj.clear': 'Löschen', 'bj.repeat': 'Wieder {v}', 'bj.deal': 'Geben',
@@ -1070,6 +1121,22 @@ const I18N = {
     'arc.lose': ['Nothing this time. Another spin?', 'So close, and yet…', 'The reels are moody tonight.'],
     'arc.won': 'You win {v}!', 'arc.line': 'Line {n}: {k}× {s}', 'arc.jackpot': 'JACKPOT! Five sevens – {v}!', 'arc.card': 'Credit {v}',
     'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade',
+    'cr.btn': 'Card table', 'cr.cardx': 'Skat and rummy with the regulars', 'cr.title': 'Heinz’s card table',
+    'cr.subskat': 'Skat for three with Otto and Kalle · bidding, skat, suit, grand, null', 'cr.subromme': 'Rummy for four with Otto, Gerda and Kalle · come out with 40 points',
+    'cr.money': 'Play for money: 1 cent per point from your arcade credit', 'cr.leave': 'Back to the pub', 'cr.decl': 'declarer', 'cr.bidval': 'bid {v}',
+    'cr.suit3': 'Clubs', 'cr.suit0': 'Spades', 'cr.suit1': 'Hearts', 'cr.suit2': 'Diamonds', 'cr.deal': 'Heinz shuffles, {name} deals.', 'cr.bidding': 'Bidding starts.',
+    'cr.bid': 'Bid {v}', 'cr.pass': 'Pass', 'cr.yes': 'Yes – {v}', 'cr.yesword': 'Yes', 'cr.play18': 'Play for 18', 'cr.allpass': 'Everyone passes – new deal.',
+    'cr.declarer': '{name} plays, bid {v}.', 'cr.plays': '{name} plays {g}.', 'cr.yourturn': 'Your turn – tap a card.',
+    'cr.take': 'Pick up the skat', 'cr.hand': 'Play hand', 'cr.push': 'Choose two cards to put away.', 'cr.pushbtn': 'Put away', 'cr.choose': 'Announce your game (bid {v}):',
+    'cr.eyes': '{n} points', 'cr.won': '{name} wins {g}: +{v}.', 'cr.lost': '{name} loses {g}: −{s} (2 × {v}).', 'cr.overbid': 'overbid', 'cr.next': 'Next game',
+    'cr.block': 'Score sheet', 'cr.game': 'Game', 'cr.resume': 'On we go.', 'cr.switching': 'One moment – the cards are still moving…',
+    'rm.isout': 'out', 'rm.deal': 'Heinz deals 13 cards each.', 'rm.took': 'takes the discard', 'rm.cameout': 'comes out ({v})',
+    'rm.drawq': 'Draw a card: from the stock or the top of the discard pile.', 'rm.stock': 'Draw from stock', 'rm.discardtake': 'Take discard',
+    'rm.play': 'Pick cards: meld them, lay them off (tap a meld) or discard one.', 'rm.play40': 'You need 40 points to come out – melded so far: {v}.',
+    'rm.meld': 'Meld', 'rm.discardbtn': 'Discard', 'rm.sortsuit': 'Sort by suit', 'rm.sortrank': 'Sort by rank', 'rm.undo': 'Take back', 'rm.done': 'Done',
+    'rm.invalid': 'That’s neither a set nor a run.', 'rm.need40': 'You need at least 40 points to come out.', 'rm.nofit': 'That doesn’t fit there.',
+    'rm.youout': 'You’re out!', 'rm.out': '{name} is out.', 'rm.handromme': 'Hand rummy – penalties doubled!', 'rm.pens': 'Your penalty: {v}.', 'rm.table': 'Rummy table (penalty points)',
+    'rules.cards': '<strong>Card table:</strong> Skat for three with Otto and Kalle by the real rules: bidding, pick up the skat or play hand, put two cards away, suit, grand or null, game value by matadors, schneider and schwarz, a lost game counts double. Rummy for four with Gerda: two decks with six jokers, sets and runs, come out with 40 points, hand rummy counts double. Optionally for 1 cent per point.',
     'bj.btn': 'Blackjack', 'bj.cardx': 'Heinz is the bank · blackjack pays 3:2', 'bj.title': 'Heinz’s blackjack',
     'bj.sub': '6 decks · dealer stands on soft 17 · bets €0.10–50', 'bj.felt1': 'BLACKJACK PAYS 3 TO 2', 'bj.felt2': 'Dealer draws to 16 and stands on 17 · insurance pays 2 to 1',
     'bj.place': 'Place your chips and press “Deal”.', 'bj.bet': 'Bet', 'bj.clear': 'Clear', 'bj.repeat': 'Again {v}', 'bj.deal': 'Deal',
@@ -3425,7 +3492,7 @@ function cpuBoostTag(g) {
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1) return;
-  if (!menu.hidden || arcade.open || poker.open || blackjack.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const kind = cpuBoostKind(g, !!f && f.seq.length === 1);
   const sigma = g.opp.sigma * cpuMult(kind);
@@ -5576,6 +5643,878 @@ const blackjack = (() => {
   };
 })();
 
+/* ---------- Kartentisch: Skat zu dritt (mit Otto und Kalle) und Rommé zu viert (dazu Tante Gerda) ---------- */
+const cardroom = (() => {
+  /* ===== Skat: Regeln, Reizen, Spielwert, Stiche, Computer-Spieler ===== */
+  // Karten: r = 7..14 (11 Bube, 12 Dame, 13 König, 14 Ass), s = 0 Pik, 1 Herz, 2 Karo, 3 Kreuz
+  const SK = {
+    BIDS: [18, 20, 22, 23, 24, 27, 30, 33, 35, 36, 40, 44, 45, 46, 48, 50, 54, 55, 59, 60, 63, 66, 70, 72, 77, 80, 81, 84, 88, 90, 96, 99, 100, 108, 110, 117, 120, 121, 126, 130, 132, 135, 140, 143, 144, 150, 153, 154, 156, 160, 162, 165, 168, 170, 176, 180, 187, 192, 198, 204, 216, 240, 264],
+    SUIT_BASE: { 3: 12, 0: 11, 1: 10, 2: 9 },   // Kreuz, Pik, Herz, Karo
+    JACK_ORDER: [3, 0, 1, 2],
+    deck() { const d = []; for (let s = 0; s < 4; s++) for (let r = 7; r <= 14; r++) d.push({ r, s, id: s * 20 + r }); return d; },
+    eyes(c) { return { 14: 11, 10: 10, 13: 4, 12: 3, 11: 2 }[c.r] || 0; },
+    isTrump(c, gm) { return gm.type !== 'null' && (c.r === 11 || (gm.type === 'suit' && c.s === gm.suit)); },
+    follow(c, gm) { return SK.isTrump(c, gm) ? 'T' : c.s; },
+    power(c, gm) {
+      if (gm.type === 'null') return [0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8][c.r];
+      if (c.r === 11) return 100 + (4 - SK.JACK_ORDER.indexOf(c.s));
+      const ord = { 14: 7, 10: 6, 13: 5, 12: 4, 9: 3, 8: 2, 7: 1 }[c.r];
+      return SK.isTrump(c, gm) ? 50 + ord : ord;
+    },
+    winner(trick, gm) {   // trick: [{p, c}]; Rückgabe: Index im Stich
+      const lead = SK.follow(trick[0].c, gm);
+      let best = 0;
+      trick.forEach((t, i) => {
+        const b = trick[best].c, c = t.c;
+        const ct = SK.isTrump(c, gm), bt = SK.isTrump(b, gm);
+        if (ct && !bt) best = i;
+        else if (ct === bt && SK.follow(c, gm) === SK.follow(b, gm) && SK.power(c, gm) > SK.power(b, gm)) best = i;
+        else if (!ct && !bt && SK.follow(c, gm) === lead && SK.follow(b, gm) !== lead) best = i;
+      });
+      return best;
+    },
+    legal(hand, trick, gm) {
+      if (!trick.length) return hand.slice();
+      const lead = SK.follow(trick[0].c, gm), same = hand.filter(c => SK.follow(c, gm) === lead);
+      return same.length ? same : hand.slice();
+    },
+    // Spitzen „mit“ oder „ohne“: wie viele der höchsten Trümpfe in Folge vorhanden bzw. fehlen
+    spitzen(cards, gm) {
+      if (gm.type === 'null') return 0;
+      const top = SK.JACK_ORDER.map(s => ({ r: 11, s }));
+      if (gm.type === 'suit') for (const r of [14, 10, 13, 12, 9, 8, 7]) top.push({ r, s: gm.suit });
+      const has = top.map(t => cards.some(c => c.r === t.r && c.s === t.s));
+      let n = 0; while (n < has.length && has[n] === has[0]) n++;
+      return n;
+    },
+    base(gm) { return gm.type === 'grand' ? 24 : gm.type === 'null' ? (gm.hand ? 35 : 23) : SK.SUIT_BASE[gm.suit]; },
+    // Spielwert vor dem Spiel (ohne Schneider), mit allen Karten des Alleinspielers inkl. Skat
+    value(gm, cards, extra = 0) {
+      if (gm.type === 'null') return SK.base(gm);
+      return SK.base(gm) * (SK.spitzen(cards, gm) + 1 + (gm.hand ? 1 : 0) + extra);
+    },
+    sort(hand, gm) {
+      const key = c => {
+        if (gm && gm.type === 'null') return [SK.JACK_ORDER.indexOf(c.s), -SK.power(c, gm)];
+        if (c.r === 11) return [-1, -SK.power(c, gm || { type: 'grand' })];
+        const trump = gm && SK.isTrump(c, gm) ? -.5 : 0;
+        return [trump || SK.JACK_ORDER.indexOf(c.s), -SK.power(c, gm || { type: 'grand' })];
+      };
+      return hand.slice().sort((a, b) => { const x = key(a), y = key(b); return x[0] - y[0] || x[1] - y[1]; });
+    },
+
+    /* --- Computer: Blatt einschätzen und reizen --- */
+    // Liefert das beste spielbare Spiel mit geschätztem Wert, oder null
+    assess(hand) {
+      const jacks = hand.filter(c => c.r === 11), hi = jacks.filter(j => j.s === 3 || j.s === 0).length;
+      const opts = [];
+      for (const s of [3, 0, 1, 2]) {
+        const tr = jacks.length + hand.filter(c => c.s === s && c.r !== 11).length;
+        const aces = hand.filter(c => c.r === 14 && c.s !== s).length;
+        const tens = hand.filter(c => c.r === 10 && c.s !== s && hand.some(d => d.s === c.s && d.r === 14)).length;
+        const str = tr + aces * .9 + tens * .45 + hi * .5 + (hand.some(c => c.s === s && c.r === 14) ? .4 : 0);
+        if (str >= 6.4) { const gm = { type: 'suit', suit: s }; opts.push({ gm, str, val: SK.value(gm, hand) }); }
+      }
+      const aces = hand.filter(c => c.r === 14).length, tens = hand.filter(c => c.r === 10 && hand.some(d => d.s === c.s && d.r === 14)).length;
+      const gstr = jacks.length * 1.6 + hi * .6 + aces * 1.1 + tens * .6;
+      if (jacks.length >= 2 && gstr >= 6.8) { const gm = { type: 'grand' }; opts.push({ gm, str: gstr, val: SK.value(gm, hand) }); }
+      // Null: in jeder Farbe nur niedrige Karten oder die passende Kette von unten
+      const nullOK = [0, 1, 2, 3].every(s => {
+        const rs = hand.filter(c => c.s === s).map(c => SK.power(c, { type: 'null' })).sort((a, b) => a - b);
+        return rs.every((p, i) => p <= 2 * i + 2);
+      });
+      if (nullOK) opts.push({ gm: { type: 'null' }, str: 8, val: 23 });
+      if (!opts.length) return null;
+      return opts.sort((a, b) => b.val - a.val)[0];
+    },
+    maxBid(hand, boldness = 0) {
+      const a = SK.assess(hand);
+      if (!a) return 0;
+      const v = a.val + (boldness > 0 && a.str > 8 ? SK.base(a.gm) : 0);
+      return SK.BIDS.filter(b => b <= v).pop() || 0;
+    },
+    // Alleinspieler mit Skat: Spiel wählen und zwei Karten drücken
+    chooseGame(cards12, bid) {
+      let best = null;
+      const games = [{ type: 'grand' }, ...[3, 0, 1, 2].map(s => ({ type: 'suit', suit: s })), { type: 'null' }];
+      for (const gm of games) {
+        const disc = SK.discard(cards12, gm), keep = cards12.filter(c => !disc.includes(c));
+        let str;
+        if (gm.type === 'null') {
+          const ok = [0, 1, 2, 3].every(s => { const rs = keep.filter(c => c.s === s).map(c => SK.power(c, gm)).sort((a, b) => a - b); return rs.every((p, i) => p <= 2 * i + 2); });
+          str = ok ? 9 : 0;
+        } else {
+          const trumps = keep.filter(c => SK.isTrump(c, gm)).length, aces = keep.filter(c => c.r === 14 && !SK.isTrump(c, gm)).length;
+          str = trumps * (gm.type === 'grand' ? 1.7 : 1) + aces * 1.1 + disc.reduce((a, c) => a + SK.eyes(c), 0) / 12;
+        }
+        const val = SK.value(gm, cards12);
+        const ok = val >= bid;
+        const score = str + (ok ? 3 : -5) + val / 60;
+        if (!best || score > best.score) best = { gm, disc, score };
+      }
+      return best;
+    },
+    discard(cards12, gm) {
+      // Hohe Augen in den Skat, kurze Farben blank machen, Asse und Trümpfe behalten
+      const cand = cards12.filter(c => gm.type === 'null' ? true : !SK.isTrump(c, gm) && c.r !== 14);
+      const len = s => cards12.filter(c => !SK.isTrump(c, gm) && c.s === s).length;
+      const score = c => gm.type === 'null' ? SK.power(c, gm) * 2 - len(c.s) : SK.eyes(c) + (len(c.s) <= 2 ? 6 : 0) - len(c.s);
+      const pool = (cand.length >= 2 ? cand : cards12).slice().sort((a, b) => score(b) - score(a));
+      return pool.slice(0, 2);
+    },
+    // Kartenwahl im Spiel: einfache, aber vernünftige Regeln
+    play(hand, trick, gm, me, decl, played) {
+      const legal = SK.legal(hand, trick, gm);
+      if (legal.length === 1) return legal[0];
+      const byPow = (a, b) => SK.power(a, gm) - SK.power(b, gm);
+      const low = arr => arr.slice().sort((a, b) => SK.eyes(a) - SK.eyes(b) || byPow(a, b))[0];
+      if (gm.type === 'null') {
+        if (me === decl) {
+          if (!trick.length) return legal.slice().sort(byPow)[0];
+          const w = trick[SK.winner(trick, gm)].c;
+          const under = legal.filter(c => SK.follow(c, gm) !== SK.follow(w, gm) || SK.power(c, gm) < SK.power(w, gm));
+          return (under.length ? under.sort(byPow).pop() : legal.sort(byPow)[0]);
+        }
+        // Gegenspieler: tief anspielen, sonst möglichst drunter bleiben, damit der Alleinspieler sticht
+        if (!trick.length) return legal.slice().sort(byPow)[0];
+        const declCard = trick.find(t => t.p === decl);
+        if (declCard) { const under = legal.filter(c => SK.power(c, gm) < SK.power(declCard.c, gm) && SK.follow(c, gm) === SK.follow(declCard.c, gm)); if (under.length) return under.sort(byPow).pop(); }
+        return legal.slice().sort(byPow).pop();
+      }
+      const trumpsOut = 11 - (gm.type === 'grand' ? 7 : 0) - played.filter(c => SK.isTrump(c, gm)).length - hand.filter(c => SK.isTrump(c, gm)).length;
+      if (!trick.length) {
+        const myTr = legal.filter(c => SK.isTrump(c, gm)), side = legal.filter(c => !SK.isTrump(c, gm));
+        if (me === decl) {
+          if (myTr.length >= 3 && trumpsOut > 0) return myTr.sort(byPow).pop();
+          const ace = side.find(c => c.r === 14); if (ace) return ace;
+          const ten = side.find(c => c.r === 10 && played.some(p => p.s === c.s && p.r === 14)); if (ten) return ten;
+          return low(side.length ? side : legal);
+        }
+        const ace = side.find(c => c.r === 14); if (ace) return ace;
+        if (side.length) { const bySuit = {}; side.forEach(c => (bySuit[c.s] = bySuit[c.s] || []).push(c)); const short = Object.values(bySuit).sort((a, b) => a.length - b.length)[0]; return low(short); }
+        return low(legal);
+      }
+      const wi = SK.winner(trick, gm), wp = trick[wi].p, wc = trick[wi].c;
+      const partnerWins = me !== decl && wp !== decl;
+      const beats = c => { const t = trick.concat([{ p: me, c }]); return SK.winner(t, gm) === t.length - 1; };
+      const last = trick.length === 2;
+      if (partnerWins) {
+        // Schmieren, wenn der Partner sicher ist (letzter Spieler oder hohe Karte)
+        const safe = last || SK.power(wc, gm) >= 100;
+        const nonTr = legal.filter(c => !SK.isTrump(c, gm) || c.r !== 11);
+        if (safe) return nonTr.length ? nonTr.slice().sort((a, b) => SK.eyes(b) - SK.eyes(a))[0] : low(legal);
+        return low(legal);
+      }
+      const winning = legal.filter(beats);
+      const pts = trick.reduce((a, t) => a + SK.eyes(t.c), 0);
+      if (winning.length && (last || pts >= 3 || me === decl)) return winning.sort((a, b) => SK.power(a, gm) - SK.power(b, gm) + (SK.eyes(a) - SK.eyes(b)) * .01)[0];
+      return low(legal);
+    },
+    // Abrechnung nach dem Spiel
+    settle(gm, declCards, declEyes, declTricks, totalTricks, bid) {
+      if (gm.type === 'null') {
+        const won = declTricks === 0, val = SK.base(gm);
+        const overbid = val < bid;
+        const v = overbid ? Math.ceil(bid / val) * val : val;
+        return { won: won && !overbid, value: v, score: won && !overbid ? v : -2 * v, overbid };
+      }
+      const schwarz = declTricks === totalTricks || declTricks === 0;
+      const schneider = declEyes >= 90 || declEyes <= 30;
+      const won = declEyes >= 61;
+      let val = SK.value(gm, declCards, (schneider ? 1 : 0) + (schwarz ? 1 : 0));
+      const overbid = val < bid;
+      if (overbid) val = Math.ceil(bid / SK.base(gm)) * SK.base(gm);
+      const ok = won && !overbid;
+      return { won: ok, value: val, score: ok ? val : -2 * val, schneider, schwarz, overbid };
+    }
+  };
+  /* ===== Rommé: zwei Decks mit sechs Jokern, Sätze und Reihen, Rauskommen ab 40 ===== */
+  // Karten: r = 2..14 (14 = Ass), s = 0..3, joker: true für Joker
+  const RM = {
+    deck() {
+      const d = []; let id = 0;
+      for (let k = 0; k < 2; k++) for (let s = 0; s < 4; s++) for (let r = 2; r <= 14; r++) d.push({ r, s, id: id++ });
+      for (let j = 0; j < 6; j++) d.push({ joker: true, r: 0, s: j % 2, id: id++ });
+      return d;
+    },
+    penalty(c) { return c.joker ? 20 : c.r === 14 ? 11 : c.r >= 11 ? 10 : c.r; },
+    cardValue(r, aceLow) { return r === 14 || r === 1 ? (aceLow || r === 1 ? 1 : 11) : r >= 11 ? 10 : r; },
+    // Prüft eine Auslage; liefert {type, value, slots:[{card, r, s}]} mit den Rollen der Joker, sonst null
+    analyze(cards) {
+      if (cards.length < 3) return null;
+      const nat = cards.filter(c => !c.joker), jok = cards.filter(c => c.joker);
+      if (nat.length < 2) return null;
+      // Satz: gleicher Rang, verschiedene Farben, höchstens vier Karten
+      if (nat.every(c => c.r === nat[0].r) && new Set(nat.map(c => c.s)).size === nat.length && cards.length <= 4) {
+        const free = [0, 1, 2, 3].filter(s => !nat.some(c => c.s === s));
+        const slots = nat.map(c => ({ card: c, r: c.r, s: c.s })).concat(jok.map((c, i) => ({ card: c, r: nat[0].r, s: free[i] })));
+        return { type: 'set', value: RM.cardValue(nat[0].r) * cards.length, slots };
+      }
+      // Reihe: gleiche Farbe, aufsteigend, Ass unten (A-2-3) oder oben (D-K-A)
+      if (!nat.every(c => c.s === nat[0].s)) return null;
+      for (const aceLow of [false, true]) {
+        const rs = nat.map(c => c.r === 14 && aceLow ? 1 : c.r).sort((a, b) => a - b);
+        if (new Set(rs).size !== rs.length) continue;
+        let gaps = 0; for (let i = 1; i < rs.length; i++) gaps += rs[i] - rs[i - 1] - 1;
+        if (gaps > jok.length) continue;
+        let lo = rs[0], hi = rs[rs.length - 1], extra = jok.length - gaps;
+        while (extra > 0 && hi < 14) { hi++; extra--; }
+        while (extra > 0 && lo > 1) { lo--; extra--; }
+        if (extra > 0 || hi - lo + 1 > 14 || (lo === 1 && hi === 14)) continue;
+        const slots = []; let j = 0;
+        for (let r = lo; r <= hi; r++) {
+          const c = nat.find(x => (x.r === 14 && aceLow ? 1 : x.r) === r);
+          slots.push(c ? { card: c, r, s: c.s } : { card: jok[j++], r, s: nat[0].s });
+        }
+        const value = slots.reduce((a, sl) => a + RM.cardValue(sl.r, sl.r === 1), 0);
+        return { type: 'run', value, slots };
+      }
+      return null;
+    },
+    sort(hand, byRank) {
+      const k = c => c.joker ? 999 : byRank ? c.r * 4 + c.s : c.s * 20 + c.r;
+      return hand.slice().sort((a, b) => k(a) - k(b));
+    },
+    /* --- Computer --- */
+    // Alle sinnvollen Auslagen aus einer Hand: Sätze und Reihen, mit höchstens einem Joker je Auslage
+    candidates(hand) {
+      const nat = hand.filter(c => !c.joker), jok = hand.filter(c => c.joker), out = [];
+      const byRank = {}; nat.forEach(c => (byRank[c.r] = byRank[c.r] || []).push(c));
+      for (const r in byRank) {
+        const uniq = []; byRank[r].forEach(c => { if (!uniq.some(u => u.s === c.s)) uniq.push(c); });
+        if (uniq.length >= 3) out.push(uniq.slice(0, 4));
+        else if (uniq.length === 2 && jok.length) out.push(uniq.concat([jok[0]]));
+      }
+      for (let s = 0; s < 4; s++) {
+        const cs = []; nat.filter(c => c.s === s).forEach(c => { if (!cs.some(x => x.r === c.r)) cs.push(c); });
+        const ranks = cs.map(c => c.r); if (cs.some(c => c.r === 14)) ranks.push(1);
+        const has = r => ranks.includes(r), get = r => cs.find(c => c.r === (r === 1 ? 14 : r));
+        for (let start = 1; start <= 12; start++) {
+          let run = [], usedJ = 0;
+          for (let r = start; r <= 14; r++) {
+            if (has(r) && !(r === 14 && start === 1)) run.push(get(r));
+            else if (usedJ < Math.min(1, jok.length) && run.length) { run.push(jok[usedJ]); usedJ++; }
+            else break;
+            if (run.length >= 3 && RM.analyze(run)) out.push(run.slice());
+          }
+        }
+      }
+      return out.filter(m => RM.analyze(m));
+    },
+    // Möglichst wertvolle, überschneidungsfreie Auswahl von Auslagen
+    bestMelds(hand) {
+      const cands = RM.candidates(hand).map(m => ({ m, v: RM.analyze(m).value, nj: m.filter(c => c.joker).length }))
+        .sort((a, b) => b.m.length - a.m.length || b.v - a.v || a.nj - b.nj);
+      const used = new Set(), pick = [];
+      for (const c of cands) { if (c.m.some(x => used.has(x.id))) continue; pick.push(c.m); c.m.forEach(x => used.add(x.id)); }
+      return pick;
+    },
+    // Kann die Karte an eine liegende Auslage angelegt werden?
+    layOff(meld, cards) { return RM.analyze(meld.cards.concat(cards)); },
+    usefulness(hand, c) {
+      if (c.joker) return 100;
+      let u = 0;
+      for (const d of hand) {
+        if (d === c || d.joker) continue;
+        if (d.r === c.r && d.s !== c.s) u += 3;
+        if (d.s === c.s && Math.abs(d.r - c.r) <= 2 && d.r !== c.r) u += 3 - Math.abs(d.r - c.r);
+      }
+      return u;
+    },
+    chooseDiscard(hand) {
+      return hand.slice().sort((a, b) => (RM.usefulness(hand, a) * 4 - RM.penalty(a)) - (RM.usefulness(hand, b) * 4 - RM.penalty(b)))[0];
+    },
+    wantsTop(hand, top) {
+      if (!top || top.joker) return !!top;
+      const before = RM.bestMelds(hand).reduce((a, m) => a + m.length, 0);
+      const after = RM.bestMelds(hand.concat([top])).reduce((a, m) => a + m.length, 0);
+      return after > before;
+    }
+  };
+
+  const PEOPLE = {
+    otto:  { lvl: 'verein', shirt: '#9b2226', skin: '#eab998', hair: '#6b4a2b', look: 'glasses' },
+    kalle: { lvl: 'stammgast', shirt: '#2f5d8a', skin: '#e8b890', hair: '#3b2a1e', look: 'cap' },
+    gerda: { lvl: 'anfaenger', shirt: '#7a3b69', skin: '#f0c9a8', hair: '#d8d0dc', look: 'curls' }
+  };
+  const LAYOUT = {
+    land: {
+      W: 1000, H: 640, table: [500, 318, 384, 232], heinz: { skat: [500, 34], romme: [140, 50] },
+      seats: {
+        you:   { hand: [500, 574], play: [500, 382], pile: [700, 470], label: [130, 612] },
+        otto:  { fig: [50, 304], hand: [168, 304], play: [432, 300], pile: [200, 430], label: [92, 444] },
+        kalle: { fig: [950, 304], hand: [832, 304], play: [568, 300], pile: [800, 430], label: [908, 444] },
+        gerda: { fig: [500, 40], hand: [500, 128], play: [500, 228], pile: [640, 128], label: [670, 46] }
+      },
+      skat: [500, 196], stock: [290, 300], discard: [362, 300], melds: [420, 196, 380, 250], cw: { you: 64, opp: 40, table: 58, meld: 38 }
+    },
+    port: {
+      W: 700, H: 940, table: [350, 452, 272, 360], heinz: { skat: [350, 46], romme: [104, 56] },
+      seats: {
+        you:   { hand: [350, 836], play: [350, 560], pile: [560, 690], label: [130, 908] },
+        otto:  { fig: [42, 380], hand: [116, 380], play: [278, 450], pile: [130, 560], label: [96, 254] },
+        kalle: { fig: [658, 380], hand: [584, 380], play: [422, 450], pile: [570, 560], label: [604, 254] },
+        gerda: { fig: [350, 44], hand: [350, 150], play: [350, 300], pile: [480, 150], label: [520, 54] }
+      },
+      skat: [350, 260], stock: [250, 262], discard: [330, 262], melds: [182, 340, 336, 400], cw: { you: 62, opp: 40, table: 64, meld: 40 }
+    }
+  };
+
+  const el = $('#cardroom'), cv = $('#crCv'), g = cv.getContext('2d');
+  let L = LAYOUT.land, scale = 1, dpr = 1, raf = 0, dirty = true, game = 'skat';
+  let money = false;
+  try { money = localStorage.getItem('dk-cr-money') === '1'; } catch (e) {}
+  const anims = [], flying = [], figs = {};
+  const fmt = c => arcade.fmt(c);
+  const nameOf = id => id === 'you' ? t('you') : t('lvl.' + PEOPLE[id].lvl);
+  const shuffle = d => { for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; } return d; };
+  const wait = ms => new Promise(res => setTimeout(res, ms));
+
+  /* ---------- Eingabe: Knöpfe und Antippen ---------- */
+  let asking = null, selectable = null, selected = new Set(), meldTap = null, pendingSwitch = null;
+  function ask(buttons, opts = {}) {   // opts: selectable (antippbare Karten), meldTap (Auslagen antippbar)
+    // buttons: [{key, label, primary, disabled}] – Rückgabe: key des gedrückten Knopfs oder einer Antipp-Aktion
+    return new Promise(res => {
+      asking = res; selectable = opts.selectable || null; meldTap = opts.meldTap || null;
+      renderButtons(buttons); kick();
+      // Ein gewünschter Tischwechsel passiert, sobald das laufende Spiel auf dich wartet
+      if (pendingSwitch && pendingSwitch !== game) { const w = pendingSwitch; pendingSwitch = null; switchTo(w); }
+    });
+  }
+  function answer(key) { if (!asking) return; const r = asking; asking = null; renderButtons([]); r(key); }
+  function renderButtons(list) {
+    const box = $('#crActions');
+    box.innerHTML = list.map(b => `<button type="button" class="btn${b.primary ? '' : ' ghost'}" data-k="${b.key}"${b.disabled ? ' disabled' : ''}>${b.label}</button>`).join('');
+    box.hidden = !list.length;
+  }
+  $('#crActions').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b && !b.disabled) answer(b.dataset.k); });
+  function msg(text) { $('#crMsg').textContent = text; }
+
+  /* ---------- Animation ---------- */
+  const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+  const lerp = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+  function tween(dur, step) { return new Promise(res => { anims.push({ t0: performance.now(), dur, step, res }); kick(); }); }
+  function moveHand(id, side, to, dur = 220) { const f = figs[id], from = f.hand[side].slice(); return tween(dur, k => { f.hand[side] = lerp(from, to, k); }); }
+  function loop(now) {
+    raf = 0;
+    if (el.hidden) return;
+    for (let i = anims.length - 1; i >= 0; i--) { const a = anims[i], k = Math.min(1, (now - a.t0) / a.dur); a.step(ease(k)); if (k >= 1) { anims.splice(i, 1); a.res(); } }
+    draw();
+    if (anims.length || dirty) raf = requestAnimationFrame(loop);
+  }
+  function kick() { dirty = true; if (!raf && !el.hidden) raf = requestAnimationFrame(loop); }
+  const seatsNow = () => game === 'skat' ? ['you', 'otto', 'kalle'] : ['you', 'otto', 'gerda', 'kalle'];
+  const heinzPos = () => L.heinz[game];
+  const figAng = id => { const p = id === 'heinz' ? heinzPos() : L.seats[id].fig; return Math.atan2(L.table[1] - p[1], L.table[0] - p[0]) - Math.PI / 2; };
+  function restOf(id, side) {
+    if (id === 'you') { const [x, y] = L.seats.you.hand; return side === 'L' ? [x - 250, y + 80] : [x + 250, y + 80]; }
+    const p = id === 'heinz' ? heinzPos() : L.seats[id].fig, a = figAng(id), lx = side === 'L' ? 36 : -36, ly = id === 'heinz' ? 172 : 100;
+    return [p[0] + Math.cos(a) * lx - Math.sin(a) * ly, p[1] + Math.sin(a) * lx + Math.cos(a) * ly];
+  }
+  function place() {
+    for (const id of ['heinz', 'otto', 'kalle', 'gerda', 'you']) { figs[id] = figs[id] || { hand: {} }; figs[id].hand.L = restOf(id, 'L'); figs[id].hand.R = restOf(id, 'R'); }
+  }
+  function resize() {
+    const r = cv.parentElement.getBoundingClientRect(); if (!r.width) return;
+    const portrait = r.width < 620;
+    L = portrait ? LAYOUT.port : LAYOUT.land;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const maxH = window.innerHeight * (portrait ? .58 : .64);
+    let w = r.width, h = w * L.H / L.W;
+    if (h > maxH) { h = maxH; w = h * L.W / L.H; }
+    cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.margin = '0 auto';
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    scale = w / L.W; place(); kick();
+  }
+  // Karte von a nach b fliegen lassen, optional trägt ein Arm sie
+  async function fly(card, from, to, w, face, carrier, dur = 260) {
+    const it = { card, x: from[0], y: from[1], w, face }; flying.push(it); sfx.card();
+    const h0 = carrier ? figs[carrier[0]].hand[carrier[1]].slice() : null;
+    await tween(dur, k => { const q = lerp(from, to, k); it.x = q[0]; it.y = q[1]; if (carrier) figs[carrier[0]].hand[carrier[1]] = lerp(h0, q, Math.min(1, k * 1.25)); });
+    flying.splice(flying.indexOf(it), 1);
+    if (carrier) moveHand(carrier[0], carrier[1], restOf(carrier[0], carrier[1]), 160);
+  }
+  const px = w => Math.round(w * scale * dpr);
+  const drawCard = (c, x, y, w, face, rot = 0, alpha = 1, lift = 0) => felt.card(g, c.joker ? { r: 2, s: 0 } : c, x, y, w, px(w), face && !c.joker, rot, alpha, lift);
+  function drawJoker(x, y, w, rot = 0, lift = 0) {
+    const h = w * 1.42;
+    g.save(); g.translate(x, y - lift * 14); g.rotate(rot);
+    g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 6; g.shadowOffsetY = 2;
+    g.fillStyle = '#fbf8f0'; g.beginPath(); g.roundRect ? g.roundRect(-w / 2, -h / 2, w, h, w * .1) : g.rect(-w / 2, -h / 2, w, h); g.fill();
+    g.shadowColor = 'transparent'; g.strokeStyle = '#8a8272'; g.lineWidth = 1; g.stroke();
+    g.fillStyle = '#7a3b69'; g.font = `700 ${w * .26}px 'Barlow Condensed', sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('JOKER', 0, -h * .3);
+    g.font = `${w * .55}px 'DejaVu Sans', sans-serif`; g.fillStyle = '#c8102e'; g.fillText('★', 0, h * .08);
+    g.restore();
+  }
+  const card = (c, x, y, w, face, rot, alpha, lift) => face && c.joker ? drawJoker(x, y, w, rot || 0, lift || 0) : drawCard(c, x, y, w, face, rot, alpha, lift);
+
+  /* ---------- Zeichnen ---------- */
+  // Deine Hand: Fächer unten; liefert die Positionen für das Antippen
+  let handRects = [];
+  function handLayout(hand) {
+    const [cx, cy] = L.seats.you.hand, w = L.cw.you, n = hand.length;
+    const span = Math.min(L.W - 60, n * w * .62), step = n > 1 ? Math.min(w * .62, (span - w) / (n - 1)) : 0;
+    const x0 = cx - (step * (n - 1)) / 2;
+    return hand.map((c, i) => ({ c, x: x0 + i * step, y: cy - (selected.has(c) ? 22 : 0), w, step }));
+  }
+  function oppHand(id, n) {
+    const S = L.seats[id], w = L.cw.opp, vertical = id === 'otto' || id === 'kalle';
+    const step = Math.min(14, 150 / Math.max(1, n)), off = (n - 1) * step / 2;
+    for (let i = 0; i < n; i++) card({ r: 2, s: 0 }, S.hand[0] + (vertical ? 0 : i * step - off), S.hand[1] + (vertical ? i * step - off : 0), w, false, vertical ? Math.PI / 2 : 0);
+  }
+  function draw() {
+    if (!figs.you) return;
+    g.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+    const [tx, ty, rx, ry] = L.table;
+    const bg = g.createRadialGradient(tx, ty, 60, tx, ty, Math.max(L.W, L.H) * .8); bg.addColorStop(0, '#3a2414'); bg.addColorStop(1, '#120a05');
+    g.fillStyle = bg; g.fillRect(0, 0, L.W, L.H);
+    felt.figure(g, heinzPos()[0], heinzPos()[1], figAng('heinz'), felt.HEINZ, false);
+    for (const id of seatsNow()) if (id !== 'you') felt.figure(g, L.seats[id].fig[0], L.seats[id].fig[1], figAng(id), PEOPLE[id], false);
+    // Runder Holztisch mit grünem Tuch
+    g.fillStyle = '#3a1f0e'; g.beginPath(); g.ellipse(tx, ty + 8, rx + 30, ry + 30, 0, 0, Math.PI * 2); g.fill();
+    const wood = g.createLinearGradient(0, ty - ry, 0, ty + ry); wood.addColorStop(0, '#8a5a30'); wood.addColorStop(1, '#3a1f0e');
+    g.fillStyle = wood; g.beginPath(); g.ellipse(tx, ty, rx + 26, ry + 26, 0, 0, Math.PI * 2); g.fill();
+    const cloth = g.createRadialGradient(tx, ty - ry * .2, 30, tx, ty, Math.max(rx, ry)); cloth.addColorStop(0, '#2f7d4c'); cloth.addColorStop(1, '#123d26');
+    g.fillStyle = cloth; g.beginPath(); g.ellipse(tx, ty, rx, ry, 0, 0, Math.PI * 2); g.fill();
+    if (game === 'skat') drawSkat(); else drawRomme();
+    // Arme
+    for (const side of ['L', 'R']) felt.arm(g, felt.shoulder(heinzPos()[0], heinzPos()[1], figAng('heinz'), side), figs.heinz.hand[side], 92, 18, '#fbf8f0', felt.HEINZ.skin, side === 'L' ? -1 : 1);
+    for (const id of seatsNow()) if (id !== 'you') { const f = L.seats[id].fig, a = figAng(id); for (const side of ['L', 'R']) felt.arm(g, felt.shoulder(f[0], f[1], a, side), figs[id].hand[side], 74, 18, PEOPLE[id].shirt, PEOPLE[id].skin, side === 'L' ? -1 : 1); }
+    for (const it of flying) card(it.card, it.x, it.y, it.w, it.face, it.rot || 0);
+    // Deine Karten und Hände
+    const mine = game === 'skat' ? sk.hands[0] : rm.hands[0];
+    handRects = mine ? handLayout(mine) : [];
+    const legalSet = selectable ? new Set(selectable) : null;
+    handRects.forEach(r => card(r.c, r.x, r.y, r.w, true, 0, legalSet && !legalSet.has(r.c) ? .55 : 1, selected.has(r.c) ? .4 : 0));
+    felt.arm(g, [L.W * .2, L.H + 170], figs.you.hand.L, 190, 46, '#3b5e8c', '#f0c29a', 1);
+    felt.arm(g, [L.W * .8, L.H + 170], figs.you.hand.R, 190, 46, '#3b5e8c', '#f0c29a', -1);
+    // Namen
+    for (const id of seatsNow()) {
+      const S = L.seats[id], st = game === 'skat' ? sk : rm, i = seatsNow().indexOf(id);
+      const line1 = id === 'you' ? t('you') : nameOf(id), extra = game === 'skat' ? (sk.decl === i && sk.gm ? ' · ' + t('cr.decl') : '') : (rm.out[i] ? ' · ' + t('rm.isout') : '');
+      felt.label(g, S.label[0], S.label[1], [line1 + extra, (st.say && st.say[i]) || ''].filter(Boolean), st.turn === i && !!asking === (id === 'you'));
+    }
+    dirty = false;
+  }
+
+  /* ================= Skat ================= */
+  const sk = { hands: [[], [], []], skat: [], dealer: 2, decl: -1, gm: null, bid: 0, trick: [], won: [[], [], []], played: [], say: ['', '', ''], turn: -1, rows: [], total: [0, 0, 0], skatOnTable: false };
+  const SEAT = ['you', 'otto', 'kalle'];
+  function drawSkat() {
+    const S = L.seats;
+    if (sk.skatOnTable) sk.skat.forEach((c, i) => card(c, L.skat[0] + (i ? 18 : -18), L.skat[1], L.cw.table, false, (i ? .1 : -.1)));
+    sk.trick.forEach(t => { const P = S[SEAT[t.p]].play; card(t.c, P[0], P[1], L.cw.table, true, (t.p - 1) * .12); });
+    SEAT.forEach((id, i) => { if (id !== 'you') oppHand(id, sk.hands[i].length); const n = sk.won[i].length / 3; for (let k = 0; k < Math.min(n, 6); k++) card({ r: 2, s: 0 }, S[id].pile[0] + k * 2, S[id].pile[1] - k * 2, L.cw.opp, false, .4); });
+    if (sk.gm) { g.fillStyle = 'rgba(243,212,135,.85)'; g.font = "700 22px 'Barlow Condensed', sans-serif"; g.textAlign = 'center'; g.fillText(gameName(sk.gm) + ' · ' + t('cr.bidval', { v: sk.bid }), L.table[0], L.table[1] + L.table[3] * .5); }
+  }
+  function gameName(gm) { return (gm.type === 'grand' ? 'Grand' : gm.type === 'null' ? 'Null' : t('cr.suit' + gm.suit)) + (gm.hand ? ' Hand' : ''); }
+
+  async function skatDeal() {
+    const d = shuffle(SK.deck());
+    sk.hands = [[], [], []]; sk.skat = []; sk.trick = []; sk.won = [[], [], []]; sk.played = []; sk.gm = null; sk.decl = -1; sk.bid = 0; sk.say = ['', '', ''];
+    sk.dealer = (sk.dealer + 1) % 3; selected.clear();
+    msg(t('cr.deal', { name: nameOf(SEAT[sk.dealer]) }));
+    const from = heinzPos().slice();
+    // Klassisch: 3 – Skat – 4 – 3
+    const packets = [3, 'skat', 4, 3];
+    for (const pk of packets) {
+      if (pk === 'skat') { sk.skat = [d.pop(), d.pop()]; await fly(sk.skat[0], from, L.skat, L.cw.table, false, ['heinz', 'R'], 200); sk.skatOnTable = true; continue; }
+      for (let k = 1; k <= 3; k++) {
+        const p = (sk.dealer + k) % 3, cs = d.splice(-pk);
+        await fly(cs[0], from, p === 0 ? L.seats.you.hand : L.seats[SEAT[p]].hand, p === 0 ? L.cw.you : L.cw.opp, false, ['heinz', 'R'], 200);
+        sk.hands[p].push(...cs);
+        if (p === 0) sk.hands[0] = SK.sort(sk.hands[0]);
+        kick();
+      }
+    }
+    await moveHand('heinz', 'R', restOf('heinz', 'R'), 260);
+  }
+  // Ein Reiz-Duell: der Sager bietet, der Hörer sagt ja oder passe
+  async function duel(sayer, hearer, cur, max) {
+    let i = cur ? SK.BIDS.indexOf(cur) + 1 : 0, bid = cur;
+    while (true) {
+      const next = SK.BIDS[i];
+      let says;
+      sk.turn = sayer;
+      if (next === undefined) says = false;
+      else if (sayer === 0) says = (await ask([{ key: 'bid', label: t('cr.bid', { v: next }), primary: true }, { key: 'pass', label: t('cr.pass') }])) === 'bid';
+      else { await wait(500); says = max[sayer] >= next; }
+      sk.say[sayer] = says ? String(next) : t('cr.pass'); kick();
+      if (!says) return { winner: hearer, bid };
+      sk.turn = hearer;
+      let holds;
+      if (hearer === 0) holds = (await ask([{ key: 'yes', label: t('cr.yes', { v: next }), primary: true }, { key: 'pass', label: t('cr.pass') }])) === 'yes';
+      else { await wait(450); holds = max[hearer] >= next; }
+      sk.say[hearer] = holds ? t('cr.yesword') : t('cr.pass'); kick();
+      if (!holds) return { winner: sayer, bid: next };
+      bid = next; i++;
+    }
+  }
+  async function skatGame() {
+    kick();
+    await skatDeal();
+    const vor = (sk.dealer + 1) % 3, mit = (sk.dealer + 2) % 3, hin = sk.dealer;
+    const max = sk.hands.map((h, i) => i === 0 ? 0 : SK.maxBid(h, i === 2 ? 1 : 0));
+    msg(t('cr.bidding'));
+    const d1 = await duel(mit, vor, 0, max);
+    const d2 = await duel(hin, d1.winner, d1.bid, max);
+    let decl = d2.winner, bid = d2.bid;
+    if (!bid) {
+      // Niemand hat gereizt: Vorhand darf für 18 spielen
+      sk.turn = decl;
+      const play = decl === 0 ? (await ask([{ key: 'play', label: t('cr.play18'), primary: true }, { key: 'pass', label: t('cr.pass') }])) === 'play' : max[decl] >= 18;
+      if (!play) { msg(t('cr.allpass')); sk.say[decl] = t('cr.pass'); await wait(1300); return skatEnd(null); }
+      bid = 18;
+    }
+    sk.decl = decl; sk.bid = bid; sk.turn = decl;
+    msg(t('cr.declarer', { name: nameOf(SEAT[decl]), v: bid }));
+    let gm;
+    if (decl === 0) gm = await youDeclare(bid);
+    else {
+      await wait(500);
+      const cards12 = sk.hands[decl].concat(sk.skat), ch = SK.chooseGame(cards12, bid);
+      origCards = cards12;
+      for (const c of sk.skat) await fly(c, L.skat, L.seats[SEAT[decl]].hand, L.cw.opp, false, [SEAT[decl], 'L'], 220);
+      sk.skatOnTable = false;
+      sk.hands[decl] = cards12.filter(c => !ch.disc.includes(c));
+      sk.skat = ch.disc;
+      for (const c of sk.skat) await fly(c, L.seats[SEAT[decl]].hand, L.seats[SEAT[decl]].pile, L.cw.opp, false, [SEAT[decl], 'L'], 220);
+      gm = ch.gm;
+    }
+    sk.gm = gm; sk.hands[0] = SK.sort(sk.hands[0], gm); sk.say = ['', '', ''];
+    msg(t('cr.plays', { name: nameOf(SEAT[decl]), g: gameName(gm) }));
+    await wait(900);
+    // Stiche
+    let lead = vor, declTricks = 0, declEyes = sk.skat.reduce((a, c) => a + SK.eyes(c), 0), tricks = 0;
+    for (let k = 0; k < 10; k++) {
+      sk.trick = [];
+      for (let j = 0; j < 3; j++) {
+        const p = (lead + j) % 3; sk.turn = p; kick();
+        let c;
+        if (p === 0) {
+          const legal = SK.legal(sk.hands[0], sk.trick, gm);
+          msg(t('cr.yourturn'));
+          const key = await ask([], { selectable: legal });
+          c = sk.hands[0].find(x => x.id === +key);
+        } else { await wait(420); c = SK.play(sk.hands[p], sk.trick, gm, p, decl, sk.played); }
+        const rect = p === 0 && handRects.find(r => r.c === c), from = rect ? [rect.x, rect.y] : L.seats[SEAT[p]].hand;
+        sk.hands[p].splice(sk.hands[p].indexOf(c), 1);
+        await fly(c, from, L.seats[SEAT[p]].play, L.cw.table, true, [SEAT[p], 'R'], 240);
+        sk.trick.push({ p, c }); kick();
+      }
+      await wait(650);
+      const w = sk.trick[SK.winner(sk.trick, gm)].p, eyes = sk.trick.reduce((a, t) => a + SK.eyes(t.c), 0);
+      const its = sk.trick.map(t => t.c); sk.played.push(...its);
+      const cs = sk.trick.slice(); sk.trick = [];
+      await Promise.all(cs.map(tc => fly(tc.c, L.seats[SEAT[tc.p]].play, L.seats[SEAT[w]].pile, L.cw.opp, false, null, 300)));
+      sk.won[w].push(...its); tricks++;
+      if (w === decl) { declTricks++; declEyes += eyes; }
+      lead = w;
+      if (gm.type === 'null' && declTricks) break;
+    }
+    // Spitzen zählen mit den zehn Handkarten plus Skat
+    const res = SK.settle(gm, origCards, declEyes, declTricks, tricks, bid);
+    return skatEnd({ decl, gm, res, declEyes, bid });
+  }
+  let origCards = [];
+  async function youDeclare(bid) {
+    const hand = await ask([{ key: 'take', label: t('cr.take'), primary: true }, { key: 'hand', label: t('cr.hand') }]);
+    let isHand = hand === 'hand';
+    if (!isHand) {
+      for (const c of sk.skat) { await fly(c, L.skat, L.seats.you.hand, L.cw.you, true, ['you', 'R'], 220); sk.hands[0].push(c); sk.hands[0] = SK.sort(sk.hands[0]); kick(); }
+      sk.skatOnTable = false;
+      // Zwei Karten drücken
+      while (true) {
+        msg(t('cr.push'));
+        const key = await ask([{ key: 'push', label: t('cr.pushbtn'), primary: true, disabled: selected.size !== 2 }], { selectable: sk.hands[0] });
+        if (key === 'push' && selected.size === 2) break;
+        if (key !== 'push') { const c = sk.hands[0].find(x => x.id === +key); if (selected.has(c)) selected.delete(c); else if (selected.size < 2) selected.add(c); kick(); }
+      }
+      const disc = [...selected]; selected.clear();
+      origCards = sk.hands[0].slice();
+      sk.hands[0] = sk.hands[0].filter(c => !disc.includes(c)); sk.skat = disc;
+      for (const c of disc) await fly(c, L.seats.you.hand, L.seats.you.pile, L.cw.opp, false, ['you', 'R'], 200);
+    } else origCards = sk.hands[0].concat(sk.skat);
+    // Spiel ansagen
+    const games = [3, 0, 1, 2].map(s => ({ type: 'suit', suit: s, hand: isHand })).concat([{ type: 'grand', hand: isHand }, { type: 'null', hand: isHand }]);
+    msg(t('cr.choose', { v: bid }));
+    const key = await ask(games.map((gm, i) => {
+      const v = SK.value(gm, sk.hands[0].concat(isHand ? [] : sk.skat));
+      return { key: String(i), label: gameName(gm) + ' · ' + v + (v < bid ? ' ⚠' : ''), primary: v >= bid && i === 0 };
+    }));
+    return games[+key];
+  }
+  async function skatEnd(r) {
+    sk.turn = -1;
+    if (r) {
+      const { decl, gm, res, declEyes } = r;
+      sk.total[decl] += res.score;
+      sk.rows.push({ decl, game: gameName(gm), value: res.score });
+      const extra = gm.type === 'null' ? '' : ' · ' + t('cr.eyes', { n: declEyes }) + (res.schwarz ? ' · Schwarz' : res.schneider ? ' · Schneider' : '');
+      msg((res.won ? t('cr.won', { name: nameOf(SEAT[decl]), g: gameName(gm), v: res.value }) : t('cr.lost', { name: nameOf(SEAT[decl]), g: gameName(gm), v: res.value, s: -res.score }) + (res.overbid ? ' (' + t('cr.overbid') + ')' : '')) + extra);
+      // Geld: jeder Gegner zahlt dem Alleinspieler den Wert bzw. bekommt den doppelten Wert
+      if (money) { const delta = decl === 0 ? 2 * res.score : -res.score; payout(delta); }
+      if (res.won && decl === 0) sfx.coins(6); else if (!res.won && decl === 0) sfx.bust();
+    }
+    renderScore();
+    await ask([{ key: 'next', label: t('cr.next'), primary: true }]);
+    sk.hands = [[], [], []]; sk.won = [[], [], []]; sk.skatOnTable = false; sk.gm = null; sk.decl = -1; sk.say = ['', '', ''];
+  }
+  async function skatLoop() { for (;;) await skatGame(); }
+
+  /* ================= Rommé ================= */
+  const rm = { hands: [[], [], [], []], stock: [], discard: [], melds: [], out: [false, false, false, false], dealer: 3, say: ['', '', '', ''], turn: -1, rows: [], total: [0, 0, 0, 0], byRank: false };
+  const RSEAT = ['you', 'otto', 'gerda', 'kalle'];
+  let meldRects = [];
+  function meldLayout() {
+    const [mx, my, mw, mh] = L.melds, w = L.cw.meld, step = w * .36, rowH = w * 1.42 + 10;
+    let x = mx, y = my; const out = [];
+    for (const m of rm.melds) {
+      const info = RM.analyze(m.cards), cards = info ? info.slots.map(s => s.card) : m.cards, width = w + step * (cards.length - 1);
+      if (x + width > mx + mw && x > mx) { x = mx; y += rowH; }
+      out.push({ m, cards, x, y, w, step, width });
+      x += width + 12;
+    }
+    return out;
+  }
+  function drawRomme() {
+    // Stapel und Ablage
+    const [sx, sy] = L.stock; for (let i = 0; i < Math.min(6, Math.ceil(rm.stock.length / 10)); i++) card({ r: 2, s: 0 }, sx + i * .8, sy - i * 1.2, L.cw.table, false);
+    g.fillStyle = '#f1ede2'; g.font = "600 16px 'Barlow Condensed', sans-serif"; g.textAlign = 'center'; g.fillText(String(rm.stock.length), sx, sy + L.cw.table * .9);
+    const top = rm.discard[rm.discard.length - 1];
+    if (top) card(top, L.discard[0], L.discard[1], L.cw.table, true);
+    else { g.strokeStyle = 'rgba(255,255,255,.2)'; g.strokeRect(L.discard[0] - L.cw.table / 2, L.discard[1] - L.cw.table * .71, L.cw.table, L.cw.table * 1.42); }
+    // Auslagen
+    meldRects = meldLayout();
+    for (const r of meldRects) {
+      r.cards.forEach((c, i) => card(c, r.x + r.w / 2 + i * r.step, r.y + r.w * .71, r.w, true));
+      if (r.m.staged) { g.strokeStyle = '#ffd66b'; g.lineWidth = 2; g.setLineDash([5, 4]); g.strokeRect(r.x - 3, r.y - 3, r.width + 6, r.w * 1.42 + 6); g.setLineDash([]); }
+    }
+    RSEAT.forEach((id, i) => { if (id !== 'you') oppHand(id, rm.hands[i].length); });
+  }
+  async function rmDeal() {
+    const d = shuffle(RM.deck());
+    rm.hands = [[], [], [], []]; rm.melds = []; rm.out = [false, false, false, false]; rm.say = ['', '', '', '']; selected.clear();
+    rm.dealer = (rm.dealer + 1) % 4;
+    msg(t('rm.deal'));
+    for (let k = 1; k <= 4; k++) {
+      const p = (rm.dealer + k) % 4, cs = d.splice(-13);
+      await fly(cs[0], heinzPos(), p === 0 ? L.seats.you.hand : L.seats[RSEAT[p]].hand, p === 0 ? L.cw.you : L.cw.opp, false, ['heinz', 'R'], 240);
+      rm.hands[p] = p === 0 ? RM.sort(cs, rm.byRank) : cs; kick();
+    }
+    rm.discard = [d.pop()]; rm.stock = d;
+    await fly(rm.discard[0], heinzPos(), L.discard, L.cw.table, true, ['heinz', 'R'], 240);
+    await moveHand('heinz', 'R', restOf('heinz', 'R'), 260);
+  }
+  function drawFromStock(p) {
+    if (!rm.stock.length) { const top = rm.discard.pop(); rm.stock = shuffle(rm.discard.splice(0)); rm.discard = [top]; }
+    return rm.stock.pop();
+  }
+  async function rommeRound() {
+    await rmDeal();
+    let p = (rm.dealer + 1) % 4;
+    while (true) {
+      rm.turn = p; kick();
+      const ended = p === 0 ? await youRommeTurn() : await aiRommeTurn(p);
+      if (ended) return rommeEnd(p, ended === 'hand');
+      p = (p + 1) % 4;
+    }
+  }
+  async function aiRommeTurn(p) {
+    const h = rm.hands[p], id = RSEAT[p], S = L.seats[id], startedOut = rm.out[p];
+    await wait(450);
+    const top = rm.discard[rm.discard.length - 1];
+    if (top && rm.out[p] && RM.wantsTop(h, top)) { rm.discard.pop(); await fly(top, L.discard, S.hand, L.cw.opp, true, [id, 'R']); h.push(top); rm.say[p] = t('rm.took'); }
+    else { const c = drawFromStock(p); await fly(c, L.stock, S.hand, L.cw.opp, false, [id, 'R']); h.push(c); rm.say[p] = ''; }
+    kick();
+    const melds = RM.bestMelds(h), total = melds.reduce((a, m) => a + RM.analyze(m).value, 0);
+    if (melds.length && (rm.out[p] || total >= 40)) {
+      for (const m of melds) {
+        m.forEach(c => h.splice(h.indexOf(c), 1));
+        const meld = { owner: p, cards: m.slice() }; rm.melds.push(meld);
+        const target = meldLayout().find(r => r.m === meld);
+        await fly(m[0], S.hand, target ? [target.x + target.w / 2, target.y + target.w * .71] : L.table, L.cw.meld, true, [id, 'L'], 260);
+        kick();
+      }
+      if (!rm.out[p]) rm.say[p] = t('rm.cameout', { v: total });
+      rm.out[p] = true;
+    }
+    if (rm.out[p]) {
+      let changed = true;
+      while (changed && h.length > 1) {
+        changed = false;
+        for (const c of h.slice()) {
+          if (c.joker) continue;
+          const m = rm.melds.find(m => RM.layOff(m, [c]));
+          if (m) { h.splice(h.indexOf(c), 1); m.cards.push(c); const r = meldLayout().find(x => x.m === m); await fly(c, S.hand, r ? [r.x + r.width, r.y + r.w * .71] : L.table, L.cw.meld, true, [id, 'L'], 220); changed = true; kick(); break; }
+        }
+      }
+    }
+    if (!h.length) return startedOut ? 'out' : 'hand';
+    const d = RM.chooseDiscard(h); h.splice(h.indexOf(d), 1);
+    await fly(d, S.hand, L.discard, L.cw.table, true, [id, 'R']); rm.discard.push(d); kick();
+    if (!h.length) return startedOut ? 'out' : 'hand';
+    return false;
+  }
+  async function youRommeTurn() {
+    const h = () => rm.hands[0], startedOut = rm.out[0];
+    // 1. Ziehen
+    const top = rm.discard[rm.discard.length - 1];
+    msg(t('rm.drawq'));
+    const pick = await ask([{ key: 'stock', label: t('rm.stock'), primary: true }, { key: 'discardtake', label: t('rm.discardtake'), disabled: !top }]);
+    let c;
+    if (pick === 'discardtake' && top) { c = rm.discard.pop(); await fly(c, L.discard, L.seats.you.hand, L.cw.you, true, ['you', 'R']); }
+    else { c = drawFromStock(0); await fly(c, L.stock, L.seats.you.hand, L.cw.you, true, ['you', 'R']); }
+    rm.hands[0].push(c); rm.hands[0] = RM.sort(rm.hands[0], rm.byRank); selected.clear(); kick();
+    // 2. Auslegen, anlegen, abwerfen
+    const staged = () => rm.melds.filter(m => m.staged);
+    while (true) {
+      const stagedVal = staged().reduce((a, m) => a + RM.analyze(m.cards).value, 0), canLay = startedOut || stagedVal >= 40;
+      const sel = [...selected];
+      msg(startedOut ? t('rm.play') : t('rm.play40', { v: stagedVal }));
+      const buttons = [
+        { key: 'meld', label: t('rm.meld'), primary: sel.length >= 3, disabled: sel.length < 3 },
+        { key: 'discard', label: t('rm.discardbtn'), primary: sel.length === 1, disabled: sel.length !== 1 },
+        { key: 'sort', label: rm.byRank ? t('rm.sortsuit') : t('rm.sortrank') }
+      ];
+      if (staged().length && !startedOut) buttons.push({ key: 'undo', label: t('rm.undo') });
+      if (!h().length) buttons.unshift({ key: 'done', label: t('rm.done'), primary: true });
+      const key = await ask(buttons, { selectable: h(), meldTap: canLay });
+      if (key === 'sort') { rm.byRank = !rm.byRank; rm.hands[0] = RM.sort(h(), rm.byRank); continue; }
+      if (key === 'undo') { for (const m of staged()) { rm.hands[0].push(...m.cards); rm.melds.splice(rm.melds.indexOf(m), 1); } rm.hands[0] = RM.sort(h(), rm.byRank); selected.clear(); continue; }
+      if (key === 'meld') {
+        const info = RM.analyze(sel);
+        if (!info) { msg(t('rm.invalid')); sfx.bust(); await wait(1100); continue; }
+        sel.forEach(x => rm.hands[0].splice(rm.hands[0].indexOf(x), 1)); selected.clear();
+        rm.melds.push({ owner: 0, cards: sel, staged: !startedOut }); sfx.card(); kick();
+        continue;
+      }
+      if (key.startsWith('meld:')) {
+        const m = rm.melds[+key.slice(5)];
+        if (!canLay) { msg(t('rm.need40')); await wait(1100); continue; }
+        if (!sel.length) continue;
+        if (!RM.layOff(m, sel)) { msg(t('rm.nofit')); sfx.bust(); await wait(1000); continue; }
+        sel.forEach(x => rm.hands[0].splice(rm.hands[0].indexOf(x), 1)); m.cards.push(...sel); selected.clear(); sfx.card(); kick();
+        continue;
+      }
+      if ((key === 'discard' && sel.length === 1) || (key === 'done' && !h().length)) {
+        if (staged().length && !startedOut && stagedVal < 40) { msg(t('rm.need40')); sfx.bust(); await wait(1300); continue; }
+        if (staged().length) { staged().forEach(m => { delete m.staged; }); rm.out[0] = true; }
+        if (key === 'discard') {
+          const d = sel[0]; rm.hands[0].splice(rm.hands[0].indexOf(d), 1); selected.clear();
+          await fly(d, L.seats.you.hand, L.discard, L.cw.table, true, ['you', 'R']); rm.discard.push(d);
+        }
+        kick();
+        if (!h().length) return startedOut ? 'out' : 'hand';
+        return false;
+      }
+      // Karte angetippt: an- oder abwählen
+      const cc = h().find(x => x.id === +key);
+      if (cc) { if (selected.has(cc)) selected.delete(cc); else selected.add(cc); kick(); }
+    }
+  }
+  async function rommeEnd(w, handRomme) {
+    rm.turn = -1;
+    const pens = rm.hands.map((h, i) => i === w ? 0 : h.reduce((a, c) => a + RM.penalty(c), 0) * (handRomme ? 2 : 1));
+    pens.forEach((v, i) => { rm.total[i] += v; });
+    rm.rows.push(pens);
+    const sum = pens.reduce((a, b) => a + b, 0);
+    msg((w === 0 ? t('rm.youout') : t('rm.out', { name: nameOf(RSEAT[w]) })) + (handRomme ? ' ' + t('rm.handromme') : '') + ' ' + t('rm.pens', { v: pens[0] }));
+    if (money) payout(w === 0 ? sum : -pens[0]);
+    if (w === 0) sfx.coins(8);
+    renderScore();
+    // Karten der anderen aufdecken
+    await ask([{ key: 'next', label: t('cr.next'), primary: true }]);
+  }
+  async function rommeLoop() { for (;;) await rommeRound(); }
+
+  /* ---------- Geld und Block ---------- */
+  function payout(delta) {
+    if (!delta) return;
+    const v = delta < 0 ? -Math.min(-delta, arcade.cash) : delta;
+    arcade.addCash(v); $('#crCash').textContent = fmt(arcade.cash);
+  }
+  function renderScore() {
+    const box = $('#crScore');
+    if (game === 'skat') {
+      $('#crScoreTitle').textContent = t('cr.block');
+      box.innerHTML = `<table><thead><tr><th>#</th><th>${t('cr.game')}</th>${SEAT.map(id => `<th>${nameOf(id)}</th>`).join('')}</tr></thead><tbody>` +
+        sk.rows.slice(-12).map((r, i) => `<tr><td>${sk.rows.length - Math.min(12, sk.rows.length) + i + 1}</td><td>${r.game}</td>${SEAT.map((_, p) => `<td>${p === r.decl ? (r.value > 0 ? '+' : '') + r.value : ''}</td>`).join('')}</tr>`).join('') +
+        `</tbody><tfoot><tr><td></td><td>Σ</td>${sk.total.map(v => `<td>${v}</td>`).join('')}</tr></tfoot></table>`;
+    } else {
+      $('#crScoreTitle').textContent = t('rm.table');
+      box.innerHTML = `<table><thead><tr><th>#</th>${RSEAT.map(id => `<th>${nameOf(id)}</th>`).join('')}</tr></thead><tbody>` +
+        rm.rows.slice(-12).map((r, i) => `<tr><td>${rm.rows.length - Math.min(12, rm.rows.length) + i + 1}</td>${r.map(v => `<td>${v}</td>`).join('')}</tr>`).join('') +
+        `</tbody><tfoot><tr><td>Σ</td>${rm.total.map(v => `<td>${v}</td>`).join('')}</tr></tfoot></table>`;
+    }
+  }
+
+  /* ---------- Bedienung ---------- */
+  const started = { skat: false, romme: false };
+  function setTabs() {
+    $('#tabSkat').setAttribute('aria-selected', String(game === 'skat')); $('#tabRomme').setAttribute('aria-selected', String(game === 'romme'));
+    $('#crSub').textContent = t(game === 'skat' ? 'cr.subskat' : 'cr.subromme');
+  }
+  function begin() { started[game] = true; renderButtons([]); (game === 'skat' ? skatLoop : rommeLoop)(); }
+  function open() {
+    sfx.init(); el.hidden = false;
+    $('#crCash').textContent = fmt(arcade.cash);
+    $('#crMoney').checked = money;
+    setTabs(); renderScore();
+    requestAnimationFrame(() => { resize(); if (!started[game]) begin(); else kick(); });
+  }
+  function close() { if (anims.length) return; el.hidden = true; sfx.setStyle(boardKey); }
+  function wantTab(which) {
+    if (which === game) { pendingSwitch = null; return; }
+    if (asking && !anims.length) switchTo(which);
+    else { pendingSwitch = which; msg(t('cr.switching')); }
+  }
+  $('#tabSkat').addEventListener('click', () => wantTab('skat'));
+  $('#tabRomme').addEventListener('click', () => wantTab('romme'));
+  // Beim Wechsel bleibt das andere Spiel genau dort stehen, wo es auf dich wartet
+  const parked = {};
+  function switchTo(which) {
+    parked[game] = { resolve: asking, buttons: $('#crActions').innerHTML, sel: selectable, meld: meldTap, text: $('#crMsg').textContent };
+    asking = null;
+    game = which;
+    setTabs(); place(); renderScore(); selected.clear();
+    const pk = parked[which];
+    if (pk) { asking = pk.resolve; selectable = pk.sel; meldTap = pk.meld; $('#crActions').innerHTML = pk.buttons; $('#crActions').hidden = !pk.buttons; msg(pk.text); delete parked[which]; }
+    else begin();
+    kick();
+  }
+  $('#crMoney').addEventListener('change', e => { money = e.target.checked; try { localStorage.setItem('dk-cr-money', money ? '1' : '0'); } catch (_) {} });
+  $('#crLeave').addEventListener('click', close);
+  $('#cardroomBtn').addEventListener('click', open);
+  $('#cardroomCard').addEventListener('click', open);
+  document.addEventListener('keydown', e => { if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); close(); } }, true);
+  // Antippen: eigene Karten, Stapel und Ablage, Auslagen zum Anlegen
+  const toTable = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * L.W, (e.clientY - r.top) / r.height * L.H]; };
+  cv.addEventListener('click', e => {
+    if (!asking) return;
+    const [x, y] = toTable(e), cw = L.cw;
+    // Oberste Karte zuerst: jede Karte ist bis zum Beginn der nächsten sichtbar
+    for (let i = handRects.length - 1; i >= 0; i--) {
+      const r = handRects[i], left = r.x - r.w / 2, right = i === handRects.length - 1 ? r.x + r.w / 2 : left + Math.max(r.step, 8);
+      if (x >= left && x <= right && Math.abs(y - r.y) <= r.w * .71) {
+        if (selectable && !selectable.includes(r.c)) return;
+        answer(String(r.c.id)); return;
+      }
+    }
+    if (game === 'romme') {
+      if (Math.abs(x - L.stock[0]) < cw.table * .6 && Math.abs(y - L.stock[1]) < cw.table * .8 && $('#crActions [data-k="stock"]')) { answer('stock'); return; }
+      if (Math.abs(x - L.discard[0]) < cw.table * .6 && Math.abs(y - L.discard[1]) < cw.table * .8 && $('#crActions [data-k="discardtake"]:not([disabled])')) { answer('discardtake'); return; }
+      if (meldTap && selected.size) for (const r of meldRects) if (x >= r.x && x <= r.x + r.width && y >= r.y && y <= r.y + r.w * 1.42) { answer('meld:' + rm.melds.indexOf(r.m)); return; }
+    }
+  });
+  new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv.parentElement);
+  return {
+    get open() { return !el.hidden; },
+    relang() { if (!el.hidden) { $('#crSub').textContent = t(game === 'skat' ? 'cr.subskat' : 'cr.subromme'); renderScore(); kick(); } }
+  };
+})();
+
 // Pfeil-Symbol für das Menü
 function dartIcon(k) {
   const L = DART_LOOK[k], c = document.createElement('canvas'); c.width = 180; c.height = 52;
@@ -5661,7 +6600,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
