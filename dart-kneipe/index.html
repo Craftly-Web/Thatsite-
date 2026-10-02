@@ -1125,7 +1125,7 @@ const I18N = {
     'arc.nocash': 'Zu wenig Guthaben. Gewinn Legs in der Kneipe – jedes bringt Preisgeld.', 'arc.hello': 'Einsatz wählen und drehen. Viel Glück!',
     'arc.lose': ['Leider nichts. Nächste Runde?', 'Knapp daneben ist auch vorbei.', 'Die Walzen sind heute launisch.'],
     'arc.won': 'Gewinn {v}!', 'arc.line': 'Linie {n}: {k}× {s}', 'arc.jackpot': 'HAUPTGEWINN! Fünf Siebener – {v}!', 'arc.card': 'Guthaben {v}',
-    'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle',
+    'toast.cash': 'Preisgeld', 'toast.cashx': ' +{v} für die Spielhalle', 'toast.gift': 'Geschenk von Heinz', 'toast.giftx': ' +100,00 € Guthaben – viel Spaß!',
     'cr.btn': 'Kartentisch', 'cr.cardx': 'Skat und Rommé mit den Stammgästen', 'cr.title': 'Heinz’ Kartentisch',
     'cr.subskat': 'Skat zu dritt mit Otto und Kalle · Reizen, Skat, Farbspiel, Grand, Null', 'cr.subromme': 'Rommé zu viert mit Otto, Gerda und Kalle · Rauskommen ab 40 Punkten',
     'cr.money': 'Um Geld spielen: 1 Cent pro Punkt vom Spielhallen-Guthaben', 'cr.leave': 'Zurück in die Kneipe', 'cr.decl': 'spielt', 'cr.bidval': 'gereizt bis {v}',
@@ -1299,7 +1299,7 @@ const I18N = {
     'arc.nocash': 'Not enough credit. Win legs in the pub – each one earns prize money.', 'arc.hello': 'Pick your bet and spin. Good luck!',
     'arc.lose': ['Nothing this time. Another spin?', 'So close, and yet…', 'The reels are moody tonight.'],
     'arc.won': 'You win {v}!', 'arc.line': 'Line {n}: {k}× {s}', 'arc.jackpot': 'JACKPOT! Five sevens – {v}!', 'arc.card': 'Credit {v}',
-    'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade',
+    'toast.cash': 'Prize money', 'toast.cashx': ' +{v} for the arcade', 'toast.gift': 'A gift from Heinz', 'toast.giftx': ' +€100.00 credit – have fun!',
     'cr.btn': 'Card table', 'cr.cardx': 'Skat and rummy with the regulars', 'cr.title': 'Heinz’s card table',
     'cr.subskat': 'Skat for three with Otto and Kalle · bidding, skat, suit, grand, null', 'cr.subromme': 'Rummy for four with Otto, Gerda and Kalle · come out with 40 points',
     'cr.money': 'Play for money: 1 cent per point from your arcade credit', 'cr.leave': 'Back to the pub', 'cr.decl': 'declarer', 'cr.bidval': 'bid {v}',
@@ -4260,6 +4260,8 @@ const arcade = (() => {
   try { const b = +localStorage.getItem('dk-bet'); if (b >= 0 && b < BETS.length) betIdx = b; } catch (e) {}
   const pos = strips.map((_, i) => (i * 7) % L), reels = pos.map(p => ({ p, from: p, to: p, t0: 0, dur: 0, done: true }));
   const save = () => { try { localStorage.setItem('dk-cash', String(cash)); localStorage.setItem('dk-bet', String(betIdx)); } catch (e) {} };
+  // Geschenk von Heinz: einmalig 100 € Guthaben je Browser
+  try { if (!localStorage.getItem('dk-gift-100')) { cash += 10000; localStorage.setItem('dk-gift-100', '1'); save(); setTimeout(() => toast(t('toast.gift'), t('toast.giftx')), 1200); } } catch (e) {}
   const fmt = c => new Intl.NumberFormat(lang === 'de' ? 'de-DE' : 'en-IE', { style: 'currency', currency: 'EUR' }).format(c / 100);
 
   /* Symbole einmal pro Größe vorzeichnen */
