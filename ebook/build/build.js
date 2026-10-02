@@ -213,10 +213,11 @@ function buchHtml(seiten = {}) {
   const ctx = { zitate: [] };
   const s = [];
   s.push(cover());
-  s.push(`<section class="titelei titelseite">${emblem()}<p class="t">${esc(CFG.titel)}</p><p class="u">${esc(CFG.untertitel)}</p>${CFG.autor ? `<p class="a">${esc(CFG.autor)}</p>` : ''}</section>`);
+  s.push(`<section class="titelei titelseite">${emblem()}<p class="t">${esc(CFG.titel)}</p><p class="u">${esc(CFG.untertitel)}</p>${CFG.autor ? `<p class="a">${esc(CFG.autor)}</p>` : ''}${CFG.verlag ? `<p class="v">${esc(CFG.verlag)}</p>` : ''}</section>`);
   s.push(`<section class="titelei impressum">
     <p><strong>${esc(CFG.titel)}</strong><br>${esc(CFG.untertitel)}</p>
     <p>© ${CFG.jahr}${CFG.autor ? ' ' + esc(CFG.autor) : ''}. Alle Rechte vorbehalten. Die Zitate ohne Namensangabe wurden für dieses Buch geschrieben.</p>
+    ${CFG.verlag ? `<p>Verlag: ${esc(CFG.verlag)}</p>` : ''}
     <p><strong>Wichtiger Hinweis:</strong> Dieses Buch wurde mit großer Sorgfalt erstellt. Die beschriebenen Methoden stützen sich auf veröffentlichte wissenschaftliche Studien (Stand ${CFG.jahr}; Quellen im Anhang). Das Buch ersetzt jedoch keine ärztliche, psychotherapeutische oder psychologische Beratung oder Behandlung. Wenn es dir über längere Zeit schlecht geht oder du an Suizid denkst, hol dir bitte sofort Hilfe – zum Beispiel bei der Telefonseelsorge: Deutschland 0800 111 0 111, Österreich 142, Schweiz 143, rund um die Uhr und kostenlos. Im Notfall: 112.</p>
     <p>Schriften: Fraunces, Literata und DM Sans (SIL Open Font License).</p>
   </section>`);
@@ -256,6 +257,7 @@ async function lesezeichenReparieren(datei, html) {
   const doc = await PDFDocument.load(fs.readFileSync(datei), { updateMetadata: false });
   doc.setTitle(CFG.titel); doc.setSubject(CFG.untertitel); doc.setLanguage(CFG.sprache);
   if (CFG.autor) doc.setAuthor(CFG.autor);
+  if (CFG.verlag) doc.setCreator(CFG.verlag);
   const outlines = doc.catalog.lookup(PDFName.of('Outlines'));
   let repariert = 0;
   const walk = ref => {
@@ -360,11 +362,12 @@ async function epub(banner) {
   const dateien = []; const ctx = { zitate: [] };
   const add = (id, titel, body, klasse, props) => { fs.writeFileSync(path.join(O, 'text', id + '.xhtml'), epubSeite(titel, body, klasse)); dateien.push({ id, titel, props }); };
   add('cover', CFG.titel, `<section epub:type="cover" class="cover-seite"><img src="../images/cover.jpg" alt="${esc(CFG.titel)} – Cover"/></section>`, 'cover');
-  add('titel', CFG.titel, `<section epub:type="titlepage" class="titelseite">${emblem()}<h1 class="t">${esc(CFG.titel)}</h1><p class="u">${esc(CFG.untertitel)}</p>${CFG.autor ? `<p class="a">${esc(CFG.autor)}</p>` : ''}
+  add('titel', CFG.titel, `<section epub:type="titlepage" class="titelseite">${emblem()}<h1 class="t">${esc(CFG.titel)}</h1><p class="u">${esc(CFG.untertitel)}</p>${CFG.autor ? `<p class="a">${esc(CFG.autor)}</p>` : ''}${CFG.verlag ? `<p class="v">${esc(CFG.verlag)}</p>` : ''}
     <p class="widmung">${CFG.widmung}</p></section>`);
   add('impressum', 'Impressum', `<section epub:type="copyright-page" class="impressum">
     <p><strong>${esc(CFG.titel)}</strong><br/>${esc(CFG.untertitel)}</p>
     <p>© ${CFG.jahr}${CFG.autor ? ' ' + esc(CFG.autor) : ''}. Alle Rechte vorbehalten. Die Zitate ohne Namensangabe wurden für dieses Buch geschrieben.</p>
+    ${CFG.verlag ? `<p>Verlag: ${esc(CFG.verlag)}</p>` : ''}
     <p><strong>Wichtiger Hinweis:</strong> Die beschriebenen Methoden stützen sich auf veröffentlichte wissenschaftliche Studien (Stand ${CFG.jahr}; Quellen im Anhang). Das Buch ersetzt keine ärztliche, psychotherapeutische oder psychologische Beratung oder Behandlung. Wenn es dir über längere Zeit schlecht geht oder du an Suizid denkst, hol dir bitte sofort Hilfe – zum Beispiel bei der Telefonseelsorge: Deutschland 0800 111 0 111, Österreich 142, Schweiz 143. Im Notfall: 112.</p>
   </section>`);
   for (const t of teile) {
@@ -409,6 +412,7 @@ ${dateien.filter(d => !['cover', 'titel'].includes(d.id)).map((d, i) => `<navPoi
   <dc:title>${esc(CFG.titel)}</dc:title>
   <dc:language>${CFG.sprache}</dc:language>
   ${CFG.autor ? `<dc:creator>${esc(CFG.autor)}</dc:creator>` : ''}
+  ${CFG.verlag ? `<dc:publisher>${esc(CFG.verlag)}</dc:publisher>` : ''}
   <dc:description>${esc(CFG.untertitel)}</dc:description>
   <dc:rights>© ${CFG.jahr}${CFG.autor ? ' ' + esc(CFG.autor) : ''}. Alle Rechte vorbehalten.</dc:rights>
   <dc:subject>Trennung</dc:subject><dc:subject>Liebeskummer</dc:subject><dc:subject>Selbsthilfe</dc:subject>

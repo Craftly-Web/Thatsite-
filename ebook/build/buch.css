@@ -77,8 +77,8 @@ li::marker { color: var(--ton); }
   letter-spacing: .18em; text-transform: uppercase; color: #EADFCD; margin: 0;
 }
 .cover-autor {
-  position: absolute; left: 15mm; right: 15mm; bottom: 32mm;
-  font-family: 'Fraunces', serif; font-style: italic; font-size: 12pt; color: var(--creme); margin: 0;
+  position: absolute; left: 15mm; right: 15mm; bottom: 28mm;
+  font-family: 'Fraunces', serif; font-style: italic; font-size: 9.5pt; letter-spacing: .02em; color: #DCCFBB; margin: 0;
 }
 
 .op-nummer {
@@ -105,7 +105,8 @@ li::marker { color: var(--ton); }
 .titelseite .emblem { width: 30mm; margin: 0 auto 9mm; display: block; }
 .titelseite .t { font-family: 'Fraunces', serif; font-weight: 450; font-size: 20pt; line-height: 1.15; color: var(--petrol); margin: 0 0 5mm; }
 .titelseite .u { font-style: italic; color: var(--grau); font-size: 9.5pt; max-width: 92mm; margin: 0 auto; }
-.titelseite .a { font-family: 'DM Sans', sans-serif; font-size: 7.5pt; letter-spacing: .2em; text-transform: uppercase; color: var(--ton); margin-top: 10mm; }
+.titelseite .a { font-family: 'Fraunces', serif; font-style: italic; font-size: 10pt; color: var(--ton-dunkel); margin-top: 9mm; }
+.titelseite .v { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 6.6pt; letter-spacing: .32em; text-transform: uppercase; color: var(--grau); margin-top: 52mm; }
 .impressum { padding-top: 92mm; font-size: 7.4pt; line-height: 1.55; color: var(--grau); }
 .impressum p { margin: 0 0 .9em; }
 .impressum strong { color: var(--tinte); }

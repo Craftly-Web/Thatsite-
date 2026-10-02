@@ -16,7 +16,8 @@ body.cover { margin: 0; }
 .titelseite svg.emblem { margin: 0 auto 1.5em; width: 6em; height: 3em; }
 .titelseite .t { font-family: 'Fraunces', serif; font-weight: 450; font-size: 1.9em; line-height: 1.15; color: #2F4B54; margin: 0 0 .6em; }
 .titelseite .u { font-style: italic; color: #6F7B78; }
-.titelseite .a { font-family: 'DM Sans', sans-serif; letter-spacing: .18em; text-transform: uppercase; font-size: .8em; color: #B9735A; margin-top: 2em; }
+.titelseite .a { font-family: 'Fraunces', serif; font-style: italic; color: #8E5440; margin-top: 2em; }
+.titelseite .v { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .7em; letter-spacing: .3em; text-transform: uppercase; color: #6F7B78; margin-top: 3em; }
 .titelseite .widmung { font-family: 'Fraunces', serif; font-style: italic; color: #8E5440; margin-top: 4em; line-height: 1.7; }
 .impressum { font-size: .82em; color: #5D6966; margin-top: 2em; }
 
