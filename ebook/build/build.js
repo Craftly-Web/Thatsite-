@@ -502,6 +502,62 @@ async function karten(browser) {
   console.log(`Instagram: ${erlaubt.length} Zitatkarten`);
 }
 
+// ---------------------------------------------------------------- Zitatliste als PDF (A4, zum Ausdrucken und Planen)
+async function zitatListe(browser) {
+  const erlaubt = ZITATE.filter(z => !CFG.instagram_nicht_posten.some(n => z.von.includes(n)));
+  const gruppen = [];
+  for (const z of ZITATE) {
+    let g = gruppen.find(g => g.wo === z.wo);
+    if (!g) gruppen.push(g = { wo: z.wo, zitate: [] });
+    g.zitate.push(z);
+  }
+  const kapNr = wo => { const t = teile.find(t => t.titel === wo); return t && t.art === 'kapitel' ? 'Kapitel ' + t.nummer : labelFuer(t || {}); };
+  let n = 0;
+  const liste = gruppen.map(g => `<section class="gruppe"><p class="g-label">${esc(kapNr(g.wo))}</p><h2>${esc(g.wo)}</h2>${g.zitate.map(z => {
+    n++;
+    const k = erlaubt.indexOf(z);
+    const status = k >= 0 ? `<span class="frei">Instagram-Karte ${nr2(k + 1)}</span>` : `<span class="nur">nur im Buch</span>`;
+    return `<div class="z"><span class="nr">${nr2(n)}</span><div><p class="txt">„${inline(z.text)}“</p><p class="meta">${z.von ? esc(z.von) + ' · ' : ''}${status}</p></div></div>`;
+  }).join('')}</section>`).join('');
+  const html = `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Alle Zitate – ${esc(CFG.titel)}</title><style>
+  ${fontCss('file://' + path.join(ROOT, 'fonts') + '/')}
+  @page { size: A4; margin: 18mm 20mm 20mm; background: #FBF7F1;
+    @bottom-center { content: counter(page); font: 500 8pt 'DM Sans'; color: #8C9893; letter-spacing: .08em; } }
+  html { background: #FBF7F1; }
+  body { margin: 0; font-family: 'Literata', serif; color: #2A3236; font-variation-settings: 'WONK' 0, 'SOFT' 50; }
+  .kopf { text-align: center; padding: 6mm 0 9mm; border-bottom: .3mm solid #E2D6C4; margin-bottom: 4mm; }
+  .kopf .emblem { width: 26mm; display: block; margin: 0 auto 5mm; }
+  .kopf .l { font-family: 'DM Sans'; font-weight: 700; font-size: 7.5pt; letter-spacing: .26em; text-transform: uppercase; color: #B9735A; margin: 0 0 2mm; }
+  .kopf h1 { font-family: 'Fraunces'; font-weight: 500; font-size: 26pt; color: #2F4B54; margin: 0 0 2mm; }
+  .kopf .u { font-style: italic; color: #6F7B78; font-size: 10pt; margin: 0; }
+  .info { font-size: 8.6pt; line-height: 1.55; color: #5D6966; margin: 0 0 2mm; }
+  .info .frei, .info .nur { margin-right: 1mm; }
+  .gruppe { break-inside: auto; margin-top: 7mm; }
+  .g-label { font-family: 'DM Sans'; font-weight: 700; font-size: 6.8pt; letter-spacing: .22em; text-transform: uppercase; color: #B9735A; margin: 0 0 1mm; break-after: avoid; }
+  h2 { font-family: 'Fraunces'; font-weight: 560; font-size: 13pt; color: #2F4B54; margin: 0 0 2mm; break-after: avoid; }
+  .z { display: flex; gap: 4mm; padding: 3mm 0; border-bottom: .2mm solid #E6DED2; break-inside: avoid; }
+  .nr { flex: 0 0 8mm; font-family: 'Fraunces'; font-size: 10pt; color: #C9A35B; padding-top: .6mm; }
+  .txt { font-family: 'Fraunces'; font-style: italic; font-size: 12pt; line-height: 1.4; color: #8E5440; margin: 0 0 1.2mm; }
+  .meta { font-family: 'DM Sans'; font-size: 7pt; letter-spacing: .1em; text-transform: uppercase; color: #6F7B78; margin: 0; }
+  .frei, .nur { display: inline-block; padding: .3mm 1.8mm; border-radius: 3mm; letter-spacing: .08em; }
+  .frei { background: #E4ECE6; color: #3F6255; }
+  .nur { background: #F1E4DB; color: #8E5440; }
+  .fuss { margin: 3mm 0 0; font-family: 'DM Sans'; font-size: 7pt; letter-spacing: .18em; text-transform: uppercase; color: #8C9893; }
+  </style></head><body>
+  <header class="kopf">${emblem()}<p class="l">${esc(CFG.titel)}</p><h1>Alle Zitate</h1><p class="u">${ZITATE.length} Sätze zum Festhalten – sortiert nach Kapiteln</p>${CFG.autor || CFG.verlag ? `<p class="fuss">${[CFG.autor, CFG.verlag].filter(Boolean).map(esc).join(' · ')}</p>` : ''}</header>
+  <p class="info"><span class="frei">Instagram-Karte</span> frei postbar: selbst geschrieben oder gemeinfrei, mit Nummer der fertigen Bildkarte im Ordner <i>instagram/</i>.<br>
+  <span class="nur">nur im Buch</span> noch urheberrechtlich geschützt, im Buch per Zitatrecht verwendet – bitte nicht als eigenen Beitrag posten.</p>
+  ${liste}
+  </body></html>`;
+  fs.writeFileSync(path.join(TMP, 'zitate.html'), html);
+  const page = await browser.newPage();
+  await page.goto('file://' + path.join(TMP, 'zitate.html'));
+  await page.evaluate(() => document.fonts.ready);
+  await page.pdf({ path: path.join(OUT, 'Zitate-' + NAME + '.pdf'), preferCSSPageSize: true, printBackground: true });
+  await page.close();
+  console.log(`Zitatliste: ${ZITATE.length} Zitate (${erlaubt.length} frei postbar)`);
+}
+
 // ---------------------------------------------------------------- Los
 (async () => {
   fs.rmSync(TMP, { recursive: true, force: true });
@@ -513,6 +569,7 @@ async function karten(browser) {
     const banner = await bilder(browser);
     await epub(banner);
     await karten(browser);
+    await zitatListe(browser);
   } finally { await browser.close(); }
   console.log(`Zitate gesamt: ${ZITATE.length}. Fertig → ${path.relative(process.cwd(), OUT) || '.'}`);
 })().catch(e => { console.error(e); process.exit(1); });

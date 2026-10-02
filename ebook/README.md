@@ -10,6 +10,7 @@ Ein warmherziger, wissenschaftlich fundierter Begleiter durch die Zeit nach eine
 | `Das-Herz-heilt-leiser.pdf` | Gestaltetes E-Book im A5-Format (161 Seiten), klickbares Inhaltsverzeichnis, Lesezeichen. Ideal zum Verkaufen/Verschicken (z. B. Digistore24, Gumroad, eigene Website). |
 | `Das-Herz-heilt-leiser.epub` | EPUB 3 für E-Reader (Tolino, Kindle über KDP, Apple Books, Google Play Books). Geprüft mit EPUBCheck 5.2.1: 0 Fehler, 0 Warnungen. |
 | `cover.jpg` | Cover 1600 × 2263 px für Shops. |
+| `Zitate-Das-Herz-heilt-leiser.pdf` | Alle 63 Zitate als A4-Liste nach Kapiteln, mit Hinweis, ob frei postbar und welche Instagram-Karte dazugehört. |
 | `instagram/zitat-XX-*.png` | 60 Zitatkarten im Instagram-Hochformat 1080 × 1350 px, fünf Farbvarianten. |
 | `instagram/zitate.md` | Alle Zitate als Text zum Kopieren, mit Hashtag-Vorschlag. |
 
