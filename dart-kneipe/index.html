@@ -179,6 +179,18 @@ body::after{
   .dr-item h3{font-size:21px}
 }
 .prize-note{margin:8px 0 0;font-size:14px;color:#ffd66b}
+.mp-panel{display:grid;gap:8px;margin-top:10px}
+.mp-row{display:flex;gap:8px;flex-wrap:wrap}
+.mp-row .btn{flex:1 1 140px}
+.mp-input{flex:1 1 120px;min-width:0;padding:11px 12px;border-radius:8px;border:1px solid rgba(233,201,140,.4);background:rgba(10,6,3,.65);color:var(--ink);font:600 17px var(--ui);letter-spacing:.04em}
+.mp-input:focus-visible{outline:2px solid #ffd66b;outline-offset:1px}
+.mp-codein{text-transform:uppercase;letter-spacing:.25em;font-family:'Courier New',monospace;font-weight:700}
+.mp-share{display:grid;justify-items:center;gap:6px;padding:10px;border-radius:10px;border:1px dashed rgba(255,214,107,.5);background:rgba(0,0,0,.3)}
+.mp-share small{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mp-code{font:700 36px/1 'Courier New',monospace;letter-spacing:.24em;color:#ffe9a8}
+.mp-status{margin:0;min-height:1.3em;font-size:15px;font-weight:700;color:#ffd66b}
+.mp-note{margin:0;font-size:13px;color:var(--muted)}
+body.mp #skills,body.mp #drinkbar{display:none}
 .drinkbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;width:min(100%,560px)}
 .drink-open{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;font:600 14px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:#ffe9a8;background:rgba(60,35,5,.75);border:1px solid rgba(255,200,90,.5);border-radius:999px;cursor:pointer}
 .drink-open svg{width:18px;height:18px}
@@ -608,7 +620,7 @@ legend{padding:0;margin-bottom:8px}
       <div class="tafel-head"><span id="modeLabel">501 · Double Out</span><span id="levelLabel"></span></div>
       <div class="cols">
         <div class="col" id="col0">
-          <h2 data-i18n="you">Du</h2>
+          <h2 id="name0" data-i18n="you">Du</h2>
           <div class="rest" id="rest0">501</div>
           <div class="out" id="out0" aria-live="polite"></div>
           <div class="avg" id="avg0" title="Durchschnitt pro Aufnahme (3 Darts) in diesem Leg" data-i18n-title="avg.title">Leg-Ø <b>–</b></div>
@@ -658,6 +670,30 @@ legend{padding:0;margin-bottom:8px}
       </div>
     </fieldset>
     <fieldset>
+      <legend data-i18n="lg.mode">Spielmodus</legend>
+      <div class="chips" id="modeChips">
+        <label class="chip"><input type="radio" name="mode" id="modeCpu" value="cpu" checked><span data-i18n="mode.cpu">Gegen die Kneipe</span></label>
+        <label class="chip"><input type="radio" name="mode" id="modeLocal" value="local"><span data-i18n="mode.local">Zu zweit, ein Gerät</span></label>
+        <label class="chip"><input type="radio" name="mode" id="modeOnline" value="online"><span data-i18n="mode.online">Online mit Freunden</span></label>
+      </div>
+      <div class="mp-panel" id="localPanel" hidden>
+        <div class="mp-row"><input class="mp-input" id="p1Name" maxlength="16" autocomplete="off" data-i18n-ph="mp.p1" placeholder="Spieler 1"><input class="mp-input" id="p2Name" maxlength="16" autocomplete="off" data-i18n-ph="mp.p2" placeholder="Spieler 2"></div>
+        <p class="mp-note" data-i18n="mp.note">Im Mehrspieler-Modus gibt es keine Pfeil-Fähigkeiten, kein Adrenalin und keine Getränke – nur dein Können zählt.</p>
+      </div>
+      <div class="mp-panel" id="onlinePanel" hidden>
+        <div class="mp-row"><input class="mp-input" id="mpName" maxlength="16" autocomplete="off" data-i18n-ph="mp.yourname" placeholder="Dein Name"></div>
+        <div class="mp-row"><button type="button" class="btn" id="mpHost" data-i18n="mp.host">Raum erstellen</button></div>
+        <div class="mp-row"><input class="mp-input mp-codein" id="mpCode" maxlength="5" autocomplete="off" autocapitalize="characters" spellcheck="false" data-i18n-ph="mp.code" placeholder="Raum-Code"><button type="button" class="btn ghost" id="mpJoin" data-i18n="mp.join">Beitreten</button></div>
+        <div class="mp-share" id="mpShare" hidden>
+          <small data-i18n="mp.yourcode">Dein Raum-Code</small>
+          <b class="mp-code" id="mpCodeShow"></b>
+          <button type="button" class="btn ghost" id="mpCopy" data-i18n="mp.copy">Einladungslink teilen</button>
+        </div>
+        <p class="mp-status" id="mpStatus" aria-live="polite"></p>
+        <p class="mp-note" data-i18n="mp.note">Im Mehrspieler-Modus gibt es keine Pfeil-Fähigkeiten, kein Adrenalin und keine Getränke – nur dein Können zählt.</p>
+      </div>
+    </fieldset>
+    <fieldset>
       <legend data-i18n="lg.start">Startwert</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="start" id="start501" value="501" checked><span>501</span></label>
@@ -683,7 +719,7 @@ legend{padding:0;margin-bottom:8px}
       <legend data-i18n="lg.board">Scheibe</legend>
       <div class="chips boards" id="boardChips"></div>
     </fieldset>
-    <fieldset>
+    <fieldset id="oppSet">
       <legend data-i18n="lg.opp">Gegner</legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="level" id="lvlA" value="anfaenger"><span><span data-i18n="lvl.anfaenger">Tante Gerda</span><small data-i18n="lvl.anfaenger.l">Anfängerin</small></span></label>
@@ -712,8 +748,8 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.do"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
       <p class="rules" data-i18n-html="rules.prec"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
       <p class="rules" data-i18n-html="rules.adr"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
-      <p class="rules" data-i18n-html="rules.darts"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Alle Pfeile sind von Anfang an frei.</p>
-      <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.</p>
+      <p class="rules" data-i18n-html="rules.darts"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Frei sind der Standardpfeil und der Stammtischpfeil. Den Anfängerpfeil gibt es für 3 gewonnene Legs, den Kneipenpfeil für 10 Aufnahmen mit 100 oder mehr und den Blitzpfeil für 15 Triple 20 – gezählt wird im Spiel gegen die Kneipe.</p>
+      <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Alle Scheiben sind von Anfang an frei: Klassik, Holz, Dartautomat und Top Liga.</p>
       <p class="rules" data-i18n-html="rules.cpu"></p>
       <p class="rules" data-i18n-html="rules.arcade"></p>
       <p class="rules" data-i18n-html="rules.poker"></p>
@@ -1069,8 +1105,8 @@ const I18N = {
     'rules.do': '<strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.',
     'rules.prec': '<strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.',
     'rules.adr': '<strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.',
-    'rules.darts': '<strong>Pfeile:</strong> Der Standardpfeil ist von Anfang an frei und lernt mit: Jeder Wurf macht ihn um 0,05 % ruhiger und genauer, Zielkreis eingeschlossen, bis zu +50 % nach 1000 Würfen. Der Fortschritt bleibt gespeichert. Der Anfängerpfeil ist ebenfalls frei: Er schwankt beim Zielen nur wenig, und mit „Viel Glück“ fliegt jeder Dart mit 33 % Wahrscheinlichkeit so präzise wie mit Adrenalin. Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Alle Pfeile sind von Anfang an frei.',
-    'rules.boards': '<strong>Scheiben:</strong> Die Holzscheibe gibt es für deinen ersten Matchsieg, den Dartautomaten für eine Aufnahme mit 100 oder mehr und die Top-Liga-Scheibe für einen Sieg gegen Otto oder Die Maschine. Dein Browser merkt sich, was du freigeschaltet hast.',
+    'rules.darts': '<strong>Pfeile:</strong> Der Standardpfeil ist von Anfang an frei und lernt mit: Jeder Wurf macht ihn um 0,05 % ruhiger und genauer, Zielkreis eingeschlossen, bis zu +50 % nach 1000 Würfen. Der Fortschritt bleibt gespeichert. Der Anfängerpfeil schwankt beim Zielen nur wenig, und mit „Viel Glück“ fliegt jeder Dart mit 33 % Wahrscheinlichkeit so präzise wie mit Adrenalin. Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Frei sind der Standardpfeil und der Stammtischpfeil. Den Anfängerpfeil gibt es für 3 gewonnene Legs, den Kneipenpfeil für 10 Aufnahmen mit 100 oder mehr und den Blitzpfeil für 15 Triple 20 – gezählt wird im Spiel gegen die Kneipe.',
+    'rules.boards': '<strong>Scheiben:</strong> Alle Scheiben sind von Anfang an frei: Klassik, Holz, Dartautomat und Top Liga.',
     'rules.cpu': '<strong>Gegner:</strong> Jeder Gegner wählt jede Aufnahme zufällig eine der Pfeil-Fähigkeiten – Präzision, Schnellwurf, ruhige Hand, Glück oder Übung – und hat sie mit voller Wirkung, nur für diese Aufnahme. Präzision heißt ein präziser Dart, Schnellwurf alle drei Darts, Übung ein voll eingeworfener Standardpfeil (+50 %). Adrenalin bekommt er nicht. Was er gerade hat, steht an der Tafel unter seinem Namen.',
     'rules.legs': '<strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.',
     'btn.resume': 'Zurück zum Spiel', 'btn.start': 'Anwerfen', 'btn.settings': 'Einstellungen', 'btn.rematch': 'Revanche',
@@ -1087,7 +1123,7 @@ const I18N = {
     'luck.state': '33 % Glück pro Dart', 'luck.hit': 'Glückspfeil!', 'hint.luck': 'Glückspfeil! Der flog präzise wie mit Adrenalin.', 'cpu.luck': 'Glück',
     'w.luck': ['Anfängerglück! Zählt trotzdem.', 'Glück gehabt – ich sag’s keinem.', 'Da hat wohl einer ein Kleeblatt in der Tasche.'],
     'dart.kneipe': 'Kneipenpfeil', 'dart.kneipe.s': 'Präzision', 'dart.kneipe.d': 'Präzision · jeder 3. Dart',
-    'dart.blitz': 'Blitzpfeil', 'dart.blitz.s': 'Schnellwurf', 'dart.blitz.d': 'Schnell werfen = perfekt', 'dart.blitz.r': 'Triple 20',
+    'dart.blitz': 'Blitzpfeil', 'dart.blitz.s': 'Schnellwurf', 'dart.blitz.d': 'Schnell werfen = perfekt', 'dart.blitz.r': 'Triple 20', 'dart.kneipe.r': 'Aufnahmen mit 100+', 'dart.anfaenger.r': 'Gewonnene Legs',
     'dart.alt': 'Stammtischpfeil', 'dart.alt.s': 'Alt eingesessen', 'dart.alt.d': 'Dauerhaft ruhige Hand', 'dart.alt.r': 'Matchsiege',
     'prec.armed': 'nächster Dart präzise · {n} ges.', 'stock': '{n} gespeichert', 'stock.tap': ' – antippen',
     'blitz.on': 'aktiv · schnell werfen! noch {n}', 'blitz.prog': '{n}/{m} Würfe', 'alt.on': 'dauerhaft aktiv',
@@ -1170,6 +1206,18 @@ const I18N = {
     'w.liqhit': ['Siehste, der Likör wirkt!', 'Scheunentor getroffen!', 'Da war das Doppel wohl etwas größer.'],
     'hint.liqueur': 'Likör-Glück! Das vergrößerte Feld hat gehalten: {l}.',
     'avg.short': 'Leg-Ø', 'avg.title': 'Durchschnitt pro Aufnahme (3 Darts) in diesem Leg', 'avg.leg': 'Leg-Ø: du {a}, {name} {b}.',
+    'lg.mode': 'Spielmodus', 'mode.cpu': 'Gegen die Kneipe', 'mode.local': 'Zu zweit, ein Gerät', 'mode.online': 'Online mit Freunden',
+    'mp.p1': 'Spieler 1', 'mp.p2': 'Spieler 2', 'mp.yourname': 'Dein Name', 'mp.host': 'Raum erstellen', 'mp.code': 'Raum-Code', 'mp.join': 'Beitreten',
+    'mp.yourcode': 'Dein Raum-Code', 'mp.copy': 'Einladungslink teilen', 'mp.copied': 'Link kopiert – schick ihn deinem Gegner.',
+    'mp.note': 'Im Mehrspieler-Modus gibt es keine Pfeil-Fähigkeiten, kein Adrenalin und keine Getränke – nur dein Können zählt.',
+    'mp.connecting': 'Verbinde …', 'mp.waiting': 'Warte auf deinen Gegner – schick ihm den Code oder Link.', 'mp.joined': '{name} ist da! Stell das Spiel ein und wirf an.',
+    'mp.connected': 'Verbunden mit {name}. Der Gastgeber wirft an …', 'mp.hoststarts': 'Der Gastgeber wählt die Einstellungen und wirft an.',
+    'mp.nocode': 'Diesen Raum gibt es nicht (mehr). Code prüfen?', 'mp.nolib': 'Online-Spiel konnte nicht geladen werden – Internetverbindung prüfen.',
+    'mp.error': 'Verbindungsproblem ({e}). Nochmal versuchen?', 'mp.lost': 'Verbindung zum Gegner getrennt.', 'mp.notyet': 'Noch kein Gegner verbunden.',
+    'mp.defname': 'Gast', 'mp.label.local': 'Zu zweit', 'mp.label.online': 'Online', 'mp.remoteturn': '{name} wirft …',
+    'mp.turnname': '{name} ist dran – drücken, halten und in der Atempause loslassen.', 'mp.rematchwait': 'Revanche angefragt – der Gastgeber wirft gleich an …',
+    'end.textlocal': '{name} checkt {r} mit {d}, nach {n} Darts. {other} stand noch auf {o}.',
+    'avg.leg2': 'Leg-Ø: {n0} {a}, {n1} {b}.', 'end.ppd2': ' Points per Dart: {n0} {a}, {n1} {b}.',
     'cr.block': 'Skatblock', 'cr.game': 'Spiel', 'cr.resume': 'Weiter geht’s.', 'cr.switching': 'Gleich – die Karten sind noch unterwegs …',
     'rm.isout': 'draußen', 'rm.deal': 'Heinz gibt jedem 13 Karten.', 'rm.took': 'nimmt die Ablage', 'rm.cameout': 'kommt raus ({v})',
     'rm.drawq': 'Zieh eine Karte: vom Stapel oder die oberste der Ablage.', 'rm.stock': 'Vom Stapel ziehen', 'rm.discardtake': 'Ablage nehmen',
@@ -1244,8 +1292,8 @@ const I18N = {
     'rules.do': '<strong>Double out:</strong> Your last dart must hit a double; the bull counts as a double. Going below zero, to one, or to zero without a double is a bust, and the whole visit doesn’t count.',
     'rules.prec': '<strong>Precision:</strong> Every 3rd dart you throw earns you a precise dart. They are saved, so you can keep them until the end of the match, for a checkout for example. Tap the button and your next dart is precise; tap again to cancel.',
     'rules.adr': '<strong>Adrenaline:</strong> Your next 3 darts become very precise. If you start a visit at least 150 points behind, it kicks in by itself. When your opponent is on a finish – able to check out with three darts – the adrenaline button glows red and you trigger it whenever you like. Each happens once per leg.',
-    'rules.darts': '<strong>Darts:</strong> The standard dart is free from the start and learns with you: every throw makes it 0.05% steadier and more accurate, aim circle included, up to +50% after 1000 throws. The progress is saved. The rookie dart is free too: it barely sways while you aim, and with “good luck” every dart has a 33% chance to fly as true as with adrenaline. The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. All darts are available from the start.',
-    'rules.boards': '<strong>Boards:</strong> The wooden board unlocks with your first match win, the dart machine with a visit of 100 or more, and the top league board by beating Otto or The Machine. Your browser remembers what you unlocked.',
+    'rules.darts': '<strong>Darts:</strong> The standard dart is free from the start and learns with you: every throw makes it 0.05% steadier and more accurate, aim circle included, up to +50% after 1000 throws. The progress is saved. The rookie dart barely sways while you aim, and with “good luck” every dart has a 33% chance to fly as true as with adrenaline. The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. The standard dart and the regulars’ dart are free. The rookie dart unlocks after 3 legs won, the pub dart after 10 visits of 100 or more and the lightning dart after 15 treble 20s – counted in games against the pub.',
+    'rules.boards': '<strong>Boards:</strong> All boards are available from the start: classic, wood, dart machine and top league.',
     'rules.cpu': '<strong>Opponent:</strong> Every opponent picks one of the dart abilities at random each visit – precision, quick throw, steady hand, luck or practice – at full strength, valid for that visit only. Precision means one precise dart, quick throw all three darts, practice a fully broken-in standard dart (+50%). They never get adrenaline. Whatever they have right now shows on the scoreboard under their name.',
     'rules.legs': '<strong>Legs:</strong> First to win the chosen number of legs takes the match. The first throw alternates every leg.',
     'btn.resume': 'Back to game', 'btn.start': 'Game on', 'btn.settings': 'Settings', 'btn.rematch': 'Rematch',
@@ -1262,7 +1310,7 @@ const I18N = {
     'luck.state': '33% luck per dart', 'luck.hit': 'Lucky dart!', 'hint.luck': 'Lucky dart! That one flew true, like adrenaline.', 'cpu.luck': 'Luck',
     'w.luck': ['Beginner’s luck! Still counts.', 'Lucky! I won’t tell a soul.', 'Someone’s got a four-leaf clover in their pocket.'],
     'dart.kneipe': 'Pub dart', 'dart.kneipe.s': 'Precision', 'dart.kneipe.d': 'Precision · every 3rd dart',
-    'dart.blitz': 'Lightning dart', 'dart.blitz.s': 'Quick throw', 'dart.blitz.d': 'Throw fast = perfect', 'dart.blitz.r': 'Treble 20',
+    'dart.blitz': 'Lightning dart', 'dart.blitz.s': 'Quick throw', 'dart.blitz.d': 'Throw fast = perfect', 'dart.blitz.r': 'Treble 20', 'dart.kneipe.r': 'Visits of 100+', 'dart.anfaenger.r': 'Legs won',
     'dart.alt': 'Regulars’ dart', 'dart.alt.s': 'Old hand', 'dart.alt.d': 'Always a steady hand', 'dart.alt.r': 'Match wins',
     'prec.armed': 'next dart precise · {n} saved', 'stock': '{n} saved', 'stock.tap': ' – tap',
     'blitz.on': 'active · throw fast! {n} left', 'blitz.prog': '{n}/{m} throws', 'alt.on': 'always active',
@@ -1344,6 +1392,18 @@ const I18N = {
     'w.liqhit': ['See, the liqueur works!', 'Hit the barn door!', 'That double was a little bigger, I reckon.'],
     'hint.liqueur': 'Liqueur luck! The enlarged field held: {l}.',
     'avg.short': 'Leg avg', 'avg.title': 'Average per visit (3 darts) in this leg', 'avg.leg': 'Leg avg: you {a}, {name} {b}.',
+    'lg.mode': 'Game mode', 'mode.cpu': 'Against the pub', 'mode.local': 'Two players, one device', 'mode.online': 'Online with friends',
+    'mp.p1': 'Player 1', 'mp.p2': 'Player 2', 'mp.yourname': 'Your name', 'mp.host': 'Create room', 'mp.code': 'Room code', 'mp.join': 'Join',
+    'mp.yourcode': 'Your room code', 'mp.copy': 'Share invite link', 'mp.copied': 'Link copied – send it to your opponent.',
+    'mp.note': 'In multiplayer there are no dart abilities, no adrenaline and no drinks – only skill counts.',
+    'mp.connecting': 'Connecting…', 'mp.waiting': 'Waiting for your opponent – send them the code or link.', 'mp.joined': '{name} is here! Pick your settings and start.',
+    'mp.connected': 'Connected to {name}. The host starts the game…', 'mp.hoststarts': 'The host picks the settings and starts the game.',
+    'mp.nocode': 'This room doesn’t exist (any more). Check the code?', 'mp.nolib': 'Online play couldn’t load – check your internet connection.',
+    'mp.error': 'Connection problem ({e}). Try again?', 'mp.lost': 'Connection to your opponent was lost.', 'mp.notyet': 'No opponent connected yet.',
+    'mp.defname': 'Guest', 'mp.label.local': 'Two players', 'mp.label.online': 'Online', 'mp.remoteturn': '{name} is throwing…',
+    'mp.turnname': '{name}, you’re up – press, hold and release in the pause.', 'mp.rematchwait': 'Rematch requested – the host starts in a moment…',
+    'end.textlocal': '{name} checks out {r} with {d} after {n} darts. {other} was still on {o}.',
+    'avg.leg2': 'Leg avg: {n0} {a}, {n1} {b}.', 'end.ppd2': ' Points per dart: {n0} {a}, {n1} {b}.',
     'cr.block': 'Score sheet', 'cr.game': 'Game', 'cr.resume': 'On we go.', 'cr.switching': 'One moment – the cards are still moving…',
     'rm.isout': 'out', 'rm.deal': 'Heinz deals 13 cards each.', 'rm.took': 'takes the discard', 'rm.cameout': 'comes out ({v})',
     'rm.drawq': 'Draw a card: from the stock or the top of the discard pile.', 'rm.stock': 'Draw from stock', 'rm.discardtake': 'Take discard',
@@ -2466,10 +2526,10 @@ const BOARD_STYLE = {
 // Pfeil-Sets: jedes hat eine eigene Fähigkeit; zwei davon werden über Statistiken freigeschaltet
 const DART_INFO = {
   standard:  { name: 'Standardpfeil', skill: 'Übung', desc: 'Wird mit jedem Wurf genauer', flight: '#f2f2f2', edge: '#222222', stripe: '#d4202a', barrel: '#a7adb5' },
-  anfaenger: { name: 'Anfängerpfeil', skill: 'Viel Glück', desc: 'Ruhige Hand · 33 % Glückspfeil', flight: '#f4f1e6', edge: '#1d5a24', stripe: '#3fae49', barrel: '#c3c8cf' },
-  kneipe: { name: 'Kneipenpfeil', skill: 'Präzision', desc: 'Präzision · jeder 3. Dart', flight: '#c9302c', edge: '#6e1310', stripe: '#f4efe4', barrel: '#7d828a' },
-  blitz:  { name: 'Blitzpfeil', skill: 'Schnellwurf', desc: 'Schnell werfen = perfekt', req: 'Triple 20', need: 5, stat: 't20', flight: '#f2c230', edge: '#6b5200', stripe: '#141414', barrel: '#4d5158' },
-  alt:    { name: 'Stammtischpfeil', skill: 'Alt eingesessen', desc: 'Dauerhaft ruhige Hand', req: 'Matchsiege', need: 3, stat: 'wins', flight: '#1f6b45', edge: '#0c3320', stripe: '#e2b457', barrel: '#b8893a' }
+  anfaenger: { name: 'Anfängerpfeil', skill: 'Viel Glück', desc: 'Ruhige Hand · 33 % Glückspfeil', need: 3, stat: 'legs', flight: '#f4f1e6', edge: '#1d5a24', stripe: '#3fae49', barrel: '#c3c8cf' },
+  kneipe: { name: 'Kneipenpfeil', skill: 'Präzision', desc: 'Präzision · jeder 3. Dart', need: 10, stat: 'tons', flight: '#c9302c', edge: '#6e1310', stripe: '#f4efe4', barrel: '#7d828a' },
+  blitz:  { name: 'Blitzpfeil', skill: 'Schnellwurf', desc: 'Schnell werfen = perfekt', need: 15, stat: 't20', flight: '#f2c230', edge: '#6b5200', stripe: '#141414', barrel: '#4d5158' },
+  alt:    { name: 'Stammtischpfeil', skill: 'Alt eingesessen', desc: 'Dauerhaft ruhige Hand', flight: '#1f6b45', edge: '#0c3320', stripe: '#e2b457', barrel: '#b8893a' }
 };
 // Aussehen der Pfeile: Barrel, farbige Ringe, Schaft und Flight-Aufdruck; 'cpu' ist der Gegner
 const DART_LOOK = {
@@ -2530,25 +2590,26 @@ function drawFlightArt(g, key, w, h) {
 
 let stats = { t20: 0, wins: 0 };
 try { Object.assign(stats, JSON.parse(localStorage.getItem('dk-stats') || '{}')); } catch (e) {}
-const dartUnlocked = k => !DART_INFO[k].req || (stats[DART_INFO[k].stat] || 0) >= DART_INFO[k].need;
+// Standard- und Stammtischpfeil sind frei, die anderen gibt es für Herausforderungen gegen die Kneipe
+const dartUnlocked = k => !DART_INFO[k].need || (stats[DART_INFO[k].stat] || 0) >= DART_INFO[k].need;
 // Namen und Texte der Scheiben und Pfeile kommen aus dem Wörterbuch
 for (const k of Object.keys(BOARD_INFO)) Object.defineProperties(BOARD_INFO[k], {
   name: { get: () => t('board.' + k) }, desc: { get: () => t('board.' + k + '.d') }, req: { get: () => t('board.' + k + '.r') }
 });
 for (const k of Object.keys(DART_INFO)) Object.defineProperties(DART_INFO[k], {
   name: { get: () => t('dart.' + k) }, skill: { get: () => t('dart.' + k + '.s') }, desc: { get: () => t('dart.' + k + '.d') },
-  req: { get: () => undefined }   // alle Pfeile sind von Anfang an frei
+  req: { get: () => DART_INFO[k].need ? t('dart.' + k + '.r') : undefined }
 });
-let dartKey = 'kneipe';
+let dartKey = 'standard';
 try { const k = localStorage.getItem('dk-dart'); if (k && DART_INFO[k] && dartUnlocked(k)) dartKey = k; } catch (e) {}
 
-let unlocked = new Set(['classic']);
+let unlocked = new Set(Object.keys(BOARD_INFO));   // alle Scheiben sind von Anfang an frei
 try { JSON.parse(localStorage.getItem('dk-boards') || '[]').forEach(k => { if (BOARD_INFO[k]) unlocked.add(k); }); } catch (e) {}
 // Testzugang: Link mit #allesfrei schaltet alle Scheiben und Pfeile frei (bleibt im Browser gespeichert)
 const TEST_ALL = location.hash === '#allesfrei';
 if (TEST_ALL) {
   Object.keys(BOARD_INFO).forEach(k => unlocked.add(k));
-  stats.t20 = Math.max(stats.t20 || 0, 5); stats.wins = Math.max(stats.wins || 0, 3);
+  for (const d of Object.values(DART_INFO)) if (d.need) stats[d.stat] = Math.max(stats[d.stat] || 0, d.need);
   try {
     localStorage.setItem('dk-boards', JSON.stringify([...unlocked]));
     localStorage.setItem('dk-stats', JSON.stringify(stats));
@@ -3435,7 +3496,7 @@ const focusLevel = () => drinks.focusOn ? drinks.energy : 0;
 // Pils macht wackelig, Konzentration ruhig; der Flashback ignoriert beides
 function drinkMods(kind, b, t, w) {
   const d = drunk(), e = focusLevel();
-  if (kind === 'flash' || (!d && !e)) return b;
+  if (kind === 'flash' || (!d && !e) || (S && S.mode !== 'cpu')) return b;
   const steady = 1 - FOCUS_STEADY * e, k = (1 + PILS_SWAY * d) * steady;
   const sx = d * 7 * Math.sin(t * .83 + w.ph[1]), sy = d * 5 * Math.sin(t * .61 + w.ph[3]);   // langsames Schwanken im Rausch
   return Object.assign({}, b, { x: (b.x + sx) * k, y: (b.y + sy) * k, scatter: b.scatter * (1 + PILS_SCATTER * d) * (1 - FOCUS_SCATTER * e) });
@@ -3443,7 +3504,7 @@ function drinkMods(kind, b, t, w) {
 
 // Spezial-Likör: Steht ein Checkout an, sind Doppel, Triple und Bull für deine Pfeile größer
 const liqueurFactor = () => 1 + LIQ_STEP * drinks.liqueur;
-const liqueurActive = () => drinks.liqueur > 0 && !!S && !S.over && S.turn === 0 && !!finish(S.scores[0], 3 - S.visit.length);
+const liqueurActive = () => drinks.liqueur > 0 && !!S && S.mode === 'cpu' && !S.over && S.turn === 0 && !!finish(S.scores[0], 3 - S.visit.length);
 function liqueurSnap(ax, ay, lx, ly) {
   const want = hit(ax, ay), got = hit(lx, ly), f = liqueurFactor();
   if (got.n === want.n && got.m === want.m) return null;
@@ -3497,7 +3558,7 @@ const stdBoost = () => { const k = 1 - stdLevel(); return { amp: k, tremor: k, s
 const pct = v => (v * 100).toLocaleString(lang === 'de' ? 'de-DE' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const LUCK = 1 / 3;      // Anfängerpfeil: jeder Dart hat ein Drittel Chance, so präzise wie mit Adrenalin zu fliegen
 const boostKind = () => {
-  if (!S) return 'none';
+  if (!S || S.mode !== 'cpu') return 'none';
   if (drinks.armed && drinks.flash > 0) return 'flash';
   if (S.adrLeft > 0) return 'adr';
   if (S.dartSet === 'kneipe' && S.precArmed) return 'prec';
@@ -3586,7 +3647,7 @@ function frame(now) {
     f.seq.forEach(tg => { if (tg.m >= 2) drawBigField(tg, k); });
     overlayDirty = true;
   }
-  if (aim.active && !(S && !S.over && S.turn === 0)) aim.active = false;
+  if (aim.active && !(S && !S.over && humanTurn(S))) aim.active = false;
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
     drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind(), b.quick || 0);
@@ -3607,7 +3668,7 @@ function evToMm(e) {
   if (e.pointerType === 'touch' || e.pointerType === 'pen') py -= TOUCH_OFFSET;
   return V.unproject(px, py);
 }
-const canThrow = () => S && !S.over && S.turn === 0 && !S.busy && S.visit.length < 3 && menu.hidden && endEl.hidden && V.canAim();
+const canThrow = () => S && !S.over && humanTurn(S) && (S.mode !== 'online' || mp.connected) && !S.busy && S.visit.length < 3 && menu.hidden && endEl.hidden && V.canAim();
 
 canvas.addEventListener('contextmenu', e => e.preventDefault());
 canvas.addEventListener('pointerdown', e => {
@@ -3632,18 +3693,20 @@ canvas.addEventListener('pointerup', e => {
   aim.pos = evToMm(e);
   aim.active = false;
   if (!canThrow()) return;
-  // Anfängerpfeil: mit etwas Glück fliegt der Dart so ruhig und genau wie mit Adrenalin
+  // Anfängerpfeil: mit etwas Glück fliegt der Dart so ruhig und genau wie mit Adrenalin (Fähigkeiten nur gegen die Kneipe)
+  const solo = S.mode === 'cpu';
   const flashing = boostKind() === 'flash';
-  const lucky = !flashing && S.dartSet === 'anfaenger' && S.adrLeft === 0 && Math.random() < LUCK;
+  const lucky = solo && !flashing && S.dartSet === 'anfaenger' && S.adrLeft === 0 && Math.random() < LUCK;
   const b = breath((performance.now() - aim.t0) / 1000, aim.w, lucky ? 'adr' : undefined);
   if (S.dartSet === 'anfaenger') S.luckLast = lucky;
   const [gx, gy] = gauss2(), sc = b.scatter;
   let tx = aim.pos.x + b.x + gx * sc, ty = aim.pos.y + b.y + gy * sc;
-  const beer = flashing ? null : pilsMagnet(aim.pos.x + b.x, aim.pos.y + b.y, tx, ty);
+  const beer = flashing || !solo ? null : pilsMagnet(aim.pos.x + b.x, aim.pos.y + b.y, tx, ty);
   if (beer) { tx = beer.x; ty = beer.y; }
-  const liq = liqueurActive() ? liqueurSnap(aim.pos.x + b.x, aim.pos.y + b.y, tx, ty) : null;
+  const liq = solo && liqueurActive() ? liqueurSnap(aim.pos.x + b.x, aim.pos.y + b.y, tx, ty) : null;
   if (liq) { tx = liq.x; ty = liq.y; }
-  throwAt(0, tx, ty);
+  if (S.mode === 'online') { tx = Math.round(tx * 100) / 100; ty = Math.round(ty * 100) / 100; mp.sendDart(S.turn, tx, ty); }   // beide Geräte rechnen mit genau demselben Punkt
+  throwAt(S.turn, tx, ty);
   if (liq) { hint(t('hint.liqueur', { l: hit(tx, ty).l })); if (Math.random() < .4) wirt.say(t('w.liqhit')); }
   if (beer) { hint(t('hint.beer', { l: hit(tx, ty).l })); if (Math.random() < .4) wirt.say(t('w.beer')); }
   if (lucky) {
@@ -3673,12 +3736,23 @@ const legendOpen = () => !!S && ((S.dartSet === 'standard' && stdLevel() >= STD_
 const legendSigma = () => legendOpen() ? LEGEND_OPEN_SIGMA : LEVELS[LEGEND].sigma;
 let S = null;
 
+// Spielmodi: gegen den Computer, zu zweit an einem Gerät oder online. Sitz 0 beginnt die Zählung links.
+const humanTurn = g => g.mode === 'local' || g.turn === g.me;      // darf dieses Gerät gerade werfen?
+const isMe = (g, p) => g.mode !== 'local' && p === g.me;          // „du“ aus Sicht dieses Geräts
+const seatName = (g, p) => g.mode === 'cpu' ? (p === 0 ? t('you') : g.opp.name) : g.mode === 'online' && p === g.me ? t('you') : g.names[p];
 function newGame(o) {
-  // Der Trunk gilt genau ein Match: Was schon zu einem Match gehörte, ist jetzt verflogen
-  if (drinks.bound) resetDrinks();
-  if (anyDrink()) { drinks.bound = true; saveDrinks(); }
+  const mode = o.mode || 'cpu';
+  if (mode === 'cpu') {
+    // Der Trunk gilt genau ein Match: Was schon zu einem Match gehörte, ist jetzt verflogen
+    if (drinks.bound) resetDrinks();
+    if (anyDrink()) { drinks.bound = true; saveDrinks(); }
+  }
+  const me = o.me || 0, names = o.names || ['', ''];
+  const opp = mode === 'cpu' ? LEVELS[o.level] : { name: names[mode === 'online' ? 1 - me : 1], label: t('mp.label.' + mode), sigma: 0 };
+  document.body.classList.toggle('mp', mode !== 'cpu');
   S = {
-    start: o.start, level: o.level, opp: LEVELS[o.level],
+    mode, me, names,
+    start: o.start, level: mode === 'cpu' ? o.level : 'mp', opp,
     legsToWin: o.legs, legs: [0, 0], starter: o.starter, legStarter: o.starter,
     pts: [0, 0], dartsN: [0, 0],   // für Points per Dart über das ganze Match
     legPts: [0, 0], legDarts: [0, 0],   // für den Schnitt pro Aufnahme im laufenden Leg
@@ -3692,7 +3766,7 @@ function newGame(o) {
   };
   endEl.hidden = true; menu.hidden = true;
   V.setOpponent(o.level);
-  wirt.say(o.level === LEGEND ? t('w.phantom') : t('w.start', { name: S.opp.name }));
+  wirt.say(o.level === LEGEND && mode === 'cpu' ? t('w.phantom') : t('w.start', { name: S.opp.name }));
   voice.stop();
   voice.say(t('v.gameon'));
   startLeg();
@@ -3727,11 +3801,14 @@ function beginTurn() {
   aim.active = false;   // beim Zugwechsel nie mit altem Fadenkreuz weiterzielen
   g.visit = []; g.visitState = 'open'; g.turnStart = g.scores[g.turn]; g.darts = []; g.busy = false;
   renderTafel();
-  V.focus(g.turn === 0 ? 'aim' : 'side');
-  V.opponentTo(g.turn === 1 ? 'oche' : 'aside');
+  V.focus(humanTurn(g) ? 'aim' : 'side');
+  V.opponentTo(g.mode === 'cpu' && g.turn === 1 ? 'oche' : 'aside');
   const rest = g.scores[g.turn];
-  if (finish(rest, 3)) voice.say(t(g.turn === 0 ? 'v.req' : 'v.reqopp', { n: words(rest), name: g.opp.name }));
-  if (g.turn === 1) {
+  if (finish(rest, 3)) voice.say(t(isMe(g, g.turn) ? 'v.req' : 'v.reqopp', { n: words(rest), name: seatName(g, g.turn) }));
+  if (g.mode !== 'cpu') {
+    hint(humanTurn(g) ? (g.mode === 'local' ? t('mp.turnname', { name: seatName(g, g.turn) }) : t('hint.aim')) : t('mp.remoteturn', { name: seatName(g, g.turn) }));
+    if (g.mode === 'online') mp.pump();
+  } else if (g.turn === 1) {
     hint(t('hint.oche', { name: g.opp.name }));
     cpuBoostStart(g);
     setTimeout(() => { if (S === g) cpuDart(); }, V.is3d ? 1500 : 900);
@@ -3814,7 +3891,7 @@ function cpuBoostTag(g) {
 
 function cpuDart() {
   const g = S;
-  if (!g || g.over || g.turn !== 1) return;
+  if (!g || g.over || g.turn !== 1 || g.mode !== 'cpu') return;
   if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open || drinkShop.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const legend = g.level === LEGEND;
@@ -3833,11 +3910,11 @@ function cpuDart() {
 function throwAt(p, x, y) {
   const g = S;
   g.busy = true;
-  const d = { x, y, owner: p, set: p === 0 ? g.dartSet : null, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 };
+  const d = { x, y, owner: p, set: p === 0 || g.mode !== 'cpu' ? g.dartSet : null, t0: performance.now(), rot: Math.PI / 4 + (Math.random() - .5) * .7 };
   V.onThrow(d);
   g.darts.push(d);
   sfx.whoosh();
-  if (p === 0) {
+  if (p === 0 && g.mode === 'cpu') {
     // Fähigkeiten verbrauchen; normale Darts laden die Präzision auf
     // Ein Flashback-Pfeil geht vor allem anderen und verbraucht sonst nichts
     const flashed = drinks.armed && drinks.flash > 0;
@@ -3863,8 +3940,8 @@ function throwAt(p, x, y) {
 }
 
 function resolve(g, p, h) {
-  if (p === 0) V.punch(g.darts[g.darts.length - 1]);
-  if (p === 0 && h.m === 3 && h.n === 20) bumpStat('t20');
+  if (g.mode === 'local' || p === g.me) V.punch(g.darts[g.darts.length - 1]);
+  if (p === 0 && g.mode === 'cpu' && h.m === 3 && h.n === 20) bumpStat('t20');
   sfx.impact(boardKey, h);
   g.visit.push(h);
   g.dartsN[p]++; g.pts[p] += h.v; g.legDarts[p]++; g.legPts[p] += h.v;
@@ -3883,12 +3960,13 @@ function resolve(g, p, h) {
   renderTafel();
   if (g.visit.length === 3) { endVisit(g, false); return; }
   g.busy = false;
-  if (p === 1) setTimeout(() => { if (S === g) cpuDart(); }, 650);
+  if (p === 1 && g.mode === 'cpu') setTimeout(() => { if (S === g) cpuDart(); }, 650);
+  if (g.mode === 'online') mp.pump();
 }
 
 // Heinz kommentiert die Aufnahme
 function wirtComment(g, sum, bust) {
-  const mine = g.turn === 0, name = g.opp.name;
+  const mine = isMe(g, g.turn), name = seatName(g, g.turn);
   if (bust) {
     if (mine) wirt.react('shake', t('w.bust'));
     else wirt.react('talk', t('w.bustopp', { name }));
@@ -3908,11 +3986,11 @@ function wirtComment(g, sum, bust) {
 function endVisit(g, bust) {
   const sum = g.visit.reduce((a, h) => a + h.v, 0);
   if (!bust) g.visitState = 'done';
-  if (!bust && g.turn === 0 && sum >= 100) unlock('automat');
+  if (!bust && g.mode === 'cpu' && g.turn === 0 && sum >= 100) bumpStat('tons');
   g.hist[g.turn].push({ score: bust ? 0 : sum, rest: g.scores[g.turn], bust, d: g.visit.map(h => h.l) });
   renderTafel();
   // Nach der Aufnahme des Gegners: Kamera an die Scheibe, Gegner tritt zur Seite
-  if (g.turn === 1) { V.focus('aim'); V.opponentTo('aside'); }
+  if (g.mode === 'cpu' && g.turn === 1) { V.focus('aim'); V.opponentTo('aside'); }
   if (bust) voice.say(t('v.bust'));
   else callScore(sum);
   wirtComment(g, sum, bust);
@@ -3926,38 +4004,46 @@ function win(g, p, h) {
   g.hist[p].push({ score: sum, rest: 0, bust: false, d: g.visit.map(h => h.l) });
   g.legs[p]++;
   const matchWon = g.legs[p] >= g.legsToWin;
-  if (p === 0) {
+  if (p === 0 && g.mode === 'cpu') {
+    bumpStat('legs');
     const prize = LEG_PRIZE[g.level];
     arcade.addCash(prize);
     setTimeout(() => toast(t('toast.cash'), t('toast.cashx', { v: arcade.fmt(prize) })), 3400);
   }
-  if (matchWon && p === 0) {
+  if (matchWon && p === 0 && g.mode === 'cpu') {
     bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi' || g.level === LEGEND) unlock('pro');
   }
-  if (matchWon && drinks.bound) {
+  if (matchWon && drinks.bound && g.mode === 'cpu') {
     resetDrinks();
     setTimeout(() => toast(t('dr.title'), ' ' + t('dr.gone')), 8200);
   }
   renderTafel();
   call('Game shot!', 'big'); sfx.cheer(1.5);
-  if (p === 1) { V.focus('aim'); V.opponentTo('aside'); }
-  const what = matchWon ? 'match' : 'leg';
-  voice.say(t((p === 0 ? 'v.win.' : 'v.winopp.') + what, { name: g.opp.name }), 1);
-  if (p === 0) wirt.react('cheer', t(matchWon ? 'w.matchme' : 'w.legme'), matchWon);
-  else wirt.react('shake', t(matchWon ? 'w.matchopp' : 'w.legopp', { name: g.opp.name }));
+  if (g.mode === 'cpu' && p === 1) { V.focus('aim'); V.opponentTo('aside'); }
+  const what = matchWon ? 'match' : 'leg', meWon = isMe(g, p), wName = seatName(g, p);
+  // Aus Sicht dieses Geräts: eigene Legs zuerst; zu zweit an einem Gerät in Sitzreihenfolge
+  const my = g.mode === 'local' ? 0 : g.me, other = 1 - my, otherName = g.mode === 'local' ? g.names[1] : seatName(g, other);
+  voice.say(t((meWon ? 'v.win.' : 'v.winopp.') + what, { name: wName }), 1);
+  if (meWon) wirt.react('cheer', t(matchWon ? 'w.matchme' : 'w.legme'), matchWon);
+  else if (g.mode === 'local') wirt.react('cheer', t(matchWon ? 'w.matchopp' : 'w.legopp', { name: wName }), matchWon);
+  else wirt.react('shake', t(matchWon ? 'w.matchopp' : 'w.legopp', { name: wName }));
+  const avgText = g.mode === 'local' ? t('avg.leg2', { n0: g.names[0], a: legAvg(g, 0), n1: g.names[1], b: legAvg(g, 1) }) : t('avg.leg', { a: legAvg(g, my), b: legAvg(g, other), name: otherName });
   if (!matchWon) {
-    hint(t(p === 0 ? 'hint.legme' : 'hint.legopp', { name: g.opp.name, a: g.legs[0], b: g.legs[1] }) + ' ' + t('avg.leg', { a: legAvg(g, 0), b: legAvg(g, 1), name: g.opp.name }));
+    hint(t(meWon ? 'hint.legme' : 'hint.legopp', { name: wName, a: g.legs[my], b: g.legs[other] }) + ' ' + avgText);
     setTimeout(() => { if (S !== g) return; g.legStarter = 1 - g.legStarter; startLeg(); }, 3200);
     return;
   }
-  hint(p === 0 ? t('hint.checkme') : t('hint.checkopp', { name: g.opp.name }));
+  hint(meWon ? t('hint.checkme') : t('hint.checkopp', { name: wName }));
   const darts = (g.hist[p].length - 1) * 3 + g.visit.length;
   const dbl = h.l === 'Bull' ? t('end.bull') : h.l;
-  const score = (g.legsToWin > 1 ? t('end.legs', { a: g.legs[0], b: g.legs[1] }) : '') + ' ' + t('avg.leg', { a: legAvg(g, 0), b: legAvg(g, 1), name: g.opp.name }) + t('end.ppd', { a: ppd(g, 0), b: ppd(g, 1), name: g.opp.name });
+  const ppdText = g.mode === 'local' ? t('end.ppd2', { n0: g.names[0], a: ppd(g, 0), n1: g.names[1], b: ppd(g, 1) }) : t('end.ppd', { a: ppd(g, my), b: ppd(g, other), name: otherName });
+  const score = (g.legsToWin > 1 ? t('end.legs', { a: g.legs[my], b: g.legs[other] }) : '') + ' ' + avgText + ppdText;
   setTimeout(() => {
     if (S !== g) return;
-    $('#endTitle').textContent = p === 0 ? t('end.win') : t('end.lose', { name: g.opp.name });
-    $('#endText').textContent = t(p === 0 ? 'end.textme' : 'end.textopp', { r: g.turnStart, d: dbl, n: darts, name: g.opp.name, o: g.scores[p === 0 ? 1 : 0] }) + score;
+    $('#endTitle').textContent = meWon ? t('end.win') : t('end.lose', { name: wName });
+    $('#endText').textContent = (g.mode === 'local'
+      ? t('end.textlocal', { r: g.turnStart, d: dbl, n: darts, name: wName, other: seatName(g, 1 - p), o: g.scores[1 - p] })
+      : t(meWon ? 'end.textme' : 'end.textopp', { r: g.turnStart, d: dbl, n: darts, name: meWon ? otherName : wName, o: g.scores[1 - p] })) + score;
     endEl.hidden = false;
     $('#rematch').focus();
   }, 1700);
@@ -3976,8 +4062,9 @@ function renderTafel() {
   if (!S) return;
   $('#modeLabel').textContent = S.legsToWin > 1 ? `${S.start} · First to ${S.legsToWin}` : `${S.start} · Double Out`;
   $('#levelLabel').textContent = S.opp.label;
-  $('#tag1').textContent = cpuBoostTag(S);
-  $('#name1').textContent = S.opp.name;
+  $('#tag1').textContent = S.mode === 'cpu' ? cpuBoostTag(S) : '';
+  $('#name0').textContent = seatName(S, 0);
+  $('#name1').textContent = seatName(S, 1);
   for (const p of [0, 1]) {
     $('#rest' + p).textContent = S.scores[p];
     $('#out' + p).textContent = checkoutText(S, p);
@@ -3999,7 +4086,7 @@ function renderTafel() {
   const sum = S.visit.reduce((a, h) => a + h.v, 0);
   sumEl.classList.toggle('bust', S.visitState === 'bust');
   sumEl.textContent = S.visitState === 'bust' ? t('bust.word') : (S.visit.length ? sum : '');
-  $('#visitWho').textContent = S.turn === 0 ? t('visit.mine') : t('visit.opp', { name: S.opp.name });
+  $('#visitWho').textContent = isMe(S, S.turn) ? t('visit.mine') : t('visit.opp', { name: seatName(S, S.turn) });
   renderSkills();
   V.setScores(S);
 }
@@ -4142,6 +4229,143 @@ $('#precBtn').addEventListener('click', () => {
   renderSkills();
 });
 
+/* ---------- Online-Mehrspieler: Raum-Code, Direktverbindung über PeerJS ---------- */
+// Übertragen werden nur die Landepunkte der Pfeile; beide Geräte rechnen den Spielstand gleich.
+// Der Gastgeber sitzt links (Sitz 0), der Gast rechts (Sitz 1). Der Gastgeber wählt die Einstellungen und wirft an.
+const mp = (() => {
+  const params = new URLSearchParams(location.search);
+  const LIB = params.get('peerjs') || 'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js';
+  const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const pid = code => 'dartkneipe-' + code.toUpperCase();
+  let peer = null, conn = null, role = null, remoteName = '', connected = false, code = '', pending = false;
+  const queue = [];
+  // Für Tests ein eigener PeerJS-Server: ?peerhost=localhost:9000
+  const peerOpts = () => {
+    const h = params.get('peerhost'); if (!h) return { debug: 0 };
+    const [host, port] = h.split(':'); return { host, port: +port || 9000, path: '/', secure: false, debug: 0 };
+  };
+  let libP = null;
+  const loadLib = () => libP || (libP = new Promise((res, rej) => {
+    if (window.Peer) { res(); return; }
+    const sc = document.createElement('script'); sc.src = LIB; sc.onload = res;
+    sc.onerror = () => { libP = null; rej(new Error('lib')); }; document.head.appendChild(sc);
+  }));
+  const status = text => { $('#mpStatus').textContent = text; };
+  const myName = () => $('#mpName').value.trim() || t('mp.defname');
+  $('#mpName').addEventListener('change', () => { try { localStorage.setItem('dk-name', $('#mpName').value.trim()); } catch (e) {} });
+  try { $('#mpName').value = localStorage.getItem('dk-name') || ''; } catch (e) {}
+
+  function close() {
+    connected = false; queue.length = 0; pending = false;
+    if (conn) { try { conn.close(); } catch (e) {} conn = null; }
+    if (peer) { try { peer.destroy(); } catch (e) {} peer = null; }
+    $('#mpShare').hidden = true;
+  }
+  async function host() {
+    close(); role = 'host'; status(t('mp.connecting'));
+    try { await loadLib(); } catch (e) { status(t('mp.nolib')); return; }
+    code = Array.from({ length: 5 }, () => CHARS[Math.floor(Math.random() * CHARS.length)]).join('');
+    const p = peer = new Peer(pid(code), peerOpts());
+    p.on('open', () => {
+      if (peer !== p) return;
+      $('#mpCodeShow').textContent = code; $('#mpShare').hidden = false;
+      status(t('mp.waiting'));
+    });
+    p.on('connection', c => { if (conn) { c.close(); return; } attach(c); });
+    p.on('error', e => { if (peer !== p) return; if (e.type === 'unavailable-id') host(); else status(t('mp.error', { e: e.type || 'net' })); });
+  }
+  async function join(c) {
+    c = (c || '').trim().toUpperCase();
+    if (c.length < 4) { $('#mpCode').focus(); return; }
+    close(); role = 'guest'; code = c; status(t('mp.connecting'));
+    try { await loadLib(); } catch (e) { status(t('mp.nolib')); return; }
+    const p = peer = new Peer(peerOpts());
+    p.on('open', () => { if (peer === p) attach(p.connect(pid(c), { reliable: true })); });
+    p.on('error', e => { if (peer !== p) return; status(e.type === 'peer-unavailable' ? t('mp.nocode') : t('mp.error', { e: e.type || 'net' })); });
+  }
+  // Lebenszeichen: alle 3 s ein Ping; kommt 12 s lang nichts, gilt die Verbindung als getrennt
+  let lastSeen = 0, beat = 0;
+  function attach(c) {
+    conn = c;
+    c.on('open', () => {
+      connected = true; lastSeen = Date.now(); send({ t: 'hello', name: myName() });
+      clearInterval(beat);
+      beat = setInterval(() => { if (!connected) { clearInterval(beat); return; } send({ t: 'ping' }); if (Date.now() - lastSeen > 12000) lost(); }, 3000);
+    });
+    c.on('data', m => { lastSeen = Date.now(); onData(m); });
+    c.on('close', lost);
+    c.on('error', lost);
+  }
+  function lost() {
+    if (!conn && !connected) return;
+    clearInterval(beat);
+    const c = conn; connected = false; conn = null; queue.length = 0; pending = false;
+    if (c) { try { c.close(); } catch (e) {} }
+    status(t('mp.lost'));
+    if (S && S.mode === 'online' && !S.over) { S.over = true; hint(t('mp.lost')); toast(t('mode.online'), ' ' + t('mp.lost')); renderTafel(); }
+  }
+  const send = m => { if (conn && connected) { try { conn.send(m); } catch (e) {} } };
+  function onData(m) {
+    if (!m || typeof m !== 'object') return;
+    if (m.t === 'bye') { lost(); return; }
+    if (m.t === 'hello') {
+      remoteName = String(m.name || '').slice(0, 16) || t('mp.defname');
+      status(t(role === 'host' ? 'mp.joined' : 'mp.connected', { name: remoteName }));
+    } else if (m.t === 'start' && role === 'guest') {
+      const cfg = m.cfg || {};
+      queue.length = 0;
+      newGame({ start: +cfg.start === 301 ? 301 : 501, legs: Math.min(6, Math.max(1, +cfg.legs || 1)), starter: +cfg.starter ? 1 : 0, dart: dartKey, mode: 'online', me: 1, names: [String(m.names[0] || t('mp.defname')).slice(0, 16), myName()] });
+    } else if (m.t === 'dart') {
+      queue.push({ p: m.p ? 1 : 0, x: +m.x || 0, y: +m.y || 0 }); pump();
+    } else if (m.t === 'rematch' && role === 'host' && S && S.mode === 'online' && S.over) {
+      start({ start: S.start, legs: S.legsToWin, starter: 1 - S.starter });
+    }
+  }
+  // Pfeile des Gegners nacheinander abspielen, sobald das eigene Spiel bereit ist (z. B. nach der Leg-Pause)
+  function pump() {
+    if (pending || !queue.length) return;
+    const g = S, m = queue[0];
+    if (!g || g.mode !== 'online') { queue.length = 0; return; }
+    if (g.over || g.busy || g.turn !== m.p || m.p === g.me || g.visit.length >= 3) { setTimeout(pump, 150); return; }
+    queue.shift(); pending = true;
+    V.cpuThrow(() => { pending = false; if (S === g && !g.over && g.turn === m.p) throwAt(m.p, m.x, m.y); setTimeout(pump, 60); });
+  }
+  // Gastgeber: Einstellungen schicken und selbst anwerfen
+  function start(cfg) {
+    if (!connected) { status(role === 'guest' ? t('mp.hoststarts') : t('mp.notyet')); return; }
+    if (role !== 'host') { status(t('mp.hoststarts')); return; }
+    const names = [myName(), remoteName || t('mp.defname')];
+    queue.length = 0;
+    send({ t: 'start', cfg: { start: cfg.start, legs: cfg.legs, starter: cfg.starter }, names });
+    newGame({ ...cfg, dart: dartKey, mode: 'online', me: 0, names });
+  }
+  function rematch(cfg) {
+    if (role === 'host') start(cfg);
+    else { send({ t: 'rematch' }); hint(t('mp.rematchwait')); endEl.hidden = true; }
+  }
+
+  window.addEventListener('pagehide', () => { send({ t: 'bye' }); });
+  $('#mpHost').addEventListener('click', () => { sfx.init(); host(); });
+  $('#mpJoin').addEventListener('click', () => { sfx.init(); join($('#mpCode').value); });
+  $('#mpCode').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); join($('#mpCode').value); } });
+  $('#mpCopy').addEventListener('click', async () => {
+    const url = location.origin + location.pathname + '?raum=' + code;
+    try { if (navigator.share) { await navigator.share({ title: 'Dart Kneipe', text: t('mp.yourcode') + ': ' + code, url }); return; } } catch (e) {}
+    try { await navigator.clipboard.writeText(url); status(t('mp.copied')); } catch (e) { status(url); }
+  });
+  // Einladungslink ?raum=CODE: Menü gleich auf „Online“ stellen und beitreten
+  const invite = (params.get('raum') || '').trim();
+  if (invite) setTimeout(() => {
+    $('#modeOnline').checked = true; syncModeUI(); $('#mpCode').value = invite.toUpperCase();
+    menu.hidden = false; join(invite);
+  }, 400);
+  return {
+    get connected() { return connected; },
+    sendDart(p, x, y) { send({ t: 'dart', p, x, y }); },
+    pump, start, rematch
+  };
+})();
+
 /* ---------- Menü ---------- */
 function openMenu() {
   $('#resumeBtn').hidden = !(S && !S.over);
@@ -4153,8 +4377,19 @@ function openMenu() {
 function startFromMenu() {
   sfx.init();
   const val = name => document.querySelector(`#menuForm input[name="${name}"]:checked`).value;
-  newGame({ start: +val('start'), level: val('level'), starter: +val('starter'), legs: +val('legs'), dart: dartKey });
+  const mode = val('mode'), cfg = { start: +val('start'), starter: +val('starter'), legs: +val('legs'), dart: dartKey };
+  if (mode === 'local') newGame({ ...cfg, mode, names: [$('#p1Name').value.trim() || t('mp.p1'), $('#p2Name').value.trim() || t('mp.p2')] });
+  else if (mode === 'online') mp.start(cfg);
+  else newGame({ ...cfg, level: val('level') });
 }
+// Spielmodus im Menü: Gegnerwahl nur gegen die Kneipe, sonst Namen bzw. Online-Raum
+function syncModeUI() {
+  const mode = document.querySelector('#menuForm input[name="mode"]:checked').value;
+  $('#oppSet').hidden = mode !== 'cpu';
+  $('#localPanel').hidden = mode !== 'local';
+  $('#onlinePanel').hidden = mode !== 'online';
+}
+$('#modeChips').addEventListener('change', syncModeUI);
 $('#startBtn').addEventListener('click', startFromMenu);
 $('#menuForm').addEventListener('submit', e => { e.preventDefault(); startFromMenu(); });
 $('#resumeBtn').addEventListener('click', () => { menu.hidden = true; });
@@ -7125,7 +7360,9 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(makePrevie
 $('#toMenu').addEventListener('click', openMenu);
 $('#rematch').addEventListener('click', () => {
   sfx.init();
-  newGame({ start: S.start, level: S.level, starter: 1 - S.starter, legs: S.legsToWin, dart: S.dartSet });
+  const cfg = { start: S.start, starter: 1 - S.starter, legs: S.legsToWin, dart: S.dartSet };
+  if (S.mode === 'online') mp.rematch(cfg);
+  else newGame({ ...cfg, level: S.level, mode: S.mode, names: S.names });
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !menu.hidden && S && !S.over) menu.hidden = true;
@@ -7138,6 +7375,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', t(el.dataset.i18nPh)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
   paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang();
