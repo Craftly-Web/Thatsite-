@@ -1,0 +1,13 @@
+{
+  "name": "ebook-trennung",
+  "private": true,
+  "description": "Build für das E-Book „Das Herz heilt leiser, als es bricht“ (PDF, EPUB, Instagram-Zitatkarten)",
+  "scripts": {
+    "build": "node build/build.js"
+  },
+  "dependencies": {
+    "marked": "^14.1.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.6.82"
+  }
+}

@@ -1,0 +1,71 @@
+
+/* EPUB: zurückhaltend, damit E-Reader Schriftgröße, Ränder und Nachtmodus selbst steuern können. */
+body { font-variation-settings: 'WONK' 0, 'SOFT' 50; font-family: 'Literata', Georgia, serif; line-height: 1.6; margin: 0 4%; color: #2A3236; hyphens: auto; -webkit-hyphens: auto; -epub-hyphens: auto; }
+p { margin: 0 0 .8em; text-align: left; }
+a { color: inherit; }
+strong { font-weight: 650; }
+ul, ol { padding-left: 1.2em; margin: 0 0 1em; }
+li { margin-bottom: .35em; }
+svg.emblem { display: block; width: 4.5em; height: 2.25em; margin: 1.5em 0 1em; }
+
+.cover-seite { margin: 0; padding: 0; text-align: center; }
+.cover-seite img { max-width: 100%; max-height: 100vh; }
+body.cover { margin: 0; }
+
+.titelseite { text-align: center; margin-top: 18%; }
+.titelseite svg.emblem { margin: 0 auto 1.5em; width: 6em; height: 3em; }
+.titelseite .t { font-family: 'Fraunces', serif; font-weight: 450; font-size: 1.9em; line-height: 1.15; color: #2F4B54; margin: 0 0 .6em; }
+.titelseite .u { font-style: italic; color: #6F7B78; }
+.titelseite .a { font-family: 'DM Sans', sans-serif; letter-spacing: .18em; text-transform: uppercase; font-size: .8em; color: #B9735A; margin-top: 2em; }
+.titelseite .widmung { font-family: 'Fraunces', serif; font-style: italic; color: #8E5440; margin-top: 4em; line-height: 1.7; }
+.impressum { font-size: .82em; color: #5D6966; margin-top: 2em; }
+
+.banner { margin: 0 -4.4% 1.4em; }
+.banner img { width: 100%; display: block; }
+.kopf { margin: 0 0 2em; page-break-after: avoid; }
+.kopf-label { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .72em; letter-spacing: .22em; text-transform: uppercase; color: #B9735A; margin: 0 0 .3em; }
+.kap-nummer { font-family: 'Fraunces', serif; font-weight: 300; font-size: 2.6em; line-height: 1; color: #C9A35B; margin: .1em 0 .1em; }
+h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.85em; line-height: 1.15; color: #2F4B54; margin: 0 0 .3em; hyphens: manual; -webkit-hyphens: manual; }
+.kopf-unter { font-style: italic; color: #6F7B78; margin: 0; }
+.motto { margin: 1.4em 0 0; padding: .2em 0 .2em 1em; border-left: 2px solid #C9A35B; }
+.motto p { font-family: 'Fraunces', serif; font-style: italic; color: #8E5440; margin: 0; }
+.motto .motto-von { font-family: 'DM Sans', sans-serif; font-style: normal; font-size: .72em; letter-spacing: .12em; text-transform: uppercase; color: #6F7B78; margin-top: .4em; }
+
+h2 { font-family: 'Fraunces', serif; font-weight: 560; font-size: 1.32em; line-height: 1.25; color: #2F4B54; margin: 1.8em 0 .6em; page-break-after: avoid; hyphens: manual; -webkit-hyphens: manual; }
+h3 { font-family: 'Fraunces', serif; font-weight: 560; font-size: 1.08em; color: #2F4B54; margin: 1.4em 0 .4em; page-break-after: avoid; }
+
+table { width: 100%; border-collapse: collapse; font-size: .9em; margin: .8em 0 1.3em; }
+th { font-family: 'DM Sans', sans-serif; font-size: .72em; letter-spacing: .08em; text-transform: uppercase; text-align: left; color: #2F4B54; border-bottom: 2px solid #C9A35B; padding: .4em; }
+td { border-bottom: 1px solid #E2DACE; padding: .5em .4em; vertical-align: top; }
+
+.kasten { margin: 1.3em 0 1.5em; padding: .9em 1em .4em; border-radius: .5em; font-size: .95em; page-break-inside: avoid; }
+.kasten .label { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .68em; letter-spacing: .16em; text-transform: uppercase; margin: 0 0 .5em; }
+.spiegel { background: #E4ECE6; } .spiegel .label { color: #4D6D61; } .spiegel p { font-style: italic; }
+.studie { background: #E6ECEF; border-left: 4px solid #8EA8B1; } .studie .label { color: #43616C; }
+.uebung { border: 1px solid #DDAE95; } .uebung .label { color: #B9735A; }
+.kasten-titel { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.12em; color: #8E5440; margin: 0 0 .4em; }
+.journal { background: #F3ECE2; } .journal .label { color: #8A6A4C; } .journal ul { list-style: none; padding: 0; } .journal li p { font-style: italic; }
+.merke { background: #24373F; color: #ECE4D7; } .merke .label { color: #D9B36C; } .merke strong { color: #fff; }
+
+.zitat { margin: 1.8em 1em; text-align: center; page-break-inside: avoid; }
+.zitat .orn { height: .9em; margin: 0 auto .8em; width: 6em; background: url("ORNAMENT") center / contain no-repeat; }
+.zitat blockquote { margin: 0; }
+.zitat p { font-family: 'Fraunces', serif; font-style: italic; font-size: 1.22em; line-height: 1.4; color: #8E5440; margin: 0; text-align: center; hyphens: manual; -webkit-hyphens: manual; }
+.zitat figcaption { font-family: 'DM Sans', sans-serif; font-size: .7em; letter-spacing: .12em; text-transform: uppercase; color: #6F7B78; margin-top: .6em; }
+
+.plan-titel { margin-top: 1.6em; }
+.plan ul { list-style: none; padding: 0; }
+.plan li { padding: .45em 0; border-bottom: 1px dashed #D8CCBA; }
+.plan .box { display: inline-block; width: .75em; height: .75em; border: 1px solid #B9735A; border-radius: 2px; margin-right: .6em; vertical-align: -.05em; }
+.plan em { color: #6F7B78; font-size: .9em; }
+
+.zs { padding: .8em 0; border-bottom: 1px solid #E6DED2; page-break-inside: avoid; }
+.zs p { font-family: 'Fraunces', serif; font-style: italic; color: #8E5440; margin: 0; }
+.zs .zs-von { font-family: 'DM Sans', sans-serif; font-style: normal; font-size: .68em; letter-spacing: .12em; text-transform: uppercase; color: #6F7B78; margin-top: .3em; }
+.anhang .text { font-size: .88em; }
+.anhang .text ul { list-style: none; padding: 0; }
+.anhang .text li { padding-left: 1.2em; text-indent: -1.2em; }
+
+nav.toc ol { list-style: none; padding: 0; }
+nav.toc li { padding: .35em 0; border-bottom: 1px solid #E6DED2; }
+nav.toc a { text-decoration: none; color: #2F4B54; }
