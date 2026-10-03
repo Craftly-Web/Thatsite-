@@ -1433,8 +1433,8 @@ const I18N = {
     'bk.tense': 'Zwei Bücher … kommt das dritte?', 'bk.trigger': '{n} Bücher! Freispiele gewonnen.', 'bk.retrigger': 'Noch mal drei Bücher: +{n} Freispiele!',
     'bk.fs': 'Freispiel {i} von {n} · Sondersymbol: {s}', 'bk.fsrun': 'Freispiele …', 'bk.expand': '{s} breitet sich aus: {v}!',
     'bk.fsend': 'Freispiele vorbei – insgesamt {v} gewonnen!', 'bk.fsnone': 'Freispiele vorbei. Diesmal wollte das Buch nicht.',
-    'bsym.ten': 'Zehn', 'bsym.jack': 'Bube', 'bsym.queen': 'Dame', 'bsym.king': 'König', 'bsym.ace': 'Ass', 'bsym.amphora': 'Amphore', 'bsym.owl': 'Eule',
-    'bsym.helmet': 'Helm', 'bsym.bust': 'Büste', 'bsym.book': 'Buch', 'bsym.chest': 'Schatztruhe',
+    'bsym.ten': 'Zehn', 'bsym.jack': 'Bube', 'bsym.queen': 'Dame', 'bsym.king': 'König', 'bsym.ace': 'Ass', 'bsym.amphora': 'Skarabäus', 'bsym.owl': 'Horus',
+    'bsym.helmet': 'Pharaonenmaske', 'bsym.bust': 'Abenteurer', 'bsym.book': 'Buch', 'bsym.chest': 'Schatztruhe',
     'sym.cherry': 'Kirsche', 'sym.lemon': 'Zitrone', 'sym.orange': 'Orange', 'sym.plum': 'Pflaume', 'sym.grape': 'Traube', 'sym.melon': 'Melone', 'sym.bell': 'Glocke', 'sym.seven': 'Sieben',
     'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Daneben steht das „Buch der Weisen“: drei Bücher starten Freispiele, die Schatztruhe ist Joker, und du wählst selbst das Sondersymbol, das sich über ganze Walzen ausbreitet – im Freispiel liegt es auf den mittleren Walzen einmal mehr (rund 95 % Auszahlung, Freispiele etwa alle 140 Drehs). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu Preisgeld für jedes gewonnene Leg (2,50 € bis 25 €, je nach Gegner).',
     'w.greet': ['Moin! Wirf ’ne Runde mit.', 'Die Scheibe ist frisch gebürstet. Blamier sie nicht.', 'Schuhe abputzen, Pfeile schärfen, rein da!'],
@@ -1651,8 +1651,8 @@ const I18N = {
     'bk.tense': 'Two books… will the third one come?', 'bk.trigger': '{n} books! Free spins won.', 'bk.retrigger': 'Three books again: +{n} free spins!',
     'bk.fs': 'Free spin {i} of {n} · special symbol: {s}', 'bk.fsrun': 'Free spins …', 'bk.expand': '{s} spreads out: {v}!',
     'bk.fsend': 'Free spins over – {v} won in total!', 'bk.fsnone': 'Free spins over. The book wasn’t in the mood.',
-    'bsym.ten': 'Ten', 'bsym.jack': 'Jack', 'bsym.queen': 'Queen', 'bsym.king': 'King', 'bsym.ace': 'Ace', 'bsym.amphora': 'Amphora', 'bsym.owl': 'Owl',
-    'bsym.helmet': 'Helmet', 'bsym.bust': 'Bust', 'bsym.book': 'Book', 'bsym.chest': 'Treasure chest',
+    'bsym.ten': 'Ten', 'bsym.jack': 'Jack', 'bsym.queen': 'Queen', 'bsym.king': 'King', 'bsym.ace': 'Ace', 'bsym.amphora': 'Scarab', 'bsym.owl': 'Horus',
+    'bsym.helmet': 'Pharaoh mask', 'bsym.bust': 'Explorer', 'bsym.book': 'Book', 'bsym.chest': 'Treasure chest',
     'sym.cherry': 'cherry', 'sym.lemon': 'lemon', 'sym.orange': 'orange', 'sym.plum': 'plum', 'sym.grape': 'grapes', 'sym.melon': 'melon', 'sym.bell': 'bell', 'sym.seven': 'seven',
     'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). Next to it stands the “Tome of the Sages”: three books start free spins, the treasure chest is wild, and you pick the special symbol that spreads over whole reels – during free spins it sits once more on the middle reels (about 95% payout, free spins roughly every 140 spins). It runs on play money: €20 to start, plus prize money for every leg you win (€2.50 to €25, depending on the opponent).',
     'w.greet': ['Evening! Fancy a game?', 'Board’s freshly brushed. Don’t embarrass it.', 'Wipe your feet, sharpen your darts, off you go!'],
@@ -5139,92 +5139,199 @@ const bookSlot = (() => {
   const expandMin = k => PAY[k][2] ? 2 : 3;
 
   const el = $('#bookSlot'), cv = $('#bookCv'), g = cv.getContext('2d');
-  let betIdx = 0, spinning = false, raf = 0, W = 0, H = 0, cw = 0, ch = 0, imgs = {}, wins = [], showWin = 0, lastTick = 0;
+  let betIdx = 0, spinning = false, raf = 0, W = 0, H = 0, cw = 0, ch = 0, imgs = {}, wins = [], showWin = 0, lastTick = 0, stone = null;
   let fs = null, picking = false, expand = null, timer = 0, tense = null;   // tense: Spannung bei zwei Büchern
   try { const b = +localStorage.getItem('dk-bet-book'); if (b >= 0 && b < BETS.length) betIdx = b; } catch (e) {}
   const reels = strips.map((st, i) => ({ p: (i * 11) % st.length, from: 0, to: 0, t0: 0, dur: 0, done: true, L: st.length }));
   const fmt = c => arcade.fmt(c);
 
-  /* Antike Symbole */
+  /* Symbole im Stil eines ägyptischen Abenteuer-Automaten */
   function drawSym(k, s) {
     const c = document.createElement('canvas'); c.width = c.height = s;
     const x = c.getContext('2d'), TAU = Math.PI * 2;
     x.translate(s / 2, s / 2); x.scale(s / 100, s / 100);
-    const gold = (a, b) => { const gr = x.createLinearGradient(0, a, 0, b); gr.addColorStop(0, '#fff2b3'); gr.addColorStop(.45, '#e0b041'); gr.addColorStop(1, '#8a5a12'); return gr; };
-    const LET = { ten: ['10', '#1f9e8f'], jack: ['J', '#2f8f3a'], queen: ['Q', '#2c62c9'], king: ['K', '#7d3fa6'], ace: ['A', '#c0392b'] };
+    x.lineJoin = 'round'; x.lineCap = 'round';
+    const gold = (a, b) => { const gr = x.createLinearGradient(0, a, 0, b); gr.addColorStop(0, '#fff6c8'); gr.addColorStop(.3, '#f2c94c'); gr.addColorStop(.62, '#b07d17'); gr.addColorStop(1, '#ffe08a'); return gr; };
+    const goldH = (a, b) => { const gr = x.createLinearGradient(a, 0, b, 0); gr.addColorStop(0, '#8a5a0e'); gr.addColorStop(.35, '#ffe9a0'); gr.addColorStop(.6, '#d9a531'); gr.addColorStop(1, '#7a4e0a'); return gr; };
+    const lapis = (a, b) => { const gr = x.createLinearGradient(0, a, 0, b); gr.addColorStop(0, '#3d7bff'); gr.addColorStop(.5, '#1640a8'); gr.addColorStop(1, '#0b1f5c'); return gr; };
+    const path = pts => { x.beginPath(); pts.forEach(([px, py], i) => i ? x.lineTo(px, py) : x.moveTo(px, py)); x.closePath(); };
+    const shine = (cx, cy, rx, ry, a = .5) => { const gr = x.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry)); gr.addColorStop(0, `rgba(255,255,255,${a})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = gr; x.beginPath(); x.ellipse(cx, cy, rx, ry, 0, 0, TAU); x.fill(); };
+    // Kartenwerte: breite Antiqua-Lettern wie aus Edelstein, mit goldenem Rand und kleinem Juwel
+    const LET = { ten: ['10', ['#ffe680', '#e8a317', '#7a4b06']], jack: ['J', ['#9be7ff', '#1f8fd6', '#0a2f66']], queen: ['Q', ['#ffb3c7', '#d6265b', '#5e0a24']], king: ['K', ['#d9b3ff', '#7d36c9', '#2e0c5a']], ace: ['A', ['#b8ffb0', '#28a845', '#0a4a1c']] };
     if (LET[k]) {
-      const [txt, col] = LET[k];
-      x.font = `800 ${txt.length > 1 ? 62 : 78}px 'Cinzel', Georgia, 'Times New Roman', serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
-      x.lineJoin = 'round'; x.lineWidth = 10; x.strokeStyle = '#2a1a06'; x.strokeText(txt, 0, 6);
-      x.lineWidth = 5; x.strokeStyle = gold(-40, 40); x.strokeText(txt, 0, 6);
-      const gr = x.createLinearGradient(0, -36, 0, 44); gr.addColorStop(0, '#ffffff'); gr.addColorStop(.25, col); gr.addColorStop(1, '#101010');
+      const [txt, [c0, c1, c2]] = LET[k];
+      x.font = `900 ${txt.length > 1 ? 64 : 84}px 'Cinzel', Georgia, 'Times New Roman', serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.save(); x.translate(3, 4); x.fillStyle = 'rgba(0,0,0,.55)'; x.fillText(txt, 0, 6); x.restore();
+      x.lineWidth = 11; x.strokeStyle = '#3a2204'; x.strokeText(txt, 0, 6);
+      x.lineWidth = 6; x.strokeStyle = gold(-40, 44); x.strokeText(txt, 0, 6);
+      const gr = x.createLinearGradient(0, -38, 0, 46); gr.addColorStop(0, c0); gr.addColorStop(.45, c1); gr.addColorStop(1, c2);
       x.fillStyle = gr; x.fillText(txt, 0, 6);
+      // Glanzkante oben
+      x.save(); x.globalCompositeOperation = 'source-atop'; const gl = x.createLinearGradient(0, -40, 0, 2); gl.addColorStop(0, 'rgba(255,255,255,.5)'); gl.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = gl; x.fillRect(-50, -40, 100, 42); x.restore();
+      // kleines Juwel in Goldfassung
+      x.fillStyle = gold(30, 46); x.beginPath(); x.arc(0, 40, 7, 0, TAU); x.fill();
+      x.fillStyle = c1; x.beginPath(); x.arc(0, 40, 4.4, 0, TAU); x.fill();
+      x.fillStyle = 'rgba(255,255,255,.8)'; x.beginPath(); x.arc(-1.4, 38.6, 1.4, 0, TAU); x.fill();
     } else if (k === 'amphora') {
-      const gr = x.createLinearGradient(-30, 0, 30, 0); gr.addColorStop(0, '#8a3a12'); gr.addColorStop(.45, '#e8864a'); gr.addColorStop(1, '#7a2e0c');
-      x.fillStyle = gr; x.strokeStyle = '#3a1604'; x.lineWidth = 2.5;
-      x.beginPath(); x.moveTo(-12, -40); x.lineTo(12, -40); x.lineTo(10, -30); x.quadraticCurveTo(36, -20, 32, 6); x.quadraticCurveTo(26, 34, 8, 40); x.lineTo(12, 46); x.lineTo(-12, 46); x.lineTo(-8, 40); x.quadraticCurveTo(-26, 34, -32, 6); x.quadraticCurveTo(-36, -20, -10, -30); x.closePath(); x.fill(); x.stroke();
-      x.lineWidth = 5; x.strokeStyle = '#7a2e0c'; x.beginPath(); x.moveTo(-10, -32); x.quadraticCurveTo(-34, -34, -26, -8); x.moveTo(10, -32); x.quadraticCurveTo(34, -34, 26, -8); x.stroke();
-      x.fillStyle = '#1a0d05'; x.fillRect(-31, -2, 62, 14);
-      x.strokeStyle = '#e8864a'; x.lineWidth = 2; x.beginPath();
-      for (let i = -28; i < 26; i += 8) { x.moveTo(i, 9); x.lineTo(i, 1); x.lineTo(i + 5, 1); x.lineTo(i + 5, 6); x.lineTo(i + 2.5, 6); }
-      x.stroke();
+      // Skarabäus mit Sonnenscheibe
+      const sun = x.createRadialGradient(-4, -36, 2, 0, -32, 16); sun.addColorStop(0, '#ffd27a'); sun.addColorStop(.5, '#e2401c'); sun.addColorStop(1, '#7a1404');
+      x.fillStyle = sun; x.beginPath(); x.arc(0, -32, 14, 0, TAU); x.fill(); x.strokeStyle = gold(-46, -18); x.lineWidth = 2.5; x.stroke();
+      x.strokeStyle = '#2a1a06'; x.lineWidth = 3;
+      for (const sg of [-1, 1]) for (const [a0, a1, a2] of [[-6, -22, -28], [6, -30, 4], [16, -24, 30]]) {
+        x.beginPath(); x.moveTo(sg * 12, a0); x.lineTo(sg * 24, a0 + (a1 - a0) * .3); x.lineTo(sg * 32, a2 * .6 + 8); x.stroke();
+      }
+      const shell = x.createLinearGradient(-24, -20, 24, 30); shell.addColorStop(0, '#5ff2d0'); shell.addColorStop(.35, '#0f8f7a'); shell.addColorStop(.7, '#1d3f9a'); shell.addColorStop(1, '#071a3a');
+      x.fillStyle = gold(-20, -4); x.beginPath(); x.ellipse(0, -14, 13, 8, 0, 0, TAU); x.fill();
+      x.fillStyle = '#0d3d4a'; x.beginPath(); x.ellipse(0, -15, 9, 5, 0, 0, TAU); x.fill();
+      x.fillStyle = shell; x.strokeStyle = goldH(-26, 26); x.lineWidth = 3;
+      x.beginPath(); x.moveTo(0, -8); x.bezierCurveTo(28, -8, 30, 30, 0, 40); x.bezierCurveTo(-30, 30, -28, -8, 0, -8); x.fill(); x.stroke();
+      x.beginPath(); x.moveTo(0, -6); x.lineTo(0, 38); x.stroke();
+      x.strokeStyle = 'rgba(255,230,150,.6)'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(-14, 4); x.quadraticCurveTo(-18, 20, -8, 32); x.moveTo(14, 4); x.quadraticCurveTo(18, 20, 8, 32); x.stroke();
+      shine(-9, 6, 6, 12, .55);
     } else if (k === 'owl') {
-      const gr = x.createRadialGradient(-8, -6, 6, 0, 6, 44); gr.addColorStop(0, '#c9a27a'); gr.addColorStop(1, '#5a3b1c');
-      x.fillStyle = gr; x.strokeStyle = '#2a1a0a'; x.lineWidth = 2.5;
-      x.beginPath(); x.moveTo(-30, -30); x.lineTo(-18, -22); x.quadraticCurveTo(0, -30, 18, -22); x.lineTo(30, -30); x.quadraticCurveTo(38, 10, 24, 34); x.quadraticCurveTo(0, 50, -24, 34); x.quadraticCurveTo(-38, 10, -30, -30); x.fill(); x.stroke();
-      x.fillStyle = 'rgba(255,240,210,.35)'; for (let i = 0; i < 12; i++) { x.beginPath(); x.arc(-12 + (i % 4) * 8, 16 + Math.floor(i / 4) * 7, 2.4, 0, Math.PI); x.fill(); }
-      for (const ex of [-13, 13]) {
-        x.fillStyle = '#f7e7b5'; x.beginPath(); x.arc(ex, -6, 12, 0, TAU); x.fill(); x.stroke();
-        x.fillStyle = '#f0a500'; x.beginPath(); x.arc(ex, -6, 7, 0, TAU); x.fill();
-        x.fillStyle = '#111'; x.beginPath(); x.arc(ex, -6, 4, 0, TAU); x.fill();
-        x.fillStyle = '#fff'; x.beginPath(); x.arc(ex - 1.5, -8, 1.4, 0, TAU); x.fill();
-      }
-      x.fillStyle = '#d9820a'; x.beginPath(); x.moveTo(-4, 2); x.lineTo(4, 2); x.lineTo(0, 11); x.closePath(); x.fill();
+      // Horus-Falke als goldene Statue mit Lapislazuli-Streifen
+      x.fillStyle = gold(34, 48); x.fillRect(-26, 36, 52, 10); x.fillStyle = '#5a3a08'; x.fillRect(-26, 44, 52, 3);
+      x.fillStyle = lapis(-20, 36);
+      x.beginPath(); x.moveTo(-18, 36); x.quadraticCurveTo(-28, 10, -14, -10); x.lineTo(14, -12); x.quadraticCurveTo(26, 8, 20, 36); x.closePath(); x.fill();
+      x.strokeStyle = gold(-12, 36); x.lineWidth = 3;
+      for (let i = 0; i < 4; i++) { x.beginPath(); x.moveTo(-22 + i * 2, 4 + i * 8); x.quadraticCurveTo(0, 10 + i * 8, 22 - i, 2 + i * 8); x.stroke(); }
+      // Kopf im Profil mit Hakenschnabel
+      const head = x.createLinearGradient(-20, -46, 20, -8); head.addColorStop(0, '#fff2b0'); head.addColorStop(.4, '#e0ac2c'); head.addColorStop(1, '#7a4e0a');
+      x.fillStyle = head; x.strokeStyle = '#3a2204'; x.lineWidth = 2.5;
+      x.beginPath(); x.moveTo(-16, -8); x.quadraticCurveTo(-24, -34, -6, -44); x.quadraticCurveTo(12, -50, 18, -36); x.lineTo(30, -32); x.quadraticCurveTo(30, -24, 20, -22); x.lineTo(24, -16); x.quadraticCurveTo(14, -18, 12, -12); x.closePath(); x.fill(); x.stroke();
+      // Auge des Horus
+      x.strokeStyle = '#0b1f5c'; x.lineWidth = 3;
+      x.beginPath(); x.moveTo(-4, -32); x.quadraticCurveTo(4, -37, 13, -32); x.quadraticCurveTo(4, -28, -4, -32); x.stroke();
+      x.fillStyle = '#0b1f5c'; x.beginPath(); x.arc(5, -32, 3, 0, TAU); x.fill();
+      x.beginPath(); x.moveTo(2, -29); x.quadraticCurveTo(0, -20, -6, -18); x.stroke();
+      x.beginPath(); x.moveTo(13, -32); x.lineTo(20, -31); x.stroke();
+      shine(-8, -36, 6, 4, .6);
     } else if (k === 'helmet') {
-      const gr = x.createLinearGradient(-30, 0, 30, 0); gr.addColorStop(0, '#6b4a14'); gr.addColorStop(.4, '#f2cf6a'); gr.addColorStop(1, '#6b4a14');
-      x.fillStyle = '#b3261e'; x.strokeStyle = '#5a0d08'; x.lineWidth = 2;
-      x.beginPath(); x.moveTo(-32, -18); x.quadraticCurveTo(-24, -52, 10, -48); x.quadraticCurveTo(34, -44, 34, -18); x.quadraticCurveTo(0, -30, -32, -18); x.fill(); x.stroke();
-      x.strokeStyle = 'rgba(255,190,170,.5)'; x.lineWidth = 1.5; x.beginPath(); for (let i = -26; i < 30; i += 5) { x.moveTo(i, -24); x.lineTo(i + 2, -42); } x.stroke();
-      x.fillStyle = gr; x.strokeStyle = '#3a2806'; x.lineWidth = 2.5;
-      x.beginPath(); x.moveTo(-28, -18); x.quadraticCurveTo(-30, -30, 0, -32); x.quadraticCurveTo(30, -30, 28, -18); x.lineTo(30, 30); x.quadraticCurveTo(18, 40, 8, 44); x.lineTo(8, 10); x.lineTo(-8, 10); x.lineTo(-8, 44); x.quadraticCurveTo(-18, 40, -30, 30); x.closePath(); x.fill(); x.stroke();
-      x.fillStyle = '#0d0a05'; x.beginPath(); x.moveTo(-22, -6); x.quadraticCurveTo(-10, -12, -4, -4); x.lineTo(-4, 10); x.lineTo(4, 10); x.lineTo(4, -4); x.quadraticCurveTo(10, -12, 22, -6); x.lineTo(20, 2); x.quadraticCurveTo(10, -2, 4, 4); x.lineTo(-4, 4); x.quadraticCurveTo(-10, -2, -20, 2); x.closePath(); x.fill();
-    } else if (k === 'bust') {
-      const m = x.createLinearGradient(-30, -40, 30, 40); m.addColorStop(0, '#ffffff'); m.addColorStop(.5, '#d9d6cf'); m.addColorStop(1, '#8e8a80');
-      x.fillStyle = '#6b5a3a'; x.fillRect(-22, 36, 44, 10);
-      x.fillStyle = m; x.strokeStyle = '#5e5a52'; x.lineWidth = 2;
-      x.beginPath(); x.moveTo(-34, 36); x.quadraticCurveTo(-30, 14, -12, 10); x.lineTo(-10, 2); x.lineTo(10, 2); x.lineTo(12, 10); x.quadraticCurveTo(30, 14, 34, 36); x.closePath(); x.fill(); x.stroke();
-      x.beginPath(); x.ellipse(0, -16, 18, 22, 0, 0, TAU); x.fill(); x.stroke();
-      x.strokeStyle = 'rgba(90,86,80,.6)'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(-6, -12); x.lineTo(-2, -12); x.moveTo(6, -12); x.lineTo(2, -12); x.moveTo(0, -10); x.lineTo(1, -2); x.moveTo(-5, 2); x.quadraticCurveTo(0, 5, 5, 2); x.stroke();
-      x.fillStyle = '#c9c4b8'; x.beginPath(); x.moveTo(-14, 0); x.quadraticCurveTo(0, 16, 14, 0); x.quadraticCurveTo(0, 8, -14, 0); x.fill();
-      for (let i = 0; i < 9; i++) {
-        const a = Math.PI * 1.05 + i * (Math.PI * .9 / 8), lx = Math.cos(a) * 19, ly = -18 + Math.sin(a) * 23;
-        x.save(); x.translate(lx, ly); x.rotate(a + Math.PI / 2 + (i < 4.5 ? -.5 : .5));
-        x.fillStyle = i % 2 ? '#e0b041' : '#5d8f2a'; x.beginPath(); x.ellipse(0, 0, 3.4, 7, 0, 0, TAU); x.fill(); x.restore();
+      // Goldene Pharaonenmaske mit gestreiftem Kopftuch und Kobra
+      x.fillStyle = lapis(-44, 40);
+      x.beginPath(); x.moveTo(0, -46); x.quadraticCurveTo(30, -44, 34, -18); x.lineTo(42, 34); x.lineTo(20, 40); x.lineTo(16, 0); x.lineTo(-16, 0); x.lineTo(-20, 40); x.lineTo(-42, 34); x.lineTo(-34, -18); x.quadraticCurveTo(-30, -44, 0, -46); x.closePath(); x.fill();
+      x.save(); x.clip();
+      x.fillStyle = gold(-46, 40);
+      for (let i = -46; i < 44; i += 9) x.fillRect(-50, i, 100, 4.5);
+      x.restore();
+      x.strokeStyle = '#3a2204'; x.lineWidth = 2; x.stroke();
+      // Gesicht
+      const face = x.createLinearGradient(-18, -30, 18, 30); face.addColorStop(0, '#fff3b8'); face.addColorStop(.45, '#f0bf3e'); face.addColorStop(1, '#9a6510');
+      x.fillStyle = face; x.beginPath(); x.moveTo(-17, -30); x.quadraticCurveTo(0, -36, 17, -30); x.quadraticCurveTo(20, 4, 10, 20); x.quadraticCurveTo(0, 26, -10, 20); x.quadraticCurveTo(-20, 4, -17, -30); x.fill(); x.stroke();
+      // Stirnband und Kobra
+      x.fillStyle = gold(-34, -26); x.fillRect(-18, -33, 36, 5);
+      x.fillStyle = '#1640a8'; x.beginPath(); x.moveTo(0, -44); x.quadraticCurveTo(6, -40, 3, -32); x.lineTo(-3, -32); x.quadraticCurveTo(-6, -40, 0, -44); x.fill();
+      x.fillStyle = gold(-44, -32); x.beginPath(); x.arc(0, -41, 2.6, 0, TAU); x.fill();
+      // Augen mit schwarzem Lidstrich
+      for (const sg of [-1, 1]) {
+        x.fillStyle = '#fffbe8'; x.beginPath(); x.ellipse(sg * 8, -12, 5.5, 2.8, 0, 0, TAU); x.fill();
+        x.fillStyle = '#111'; x.beginPath(); x.arc(sg * 8, -12, 2.2, 0, TAU); x.fill();
+        x.strokeStyle = '#0b1f5c'; x.lineWidth = 2.2; x.beginPath(); x.moveTo(sg * 2, -13); x.quadraticCurveTo(sg * 8, -17, sg * 16, -12); x.lineTo(sg * 18, -12); x.stroke();
+        x.beginPath(); x.moveTo(sg * 3, -20); x.quadraticCurveTo(sg * 9, -23, sg * 15, -19); x.stroke();
       }
+      x.strokeStyle = '#7a4e0a'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(0, -10); x.lineTo(-2, 3); x.lineTo(2, 4); x.moveTo(-5, 10); x.quadraticCurveTo(0, 12, 5, 10); x.stroke();
+      // Zeremonienbart
+      x.fillStyle = lapis(20, 44); x.beginPath(); x.moveTo(-5, 21); x.lineTo(5, 21); x.lineTo(4, 42); x.quadraticCurveTo(0, 46, -4, 42); x.closePath(); x.fill();
+      x.strokeStyle = gold(20, 44); x.lineWidth = 1.5; for (let y = 25; y < 42; y += 4) { x.beginPath(); x.moveTo(-4.5, y); x.lineTo(4.5, y); x.stroke(); }
+      shine(-7, -24, 6, 8, .5);
+    } else if (k === 'bust') {
+      // Der Abenteurer: Hut, Dreitagebart, Halstuch
+      const coat = x.createLinearGradient(-40, 20, 40, 50); coat.addColorStop(0, '#8a6a3a'); coat.addColorStop(1, '#4a3418');
+      x.fillStyle = coat; x.strokeStyle = '#2a1a08'; x.lineWidth = 2;
+      x.beginPath(); x.moveTo(-42, 50); x.quadraticCurveTo(-38, 22, -14, 16); x.lineTo(14, 16); x.quadraticCurveTo(38, 22, 42, 50); x.closePath(); x.fill(); x.stroke();
+      x.fillStyle = '#c0392b'; x.beginPath(); x.moveTo(-12, 15); x.quadraticCurveTo(0, 26, 12, 15); x.lineTo(6, 34); x.lineTo(0, 26); x.lineTo(-6, 34); x.closePath(); x.fill();
+      x.fillStyle = '#e8d8b0'; x.beginPath(); x.moveTo(-14, 16); x.lineTo(-22, 30); x.lineTo(-8, 22); x.closePath(); x.moveTo(14, 16); x.lineTo(22, 30); x.lineTo(8, 22); x.closePath(); x.fill();
+      // Hals und Gesicht
+      const skin = x.createLinearGradient(-18, -20, 18, 18); skin.addColorStop(0, '#f2c49a'); skin.addColorStop(1, '#a8673a');
+      x.fillStyle = skin; x.fillRect(-7, 6, 14, 12);
+      x.beginPath(); x.moveTo(-17, -16); x.quadraticCurveTo(-18, 8, -6, 14); x.quadraticCurveTo(0, 17, 6, 14); x.quadraticCurveTo(18, 8, 17, -16); x.closePath(); x.fill(); x.stroke();
+      x.fillStyle = 'rgba(70,40,20,.28)'; x.beginPath(); x.moveTo(-15, 0); x.quadraticCurveTo(-12, 14, 0, 15); x.quadraticCurveTo(12, 14, 15, 0); x.quadraticCurveTo(0, 8, -15, 0); x.fill();
+      x.fillStyle = '#3a2410'; x.fillRect(-11, -9, 7, 2.2); x.fillRect(4, -9, 7, 2.2);
+      x.fillStyle = '#fff'; x.beginPath(); x.ellipse(-7.5, -4.5, 3.4, 2, 0, 0, TAU); x.ellipse(7.5, -4.5, 3.4, 2, 0, 0, TAU); x.fill();
+      x.fillStyle = '#2a5a8a'; x.beginPath(); x.arc(-7, -4.5, 1.7, 0, TAU); x.arc(8, -4.5, 1.7, 0, TAU); x.fill();
+      x.strokeStyle = '#7a4a28'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(0, -4); x.lineTo(-2, 4); x.lineTo(1, 5); x.moveTo(-5, 9); x.quadraticCurveTo(1, 11, 6, 8); x.stroke();
+      // Hut mit breiter Krempe
+      const hat = x.createLinearGradient(0, -44, 0, -10); hat.addColorStop(0, '#9a7444'); hat.addColorStop(1, '#4e3418');
+      x.fillStyle = hat; x.strokeStyle = '#2a1a08'; x.lineWidth = 2;
+      x.beginPath(); x.ellipse(0, -17, 34, 8, -.06, 0, TAU); x.fill(); x.stroke();
+      x.beginPath(); x.moveTo(-18, -18); x.quadraticCurveTo(-20, -42, -6, -42); x.quadraticCurveTo(0, -38, 6, -42); x.quadraticCurveTo(20, -42, 18, -18); x.closePath(); x.fill(); x.stroke();
+      x.fillStyle = '#2a1a08'; x.fillRect(-18, -25, 36, 6);
+      shine(-10, -34, 6, 4, .35);
     } else if (k === 'book') {
-      x.save(); x.rotate(-.08);
+      // Das Buch: rotes Leder, goldene Beschläge, geflügelte Sonnenscheibe
+      const glow = x.createRadialGradient(0, 0, 10, 0, 0, 52); glow.addColorStop(0, 'rgba(255,214,120,.45)'); glow.addColorStop(1, 'rgba(255,214,120,0)');
+      x.fillStyle = glow; x.fillRect(-50, -50, 100, 100);
+      x.save(); x.rotate(-.06);
       x.fillStyle = '#f1e3c2'; x.fillRect(-30, -40, 64, 84);
       x.strokeStyle = 'rgba(120,90,40,.5)'; x.lineWidth = 1; x.beginPath(); for (let i = -36; i < 44; i += 4) { x.moveTo(32, i); x.lineTo(35, i); } x.stroke();
-      const lb = x.createLinearGradient(-34, 0, 30, 0); lb.addColorStop(0, '#3a1206'); lb.addColorStop(.5, '#7a2c10'); lb.addColorStop(1, '#3a1206');
-      x.fillStyle = lb; x.strokeStyle = '#1a0802'; x.lineWidth = 2.5; x.fillRect(-34, -44, 62, 86); x.strokeRect(-34, -44, 62, 86);
+      const lb = x.createLinearGradient(-34, -44, 30, 44); lb.addColorStop(0, '#c0301c'); lb.addColorStop(.5, '#7a1206'); lb.addColorStop(1, '#3a0602');
+      x.fillStyle = lb; x.strokeStyle = '#1a0402'; x.lineWidth = 2.5; x.fillRect(-34, -44, 62, 86); x.strokeRect(-34, -44, 62, 86);
+      x.strokeStyle = gold(-44, 44); x.lineWidth = 3; x.strokeRect(-28, -38, 50, 74);
       x.fillStyle = gold(-44, 44);
-      for (const [cx, cy, sx, sy] of [[-34, -44, 1, 1], [28, -44, -1, 1], [-34, 42, 1, -1], [28, 42, -1, -1]]) { x.beginPath(); x.moveTo(cx, cy); x.lineTo(cx + 14 * sx, cy); x.lineTo(cx, cy + 14 * sy); x.closePath(); x.fill(); }
-      x.strokeStyle = gold(-30, 30); x.lineWidth = 3; x.strokeRect(-26, -36, 46, 70);
-      x.beginPath(); x.arc(-3, -2, 13, 0, TAU); x.stroke();
-      x.fillStyle = gold(-14, 12); x.beginPath(); for (let i = 0; i < 16; i++) { const a = i * TAU / 16, r = i % 2 ? 5 : 11; x.lineTo(-3 + Math.cos(a) * r, -2 + Math.sin(a) * r); } x.closePath(); x.fill();
+      for (const [cx, cy, sx, sy] of [[-34, -44, 1, 1], [28, -44, -1, 1], [-34, 42, 1, -1], [28, 42, -1, -1]]) { x.beginPath(); x.moveTo(cx, cy); x.lineTo(cx + 15 * sx, cy); x.quadraticCurveTo(cx + 6 * sx, cy + 6 * sy, cx, cy + 15 * sy); x.closePath(); x.fill(); }
+      // geflügelte Sonnenscheibe
+      x.save(); x.translate(-3, -6);
+      for (const sg of [-1, 1]) {
+        x.fillStyle = gold(-12, 10);
+        x.beginPath(); x.moveTo(sg * 6, -3); x.quadraticCurveTo(sg * 18, -12, sg * 26, -8); x.lineTo(sg * 24, -4); x.lineTo(sg * 27, -2); x.lineTo(sg * 23, 1); x.lineTo(sg * 25, 4); x.quadraticCurveTo(sg * 14, 6, sg * 6, 4); x.closePath(); x.fill();
+        x.strokeStyle = 'rgba(90,50,5,.6)'; x.lineWidth = 1; x.stroke();
+      }
+      const sun = x.createRadialGradient(-2, -2, 1, 0, 0, 8); sun.addColorStop(0, '#ffd27a'); sun.addColorStop(1, '#c0301c');
+      x.fillStyle = sun; x.beginPath(); x.arc(0, 0, 7, 0, TAU); x.fill(); x.strokeStyle = gold(-8, 8); x.lineWidth = 2; x.stroke();
       x.restore();
+      // Hieroglyphenzeile
+      x.strokeStyle = gold(10, 30); x.lineWidth = 1.8;
+      x.beginPath(); x.arc(-16, 18, 3, 0, TAU); x.moveTo(-16, 21); x.lineTo(-16, 28); x.moveTo(-19, 23.5); x.lineTo(-13, 23.5);   // Anch
+      x.moveTo(-6, 26); x.lineTo(-6, 16); x.lineTo(0, 16); x.moveTo(-6, 21); x.lineTo(-1, 21);
+      x.moveTo(6, 26); x.quadraticCurveTo(10, 14, 14, 26);
+      x.stroke();
+      x.restore();
+      shine(-14, -26, 10, 6, .3);
     } else if (k === 'chest') {
-      const wd = x.createLinearGradient(0, -30, 0, 40); wd.addColorStop(0, '#9a5a24'); wd.addColorStop(1, '#4a2408');
-      x.fillStyle = '#f7d14a'; for (const [cx, cy] of [[-18, -18], [-4, -22], [12, -20], [22, -16], [4, -14]]) { x.beginPath(); x.ellipse(cx, cy, 8, 4, 0, 0, TAU); x.fill(); x.strokeStyle = '#8a5a12'; x.lineWidth = 1; x.stroke(); }
-      x.fillStyle = wd; x.strokeStyle = '#2a1204'; x.lineWidth = 2.5;
-      x.beginPath(); x.moveTo(-40, -14); x.lineTo(40, -14); x.lineTo(40, 38); x.lineTo(-40, 38); x.closePath(); x.fill(); x.stroke();
-      x.beginPath(); x.moveTo(-42, -14); x.quadraticCurveTo(-40, -44, 0, -44); x.quadraticCurveTo(40, -44, 42, -14); x.closePath();
-      x.save(); x.translate(0, -8); x.rotate(-.12); x.translate(0, -2); x.fill(); x.stroke(); x.restore();
-      x.fillStyle = gold(-44, 40);
-      for (const bx of [-30, 22]) x.fillRect(bx, -16, 8, 54);
-      x.fillRect(-42, 8, 84, 6);
-      x.fillStyle = gold(0, 24); x.fillRect(-7, -6, 14, 18); x.fillStyle = '#2a1204'; x.beginPath(); x.arc(0, 1, 2.6, 0, TAU); x.fill(); x.fillRect(-1, 2, 2, 6);
-      x.fillStyle = 'rgba(255,255,220,.9)'; for (const [sx, sy] of [[-26, -30], [30, -34], [8, -40]]) { x.beginPath(); x.moveTo(sx, sy - 5); x.lineTo(sx + 1.4, sy - 1.4); x.lineTo(sx + 5, sy); x.lineTo(sx + 1.4, sy + 1.4); x.lineTo(sx, sy + 5); x.lineTo(sx - 1.4, sy + 1.4); x.lineTo(sx - 5, sy); x.lineTo(sx - 1.4, sy - 1.4); x.closePath(); x.fill(); }
+      // Joker: goldene Schatztruhe des Pharao, Deckel offen, Edelsteine
+      const glow = x.createRadialGradient(0, -14, 4, 0, -14, 40); glow.addColorStop(0, 'rgba(255,240,170,.85)'); glow.addColorStop(1, 'rgba(255,200,80,0)');
+      x.fillStyle = glow; x.fillRect(-50, -50, 100, 70);
+      // Deckel
+      x.fillStyle = lapis(-46, -22); x.strokeStyle = '#3a2204'; x.lineWidth = 2;
+      path([[-38, -22], [-34, -44], [34, -44], [38, -22]]); x.fill(); x.stroke();
+      x.fillStyle = gold(-46, -22); x.fillRect(-36, -36, 72, 5); x.fillRect(-36, -26, 72, 4);
+      // Schätze
+      for (const [cx, cy, col] of [[-20, -18, '#e8264a'], [-6, -21, '#1fc46a'], [10, -19, '#2b7bff'], [22, -17, '#f2c94c'], [2, -15, '#f2c94c'], [-14, -14, '#f2c94c']]) {
+        x.fillStyle = col; x.beginPath(); x.arc(cx, cy, 5, 0, TAU); x.fill();
+        x.fillStyle = 'rgba(255,255,255,.7)'; x.beginPath(); x.arc(cx - 1.5, cy - 1.5, 1.6, 0, TAU); x.fill();
+      }
+      // Truhe
+      x.fillStyle = goldH(-40, 40); x.strokeStyle = '#3a2204'; x.lineWidth = 2.5;
+      path([[-40, -14], [40, -14], [36, 34], [-36, 34]]); x.fill(); x.stroke();
+      x.fillStyle = lapis(-6, 26); x.fillRect(-30, -6, 60, 30);
+      x.strokeStyle = gold(-6, 26); x.lineWidth = 2; x.strokeRect(-30, -6, 60, 30);
+      // Anch in der Mitte
+      x.strokeStyle = gold(-4, 24); x.lineWidth = 4;
+      x.beginPath(); x.ellipse(0, 2, 5, 6, 0, 0, TAU); x.moveTo(0, 8); x.lineTo(0, 22); x.moveTo(-8, 11); x.lineTo(8, 11); x.stroke();
+      for (const lx of [-34, 30]) { x.fillStyle = gold(34, 44); x.fillRect(lx, 34, 6, 9); }
+      x.fillStyle = '#fff6c8'; x.font = "900 13px 'Cinzel', Georgia, serif"; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.lineWidth = 3; x.strokeStyle = '#3a2204'; x.strokeText('WILD', 0, 41); x.fillText('WILD', 0, 41);
+    }
+    return c;
+  }
+  // Sandstein mit eingeritzten Hieroglyphen als Walzenhintergrund
+  function stonePattern(w, h) {
+    const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h));
+    const x = c.getContext('2d');
+    const bg = x.createLinearGradient(0, 0, w, 0); bg.addColorStop(0, '#2b1e10'); bg.addColorStop(.5, '#46321b'); bg.addColorStop(1, '#2b1e10');
+    x.fillStyle = bg; x.fillRect(0, 0, w, h);
+    x.strokeStyle = 'rgba(255,220,150,.07)'; x.lineWidth = Math.max(1, w / 120); x.lineCap = 'round';
+    const u = w / 6;
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    for (let yy = u * .6; yy < h; yy += u * 1.3) for (let xx = u * .8; xx < w; xx += u * 1.6) {
+      const t = Math.floor(rnd() * 5), cx = xx + (rnd() - .5) * u * .4, cy = yy;
+      x.beginPath();
+      if (t === 0) { x.arc(cx, cy - u * .2, u * .18, 0, Math.PI * 2); x.moveTo(cx, cy); x.lineTo(cx, cy + u * .45); x.moveTo(cx - u * .2, cy + u * .1); x.lineTo(cx + u * .2, cy + u * .1); }
+      else if (t === 1) { x.ellipse(cx, cy, u * .3, u * .14, 0, 0, Math.PI * 2); x.moveTo(cx - u * .1, cy + u * .14); x.lineTo(cx - u * .2, cy + u * .35); }
+      else if (t === 2) { for (let k = 0; k < 3; k++) { x.moveTo(cx - u * .3, cy + k * u * .14); for (let q = 0; q < 4; q++) x.lineTo(cx - u * .3 + (q + .5) * u * .15, cy + k * u * .14 + (q % 2 ? -1 : 1) * u * .05); } }
+      else if (t === 3) { x.moveTo(cx - u * .25, cy + u * .3); x.lineTo(cx, cy - u * .3); x.lineTo(cx + u * .25, cy + u * .3); x.closePath(); }
+      else { x.arc(cx, cy, u * .2, Math.PI, 0); x.lineTo(cx + u * .2, cy + u * .25); x.moveTo(cx - u * .2, cy); x.lineTo(cx - u * .2, cy + u * .25); }
+      x.stroke();
     }
     return c;
   }
@@ -5277,6 +5384,7 @@ const bookSlot = (() => {
     cw = W / 5; ch = H / 3;
     const sz = Math.round(Math.min(cw, ch) * .84);
     for (const k of SYM) imgs[k] = drawSym(k, sz);
+    stone = stonePattern(cw, H);
     draw(performance.now());
   }
   const grid = () => reels.map((rl, r) => [0, 1, 2].map(k => strips[r][mod(Math.round(rl.p) + k, rl.L)]));
@@ -5287,8 +5395,7 @@ const bookSlot = (() => {
     for (let r = 0; r < 5; r++) {
       const x0 = r * cw, rl = reels[r], base = Math.floor(rl.p), fr = rl.p - base;
       g.save(); g.beginPath(); g.rect(x0, 0, cw, H); g.clip();
-      const bg = g.createLinearGradient(x0, 0, x0 + cw, 0); bg.addColorStop(0, '#2a2016'); bg.addColorStop(.5, '#3d2f1e'); bg.addColorStop(1, '#2a2016');
-      g.fillStyle = bg; g.fillRect(x0, 0, cw, H);
+      if (stone) g.drawImage(stone, x0, 0, cw, H);
       const fast = !rl.done;
       for (let k = -1; k <= 3; k++) {
         const sym = strips[r][mod(base + k, rl.L)], img = imgs[sym], y = (k - fr) * ch;
