@@ -175,9 +175,9 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .style-row{display:grid;grid-template-columns:64px 1fr auto 20px;align-items:center;gap:20px;padding:18px 22px;border-top:1px solid #222;transition:background .3s}
 .style-row:hover{background:#171717}
 .st-aa{font-size:42px;line-height:1;text-align:center}
-.st-a{font-family:Arial,Helvetica,sans-serif;font-weight:900;font-style:italic;letter-spacing:-.04em;color:#e2542d}
+.st-a{font-family:Arial,Helvetica,sans-serif;font-weight:900;font-style:italic;letter-spacing:-.04em;color:#5b78ff}
 .st-b{font-family:Georgia,serif;font-weight:400;color:#f4f1ec}
-.st-c{font-family:Georgia,serif;font-style:italic;color:#d98a4e}
+.st-c{font-family:Georgia,serif;font-style:italic;color:#f2c9b4}
 .st-txt strong{display:block;font-size:15px;letter-spacing:.12em}
 .st-txt small{display:block;font-size:10px;color:#888;margin-top:5px;letter-spacing:.06em}
 .st-sw{display:flex}
@@ -199,7 +199,7 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 
 /* ===== Detaillierte Mini-Websites in den Projekt-Karten (1200px Designbreite, skaliert) ===== */
 .mock-url{margin-left:10px;flex:1;max-width:60%;height:11px;border-radius:6px;font-size:6.5px;line-height:11px;padding:0 8px;letter-spacing:.04em;white-space:nowrap;overflow:hidden}
-.type-a .mock-url{background:#0b0b0b;color:#777}.type-b .mock-url{background:#f4f1ec;color:#888}.type-c .mock-url{background:#15110e;color:#8a7a6a}
+.type-a .mock-url{background:#0b0b0b;color:#777}.type-b .mock-url{background:#f4f1ec;color:#888}.type-c .mock-url{background:#fff;color:#9a8a80}
 .mview{flex:1;position:relative;overflow:hidden}
 .ms{position:absolute;left:0;top:0;width:1200px;transform-origin:0 0;transform:scale(var(--s,.3));transition:transform 1.4s cubic-bezier(.4,0,.2,1);font-family:Arial,Helvetica,sans-serif}
 .project:hover .ms,.project.auto .ms{transform:scale(var(--s,.3)) translateY(calc(var(--vh,1000) * 1px - 100%));transition-duration:8s}
@@ -285,38 +285,88 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .n-foot{padding:36px 60px;display:flex;justify-content:space-between;color:#8a8478;font-size:14px;border-top:1px solid #e0dbd2}
 
 /* LUMEN – Leuchten-Shop */
-.ms-lumen{background:radial-gradient(ellipse at 50% 0%,#3a2a1e 0%,#15110e 60%);color:#f3e7d7}
-.ms-lumen .logo{font-size:26px;letter-spacing:.45em;font-weight:700}
-.ms-lumen .ms-links{color:#b9a894}
-.ms-lumen .cart{font-size:15px;color:#f3e7d7;border:1px solid #4a3a2c;border-radius:99px;padding:12px 20px}
-.ms-lumen .cart b{background:#d98a4e;color:#15110e;border-radius:99px;padding:2px 8px;margin-left:6px;font-size:13px}
-.l-hero{position:relative;height:640px;text-align:center;padding-top:300px;overflow:hidden}
-.l-lamps{position:absolute;left:0;right:0;top:0;height:420px}
-.l-hero .kick{font-size:14px;letter-spacing:.35em;color:#d98a4e;font-weight:700;position:relative}
-.l-hero h1{font-family:Georgia,serif;font-weight:400;font-size:74px;line-height:1.05;margin-top:18px;position:relative}
-.l-hero p{font-size:18px;color:#b9a894;margin-top:18px;position:relative}
-.l-btns{display:flex;gap:14px;justify-content:center;margin-top:30px;position:relative}
-.l-btns .cop{background:#d98a4e;color:#15110e;border-radius:99px}
-.l-btns .out{border:1px solid #6a5440;color:#f3e7d7;border-radius:99px}
-.l-sec{padding:60px 60px 70px}
+.ms-lumen{background:#f7ece4;color:#2d2420}
+.ms-lumen .logo{font-family:Georgia,serif;font-style:italic;font-size:32px;letter-spacing:-.02em;font-weight:400}
+.ms-lumen .logo i{font-style:normal;color:#c8553d}
+.ms-lumen .ms-links{color:#7a6a62}
+.ms-lumen .cart{font-size:15px;color:#2d2420;background:#fff;border-radius:99px;padding:12px 20px;box-shadow:0 6px 18px rgba(120,70,50,.12)}
+.ms-lumen .cart b{background:#c8553d;color:#fff;border-radius:99px;padding:2px 8px;margin-left:6px;font-size:13px}
+.l-hero{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;padding:30px 60px 70px}
+.l-hero .kick{display:inline-block;font-size:13px;letter-spacing:.2em;color:#c8553d;font-weight:700;background:#fbe1d6;padding:9px 16px;border-radius:99px}
+.l-hero h1{font-family:Georgia,serif;font-weight:400;font-size:80px;line-height:1;margin-top:22px;letter-spacing:-.03em}
+.l-hero h1 em{color:#c8553d}
+.l-hero p{font-size:18px;color:#7a6a62;margin-top:20px;max-width:420px;line-height:1.6}
+.l-btns{display:flex;gap:12px;margin-top:30px}
+.l-btns .cop{background:#2d2420;color:#fff;border-radius:99px}
+.l-btns .out{background:#fff;color:#2d2420;border-radius:99px}
+.l-rate{display:flex;align-items:center;gap:12px;margin-top:28px;font-size:14px;color:#7a6a62}.l-rate b{color:#c8553d;letter-spacing:2px}
+.l-art{position:relative;height:520px}
+.l-blob{position:absolute;inset:20px 10px 0 40px;background:#f2c9b4;border-radius:46% 54% 42% 58% / 52% 40% 60% 48%}
+.l-blob2{position:absolute;width:160px;height:160px;border-radius:50%;background:#cfd8c4;right:0;bottom:10px}
+.l-lamps{position:absolute;inset:0;width:100%;height:100%}
+.l-tagcard{position:absolute;left:0;bottom:50px;background:#fff;border-radius:22px;padding:16px 20px;box-shadow:0 20px 40px rgba(120,70,50,.15);display:flex;gap:14px;align-items:center}
+.l-tagcard i{width:46px;height:46px;border-radius:14px;background:#fbe1d6;display:grid;place-items:center;font-style:normal;font-size:22px}
+.l-tagcard b{display:block;font-size:17px}.l-tagcard span{font-size:14px;color:#c8553d;font-weight:700}
+.l-sec{padding:40px 60px 70px}
 .l-head{display:flex;justify-content:space-between;align-items:end}
 .l-head h2{font-family:Georgia,serif;font-weight:400;font-size:46px}
-.l-chips{display:flex;gap:8px}.l-chips span{padding:10px 18px;border-radius:99px;border:1px solid #4a3a2c;font-size:14px;color:#b9a894}.l-chips .on{background:#f3e7d7;color:#15110e;border-color:#f3e7d7}
-.l-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px}
-.l-card{background:rgba(255,255,255,.035);border:1px solid #33271e;border-radius:18px;overflow:hidden}
-.l-card .im{height:250px;position:relative;background:radial-gradient(circle at 50% 70%,#4a3526,#1e1712 70%)}
+.l-chips{display:flex;gap:8px}.l-chips span{padding:10px 18px;border-radius:99px;background:#fff;font-size:14px;color:#7a6a62}.l-chips .on{background:#2d2420;color:#fff}
+.l-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+.l-card{background:#fff;border-radius:28px;overflow:hidden;padding:10px;box-shadow:0 10px 30px rgba(120,70,50,.08)}
+.l-card .im{height:240px;position:relative;border-radius:22px;background:#f2c9b4}
+.l-card:nth-child(2) .im{background:#cfd8c4}.l-card:nth-child(3) .im{background:#e3d7ec}.l-card:nth-child(4) .im{background:#f3e1b9}
 .l-card .im svg{position:absolute;inset:0;width:100%;height:100%}
-.l-card .new{position:absolute;left:14px;top:14px;background:#d98a4e;color:#15110e;font-size:12px;font-weight:700;letter-spacing:.1em;padding:6px 10px;border-radius:99px}
-.l-card .txt{padding:20px}
+.l-card .new{position:absolute;left:14px;top:14px;background:#c8553d;color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;padding:6px 10px;border-radius:99px}
+.l-card .txt{padding:16px 12px 10px}
 .l-card h4{font-family:Georgia,serif;font-weight:400;font-size:24px}
-.l-card p{font-size:14px;color:#9c8b78;margin-top:4px}
-.l-card .stars{color:#d98a4e;font-size:14px;margin-top:10px;letter-spacing:2px}.l-card .stars span{color:#7a6a58;letter-spacing:0;margin-left:6px}
-.l-card .row{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.l-card p{font-size:14px;color:#9a8a80;margin-top:4px}
+.l-card .stars{color:#c8553d;font-size:14px;margin-top:10px;letter-spacing:2px}.l-card .stars span{color:#9a8a80;letter-spacing:0;margin-left:6px}
+.l-card .row{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
 .l-card .row b{font-size:22px}
-.l-card .row i{font-style:normal;width:42px;height:42px;border-radius:50%;background:#f3e7d7;color:#15110e;display:grid;place-items:center;font-size:22px;font-weight:700}
-.l-usp{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #33271e;border-bottom:1px solid #33271e}
-.l-usp div{padding:30px 60px;font-size:16px;color:#b9a894}.l-usp b{display:block;color:#f3e7d7;font-size:18px;margin-bottom:6px}
-.l-foot{padding:36px 60px;display:flex;justify-content:space-between;color:#7a6a58;font-size:14px}
+.l-card .row i{font-style:normal;width:44px;height:44px;border-radius:50%;background:#2d2420;color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700}
+.l-usp{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 60px}
+.l-usp div{padding:26px 28px;font-size:15px;color:#7a6a62;background:#fff;border-radius:24px}.l-usp b{display:block;color:#2d2420;font-size:18px;margin-bottom:6px}
+.l-foot{padding:40px 60px;display:flex;justify-content:space-between;color:#9a8a80;font-size:14px}
+/* PULSE: mobile Website im Smartphone */
+.mock.phone-stage{background:radial-gradient(circle at 30% 15%,#5b78ff 0%,#2342e0 45%,#0d1a66 100%);overflow:hidden;display:block}
+.ps-word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);font-size:120px;font-weight:900;font-style:italic;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.18);white-space:nowrap;pointer-events:none}
+.phone-dev{position:absolute;left:50%;top:20px;width:min(54%,220px);aspect-ratio:9/19.5;transform:translateX(-50%);background:#0a0a0f;border-radius:30px;border:6px solid #0b0b0f;box-shadow:0 0 0 1px #3a3f66,0 40px 70px rgba(0,0,30,.55);overflow:hidden;transition:transform 1.2s cubic-bezier(.4,0,.2,1)}
+.phone-dev:before{content:"";position:absolute;top:6px;left:50%;width:34%;height:14px;margin-left:-17%;background:#000;border-radius:10px;z-index:3}
+.project:hover .phone-dev,.project.auto .phone-dev{transform:translate(-50%,-6%)}
+.phone-dev .mview{position:absolute;inset:0}
+.ps-chip{position:absolute;z-index:2;display:flex;align-items:center;gap:6px;background:#fff;color:#0a0a0f;font-size:10px;font-weight:700;padding:7px 11px;border-radius:99px;box-shadow:0 12px 26px rgba(0,0,40,.35);animation:psfloat 4s ease-in-out infinite}
+.ps-chip i{font-style:normal;width:16px;height:16px;border-radius:50%;background:#c6ff3d;display:grid;place-items:center;font-size:9px}
+.ps-chip b{font-size:13px;color:#2342e0}
+.ps-chip1{right:3%;top:70%}.ps-chip2{left:3%;top:20%;animation-delay:-2s}
+@keyframes psfloat{50%{transform:translateY(-8px)}}
+.ms.m390{width:390px}
+.m-pulse{background:#0a0a0f;color:#fff;min-height:845px}
+.mp-status{display:flex;justify-content:space-between;padding:16px 28px 4px;font-size:14px;font-weight:700}
+.mp-nav{display:flex;justify-content:space-between;align-items:center;padding:12px 20px}
+.mp-logo{font-size:26px;font-weight:900;font-style:italic;letter-spacing:-.04em}.mp-logo i{font-style:normal;color:#c6ff3d}
+.mp-burger{width:42px;height:42px;border-radius:13px;background:#1b1c2a;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 12px}.mp-burger i{height:2px;background:#fff;border-radius:2px}.mp-burger i:last-child{width:60%}
+.mp-hero{margin:6px 14px 0;border-radius:28px;padding:26px 22px 24px;background:linear-gradient(155deg,#3d5cff,#1d2fc4);position:relative;overflow:hidden}
+.mp-hero:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;border:30px solid rgba(198,255,61,.18);right:-90px;top:-70px}
+.mp-tag{display:inline-block;background:#c6ff3d;color:#0a0a0f;font-size:11px;font-weight:900;letter-spacing:.1em;padding:6px 11px;border-radius:99px}
+.mp-hero h1{font-size:52px;line-height:.86;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.04em;margin-top:16px;position:relative}
+.mp-hero h1 em{color:#c6ff3d}
+.mp-hero p{font-size:14px;line-height:1.5;color:#dbe1ff;margin-top:14px}
+.mp-cta{display:block;margin-top:18px;background:#c6ff3d;color:#0a0a0f;font-weight:900;text-align:center;padding:16px;border-radius:16px;font-size:15px}
+.mp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 14px 0}
+.mp-stats div{background:#16172a;border-radius:18px;padding:14px 12px}.mp-stats b{display:block;font-size:22px;font-weight:900}.mp-stats small{font-size:11px;color:#8e93b8}
+.mp-sec{padding:22px 14px 0}
+.mp-h{display:flex;justify-content:space-between;align-items:center}.mp-h h3{font-size:20px;font-weight:900;text-transform:uppercase;font-style:italic}.mp-h span{font-size:13px;color:#8e93b8}
+.mp-days{display:flex;gap:6px;margin-top:12px}.mp-days span{flex:1;text-align:center;padding:10px 0;border-radius:12px;background:#16172a;font-size:13px;font-weight:700;color:#8e93b8}.mp-days .on{background:#3d5cff;color:#fff}
+.mp-class{display:flex;align-items:center;gap:12px;background:#16172a;border-radius:18px;padding:12px;margin-top:8px}
+.mp-class time{width:58px;height:50px;border-radius:13px;background:#232546;display:grid;place-items:center;font-size:14px;font-weight:900;color:#c6ff3d;flex:none}
+.mp-class div{flex:1}.mp-class b{display:block;font-size:16px}.mp-class small{font-size:12px;color:#8e93b8}
+.mp-book{background:#c6ff3d;color:#0a0a0f;font-size:12px;font-weight:900;padding:9px 14px;border-radius:99px}
+.mp-class.full{opacity:.5}.mp-class.full .mp-book{background:#33354f;color:#9aa0c8}
+.mp-plan{display:flex;justify-content:space-between;align-items:center;margin-top:12px;border-radius:22px;padding:18px;background:linear-gradient(155deg,#c6ff3d,#8fd400);color:#0a0a0f}
+.mp-plan small{font-size:11px;font-weight:900;letter-spacing:.14em}.mp-plan b{display:block;font-size:30px;font-weight:900}.mp-plan span{font-size:12px}
+.mp-plan .mp-book{background:#0a0a0f;color:#c6ff3d}
+.mp-foot{padding:26px 20px 40px;text-align:center;font-size:12px;color:#5c6088}
+
 
 /* Variante A — PULSE: dunkel, bold, sportlich */
 .mock.type-a{background:#0b0b0b}
@@ -346,8 +396,8 @@ nav.open .burger span:nth-child(3){top:20px;transform:rotate(-45deg)}
 .mock.type-b .mock-photo{flex:.9;align-self:stretch;background:linear-gradient(160deg,#b9b2a0,#54606b);border-radius:2px}
 
 /* Variante C — LUMEN: warmes Gradient-Portfolio mit Produktraster */
-.mock.type-c{background:linear-gradient(160deg,#1b1b1b,#3a2a20)}
-.mock.type-c .mock-bar{background:#201a15}
+.mock.type-c{background:#f7ece4}
+.mock.type-c .mock-bar{background:#efe0d5}
 .mock.type-c .mock-dot{background:#454545}
 .mock.type-c .mock-logo{font-size:9px;color:var(--accent2);letter-spacing:.08em;font-weight:700}
 .mock.type-c .mock-h{font-size:16px;color:#fff;margin-top:12px;line-height:1.08;letter-spacing:-.02em;max-width:80%}
@@ -614,38 +664,34 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="two"><div><div class="eyebrow">Ausgewählte Projekte</div><h2>DESIGN, DAS<br>WIRKUNG ZEIGT.</h2><p class="lead">Jedes Projekt erzählt seine eigene Geschichte. Hier sind einige unserer Lieblingsstücke – ausgewählt, weil sie zeigen, wie unterschiedlich gutes Webdesign aussehen kann.</p></div>
 <div class="styles reveal">
 <div class="styles-head"><span>Drei Branchen. Drei Handschriften.</span><span>Stil · Schrift · Farben</span></div>
-<a class="style-row" href="#p-pulse" data-proj="0"><b class="st-aa st-a">Aa</b><div class="st-txt"><strong>PULSE</strong><small>Fitness · Bold &amp; Dunkel</small></div><div class="st-sw"><i style="background:#0b0b0b"></i><i style="background:#1f1f1f"></i><i style="background:#e2542d"></i><i style="background:#ffffff"></i></div><em>→</em></a>
+<a class="style-row" href="#p-pulse" data-proj="0"><b class="st-aa st-a">Aa</b><div class="st-txt"><strong>PULSE</strong><small>Fitness · Mobile first &amp; Elektrisch</small></div><div class="st-sw"><i style="background:#0a0a0f"></i><i style="background:#2342e0"></i><i style="background:#3d5cff"></i><i style="background:#c6ff3d"></i></div><em>→</em></a>
 <a class="style-row" href="#p-nova" data-proj="1"><b class="st-aa st-b">Aa</b><div class="st-txt"><strong>NOVA</strong><small>Architektur · Editorial &amp; Hell</small></div><div class="st-sw"><i style="background:#f4f1ec"></i><i style="background:#cfd9de"></i><i style="background:#7a6a55"></i><i style="background:#1b1b1b"></i></div><em>→</em></a>
-<a class="style-row" href="#p-lumen" data-proj="2"><b class="st-aa st-c">Aa</b><div class="st-txt"><strong>LUMEN</strong><small>Online-Shop · Warm &amp; Edel</small></div><div class="st-sw"><i style="background:#15110e"></i><i style="background:#3a2a1e"></i><i style="background:#d98a4e"></i><i style="background:#f3e7d7"></i></div><em>→</em></a>
+<a class="style-row" href="#p-lumen" data-proj="2"><b class="st-aa st-c">Aa</b><div class="st-txt"><strong>LUMEN</strong><small>Online-Shop · Hell &amp; Verspielt</small></div><div class="st-sw"><i style="background:#f7ece4"></i><i style="background:#f2c9b4"></i><i style="background:#cfd8c4"></i><i style="background:#c8553d"></i></div><em>→</em></a>
 <div class="styles-foot"><span>Jede Website wird für ihre Zielgruppe gestaltet – nie aus einer Vorlage.</span><a href="#kontakt">Dein Projekt als Nächstes? →</a></div>
 </div></div>
 <div class="projects">
 <article id="p-pulse" class="project reveal">
-<div class="mockwrap"><div class="mock type-a">
-<div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 pulse-fitness.de</span></div>
-<div class="mview"><div class="ms ms-pulse">
-<div class="ms-nav"><span class="logo">PULSE<i></i></span><div class="ms-links"><span>Kurse</span><span>Trainer</span><span>Preise</span><span>App</span><span>Standorte</span></div><span class="ms-btn red">Probetraining</span></div>
-<div class="p-hero"><div><span class="p-tag">JETZT 1 MONAT GRATIS TRAINIEREN</span><h1>Trainiere<br>härter.<br><em>Werde stärker.</em></h1><p>Modernste Geräte, über 60 Kurse pro Woche und Trainer, die dich wirklich weiterbringen – rund um die Uhr.</p><div class="p-btns"><span class="ms-btn red">Mitglied werden →</span><span class="ms-btn ghost">Kursplan ansehen</span></div><div class="p-stats"><div><b>24/7</b><span>Geöffnet</span></div><div><b>60+</b><span>Kurse pro Woche</span></div><div><b>1.200 m²</b><span>Trainingsfläche</span></div></div></div>
-<div class="p-vis"><div class="p-panel"></div><svg class="p-kb" viewBox="0 0 300 330"><defs><radialGradient id="kbg" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#4a4a4a"/><stop offset=".55" stop-color="#1c1c1c"/><stop offset="1" stop-color="#080808"/></radialGradient></defs><path d="M85 130 C60 20 240 20 215 130" fill="none" stroke="#1a1a1a" stroke-width="34" stroke-linecap="round"/><path d="M85 130 C60 20 240 20 215 130" fill="none" stroke="#3a3a3a" stroke-width="6" stroke-linecap="round" transform="translate(-6 -6)"/><ellipse cx="150" cy="215" rx="125" ry="112" fill="url(#kbg)"/><ellipse cx="150" cy="322" rx="90" ry="8" fill="#000" opacity=".4"/><rect x="104" y="195" width="92" height="42" rx="8" fill="#e2542d"/><text x="150" y="224" text-anchor="middle" font-family="Arial" font-weight="900" font-size="24" fill="#fff">24 KG</text></svg>
-<div class="p-w p-w1"><small>♥ HERZFREQUENZ</small><b>142 bpm</b><svg viewBox="0 0 200 44"><polyline points="0,30 30,30 40,30 48,8 58,40 66,22 76,30 110,30 120,30 128,4 138,42 146,24 156,30 200,30" fill="none" stroke="#e2542d" stroke-width="3" stroke-linejoin="round"/></svg></div>
-<div class="p-w p-w2"><svg viewBox="0 0 70 70"><circle cx="35" cy="35" r="28" fill="none" stroke="#2a2a2a" stroke-width="8"/><circle cx="35" cy="35" r="28" fill="none" stroke="#e2542d" stroke-width="8" stroke-dasharray="132 176" stroke-linecap="round" transform="rotate(-90 35 35)"/></svg><div><small>TAGESZIEL</small><b>540</b><small>kcal</small></div></div>
-<div class="p-w p-w3"><small>NÄCHSTER KURS · 18:30</small><b>HIIT Power</b><div class="p-av"><i></i><i></i><i></i><em>+14 angemeldet</em></div></div>
+<div class="mockwrap"><div class="mock phone-stage">
+<span class="ps-word" aria-hidden="true">PULSE</span>
+<div class="ps-chip ps-chip1"><i>✓</i>Gebucht</div>
+<div class="ps-chip ps-chip2"><b>142</b> bpm</div>
+<div class="phone-dev"><div class="mview" data-w="390"><div class="ms m390 m-pulse">
+<div class="mp-status"><span>9:41</span><span>●●● ▮</span></div>
+<div class="mp-nav"><span class="mp-logo">PULSE<i>.</i></span><span class="mp-burger"><i></i><i></i></span></div>
+<div class="mp-hero"><span class="mp-tag">1 MONAT GRATIS</span><h1>Trainiere<br>härter.<br><em>Werde<br>stärker.</em></h1><p>60+ Kurse pro Woche, 24/7 geöffnet – mitten in der Stadt.</p><span class="mp-cta">Probetraining sichern →</span></div>
+<div class="mp-stats"><div><b>24/7</b><small>geöffnet</small></div><div><b>60+</b><small>Kurse</small></div><div><b>4,9★</b><small>Bewertung</small></div></div>
+<div class="mp-sec"><div class="mp-h"><h3>Heute</h3><span>Alle →</span></div>
+<div class="mp-days"><span>Mo</span><span>Di</span><span class="on">Mi</span><span>Do</span><span>Fr</span></div>
+<div class="mp-class"><time>07:00</time><div><b>Morning Burn</b><small>Lena · 45 min</small></div><span class="mp-book">Buchen</span></div>
+<div class="mp-class"><time>12:15</time><div><b>Spinning</b><small>Max · 45 min</small></div><span class="mp-book">Buchen</span></div>
+<div class="mp-class full"><time>17:00</time><div><b>Boxen</b><small>Deniz · 60 min</small></div><span class="mp-book">Voll</span></div>
+<div class="mp-class"><time>18:30</time><div><b>HIIT Power</b><small>Sarah · 45 min</small></div><span class="mp-book">Buchen</span></div></div>
+<div class="mp-sec"><div class="mp-h"><h3>Mitgliedschaft</h3></div>
+<div class="mp-plan"><div><small>PREMIUM</small><b>49,90 €</b><span>/ Monat · alle Kurse</span></div><span class="mp-book">Wählen</span></div></div>
+<div class="mp-foot">© PULSE Fitness · Impressum</div>
+</div></div></div>
 </div></div>
-<div class="p-sec"><div class="p-head"><h2>Kurse heute</h2><div class="p-days"><span>Mo</span><span>Di</span><span class="on">Mi</span><span>Do</span><span>Fr</span><span>Sa</span></div></div>
-<div class="p-classes">
-<div class="p-class"><time>07:00 – 07:45</time><h4>Morning Burn</h4><p>mit Lena · Raum 1</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i></i></div><span class="ms-btn red">Buchen</span></div>
-<div class="p-class"><time>12:15 – 13:00</time><h4>Spinning</h4><p>mit Max · Cycling-Studio</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i class="f"></i></div><span class="ms-btn red">Buchen</span></div>
-<div class="p-class full"><time>17:00 – 18:00</time><h4>Boxen</h4><p>mit Deniz · Ring</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i class="f"></i></div><span class="ms-btn">Ausgebucht</span></div>
-<div class="p-class"><time>18:30 – 19:15</time><h4>HIIT Power</h4><p>mit Sarah · Raum 2</p><div class="p-lvl"><i class="f"></i><i class="f"></i><i></i></div><span class="ms-btn red">Buchen</span></div>
-</div></div>
-<div class="p-sec"><h2>Mitgliedschaften</h2><div class="p-prices">
-<div class="p-price"><h4>FLEX</h4><b>9,90 € <small>/ Besuch</small></b><ul><li>✓ Alle Geräte</li><li>✓ Keine Vertragslaufzeit</li></ul></div>
-<div class="p-price hot"><h4>PREMIUM</h4><b>49,90 € <small>/ Monat</small></b><ul><li>✓ Alle Kurse inklusive</li><li>✓ Personal-Training-Check</li><li>✓ Sauna &amp; Getränke</li></ul></div>
-<div class="p-price"><h4>BASIC</h4><b>29,90 € <small>/ Monat</small></b><ul><li>✓ Geräte 24/7</li><li>✓ PULSE-App</li></ul></div>
-</div></div>
-<div class="p-foot"><span>© PULSE Fitness</span><span>Impressum · Datenschutz · Kontakt</span></div>
-</div></div></div></div>
-<div class="caption"><div class="tag">Fitness · Bold &amp; Dunkel</div><h3>Dein Körper.<br>Deine Energie.</h3><p class="desc">Ein dynamisches Redesign für ein Fitnessstudio mit Fokus auf Mitgliedschaften und Online-Buchung. Kräftige Typografie und ein High-Contrast-Look sollen Energie und Antrieb vermitteln.</p><small class="client">PULSE</small></div>
+<div class="caption"><div class="tag">Fitness · Mobile first &amp; Elektrisch</div><h3>Dein Körper.<br>Deine Energie.</h3><p class="desc">Eine mobile-first Website für ein Fitnessstudio: Kurse buchen in zwei Taps, kräftige Typografie und elektrisches Blau mit Neon-Akzenten für maximale Energie.</p><small class="client">PULSE</small></div>
 </article>
 <article id="p-nova" class="project center reveal">
 <div class="mockwrap"><div class="mock type-b">
@@ -674,11 +720,12 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="mockwrap"><div class="mock type-c">
 <div class="mock-bar"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-url">🔒 lumen-leuchten.de</span></div>
 <div class="mview"><div class="ms ms-lumen">
-<div class="ms-nav"><span class="logo">LUMEN</span><div class="ms-links"><span>Kollektion</span><span>Projekte</span><span>Manufaktur</span><span>Journal</span></div><span class="cart">♡ &nbsp;Warenkorb<b>2</b></span></div>
-<div class="l-hero"><svg class="l-lamps" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMin slice"><defs><radialGradient id="lcone" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#ffc58f" stop-opacity=".55"/><stop offset=".6" stop-color="#ffb070" stop-opacity=".08"/><stop offset="1" stop-color="#ffb070" stop-opacity="0"/></radialGradient><linearGradient id="ldome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0a26e"/><stop offset="1" stop-color="#8a5530"/></linearGradient></defs>
+<div class="ms-nav"><span class="logo">lumen<i>.</i></span><div class="ms-links"><span>Kollektion</span><span>Projekte</span><span>Manufaktur</span><span>Journal</span></div><span class="cart">♡ &nbsp;Warenkorb<b>2</b></span></div>
+<div class="l-hero"><div class="l-copy"><div class="kick">NEUE KOLLEKTION 2026</div><h1>Licht, das<br>Räume <em>verändert.</em></h1><p>Handgefertigte Leuchten aus Keramik, Glas und Messing – gemacht, um jeden Raum ein bisschen wärmer zu machen.</p><div class="l-btns"><span class="ms-btn cop">Kollektion entdecken</span><span class="ms-btn out">Lichtberatung</span></div><div class="l-rate"><b>★★★★★</b>über 1.200 zufriedene Kund:innen</div></div>
+<div class="l-art"><div class="l-blob"></div><div class="l-blob2"></div><svg class="l-lamps" viewBox="420 0 360 420" preserveAspectRatio="xMidYMin meet"><defs><radialGradient id="lcone" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#ffc58f" stop-opacity=".55"/><stop offset=".6" stop-color="#ffb070" stop-opacity=".08"/><stop offset="1" stop-color="#ffb070" stop-opacity="0"/></radialGradient><linearGradient id="ldome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0a26e"/><stop offset="1" stop-color="#8a5530"/></linearGradient></defs>
 <g><path d="M600 0 V110" stroke="#6a5440" stroke-width="2"/><path d="M470 420 L560 175 H640 L730 420Z" fill="url(#lcone)"/><path d="M530 175 Q530 110 600 110 Q670 110 670 175Z" fill="url(#ldome)"/><ellipse cx="600" cy="176" rx="70" ry="10" fill="#ffd9b0"/></g>
 <g><path d="M330 0 V60" stroke="#6a5440" stroke-width="2"/><path d="M250 420 L310 115 H350 L410 420Z" fill="url(#lcone)" opacity=".7"/><path d="M290 115 Q290 60 330 60 Q370 60 370 115Z" fill="url(#ldome)"/><ellipse cx="330" cy="116" rx="40" ry="7" fill="#ffd9b0"/></g>
-<g><path d="M870 0 V70" stroke="#6a5440" stroke-width="2"/><path d="M790 420 L850 125 H890 L950 420Z" fill="url(#lcone)" opacity=".7"/><path d="M830 125 Q830 70 870 70 Q910 70 910 125Z" fill="url(#ldome)"/><ellipse cx="870" cy="126" rx="40" ry="7" fill="#ffd9b0"/></g></svg><div class="kick">NEUE KOLLEKTION 2026</div><h1>Licht, das Räume<br>verändert.</h1><p>Handgefertigte Leuchten aus Messing, Glas und Keramik.</p><div class="l-btns"><span class="ms-btn cop">Kollektion entdecken</span><span class="ms-btn out">Lichtberatung buchen</span></div></div>
+<g><path d="M870 0 V70" stroke="#6a5440" stroke-width="2"/><path d="M790 420 L850 125 H890 L950 420Z" fill="url(#lcone)" opacity=".7"/><path d="M830 125 Q830 70 870 70 Q910 70 910 125Z" fill="url(#ldome)"/><ellipse cx="870" cy="126" rx="40" ry="7" fill="#ffd9b0"/></g></svg><div class="l-tagcard"><i>💡</i><div><b>Orbit Pendel</b><span>349 €</span></div></div></div></div>
 <div class="l-sec"><div class="l-head"><h2>Bestseller</h2><div class="l-chips"><span class="on">Alle</span><span>Pendel</span><span>Steh</span><span>Tisch</span><span>Wand</span></div></div>
 <div class="l-grid">
 <div class="l-card"><div class="im"><svg viewBox="0 0 300 250"><path d="M150 0 V90" stroke="#8a7a68" stroke-width="2"/><path d="M95 150 Q95 90 150 90 Q205 90 205 150Z" fill="url(#ldome)"/><ellipse cx="150" cy="151" rx="55" ry="8" fill="#ffd9b0"/><ellipse cx="150" cy="200" rx="80" ry="40" fill="#ffc58f" opacity=".18"/></svg><span class="new">NEU</span></div><div class="txt"><h4>Orbit</h4><p>Pendelleuchte · Messing</p><div class="stars">★★★★★<span>(48)</span></div><div class="row"><b>349 €</b><i>+</i></div></div></div>
@@ -689,7 +736,7 @@ nav.open .navlinks{opacity:1;visibility:visible;transform:none}
 <div class="l-usp"><div><b>Kostenloser Versand</b>ab 100 € Bestellwert</div><div><b>30 Tage Rückgabe</b>ohne Wenn und Aber</div><div><b>Handgefertigt</b>in unserer Manufaktur</div></div>
 <div class="l-foot"><span>© LUMEN Leuchten</span><span>Versand · Rückgabe · Impressum</span></div>
 </div></div></div></div>
-<div class="caption"><div class="tag">Online-Shop · Warm &amp; Edel</div><h3>Licht, das Räume<br>verändert.</h3><p class="desc">Ein Online-Shop für eine Leuchten-Manufaktur mit warmem Lichtdesign und einem Produktraster, das jede Leuchte einzeln in Szene setzt.</p><small class="client">LUMEN</small></div>
+<div class="caption"><div class="tag">Online-Shop · Hell &amp; Verspielt</div><h3>Licht, das Räume<br>verändert.</h3><p class="desc">Ein freundlicher Online-Shop für eine Leuchten-Manufaktur: Pastellfarben, weiche Formen und Produktkarten, die Lust aufs Stöbern machen.</p><small class="client">LUMEN</small></div>
 </article>
 </div>
 <p class="work-note">Hinweis: Die gezeigten Projekte sind Beispielentwürfe von Thatsite! und zeigen, wie unterschiedlich wir gestalten – es handelt sich nicht um Kundenreferenzen.</p>
@@ -1042,7 +1089,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModals();setMe
 })();
 
 // Mini-Websites in den Projekt-Karten skalieren; auf Touch-Geräten automatisch durchscrollen
-function fitMinis(){document.querySelectorAll('.mview').forEach(v=>{const s=v.clientWidth/1200;v.style.setProperty('--s',s);v.style.setProperty('--vh',v.clientHeight/s)})}
+function fitMinis(){document.querySelectorAll('.mview').forEach(v=>{const s=v.clientWidth/(+v.dataset.w||1200);v.style.setProperty('--s',s);v.style.setProperty('--vh',v.clientHeight/s)})}
 fitMinis();addEventListener('resize',fitMinis);
 if(!matchMedia('(hover:hover)').matches&&!reduced){const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('auto',e.isIntersecting)),{threshold:.6});document.querySelectorAll('.project').forEach(p=>io.observe(p))}
 
