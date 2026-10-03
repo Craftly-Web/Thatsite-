@@ -154,6 +154,30 @@ body::after{
 /* Heinz’ Kneipentrunk */
 .arc-card.dr-card{background:linear-gradient(90deg,rgba(150,95,10,.6),rgba(60,35,5,.6));border-color:rgba(255,200,90,.5)}
 .arc-card.dr-card svg,.arc-card.dr-card i{color:#ffcf5a}
+/* Bowlingbahn */
+.arc-card.bw-card{background:linear-gradient(90deg,rgba(95,40,140,.6),rgba(30,14,50,.6));border-color:rgba(210,160,255,.5)}
+.arc-card.bw-card svg,.arc-card.bw-card i{color:#dcb8ff}
+.bw-stage{background:#0d0806}
+.bw-stage .pk-sit{overflow:auto;gap:8px}
+.bw-stage .pk-sit .row{justify-content:center;width:min(100%,420px)}
+#bwStakeRow{display:grid;gap:4px;justify-items:center}
+#bwStakeRow small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#cdb68a}
+.bw-sheet{width:100%;border-collapse:collapse;table-layout:fixed;font-family:var(--ui);color:var(--ink)}
+.bw-sheet th,.bw-sheet td{border:1px solid rgba(233,201,140,.25);padding:0;text-align:center}
+.bw-sheet thead th{font-size:11px;font-weight:600;color:#cdb68a;padding:2px 0}
+.bw-sheet thead th:first-child{width:72px}
+.bw-sheet thead th:nth-child(11){width:13%}
+.bw-sheet thead th:last-child{width:42px}
+.bw-sheet tbody th{text-align:left;padding:0 6px;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bw-r{display:flex;justify-content:flex-end;font-size:12px;line-height:16px}
+.bw-r span{flex:0 0 33%;min-width:0;border-left:1px solid rgba(233,201,140,.18);border-bottom:1px solid rgba(233,201,140,.18)}
+.bw-sheet td:nth-child(11) .bw-r span{flex-basis:33.3%}
+.bw-sheet td:not(:nth-child(11)) .bw-r span{flex-basis:45%}
+.bw-c{font-weight:700;font-size:14px;line-height:19px;min-height:19px}
+.bw-sheet tr.cur th{color:#ffe9a8}
+.bw-sheet td.cur{background:rgba(255,214,107,.14)}
+.bw-t{font-weight:700;font-size:17px;color:#ffe9a8}
+@media (max-width:620px){.bw-sheet thead th:first-child{width:46px}.bw-sheet tbody th{font-size:12px;padding:0 3px}.bw-r{font-size:10px;line-height:14px}.bw-c{font-size:12px}.bw-sheet thead th:last-child{width:34px}.bw-t{font-size:14px}}
 .pk.dr{width:min(100%,1080px)}
 .dr-list{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media (max-width:1000px){.dr-list{grid-template-columns:repeat(2,1fr)}}
@@ -531,7 +555,7 @@ legend{padding:0;margin-bottom:8px}
   .actions .btn{padding:9px 12px;font-size:14px}
   .actions .icon-btn{width:40px;height:40px;padding:0}
   /* Auf schmalen Handys nur ein Spiele-Knopf im Kopf; Poker und Blackjack gibt es über die Karten im Menü */
-  #pokerBtn,#blackjackBtn,#cardroomBtn,#drinksBtn{display:none}
+  #pokerBtn,#blackjackBtn,#cardroomBtn,#drinksBtn,#bowlBtn{display:none}
   #menuBtn .long{display:none}
   #menuBtn .short{display:inline}
   .bar-frame{width:min(100%, 340px)}
@@ -583,6 +607,7 @@ legend{padding:0;margin-bottom:8px}
       <button class="btn ghost icon-btn" id="cardroomBtn" type="button" aria-label="Kartentisch" data-i18n-aria="cr.btn" data-i18n-title="cr.btn" title="Kartentisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="9" height="13" rx="1.6" transform="rotate(-18 7 13.5)"/><rect x="7.5" y="4" width="9" height="13" rx="1.6"/><rect x="12.5" y="7" width="9" height="13" rx="1.6" transform="rotate(18 17 13.5)"/></svg></button>
       <button class="btn ghost icon-btn" id="blackjackBtn" type="button" aria-label="Blackjack" data-i18n-aria="bj.btn" data-i18n-title="bj.btn" title="Blackjack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg></button>
       <button class="btn ghost icon-btn" id="pokerBtn" type="button" aria-label="Pokertisch" data-i18n-aria="pk.btn" data-i18n-title="pk.btn" title="Pokertisch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg></button>
+      <button class="btn ghost icon-btn" id="bowlBtn" type="button" aria-label="Bowlingbahn" data-i18n-aria="bw.btn" data-i18n-title="bw.btn" title="Bowlingbahn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="14.5" r="6.5"/><circle cx="6.6" cy="12.2" r=".9" fill="currentColor" stroke="none"/><circle cx="9.4" cy="11.4" r=".9" fill="currentColor" stroke="none"/><circle cx="8.6" cy="14.4" r=".9" fill="currentColor" stroke="none"/><path d="M18.6 2.8c-1.3 0-2 1-1.8 2.2.2 1 .7 1.6.5 2.6-.4 1.6-1.8 3-1.8 6.1 0 3.1.9 5.6 1.3 7.3h3.6c.4-1.7 1.3-4.2 1.3-7.3 0-3.1-1.4-4.5-1.8-6.1-.2-1 .3-1.6.5-2.6.2-1.2-.5-2.2-1.8-2.2z"/><path d="M16.9 6.6h3.4"/></svg></button>
       <button class="btn ghost icon-btn" id="arcadeBtn" type="button" aria-label="Spielhalle" data-i18n-aria="arc.btn" data-i18n-title="arc.btn" title="Spielhalle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg></button>
       <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
       <button class="btn ghost" id="menuBtn" type="button"><span class="long" data-i18n="menu.long">Neues Spiel</span><span class="short" data-i18n="menu.short">Menü</span></button>
@@ -748,6 +773,7 @@ legend{padding:0;margin-bottom:8px}
     <button type="button" class="arc-card cr-card" id="cardroomCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="9" height="13" rx="1.6" transform="rotate(-18 7 13.5)"/><rect x="7.5" y="4" width="9" height="13" rx="1.6"/><rect x="12.5" y="7" width="9" height="13" rx="1.6" transform="rotate(18 17 13.5)"/></svg><span><b data-i18n="cr.btn">Kartentisch</b><small data-i18n="cr.cardx">Skat und Rommé mit den Stammgästen</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card bj-card" id="blackjackCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg><span><b data-i18n="bj.btn">Blackjack</b><small data-i18n="bj.cardx">Gegen Heinz als Bank · Blackjack zahlt 3:2</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card pk-card" id="pokerCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-12 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2" transform="rotate(10 15.5 10.5)"/><path d="M15.6 7.4c-1.2 1.1-2.4 2-2.4 3.1a1.2 1.2 0 0 0 2.2.7l-.4 1.5h1.6l-.4-1.5a1.2 1.2 0 0 0 2.2-.7c0-1.1-1.2-2-2.4-3.1z" fill="currentColor" stroke="none"/></svg><span><b data-i18n="pk.btn">Pokertisch</b><small data-i18n="pk.cardx">Texas Hold’em mit Heinz als Geber</small></span><i aria-hidden="true">›</i></button>
+    <button type="button" class="arc-card bw-card" id="bowlCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="14.5" r="6.5"/><circle cx="6.6" cy="12.2" r=".9" fill="currentColor" stroke="none"/><circle cx="9.4" cy="11.4" r=".9" fill="currentColor" stroke="none"/><circle cx="8.6" cy="14.4" r=".9" fill="currentColor" stroke="none"/><path d="M18.6 2.8c-1.3 0-2 1-1.8 2.2.2 1 .7 1.6.5 2.6-.4 1.6-1.8 3-1.8 6.1 0 3.1.9 5.6 1.3 7.3h3.6c.4-1.7 1.3-4.2 1.3-7.3 0-3.1-1.4-4.5-1.8-6.1-.2-1 .3-1.6.5-2.6.2-1.2-.5-2.2-1.8-2.2z"/><path d="M16.9 6.6h3.4"/></svg><span><b data-i18n="bw.card">Zur Bowlingbahn</b><small data-i18n="bw.cardx">Zehn Pins gegen die Stammgäste</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card" id="arcadeCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg><span><b data-i18n="arc.btn">Spielhalle</b><small id="arcadeCardCash"></small></span><i aria-hidden="true">›</i></button>
     <details class="howto">
       <summary data-i18n="howto">So wird gespielt</summary>
@@ -762,6 +788,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.poker"></p>
       <p class="rules" data-i18n-html="rules.blackjack"></p>
       <p class="rules" data-i18n-html="rules.cards"></p>
+      <p class="rules" data-i18n-html="rules.bowling"></p>
       <p class="rules" data-i18n-html="rules.drinks"></p>
       <p class="rules" data-i18n-html="rules.phantom"></p>
       <p class="rules" data-i18n-html="rules.classic"></p>
@@ -918,6 +945,29 @@ legend{padding:0;margin-bottom:8px}
     </div>
     <p class="pk-tip" data-i18n="bj.tip">Auf den Filz tippen = Karte · seitlich wischen = stehen</p>
     <div class="row"><button type="button" class="btn ghost" id="bjLeave" data-i18n="bj.leave">Zurück in die Kneipe</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="bowl" role="dialog" aria-modal="true" aria-labelledby="bwTitle" hidden>
+  <div class="pk bw">
+    <div class="pk-head">
+      <div><h2 id="bwTitle" data-i18n="bw.title">Heinz’ Bowlingbahn</h2><small id="bwSub"></small></div>
+      <div class="pk-cash"><small data-i18n="arc.credit">Guthaben</small><b id="bwCash">0,00 €</b></div>
+    </div>
+    <div class="pk-stage bw-stage"><canvas id="bwCv" aria-label="Bowlingbahn" data-i18n-aria="bw.btn" role="img"></canvas>
+      <div class="pk-sit" id="bwSetup" hidden>
+        <h3 data-i18n="bw.setup">Wer spielt mit?</h3>
+        <p data-i18n="bw.setupx"></p>
+        <div class="chips" id="bwOpp" role="radiogroup"></div>
+        <div id="bwStakeRow"><small data-i18n="bw.stake">Einsatz</small><div class="chips" id="bwStake" role="radiogroup"></div></div>
+        <p class="pk-warn" id="bwWarn"></p>
+        <div class="row"><button type="button" class="btn" id="bwStart" data-i18n="bw.start">Anwerfen</button><button type="button" class="btn ghost" id="bwResume" data-i18n="bw.resume" hidden>Weiterspielen</button></div>
+      </div>
+    </div>
+    <div class="pk-msg" id="bwMsg" aria-live="polite"></div>
+    <table class="bw-sheet" id="bwSheet"></table>
+    <p class="pk-tip" data-i18n="bw.tip"></p>
+    <div class="row"><button type="button" class="btn ghost" id="bwNew" data-i18n="bw.new">Neues Spiel</button><button type="button" class="btn ghost" id="bwLeave" data-i18n="bw.leave">Zurück in die Kneipe</button></div>
   </div>
 </div>
 
@@ -1219,6 +1269,21 @@ const I18N = {
     'w.phantom': 'Das Phantom … Gegen den gewinnst du nur mit voll eingeworfenem Standardpfeil oder drei Energys intus.',
     'w.phopen': 'Drei Energys! Jetzt ist das Phantom angreifbar.',
     'rules.phantom': '<strong>Das Phantom:</strong> Die Legende der Kneipe. Es punktet selten über die Triple 20, sondern wählt je nach Lage die 19, 18, 17, 16 oder das Bull: Es meidet Reste ohne Checkout, stellt sich Finishes zurecht und weicht aus, wenn eigene Pfeile das Feld verdecken. Ganz fehlerfrei ist es nicht: In jedem Leg verpasst es seinen ersten Checkout-Dart, und meist rutscht ihm beim Punkten ein Pfeil ins Single. Trotzdem ist es normalerweise unschlagbar. Angreifbar wird es nur, wenn du mit dem voll eingeworfenen Standardpfeil (+50 %) spielst oder mindestens 3 Energys getrunken hast – dann wirft es nur noch wie ein sehr starker Profi. Jedes gewonnene Leg bringt 50 €.',
+    'bw.btn': 'Bowlingbahn', 'bw.card': 'Zur Bowlingbahn', 'bw.cardx': 'Zehn Pins gegen die Stammgäste, auf Wunsch um Einsatz', 'bw.title': 'Heinz’ Bowlingbahn',
+    'bw.sub0': 'Zehn Pins · zehn Frames', 'bw.sub': 'Zehn Frames · {opp}', 'bw.neon': 'HEINZ’ BOWLING',
+    'bw.setup': 'Wer spielt mit?', 'bw.setupx': 'Kugel seitlich ziehen zum Platzieren, dann nach oben wischen: Die Richtung gibt die Linie vor, je schneller der Wisch, desto schneller die Kugel. Ein Bogen am Ende des Wischs gibt Effet.',
+    'bw.stake': 'Einsatz', 'bw.nostake': 'Ohne', 'bw.solo': 'Allein', 'bw.start': 'Anwerfen', 'bw.resume': 'Weiterspielen', 'bw.new': 'Neues Spiel', 'bw.leave': 'Zurück in die Kneipe',
+    'bw.tip': 'Kugel seitlich ziehen = platzieren · nach oben wischen = werfen · Bogen am Ende = Effet', 'bw.total': 'Σ', 'bw.frame': 'Frame {f}',
+    'bw.yourturn': 'Frame {f}: Du bist dran – Kugel platzieren und nach oben wischen.', 'bw.solo.turn': 'Frame {f}: Kugel platzieren und nach oben wischen.', 'bw.cputurn': 'Frame {f}: {name} ist dran …',
+    'bw.strike': 'Strike!', 'bw.spare': 'Spare!', 'bw.gutter': 'Rinne!', 'bw.split': 'Split!', 'bw.pins': '{n} Pins', 'bw.pin1': '1 Pin', 'bw.miss': 'Nichts', 'bw.over': 'Spiel aus',
+    'bw.speed': '{v} km/h', 'bw.hookL': 'Effet nach links', 'bw.hookR': 'Effet nach rechts', 'bw.slow': 'Zu langsam – zügiger nach oben wischen.', 'bw.short': 'Etwas weiter nach oben wischen.',
+    'bw.win': 'Gewonnen, {a} zu {b}!', 'bw.winx': ' +{v} für die Spielhalle.', 'bw.lose': '{name} gewinnt {b} zu {a}.', 'bw.tie': 'Unentschieden, {a} zu {a} – Einsatz zurück.',
+    'bw.solodone': 'Fertig: {a} Punkte.', 'bw.best': 'Bestes Spiel: {v}.', 'bw.newbest': ' Neuer Rekord!', 'bw.nocash': 'Zu wenig Guthaben für diesen Einsatz.', 'bw.forfeit': 'Spiel abgebrochen – der Einsatz bleibt bei {name}.',
+    'bw.q.strike': ['Alle zehn! Da wackelt der Tresen.', 'Strike! Darauf gibt’s ’ne Runde – für mich.', 'Wie mit dem Lineal gezogen.'],
+    'bw.q.spare': ['Sauber nachgeräumt.', 'Spare – wie mein Sparbuch, nur voller.', 'Gerettet!'],
+    'bw.q.gutter': ['Die Rinne ist auch eine Linie.', 'Die Kugel wollte nur mal die Rinne putzen.', 'Nicht schlimm, die Pins haben nur ein bisschen gelacht.'],
+    'bw.q.split': ['Ein Split – viel Glück beim Nachwurf.', 'Da klafft eine Lücke wie bei meinem Zahnarzt.'],
+    'rules.bowling': '<strong>Bowlingbahn:</strong> Zehn Pins, zehn Frames, echte Wertung: Ein Strike zählt 10 plus die nächsten zwei Würfe, ein Spare 10 plus den nächsten Wurf, und im zehnten Frame gibt es nach Strike oder Spare Bonuswürfe – 300 ist das perfekte Spiel. Kugel seitlich ziehen zum Platzieren, dann nach oben wischen: Die Richtung gibt die Linie vor, das Tempo des Wischs die Geschwindigkeit, ein Bogen am Ende des Wischs Effet. Die Kugel läuft auf dem geölten Teil erst gerade und hakt im trockenen letzten Drittel ein. Am meisten fällt, wenn sie schräg in die „Pocket“ zwischen Pin 1 und 3 läuft. Gegen Tante Gerda, Kalle oder Otto kannst du um 1, 5 oder 10 € aus der Spielhalle spielen, der Sieger bekommt den doppelten Einsatz.',
     'rules.classic': '<strong>Klassisch:</strong> Darts pur gegen die Gäste vom Tresen – keine Pfeil-Fähigkeiten, kein Adrenalin, keine Getränke, und auch die Gegner spielen ohne Tricks. Du wirfst mit dem Klassikpfeil, der etwas ruhiger in der Hand liegt als ein nackter Pfeil. Preisgeld gibt es wie sonst auch, das Phantom spielt hier nicht mit.',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Jeder Krug bringt Profi-Heinz-Flashback-Pfeile mit dem besten Aim im Spiel – 2 nach dem ersten, 5 nach dem zweiten, 10 nach dem dritten Krug –, die du per Knopf selbst einsetzt. Heinz’ Spezial-Likör (10 €, bis zu 5): Steht ein Checkout an, werden Doppel, Triple und Bull für dich je Likör 20 % größer, mit 5 Likören doppelt so groß. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
@@ -1409,6 +1474,21 @@ const I18N = {
     'w.phantom': 'The Phantom… You only beat him with a fully broken-in standard dart or three energy drinks inside you.',
     'w.phopen': 'Three energy drinks! Now the Phantom is vulnerable.',
     'rules.phantom': '<strong>The Phantom:</strong> The pub’s legend. It rarely scores on treble 20 and instead picks 19, 18, 17, 16 or the bull depending on the situation: it avoids leaves without a checkout, sets up finishes and switches when its own darts cover the bed. It isn’t flawless: every leg it misses its first checkout dart, and usually one scoring dart slips into a single. Still, it is normally unbeatable. It only becomes vulnerable if you play the fully broken-in standard dart (+50%) or have had at least 3 energy drinks – then it throws like a very strong pro. Every leg you win earns €50.',
+    'bw.btn': 'Bowling alley', 'bw.card': 'To the bowling alley', 'bw.cardx': 'Ten pins against the regulars, with a stake if you like', 'bw.title': 'Heinz’s bowling alley',
+    'bw.sub0': 'Ten pins · ten frames', 'bw.sub': 'Ten frames · {opp}', 'bw.neon': 'HEINZ’S BOWLING',
+    'bw.setup': 'Who’s playing?', 'bw.setupx': 'Drag the ball sideways to place it, then swipe up: the direction sets the line, a faster swipe means a faster ball. A curve at the end of the swipe adds hook.',
+    'bw.stake': 'Stake', 'bw.nostake': 'None', 'bw.solo': 'Alone', 'bw.start': 'Bowl', 'bw.resume': 'Keep playing', 'bw.new': 'New game', 'bw.leave': 'Back to the pub',
+    'bw.tip': 'Drag the ball sideways = place · swipe up = bowl · curve at the end = hook', 'bw.total': 'Σ', 'bw.frame': 'Frame {f}',
+    'bw.yourturn': 'Frame {f}: your turn – place the ball and swipe up.', 'bw.solo.turn': 'Frame {f}: place the ball and swipe up.', 'bw.cputurn': 'Frame {f}: {name} is up…',
+    'bw.strike': 'Strike!', 'bw.spare': 'Spare!', 'bw.gutter': 'Gutter!', 'bw.split': 'Split!', 'bw.pins': '{n} pins', 'bw.pin1': '1 pin', 'bw.miss': 'Nothing', 'bw.over': 'Game over',
+    'bw.speed': '{v} km/h', 'bw.hookL': 'hooks left', 'bw.hookR': 'hooks right', 'bw.slow': 'Too slow – swipe up more briskly.', 'bw.short': 'Swipe a bit further up.',
+    'bw.win': 'You win, {a} to {b}!', 'bw.winx': ' +{v} for the arcade.', 'bw.lose': '{name} wins {b} to {a}.', 'bw.tie': 'A tie, {a} all – stake returned.',
+    'bw.solodone': 'Done: {a} points.', 'bw.best': 'Best game: {v}.', 'bw.newbest': ' New record!', 'bw.nocash': 'Not enough credit for this stake.', 'bw.forfeit': 'Game abandoned – {name} keeps the stake.',
+    'bw.q.strike': ['All ten! The bar is shaking.', 'Strike! That calls for a round – for me.', 'Straight as a ruler.'],
+    'bw.q.spare': ['Cleaned up nicely.', 'Spare – saved like my pension, only fuller.', 'Rescued!'],
+    'bw.q.gutter': ['The gutter is a line too.', 'The ball just wanted to clean the gutter.', 'Never mind, the pins only laughed a little.'],
+    'bw.q.split': ['A split – good luck with that one.', 'That gap is wider than my dentist’s bill.'],
+    'rules.bowling': '<strong>Bowling alley:</strong> Ten pins, ten frames, real scoring: a strike counts 10 plus your next two balls, a spare 10 plus the next ball, and the tenth frame gives bonus balls after a strike or spare – 300 is a perfect game. Drag the ball sideways to place it, then swipe up: the direction sets the line, the swipe speed sets the ball speed and a curve at the end adds hook. The ball skids straight on the oiled part and hooks on the dry last third. Most pins fall when it enters the “pocket” between pins 1 and 3 at an angle. Against Aunt Gerda, Kalle or Otto you can play for €1, €5 or €10 from the arcade; the winner takes double the stake.',
     'rules.classic': '<strong>Classic:</strong> pure darts against the regulars – no dart abilities, no adrenaline, no drinks, and the opponents play without tricks too. You throw the classic dart, which sits a little steadier in the hand than a bare dart. Prize money works as usual; the Phantom sits this one out.',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): every mug brings Pro Heinz flashback darts with the best aim in the game – 2 after the first, 5 after the second, 10 after the third mug – that you use with a button. Heinz’s special liqueur (€10, up to 5): when a checkout is on, doubles, trebles and the bull grow 20% per liqueur for you, twice the size with 5. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
@@ -1778,6 +1858,21 @@ const sfx = (() => {
     get muted() { return muted; },
     setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : .8; },
     // Pokertisch: Karte über den Filz schnippen, Chips klackern
+    // Bowlingbahn: Kugel aufsetzen und rollen, Pins krachen und klappern
+    rumble(dur, speed) {
+      if (!ok()) return; const t = ac.currentTime;
+      nz(t, .1, 'lowpass', 260, .8, .55); tone(t, .14, 'sine', 120, 50, .5);
+      nz(t + .06, dur, 'lowpass', 140 + speed * 14, 1.4, .3, .3); tone(t + .06, dur, 'triangle', 46 + speed * 2, 38, .14);
+    },
+    pinCrash(k) {
+      if (!ok()) return; const t = ac.currentTime;
+      nz(t, .09, 'highpass', 1500, .7, .35 + .4 * k); tone(t, .14, 'triangle', 820, 420, .2 + .2 * k); nz(t, .35, 'bandpass', 900, 1.2, .25 * k, .01);
+      for (let i = 0; i < 6 + 10 * k; i++) { const at = t + .02 + Math.random() * (.2 + .4 * k); nz(at, .04 + Math.random() * .05, 'bandpass', 1300 + Math.random() * 2600, 3, .1 + Math.random() * .12); tone(at, .07, 'triangle', 650 + Math.random() * 900, 380 + Math.random() * 250, .05); }
+    },
+    pinTick(k) {
+      if (!ok()) return; const t = ac.currentTime, f = 900 + Math.random() * 1400;
+      nz(t, .05, 'bandpass', f * 1.6, 3, .06 + .14 * k); tone(t, .06, 'triangle', f, f * .6, .03 + .07 * k);
+    },
     card() { if (!ok()) return; const t = ac.currentTime; nz(t, .07, 'bandpass', 2600, .9, .1, .003); nz(t + .02, .05, 'highpass', 5000, .7, .05); },
     chips(n = 4) {
       if (!ok()) return; const t = ac.currentTime;
@@ -3993,7 +4088,7 @@ function cpuBoostTag(g) {
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1 || g.mode !== 'cpu') return;
-  if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open || drinkShop.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open || drinkShop.open || bowling.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const legend = g.level === LEGEND;
   const kind = legend ? 'none' : cpuBoostKind(g, !!f && f.seq.length === 1);
@@ -7305,6 +7400,655 @@ const cardroom = (() => {
   };
 })();
 
+/* ---------- Bowlingbahn: zehn Pins gegen die Stammgäste, Kugel per Wisch ---------- */
+const bowling = (() => {
+/* ---------- Bowling-Physik (Bahnkoordinaten in m: x quer, 0 = Mitte, y ab Foul-Linie) ---------- */
+  const BW = (() => {
+  const LANE = .533, GUT = .235, HEAD = 18.29, ROW = .264, SPACE = .3048, PIT = HEAD + 1.05, WALL = LANE + GUT;
+  const BALL_R = .108, PIN_R = .061, BALL_M = 6.8, PIN_M = 1.55, LIE_R = .1;
+  const HOOK_A = 1.15, OIL = 9, DRY = 13;
+  const SPOTS = [];
+  for (let r = 0; r < 4; r++) for (let i = 0; i <= r; i++) SPOTS.push({ x: (i - r / 2) * SPACE, y: HEAD + r * ROW });
+  // Nummern wie auf der Bahn: 1 vorn, 7-8-9-10 hinten
+  const NUM = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const rnd = (rng) => rng ? rng() : Math.random();
+  function gauss(rng) { let u = 0, v = 0; while (!u) u = rnd(rng); v = rnd(rng); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  function rack(standing) {
+    return SPOTS.map((s, i) => ({ i, x: s.x, y: s.y, vx: 0, vy: 0, up: standing ? standing[i] : true, fall: 0, gone: false, r: PIN_R, ang: 0, hitT: -1 }));
+  }
+  // Wurf: Startpunkt x0, Winkel (rad, + = nach rechts), Tempo (m/s), Hook (-1 links … 1 rechts)
+  function start(x0, ang, speed, hook) {
+    return { x: x0, y: -.35, vx: Math.sin(ang) * speed, vy: Math.cos(ang) * speed, hook, gutter: false, done: false, spin: 0, r: BALL_R };
+  }
+  const ramp = y => y <= OIL ? 0 : y >= DRY ? 1 : (y - OIL) / (DRY - OIL);
+  function stepBall(b, dt) {
+    if (b.done) return;
+    if (!b.gutter && b.y < HEAD - .3) b.vx += b.hook * HOOK_A * ramp(b.y) * dt;
+    b.x += b.vx * dt; b.y += b.vy * dt; b.spin += Math.hypot(b.vx, b.vy) * dt / BALL_R;
+    if (!b.gutter && Math.abs(b.x) > LANE) { b.gutter = true; b.vx = 0; b.x = Math.sign(b.x) * (LANE + GUT * .5); }
+    if (b.y > PIT + .5) b.done = true;
+  }
+  function collide(a, b, ma, mb, e, rng) {
+    const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy), rr = a.r + b.r;
+    if (d >= rr || d === 0) return false;
+    let nx = dx / d, ny = dy / d;
+    const rv = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
+    if (rv <= 0) return false;
+    // ein wenig Chaos: Pins sind keine Scheiben
+    const j0 = (gauss(rng) * .12), c = Math.cos(j0), s = Math.sin(j0);
+    const nnx = nx * c - ny * s, nny = nx * s + ny * c; nx = nnx; ny = nny;
+    const imp = (1 + e) * rv / (1 / ma + 1 / mb);
+    a.vx -= imp / ma * nx; a.vy -= imp / ma * ny;
+    b.vx += imp / mb * nx; b.vy += imp / mb * ny;
+    // auseinanderschieben
+    const over = (rr - d) / 2; a.x -= nx * over * (mb / (ma + mb)) * 2; a.y -= ny * over * (mb / (ma + mb)) * 2; b.x += nx * over * (ma / (ma + mb)) * 2; b.y += ny * over * (ma / (ma + mb)) * 2;
+    return rv;
+  }
+  const TOPPLE = .35;
+  function knock(p, rv, t) {
+    if (!p.up) return;
+    if (rv > TOPPLE || Math.hypot(p.vx, p.vy) > TOPPLE) { p.up = false; p.fall = 0; p.hitT = t; p.ang = Math.atan2(p.vy, p.vx); }
+    else { p.vx = 0; p.vy = 0; }   // nur gewackelt
+  }
+  // Ein Simulationsschritt; liefert Ereignisse für den Ton
+  function step(st, dt, rng) {
+    const b = st.ball, ev = st.ev; st.t += dt;
+    stepBall(b, dt);
+    const pins = st.pins;
+    if (!b.gutter && !b.done) for (const p of pins) {
+      if (p.gone) continue;
+      const rv = collide(b, p, BALL_M, PIN_M, .75, rng);
+      if (rv) { ev.push({ k: 'ball', v: rv }); if (!st.firstHit) st.firstHit = { x: b.x, pin: p.i }; knock(p, rv, st.t); }
+    }
+    for (let i = 0; i < pins.length; i++) {
+      const p = pins[i]; if (p.gone || p.up) continue;
+      for (let j = 0; j < pins.length; j++) {
+        if (i === j) continue; const q = pins[j]; if (q.gone) continue;
+        if (!q.up && j < i) continue;   // fallende Paare nur einmal
+        const rv = collide(p, q, PIN_M, PIN_M, .55, rng);
+        if (rv) { ev.push({ k: 'pin', v: rv }); knock(q, rv, st.t); }
+      }
+    }
+    for (const p of pins) {
+      if (p.gone || p.up) continue;
+      p.fall = Math.min(1, p.fall + dt / .22); p.r = PIN_R + (LIE_R - PIN_R) * p.fall;
+      const sp = Math.hypot(p.vx, p.vy);
+      if (sp > 0) { const dec = Math.max(0, sp - 2.6 * dt) / sp; p.vx *= dec; p.vy *= dec; }
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      if (sp > .2) p.ang = Math.atan2(p.vy, p.vx);
+      if (Math.abs(p.x) > WALL - p.r && p.y > HEAD - .7) { p.x = Math.sign(p.x) * (WALL - p.r); p.vx *= -.45; ev.push({ k: 'wall', v: Math.abs(p.vx) }); }
+      if (p.y > PIT) p.gone = true;
+      if (p.y < HEAD - .7 && Math.abs(p.x) > LANE) p.gone = true;
+    }
+    if (b.done || b.gutter && b.y > PIT) {
+      st.after += dt;
+    }
+    const moving = pins.some(p => !p.gone && !p.up && Math.hypot(p.vx, p.vy) > .05);
+    if ((b.y > PIT || b.done) && (!moving && st.after > .5 || st.after > 3.5)) st.over = true;
+  }
+  function roll(standing, x0, ang, speed, hook) {
+    return { t: 0, after: 0, ball: start(x0, ang, speed, hook), pins: rack(standing).map(p => { if (!p.up) p.gone = true; return p; }), ev: [], over: false, firstHit: null };
+  }
+  function result(st) { return st.pins.map(p => !p.gone && p.up); }
+  function simulate(standing, x0, ang, speed, hook, rng) {
+    const st = roll(standing, x0, ang, speed, hook);
+    while (!st.over && st.t < 12) { step(st, 1 / 240, rng); st.ev.length = 0; }
+    return { left: result(st), st };
+  }
+  // Wo kreuzt die Kugel ohne Pins die Höhe y? (für Zielhilfe und Computerspieler)
+  function pathX(x0, ang, speed, hook, yT) {
+    const b = start(x0, ang, speed, hook);
+    while (b.y < yT && !b.done) { stepBall(b, 1 / 240); if (b.gutter) return Math.sign(b.x) * 9; }
+    return b.x;
+  }
+  function aimFor(x0, speed, hook, xT, yT) {
+    let lo = -.12, hi = .12;
+    for (let k = 0; k < 30; k++) { const m = (lo + hi) / 2; if (pathX(x0, m, speed, hook, yT) < xT) lo = m; else hi = m; }
+    return (lo + hi) / 2;
+  }
+  return { LANE, GUT, WALL, HEAD, PIT, ROW, SPACE, BALL_R, PIN_R, LIE_R, SPOTS, NUM, rack, roll, step, simulate, pathX, aimFor, result, gauss };
+})();
+  // Wertung: je Frame die laufende Summe, solange er schon fertig gerechnet werden kann
+  function bowlScore(rolls) {
+    const cum = []; let i = 0, tot = 0;
+    for (let f = 0; f < 10; f++) {
+      if (i >= rolls.length) break;
+      if (rolls[i] === 10) {
+        if (rolls.length < i + 3) break; tot += 10 + rolls[i + 1] + rolls[i + 2]; i += 1;
+      } else {
+        if (rolls.length < i + 2) break;
+        if (rolls[i] + rolls[i + 1] === 10) { if (rolls.length < i + 3) break; tot += 10 + rolls[i + 2]; }
+        else tot += rolls[i] + rolls[i + 1];
+        i += 2;
+      }
+      cum.push(tot);
+    }
+    return cum;
+  }
+  // Wo steht ein Spieler: Frame (0–9), fertig?, frisches Gestell?
+  function bowlState(rolls) {
+    let i = 0, f = 0;
+    while (f < 9 && i < rolls.length) { if (rolls[i] === 10) i += 1; else if (i + 1 < rolls.length) i += 2; else break; f++; }
+    if (f < 9) return { frame: f, done: false, fresh: rolls.length === i };
+    const r = rolls.slice(i), n = r.length;
+    const extra = n >= 2 && (r[0] === 10 || r[0] + r[1] === 10);
+    const done = n === 3 || (n === 2 && !extra);
+    let fresh = true;
+    if (n === 1) fresh = r[0] === 10;
+    else if (n === 2) fresh = r[0] === 10 ? r[1] === 10 : r[0] + r[1] === 10;
+    return { frame: 9, done, fresh };
+  }
+  // Zeichen auf dem Spielbogen: X Strike, / Spare, – keiner
+  function bowlMarks(rolls) {
+    const out = [], m = v => v === 0 ? '–' : String(v); let i = 0;
+    for (let f = 0; f < 10 && i < rolls.length; f++) {
+      if (f < 9) {
+        if (rolls[i] === 10) { out.push(['', 'X']); i++; continue; }
+        const a = rolls[i], b = rolls[i + 1];
+        out.push([m(a), b == null ? '' : a + b === 10 ? '/' : m(b)]); i += 2;
+      } else {
+        const s = []; let fresh = true, first = 0;
+        for (const v of rolls.slice(i)) {
+          if (fresh) { s.push(v === 10 ? 'X' : m(v)); fresh = v === 10; first = v; }
+          else { s.push(first + v === 10 ? '/' : m(v)); fresh = true; }
+        }
+        out.push(s); i = rolls.length;
+      }
+    }
+    return out;
+  }
+
+  const D2R = Math.PI / 180, CAM_H = 1.45, CAM0 = -6, BALL_Y = -.35, AIM_K = .45, STEP = 1 / 240;
+  const ALL = () => Array(10).fill(true);
+  // Die Stammgäste kegeln wie sie Darts werfen: Gerda gerade und wackelig, Kalle mit etwas Effet, Otto mit sauberem Hook
+  const OPP = {
+    gerda: { lvl: 'anfaenger', x0: .05, hook: 0, speed: 6.6, sa: .75, sx: .05, ss: .45, sh: .12, ball: ['#f4a6d0', '#7a2456'] },
+    kalle: { lvl: 'stammgast', x0: .2, hook: -.5, speed: 7.6, sa: .33, sx: .035, ss: .35, sh: .12, ball: ['#8fbcff', '#1c3f7a'] },
+    otto:  { lvl: 'verein', x0: .26, hook: -.9, speed: 8.2, sa: .17, sx: .02, ss: .22, sh: .08, ball: ['#8ee8b0', '#145a33'] }
+  };
+  const MY_BALL = ['#ff9a74', '#7a1a10'];
+  const STAKES = [0, 100, 500, 1000];
+  const PROF = [[0, .026], [.03, .042], [.075, .056], [.114, .0605], [.16, .055], [.21, .038], [.245, .024], [.27, .022], [.3, .028], [.335, .032], [.36, .028], [.375, .017], [.381, 0]];
+
+  const el = $('#bowl'), cv = $('#bwCv'), g = cv.getContext('2d'), fmt = c => arcade.fmt(c);
+  let W = 1, H = 1, dpr = 1, F = 1, HY = 0, running = false, last = 0, acc = 0, cam = CAM0, hold = false;
+  let G = null, sim = null, rackPins = makeRack(ALL()), myX = .14, gest = null, guide = null, flash = null;
+  let sweepT = 0, sweepMid = null, sweepEnd = null, waitT = 0, waitFn = null, tickAt = 0, cpuShot = null;
+  const pend = v => { try { if (v) localStorage.setItem('dk-bowl', String(v)); else localStorage.removeItem('dk-bowl'); } catch (e) {} };
+  // Einsatz, der beim Schließen der Seite noch auf der Bahn lag, kommt zurück
+  try { const v = +localStorage.getItem('dk-bowl'); if (v > 0) arcade.addCash(v); localStorage.removeItem('dk-bowl'); } catch (e) {}
+  let best = 0; try { best = +localStorage.getItem('dk-bowl-best') || 0; } catch (e) {}
+
+  function makeRack(standing) { return BW.rack(standing).map(p => { p.gone = !p.up; return p; }); }
+  const nameOf = id => id === 'you' ? t('you') : t('lvl.' + OPP[id].lvl);
+  const msg = s => { $('#bwMsg').textContent = s; };
+  const cur = () => G.players[G.cur];
+  const wait = (s, fn) => { waitT = s; waitFn = fn; };
+  // Ein Split: Kopfpin weg, und die stehenden Pins zerfallen in getrennte Gruppen
+  function isSplit(left) {
+    const up = left.map((v, i) => v ? i : -1).filter(i => i >= 0);
+    if (left[0] || up.length < 2) return false;
+    const seen = new Set([up[0]]), todo = [up[0]];
+    while (todo.length) {
+      const a = BW.SPOTS[todo.pop()];
+      for (const j of up) if (!seen.has(j) && Math.hypot(BW.SPOTS[j].x - a.x, BW.SPOTS[j].y - a.y) < BW.SPACE * 1.05) { seen.add(j); todo.push(j); }
+    }
+    return seen.size < up.length;
+  }
+
+  /* ---------- Ablauf ---------- */
+  function startGame(opp, stake) {
+    if (G && !G.over && G.stake) { msg(t('bw.forfeit', { name: nameOf(G.players[1].id) })); pend(0); }
+    if (stake) { arcade.addCash(-stake); pend(stake); sfx.chips(3); }
+    const players = [{ id: 'you', rolls: [], ball: MY_BALL }];
+    if (opp) players.push({ id: opp, rolls: [], ball: OPP[opp].ball });
+    G = { opp, stake: opp ? stake : 0, players, cur: 0, standing: ALL(), over: false, phase: 'wait', frameAt: 0, left: null };
+    sim = null; rackPins = makeRack(ALL()); cam = CAM0; hold = false; flash = null;
+    $('#bwSetup').hidden = true; paintCash(); renderSheet();
+    $('#bwSub').textContent = t('bw.sub', { opp: opp ? nameOf(opp) : t('bw.solo') });
+    nextTurn();
+  }
+  function nextTurn() {
+    const p = cur(), s = bowlState(p.rolls);
+    if (p.id === 'you') {
+      G.phase = 'aim';
+      msg(t(G.players.length > 1 ? 'bw.yourturn' : 'bw.solo.turn', { f: s.frame + 1 }));
+    } else {
+      G.phase = 'cpu'; cpuShot = cpuPlan(OPP[p.id], G.standing);
+      msg(t('bw.cputurn', { name: nameOf(p.id), f: s.frame + 1 }));
+      wait(.9, () => throwBall(...cpuShot));
+    }
+    renderSheet();
+  }
+  function cpuPlan(c, standing) {
+    let x0 = c.x0, hook = c.hook, xT = .065, yT = BW.HEAD;
+    if (!standing.every(v => v)) {
+      // Spare: auf den vordersten Pin, leicht zur Mitte der Reste, quer über die Bahn
+      const up = BW.SPOTS.filter((s, i) => standing[i]);
+      const front = up.reduce((a, b) => b.y < a.y ? b : a), cx = up.reduce((a, b) => a + b.x, 0) / up.length;
+      xT = (front.x + cx) / 2; yT = front.y; hook = c.hook * .4;
+      x0 = Math.max(-.4, Math.min(.4, -xT * .8 + c.x0 * .5));
+    }
+    const ang = BW.aimFor(x0, c.speed, hook, xT, yT);
+    return [x0 + BW.gauss() * c.sx, ang + BW.gauss() * c.sa * D2R, Math.max(5, c.speed + BW.gauss() * c.ss), hook + BW.gauss() * c.sh];
+  }
+  function throwBall(x0, ang, speed, hook) {
+    if (!G || G.over) return;
+    x0 = Math.max(-BW.LANE + .1, Math.min(BW.LANE - .1, x0));
+    G.frameAt = bowlState(cur().rolls).frame; G.phase = 'roll';
+    sim = BW.roll(G.standing, x0, ang, speed, hook); sim.color = cur().ball; acc = 0; hold = false;
+    sfx.rumble((BW.PIT - BALL_Y) / speed, speed);
+    const hk = Math.abs(hook) < .12 ? '' : ' · ' + t(hook < 0 ? 'bw.hookL' : 'bw.hookR');
+    G.info = t('bw.speed', { v: Math.round(speed * 3.6) }) + hk;
+  }
+  function finishRoll() {
+    const p = cur(), before = G.standing.filter(Boolean).length, left = BW.result(sim), after = left.filter(Boolean).length, n = before - after;
+    p.rolls.push(n); G.left = left; G.phase = 'wait'; hold = true;
+    const fresh = before === 10, you = p.id === 'you';
+    let key = n === 1 ? 'bw.pin1' : 'bw.pins';
+    if (fresh && n === 10) key = 'bw.strike';
+    else if (!fresh && after === 0) key = 'bw.spare';
+    else if (sim.ball.gutter && n === 0) key = 'bw.gutter';
+    else if (n === 0) key = 'bw.miss';
+    else if (fresh && isSplit(left)) key = 'bw.split';
+    const word = t(key, { n });
+    flash = { text: word, t: 0, big: key === 'bw.strike' || key === 'bw.spare' };
+    if (key === 'bw.strike') sfx.cheer(1.2); else if (key === 'bw.spare') sfx.cheer(.6); else if (key === 'bw.gutter') sfx.bust();
+    let line = (you ? '' : nameOf(p.id) + ': ') + word + ' · ' + G.info;
+    const q = { 'bw.strike': 'bw.q.strike', 'bw.spare': 'bw.q.spare', 'bw.gutter': 'bw.q.gutter', 'bw.split': 'bw.q.split' }[key];
+    if (you && q && Math.random() < .6) line += ' – Heinz: „' + t(q) + '“';
+    msg(line); renderSheet();
+    wait(1.3, afterRoll);
+  }
+  function afterRoll() {
+    const p = cur(), s = bowlState(p.rolls), next = s.fresh || s.done ? ALL() : G.left;
+    const change = s.done || s.frame !== G.frameAt;
+    sweep(change ? ALL() : next, () => { if (change) nextPlayer(); else nextTurn(); });
+  }
+  function nextPlayer() {
+    for (let k = 1; k <= G.players.length; k++) {
+      const i = (G.cur + k) % G.players.length;
+      if (!bowlState(G.players[i].rolls).done) { G.cur = i; nextTurn(); return; }
+    }
+    endGame();
+  }
+  // Der Pinsetter senkt den Rechen, räumt ab und stellt neu
+  function sweep(standing, then) {
+    sweepT = .001;
+    sweepMid = () => { sim = null; G.standing = standing; rackPins = makeRack(standing); hold = false; };
+    sweepEnd = then;
+  }
+  function endGame() {
+    G.over = true; G.phase = 'over'; G.cur = -1; pend(0);
+    const tot = G.players.map(p => bowlScore(p.rolls)[9] || 0), a = tot[0];
+    let line, rec = '';
+    if (a > best) { best = a; rec = t('bw.newbest'); try { localStorage.setItem('dk-bowl-best', String(best)); } catch (e) {} }
+    if (G.players.length < 2) line = t('bw.solodone', { a }) + rec;
+    else {
+      const b = tot[1], who = nameOf(G.players[1].id);
+      if (a > b) { line = t('bw.win', { a, b }); if (G.stake) { arcade.addCash(2 * G.stake); line += t('bw.winx', { v: fmt(2 * G.stake) }); sfx.coins(8); } sfx.cheer(1.4); }
+      else if (a < b) { line = t('bw.lose', { name: who, a, b }); sfx.bust(); }
+      else { line = t('bw.tie', { a }); if (G.stake) arcade.addCash(G.stake); }
+      line += rec;
+    }
+    msg(line + ' ' + t('bw.best', { v: best })); paintCash(); renderSheet();
+    flash = { text: t('bw.over'), t: 0, big: true };
+    setTimeout(() => { if (G && G.over && !el.hidden) showSetup(); }, 2600);
+  }
+
+  /* ---------- Spielbogen ---------- */
+  function renderSheet() {
+    const tb = $('#bwSheet');
+    if (!G) { tb.innerHTML = ''; return; }
+    const head = '<thead><tr><th></th>' + Array.from({ length: 10 }, (_, i) => `<th>${i + 1}</th>`).join('') + `<th>${t('bw.total')}</th></tr></thead>`;
+    const rows = G.players.map((p, pi) => {
+      const mk = bowlMarks(p.rolls), sc = bowlScore(p.rolls), st = bowlState(p.rolls), on = pi === G.cur;
+      const cells = Array.from({ length: 10 }, (_, f) => {
+        const m = mk[f] || (f < 9 ? ['', ''] : ['', '', '']), slots = f < 9 ? 2 : 3;
+        while (m.length < slots) m.push('');
+        return `<td class="${on && st.frame === f && !st.done ? 'cur' : ''}"><div class="bw-r">${m.map(v => `<span>${v}</span>`).join('')}</div><div class="bw-c">${sc[f] != null ? sc[f] : ''}</div></td>`;
+      }).join('');
+      return `<tr class="${on ? 'cur' : ''}"><th>${nameOf(p.id)}</th>${cells}<td class="bw-t">${sc.length ? sc[sc.length - 1] : 0}</td></tr>`;
+    }).join('');
+    tb.innerHTML = head + '<tbody>' + rows + '</tbody>';
+  }
+  function paintCash() { $('#bwCash').textContent = fmt(arcade.cash); }
+
+  /* ---------- Bild ---------- */
+  function P(x, y, z) { const d = Math.max(.25, y - cam); return { x: W / 2 + F * x / d, y: HY + F * (CAM_H - z) / d, s: F / d }; }
+  const nearY = () => cam + .4;
+  function quad(x0, x1, y0, y1, z, fill) {
+    y0 = Math.max(y0, nearY()); if (y1 <= y0) return;
+    const a = P(x0, y0, z), b = P(x1, y0, z), c = P(x1, y1, z), d = P(x0, y1, z);
+    g.fillStyle = fill; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.lineTo(c.x, c.y); g.lineTo(d.x, d.y); g.closePath(); g.fill();
+  }
+  function wall(x, y0, y1, z0, z1, fill) {
+    y0 = Math.max(y0, nearY()); if (y1 <= y0) return;
+    const a = P(x, y0, z0), b = P(x, y1, z0), c = P(x, y1, z1), d = P(x, y0, z1);
+    g.fillStyle = fill; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.lineTo(c.x, c.y); g.lineTo(d.x, d.y); g.closePath(); g.fill();
+  }
+  function line(x0, y0, x1, y1, z, col, w) {
+    y0 = Math.max(y0, nearY()); if (y1 <= y0) return;
+    const a = P(x0, y0, z), b = P(x1, y1, z);
+    g.strokeStyle = col; g.lineWidth = w; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke();
+  }
+  function drawLane(ox, dim) {
+    const L = BW.LANE, GW = BW.GUT, deck = BW.HEAD - .45, end = BW.PIT, y0 = Math.min(-3, nearY());
+    // Anlauf, Kappen zwischen den Bahnen
+    quad(ox - L - GW - .12, ox + L + GW + .12, y0, 0, 0, dim ? '#5a3b22' : '#7a5230');
+    quad(ox - L - GW - .12, ox - L - GW, 0, end, 0, '#1d120b'); quad(ox + L + GW, ox + L + GW + .12, 0, end, 0, '#1d120b');
+    // Rinnen
+    for (const sg of [-1, 1]) {
+      const xa = ox + sg * L, xb = ox + sg * (L + GW);
+      quad(Math.min(xa, xb), Math.max(xa, xb), 0, end, -.03, '#24272c');
+      line(ox + sg * (L + GW * .5), 0, ox + sg * (L + GW * .5), end, -.05, 'rgba(0,0,0,.45)', 2);
+    }
+    // Holz: vorne Ahorn, in der Mitte Kiefer, das Pin-Deck wieder heller
+    const a = P(0, Math.max(0, nearY()), 0), b = P(0, deck, 0);
+    const wood = g.createLinearGradient(0, a.y, 0, b.y);
+    wood.addColorStop(0, dim ? '#a07a4c' : '#d9b07a'); wood.addColorStop(.25, dim ? '#93683c' : '#c79559'); wood.addColorStop(1, dim ? '#6e4c2a' : '#a8743f');
+    quad(ox - L, ox + L, 0, deck, 0, wood);
+    quad(ox - L, ox + L, deck, end, 0, dim ? '#8c6a44' : '#d6b483');
+    if (!dim) {
+      // Ölfilm in der Mitte glänzt
+      const sh = g.createLinearGradient(0, a.y, 0, P(0, 10, 0).y); sh.addColorStop(0, 'rgba(255,240,210,.16)'); sh.addColorStop(1, 'rgba(255,240,210,0)');
+      quad(ox - L * .6, ox + L * .6, 0, 10, 0, sh);
+      const bw = 2 * L / 39;
+      for (let k = 1; k < 39; k++) line(ox - L + k * bw, 0, ox - L + k * bw, end, 0, k % 5 ? 'rgba(70,40,15,.12)' : 'rgba(70,40,15,.22)', 1);
+      line(ox - L, deck, ox + L, deck, 0, 'rgba(70,40,15,.35)', 1.5);
+      // Pfeile und Punkte als Zielhilfe
+      for (let k = 5; k <= 35; k += 5) {
+        const x = ox - L + (k - .5) * bw, y = 3.9 + .9 * (1 - Math.abs(k - 20) / 15);
+        const p1 = P(x, y + .2, 0), p2 = P(x - .022, y, 0), p3 = P(x + .022, y, 0);
+        if (y > nearY()) { g.fillStyle = '#5a2c12'; g.beginPath(); g.moveTo(p1.x, p1.y); g.lineTo(p2.x, p2.y); g.lineTo(p3.x, p3.y); g.closePath(); g.fill(); }
+      }
+      for (const k of [3, 5, 8, 11, 14, 25, 28, 31, 34, 36]) {
+        const d = P(ox - L + (k - .5) * bw, 2.13, 0);
+        if (2.13 > nearY()) { g.fillStyle = '#5a2c12'; g.beginPath(); g.ellipse(d.x, d.y, Math.max(1, .012 * d.s), Math.max(.6, .005 * d.s), 0, 0, Math.PI * 2); g.fill(); }
+      }
+      quad(ox - L - GW, ox + L + GW, -.012, .012, 0, '#8a1f1f');
+    }
+    // Seitenwände am Pin-Deck
+    wall(ox - BW.WALL, BW.HEAD - .9, end, 0, .5, dim ? '#21140c' : '#2c1c11');
+    wall(ox + BW.WALL, BW.HEAD - .9, end, 0, .5, dim ? '#21140c' : '#2c1c11');
+  }
+  function drawBack() {
+    const sky = g.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#120b1c'); sky.addColorStop(.35, '#1d1226'); sky.addColorStop(1, '#0d0806');
+    g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    // Grube und Rückwand
+    const pit = P(0, BW.PIT, 0), top = P(0, BW.PIT + .15, .58);
+    g.fillStyle = '#050403'; g.fillRect(0, top.y, W, pit.y - top.y + 2);
+    // Blende über den Pins mit Neon-Schrift
+    const m0 = P(0, BW.PIT + .15, 2.6), m1 = P(0, BW.PIT + .15, .58);
+    const mg = g.createLinearGradient(0, m0.y, 0, m1.y); mg.addColorStop(0, '#2a1838'); mg.addColorStop(1, '#3d2350');
+    g.fillStyle = mg; g.fillRect(0, m0.y, W, m1.y - m0.y);
+    g.fillStyle = 'rgba(0,0,0,.4)'; g.fillRect(0, m1.y - 3, W, 3);
+    const fs = Math.max(10, .16 * m1.s);
+    g.save(); g.font = `700 ${fs}px 'Cabin Sketch', cursive`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.shadowColor = '#ff4fd8'; g.shadowBlur = fs * .6; g.fillStyle = '#ffd2f6';
+    g.fillText(t('bw.neon'), W / 2, m1.y - .2 * m1.s);
+    g.shadowColor = '#4fd8ff'; g.fillStyle = '#c8f4ff'; g.font = `700 ${fs * .6}px 'Barlow Condensed', sans-serif`;
+    for (const sg of [-1, 1]) g.fillText(sg < 0 ? '7' : '8', W / 2 + sg * 1.75 * m1.s, m1.y - .2 * m1.s);
+    g.restore();
+  }
+  function drawPin(p) {
+    if (p.gone) return;
+    const phi = (p.up ? 0 : p.fall) * Math.PI / 2, ca = Math.cos(p.ang), sa = Math.sin(p.ang);
+    const lift = .05 * Math.sin(phi);
+    const b = P(p.x, p.y, lift), tp = P(p.x + Math.sin(phi) * .381 * ca, p.y + Math.sin(phi) * .381 * sa, Math.cos(phi) * .381 + lift);
+    if (p.y < nearY()) return;
+    const ax = tp.x - b.x, ay = tp.y - b.y, len = Math.hypot(ax, ay), sw = (b.s + tp.s) / 2;
+    if (len < .5) return;
+    // Schatten
+    g.fillStyle = 'rgba(0,0,0,.28)'; g.beginPath(); g.ellipse(b.x, b.y, .07 * b.s, .025 * b.s, 0, 0, Math.PI * 2); g.fill();
+    g.save(); g.translate(b.x, b.y); g.rotate(Math.atan2(ax, -ay));
+    const hk = len / .381;
+    const pts = PROF.map(([h, w]) => [w * sw, -h * hk]);
+    g.beginPath(); g.moveTo(-pts[0][0], 0);
+    for (let i = 1; i < pts.length; i++) { const [w0, h0] = pts[i - 1], [w1, h1] = pts[i]; g.quadraticCurveTo(-w0, h0, -(w0 + w1) / 2, (h0 + h1) / 2); }
+    g.lineTo(0, pts[pts.length - 1][1]);
+    for (let i = pts.length - 1; i > 0; i--) { const [w0, h0] = pts[i], [w1, h1] = pts[i - 1]; g.quadraticCurveTo(w0, h0, (w0 + w1) / 2, (h0 + h1) / 2); }
+    g.lineTo(pts[0][0], 0); g.closePath();
+    const wmax = .0605 * sw, gr = g.createLinearGradient(-wmax, 0, wmax, 0);
+    gr.addColorStop(0, '#b9b1a4'); gr.addColorStop(.38, '#ffffff'); gr.addColorStop(1, '#a9a091');
+    g.fillStyle = gr; g.fill();
+    g.save(); g.clip();
+    g.fillStyle = '#c0262b';
+    for (const h of [.252, .28]) g.fillRect(-wmax, -h * hk - .006 * hk, wmax * 2, .011 * hk);
+    g.restore(); g.restore();
+  }
+  function drawBall(x, y, gutter, spin, col) {
+    if (y < nearY() || y > BW.PIT + .25) return;
+    const R = BW.BALL_R, z = gutter ? R - .06 : R, c = P(x, y, z), r = R * c.s;
+    g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(c.x, c.y + r * .9, r * .95, r * .3, 0, 0, Math.PI * 2); g.fill();
+    const gr = g.createRadialGradient(c.x - r * .35, c.y - r * .4, r * .1, c.x, c.y, r);
+    gr.addColorStop(0, col[0]); gr.addColorStop(.55, col[1]); gr.addColorStop(1, '#0a0606');
+    g.fillStyle = gr; g.beginPath(); g.arc(c.x, c.y, r, 0, Math.PI * 2); g.fill();
+    // Grifflöcher rollen mit
+    g.fillStyle = 'rgba(10,6,6,.85)';
+    [[0, -.2], [.32, -.12], [.32, .14]].forEach(([o, dx]) => {
+      const lat = spin + o, cz = Math.cos(lat);
+      if (cz < .15) return;
+      g.beginPath(); g.ellipse(c.x + dx * r, c.y - Math.sin(lat) * r * .7, r * .1, r * .1 * cz, 0, 0, Math.PI * 2); g.fill();
+    });
+    g.fillStyle = 'rgba(255,255,255,.35)'; g.beginPath(); g.ellipse(c.x - r * .38, c.y - r * .45, r * .22, r * .12, -.6, 0, Math.PI * 2); g.fill();
+  }
+  function drawRake() {
+    if (!sweepT) return;
+    const k = Math.sin(Math.PI * Math.min(1, sweepT));
+    const zb = .75 - k * .7, y = BW.HEAD - .5;
+    wall(0, y, y + .02, zb, zb + .1, '#2b2b30');
+    const a = P(-BW.WALL, y, zb), b = P(BW.WALL, y, zb + .1);
+    g.fillStyle = '#3a3a40'; g.fillRect(a.x, b.y, b.x - a.x, a.y - b.y);
+    g.fillStyle = '#f2c94c'; for (let i = 0; i < 6; i++) { const x = a.x + (b.x - a.x) * (i + .25) / 6; g.fillRect(x, b.y, (b.x - a.x) / 12, a.y - b.y); }
+  }
+  function drawHud() {
+    // Mini-Gestell oben rechts
+    const pins = sim ? sim.pins : rackPins, r = Math.max(4, Math.min(7, W / 80)), bx = W - 8 - r * 8.6, by = 8 + r * 1.6;
+    g.fillStyle = 'rgba(10,6,3,.55)'; g.fillRect(bx - r * 1.6, by - r * 1.6, r * 10.2, r * 9);
+    BW.SPOTS.forEach((s, i) => {
+      const row = Math.round((s.y - BW.HEAD) / BW.ROW), x = bx + r * 3.6 + s.x / BW.SPACE * r * 2.4, y = by + (3 - row) * r * 2.1;
+      const p = pins[i], up = p && !p.gone && p.up;
+      g.fillStyle = up ? '#fff6e6' : 'rgba(255,255,255,.12)'; g.beginPath(); g.arc(x, y, r * .8, 0, Math.PI * 2); g.fill();
+    });
+    if (G && !G.over && G.cur >= 0) {
+      const p = cur(), s = bowlState(p.rolls);
+      g.font = "600 15px 'Barlow Condensed', sans-serif"; g.textBaseline = 'top'; g.textAlign = 'left';
+      const txt = nameOf(p.id) + ' · ' + t('bw.frame', { f: s.frame + 1 });
+      g.fillStyle = 'rgba(10,6,3,.55)'; g.fillRect(8, 8, g.measureText(txt).width + 16, 24);
+      g.fillStyle = '#f3d487'; g.fillText(txt, 16, 12);
+    }
+    if (flash) {
+      const k = flash.t, a = k < 1.4 ? 1 : Math.max(0, 1 - (k - 1.4) / .5);
+      if (a > 0) {
+        const fs = (flash.big ? .13 : .085) * Math.min(W, H * 1.2) * (1 + .25 * Math.max(0, 1 - k * 4));
+        g.save(); g.globalAlpha = a; g.font = `700 ${fs}px 'Cabin Sketch', cursive`; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.shadowColor = flash.big ? '#ff4fd8' : '#000'; g.shadowBlur = fs * .4; g.fillStyle = flash.big ? '#ffe9a8' : '#fff4dc';
+        g.fillText(flash.text, W / 2, H * .5); g.restore();
+      }
+    }
+    if (G && G.phase === 'aim' && !gest) {
+      // Wisch-Hinweis über der Kugel
+      const c = P(myX, BALL_Y, BW.BALL_R), bob = Math.sin(performance.now() / 260) * 6;
+      g.save(); g.strokeStyle = 'rgba(255,233,168,.75)'; g.lineWidth = 3; g.lineCap = 'round';
+      const y = c.y - BW.BALL_R * c.s - 18 + bob;
+      g.beginPath(); g.moveTo(c.x, y + 14); g.lineTo(c.x, y - 16); g.moveTo(c.x - 8, y - 8); g.lineTo(c.x, y - 16); g.lineTo(c.x + 8, y - 8); g.stroke(); g.restore();
+    }
+    if (guide) {
+      g.save(); g.strokeStyle = 'rgba(255,214,107,.85)'; g.lineWidth = 2.5; g.setLineDash([6, 7]); g.beginPath();
+      guide.forEach((q, i) => i ? g.lineTo(q.x, q.y) : g.moveTo(q.x, q.y)); g.stroke(); g.restore();
+    }
+  }
+  function draw() {
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawBack();
+    for (const ox of [-3.5, -1.75, 1.75, 3.5]) {
+      drawLane(ox, true);
+      BW.SPOTS.slice().reverse().forEach(s => drawPin({ x: s.x + ox, y: s.y, up: true, fall: 0, ang: 0 }));
+    }
+    drawLane(0, false);
+    // Pins und Kugel nach Entfernung sortiert
+    const items = (sim ? sim.pins : rackPins).filter(p => !p.gone).map(p => ({ y: p.y, f: () => drawPin(p) }));
+    if (sim) items.push({ y: sim.ball.y, f: () => drawBall(sim.ball.x, sim.ball.y, sim.ball.gutter, sim.ball.spin, sim.color) });
+    else if (G && G.phase === 'aim') items.push({ y: BALL_Y, f: () => drawBall(myX, BALL_Y, false, 0, MY_BALL) });
+    else if (G && G.phase === 'cpu' && cpuShot) items.push({ y: BALL_Y, f: () => drawBall(cpuShot[0], BALL_Y, false, 0, cur().ball) });
+    items.sort((a, b) => b.y - a.y).forEach(it => it.f());
+    drawRake();
+    const vg = g.createRadialGradient(W / 2, H * .55, Math.min(W, H) * .3, W / 2, H * .55, Math.max(W, H) * .8);
+    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.5)'); g.fillStyle = vg; g.fillRect(0, 0, W, H);
+    drawHud();
+  }
+
+  /* ---------- Takt ---------- */
+  function update(dt) {
+    if (sim && !sim.over) {
+      acc += dt;
+      while (acc >= STEP && !sim.over) {
+        BW.step(sim, STEP); acc -= STEP;
+        for (const ev of sim.ev) {
+          if (ev.k === 'ball' && !sim.crash) { sim.crash = true; sfx.pinCrash(Math.min(1, ev.v / 6)); }
+          else if (ev.k !== 'ball' && ev.v > .25 && sim.t - tickAt > .035) { tickAt = sim.t; sfx.pinTick(Math.min(1, ev.v / 3)); }
+        }
+        sim.ev.length = 0;
+        if (sim.ball.gutter && !sim.gutSnd) { sim.gutSnd = true; sfx.thud('wall'); }
+      }
+      if (sim.over) finishRoll();
+    }
+    const target = sim && !sim.over ? Math.max(CAM0, Math.min(11.4, sim.ball.y - 7)) : hold ? cam : CAM0;
+    cam += (target - cam) * Math.min(1, dt * (target > cam ? 7 : 2.4));
+    if (flash) { flash.t += dt; if (flash.t > 2.2) flash = null; }
+    if (sweepT) {
+      const was = sweepT; sweepT += dt / .9;
+      if (was < .5 && sweepT >= .5 && sweepMid) { sweepMid(); sweepMid = null; }
+      if (sweepT >= 1) { sweepT = 0; const f = sweepEnd; sweepEnd = null; if (f) f(); }
+    }
+    if (waitFn) { waitT -= dt; if (waitT <= 0) { const f = waitFn; waitFn = null; f(); } }
+  }
+  function loop(now) {
+    if (el.hidden) { running = false; return; }
+    const dt = Math.min(.05, Math.max(0, (now - last) / 1000)); last = now;
+    update(dt); draw();
+    requestAnimationFrame(loop);
+  }
+  function kick() { if (!running && !el.hidden) { running = true; last = performance.now(); requestAnimationFrame(loop); } }
+  function resize() {
+    const r = cv.parentElement.getBoundingClientRect(); if (!r.width) return;
+    const portrait = r.width < 620;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const maxH = window.innerHeight * (portrait ? .55 : .6);
+    W = r.width; H = Math.min(maxH, W * (portrait ? 1.3 : .58));
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    F = Math.min(H * 2.5, W * 3.3); HY = H * .2;
+  }
+
+  /* ---------- Wischen ---------- */
+  const pt = e => { const rc = cv.getBoundingClientRect(); return { x: e.clientX - rc.left, y: e.clientY - rc.top, t: performance.now() }; };
+  const unX = sx => (sx - W / 2) * (BALL_Y - cam) / F;
+  const clampX = x => Math.max(-BW.LANE + .11, Math.min(BW.LANE - .11, x));
+  // Richtung des Wischs, verlängert bis zu den Pins; gedämpft, damit ein Finger nicht aufs Grad genau wischen muss
+  function aimAngle(a, z) {
+    const B = P(myX, BALL_Y, BW.BALL_R), dx = z.x - a.x, dy = Math.min(-1, z.y - a.y);
+    const yp = P(0, BW.HEAD, 0).y, xs = B.x + dx / dy * (yp - B.y);
+    const xT = (xs - W / 2) * (BW.HEAD - cam) / F, xA = myX + (xT - myX) * AIM_K;
+    return Math.atan2(xA - myX, BW.HEAD - BALL_Y);
+  }
+  function hookOf(pts) {
+    if (pts.length < 5) return 0;
+    const a = pts[0], z = pts[pts.length - 1], m = pts[Math.floor(pts.length * .6)];
+    const chord = Math.atan2(z.y - a.y, z.x - a.x), tail = Math.atan2(z.y - m.y, z.x - m.x);
+    let d = tail - chord; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
+    if (Math.abs(d) < .05) return 0;
+    return Math.max(-1, Math.min(1, (d - Math.sign(d) * .05) / .22));
+  }
+  function setGuide(pts) {
+    const ang = aimAngle(pts[0], pts[pts.length - 1]), tn = Math.tan(ang);
+    guide = [];
+    for (let y = BALL_Y; y <= 6; y += .5) guide.push(P(myX + tn * (y - BALL_Y), y, 0));
+  }
+  cv.addEventListener('pointerdown', e => {
+    if (!G || G.phase !== 'aim' || el.hidden) return;
+    e.preventDefault(); sfx.init();
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    const q = pt(e);
+    gest = { id: e.pointerId, anchor: q, pts: [q], up: false, off: myX - unX(q.x) };
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!gest || e.pointerId !== gest.id) return;
+    const q = pt(e);
+    if (!gest.up) {
+      // Erst seitlich schieben, dann nach oben wischen
+      if (q.y >= gest.anchor.y - 3) { gest.anchor = q; myX = clampX(unX(q.x) + gest.off); }
+      else if (gest.anchor.y - q.y > H * .035) { gest.up = true; gest.pts = [gest.anchor, q]; }
+    } else gest.pts.push(q);
+    if (gest.up) setGuide(gest.pts);
+  });
+  cv.addEventListener('pointerup', e => {
+    if (!gest || e.pointerId !== gest.id) return;
+    const gs = gest; gest = null; guide = null;
+    if (!gs.up || !G || G.phase !== 'aim') return;
+    const pts = gs.pts, a = pts[0], z = pts[pts.length - 1];
+    if (a.y - z.y < H * .1) { msg(t('bw.short')); return; }
+    let i0 = pts.length - 2; while (i0 > 0 && z.t - pts[i0].t < 110) i0--;
+    const dt = Math.max(16, z.t - pts[i0].t), v = Math.hypot(z.x - pts[i0].x, z.y - pts[i0].y) / dt * 1000 / H;
+    if (v < .45) { msg(t('bw.slow')); return; }
+    const speed = Math.max(5, Math.min(10, 4.6 + 1.55 * v));
+    const ang = aimAngle(a, z) + BW.gauss() * .1 * D2R, hook = hookOf(pts);
+    throwBall(myX, ang, speed + BW.gauss() * .12, hook ? hook + BW.gauss() * .05 : 0);
+  });
+  cv.addEventListener('pointercancel', () => { gest = null; guide = null; });
+
+  /* ---------- Bedienung ---------- */
+  function showSetup() {
+    const s = $('#bwSetup');
+    $('#bwOpp').innerHTML = ['solo', 'gerda', 'kalle', 'otto'].map((k, i) =>
+      `<label class="chip"><input type="radio" name="bwOpp" value="${k}"${(G ? (G.opp || 'solo') === k : i === 2) ? ' checked' : ''}><span>${k === 'solo' ? t('bw.solo') : nameOf(k)}</span></label>`).join('');
+    $('#bwStake').innerHTML = STAKES.map((v, i) =>
+      `<label class="chip"><input type="radio" name="bwStake" value="${v}"${(G ? G.stake === v : i === 0) ? ' checked' : ''}><span>${v ? fmt(v) : t('bw.nostake')}</span></label>`).join('');
+    syncStake(); $('#bwWarn').textContent = ''; $('#bwResume').hidden = !(G && !G.over); s.hidden = false;
+  }
+  function syncStake() {
+    const solo = (document.querySelector('input[name="bwOpp"]:checked') || {}).value === 'solo';
+    $('#bwStakeRow').hidden = solo;
+  }
+  $('#bwOpp').addEventListener('change', syncStake);
+  $('#bwStart').addEventListener('click', () => {
+    sfx.init();
+    const opp = (document.querySelector('input[name="bwOpp"]:checked') || {}).value || 'solo';
+    const stake = opp === 'solo' ? 0 : +(document.querySelector('input[name="bwStake"]:checked') || {}).value || 0;
+    if (stake > arcade.cash) { $('#bwWarn').textContent = t('bw.nocash'); sfx.bust(); return; }
+    startGame(opp === 'solo' ? null : opp, stake);
+  });
+  function open() {
+    sfx.init(); el.hidden = false; paintCash();
+    $('#bwSub').textContent = G ? t('bw.sub', { opp: G.opp ? nameOf(G.opp) : t('bw.solo') }) : t('bw.sub0');
+    if (!G || G.over) showSetup();
+    renderSheet();
+    requestAnimationFrame(() => { resize(); kick(); });
+  }
+  function close() { el.hidden = true; gest = null; guide = null; }
+  $('#bwNew').addEventListener('click', showSetup);
+  $('#bwResume').addEventListener('click', () => { $('#bwSetup').hidden = true; });
+  $('#bwLeave').addEventListener('click', close);
+  $('#bowlBtn').addEventListener('click', open);
+  $('#bowlCard').addEventListener('click', open);
+  document.addEventListener('keydown', e => {
+    if (el.hidden) return;
+    if (e.key === 'Escape') { e.stopImmediatePropagation(); if (!$('#bwSetup').hidden && G && !G.over) $('#bwSetup').hidden = true; else close(); }
+  }, true);
+  new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv.parentElement);
+  return {
+    get open() { return !el.hidden; },
+    relang() {
+      if (el.hidden) return;
+      $('#bwSub').textContent = G ? t('bw.sub', { opp: G.opp ? nameOf(G.opp) : t('bw.solo') }) : t('bw.sub0');
+      if (!$('#bwSetup').hidden) showSetup();
+      renderSheet();
+    }
+  };
+})();
+
 /* ---------- Heinz’ Kneipentrunk: Getränke für Spielhallen-Guthaben, sie wirken ein ganzes Match ---------- */
 const drinkShop = (() => {
   const el = $('#drinks'), fmt = c => arcade.fmt(c);
@@ -7487,7 +8231,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', t(el.dataset.i18nPh)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang(); bowling.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
