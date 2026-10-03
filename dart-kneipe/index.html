@@ -157,7 +157,20 @@ body::after{
 /* Bowlingbahn */
 .arc-card.bw-card{background:linear-gradient(90deg,rgba(95,40,140,.6),rgba(30,14,50,.6));border-color:rgba(210,160,255,.5)}
 .arc-card.bw-card svg,.arc-card.bw-card i{color:#dcb8ff}
-.bw-stage{background:#0d0806}
+.bw-stage{background:#04020a;box-shadow:inset 0 0 0 1px rgba(160,100,255,.4)}
+.pk.bw{background:radial-gradient(120% 60% at 50% 0%,#1d0b33,#07030f 70%);border-color:#9d5cff;animation:bwGlow 4s linear infinite}
+@keyframes bwGlow{0%,100%{box-shadow:0 0 0 2px #12061f,0 0 22px rgba(255,43,214,.55),0 0 50px rgba(0,229,255,.25)}50%{box-shadow:0 0 0 2px #12061f,0 0 22px rgba(0,229,255,.6),0 0 50px rgba(157,92,255,.35)}}
+.pk.bw .pk-head h2{color:#ffd2f6;text-shadow:0 0 8px #ff2bd6,0 0 18px rgba(255,43,214,.6)}
+.pk.bw .pk-head small,.pk.bw .pk-tip{color:#a9c8ff}
+.pk.bw .pk-msg{color:#7ff6ff;text-shadow:0 0 10px rgba(0,229,255,.55)}
+.pk.bw .pk-cash{background:#07030f;border-color:rgba(0,229,255,.4)}
+.pk.bw .btn.ghost{background:rgba(20,8,36,.7);border-color:rgba(157,92,255,.55);color:#efe6ff}
+.pk.bw .bw-sheet th,.pk.bw .bw-sheet td{border-color:rgba(157,92,255,.35)}
+.pk.bw .bw-sheet thead th{color:#a9c8ff}
+.pk.bw .bw-sheet tr.cur th,.pk.bw .bw-t{color:#ffd2f6;text-shadow:0 0 6px rgba(255,43,214,.6)}
+.pk.bw .bw-sheet td.cur{background:rgba(0,229,255,.12)}
+#bwMusic{flex:0 1 170px;white-space:nowrap;font-size:16px}
+@media (prefers-reduced-motion:reduce){.pk.bw{animation:none}}
 .bw-stage .pk-sit{overflow:auto;gap:8px}
 .bw-stage .pk-sit .row{justify-content:center;width:min(100%,420px)}
 #bwStakeRow{display:grid;gap:4px;justify-items:center}
@@ -967,7 +980,7 @@ legend{padding:0;margin-bottom:8px}
     <div class="pk-msg" id="bwMsg" aria-live="polite"></div>
     <table class="bw-sheet" id="bwSheet"></table>
     <p class="pk-tip" data-i18n="bw.tip"></p>
-    <div class="row"><button type="button" class="btn ghost" id="bwNew" data-i18n="bw.new">Neues Spiel</button><button type="button" class="btn ghost" id="bwLeave" data-i18n="bw.leave">Zurück in die Kneipe</button></div>
+    <div class="row"><button type="button" class="btn ghost" id="bwMusic" aria-pressed="true"></button><button type="button" class="btn ghost" id="bwNew" data-i18n="bw.new">Neues Spiel</button><button type="button" class="btn ghost" id="bwLeave" data-i18n="bw.leave">Zurück in die Kneipe</button></div>
   </div>
 </div>
 
@@ -1270,7 +1283,7 @@ const I18N = {
     'w.phopen': 'Drei Energys! Jetzt ist das Phantom angreifbar.',
     'rules.phantom': '<strong>Das Phantom:</strong> Die Legende der Kneipe. Es punktet selten über die Triple 20, sondern wählt je nach Lage die 19, 18, 17, 16 oder das Bull: Es meidet Reste ohne Checkout, stellt sich Finishes zurecht und weicht aus, wenn eigene Pfeile das Feld verdecken. Ganz fehlerfrei ist es nicht: In jedem Leg verpasst es seinen ersten Checkout-Dart, und meist rutscht ihm beim Punkten ein Pfeil ins Single. Trotzdem ist es normalerweise unschlagbar. Angreifbar wird es nur, wenn du mit dem voll eingeworfenen Standardpfeil (+50 %) spielst oder mindestens 3 Energys getrunken hast – dann wirft es nur noch wie ein sehr starker Profi. Jedes gewonnene Leg bringt 50 €.',
     'bw.btn': 'Bowlingbahn', 'bw.card': 'Zur Bowlingbahn', 'bw.cardx': 'Zehn Pins gegen die Stammgäste, auf Wunsch um Einsatz', 'bw.title': 'Heinz’ Bowlingbahn',
-    'bw.sub0': 'Zehn Pins · zehn Frames', 'bw.sub': 'Zehn Frames · {opp}', 'bw.neon': 'HEINZ’ BOWLING',
+    'bw.sub0': 'Zehn Pins · zehn Frames', 'bw.sub': 'Zehn Frames · {opp}', 'bw.neon': 'HEINZ’ COSMIC BOWLING', 'bw.music.on': '♪ Musik an', 'bw.music.off': '♪ Musik aus',
     'bw.setup': 'Wer spielt mit?', 'bw.setupx': 'Kugel seitlich ziehen zum Platzieren, dann nach oben wischen: Die Richtung gibt die Linie vor, je schneller der Wisch, desto schneller die Kugel. Ein Bogen am Ende des Wischs gibt Effet.',
     'bw.stake': 'Einsatz', 'bw.nostake': 'Ohne', 'bw.solo': 'Allein', 'bw.start': 'Anwerfen', 'bw.resume': 'Weiterspielen', 'bw.new': 'Neues Spiel', 'bw.leave': 'Zurück in die Kneipe',
     'bw.tip': 'Kugel seitlich ziehen = platzieren · nach oben wischen = werfen · Bogen am Ende = Effet', 'bw.total': 'Σ', 'bw.frame': 'Frame {f}',
@@ -1283,7 +1296,7 @@ const I18N = {
     'bw.q.spare': ['Sauber nachgeräumt.', 'Spare – wie mein Sparbuch, nur voller.', 'Gerettet!'],
     'bw.q.gutter': ['Die Rinne ist auch eine Linie.', 'Die Kugel wollte nur mal die Rinne putzen.', 'Nicht schlimm, die Pins haben nur ein bisschen gelacht.'],
     'bw.q.split': ['Ein Split – viel Glück beim Nachwurf.', 'Da klafft eine Lücke wie bei meinem Zahnarzt.'],
-    'rules.bowling': '<strong>Bowlingbahn:</strong> Zehn Pins, zehn Frames, echte Wertung: Ein Strike zählt 10 plus die nächsten zwei Würfe, ein Spare 10 plus den nächsten Wurf, und im zehnten Frame gibt es nach Strike oder Spare Bonuswürfe – 300 ist das perfekte Spiel. Kugel seitlich ziehen zum Platzieren, dann nach oben wischen: Die Richtung gibt die Linie vor, das Tempo des Wischs die Geschwindigkeit, ein Bogen am Ende des Wischs Effet. Die Kugel läuft auf dem geölten Teil erst gerade und hakt im trockenen letzten Drittel ein. Am meisten fällt, wenn sie schräg in die „Pocket“ zwischen Pin 1 und 3 läuft. Gegen Tante Gerda, Kalle oder Otto kannst du um 1, 5 oder 10 € aus der Spielhalle spielen, der Sieger bekommt den doppelten Einsatz.',
+    'rules.bowling': '<strong>Bowlingbahn:</strong> Zehn Pins, zehn Frames, echte Wertung: Ein Strike zählt 10 plus die nächsten zwei Würfe, ein Spare 10 plus den nächsten Wurf, und im zehnten Frame gibt es nach Strike oder Spare Bonuswürfe – 300 ist das perfekte Spiel. Kugel seitlich ziehen zum Platzieren, dann nach oben wischen: Die Richtung gibt die Linie vor, das Tempo des Wischs die Geschwindigkeit, ein Bogen am Ende des Wischs Effet. Die Kugel läuft auf dem geölten Teil erst gerade und hakt im trockenen letzten Drittel ein. Am meisten fällt, wenn sie schräg in die „Pocket“ zwischen Pin 1 und 3 läuft. Gegen Tante Gerda, Kalle oder Otto kannst du um 1, 5 oder 10 € aus der Spielhalle spielen, der Sieger bekommt den doppelten Einsatz. Auf der Bahn ist immer Cosmic Bowling: LED-Leisten, Laser und Discokugel laufen im Takt der House-Musik, bei einem Strike gibt’s die Lichtshow. Die Musik lässt sich unten an- und ausschalten.',
     'rules.classic': '<strong>Klassisch:</strong> Darts pur gegen die Gäste vom Tresen – keine Pfeil-Fähigkeiten, kein Adrenalin, keine Getränke, und auch die Gegner spielen ohne Tricks. Du wirfst mit dem Klassikpfeil, der etwas ruhiger in der Hand liegt als ein nackter Pfeil. Preisgeld gibt es wie sonst auch, das Phantom spielt hier nicht mit.',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Jeder Krug bringt Profi-Heinz-Flashback-Pfeile mit dem besten Aim im Spiel – 2 nach dem ersten, 5 nach dem zweiten, 10 nach dem dritten Krug –, die du per Knopf selbst einsetzt. Heinz’ Spezial-Likör (10 €, bis zu 5): Steht ein Checkout an, werden Doppel, Triple und Bull für dich je Likör 20 % größer, mit 5 Likören doppelt so groß. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
@@ -1475,7 +1488,7 @@ const I18N = {
     'w.phopen': 'Three energy drinks! Now the Phantom is vulnerable.',
     'rules.phantom': '<strong>The Phantom:</strong> The pub’s legend. It rarely scores on treble 20 and instead picks 19, 18, 17, 16 or the bull depending on the situation: it avoids leaves without a checkout, sets up finishes and switches when its own darts cover the bed. It isn’t flawless: every leg it misses its first checkout dart, and usually one scoring dart slips into a single. Still, it is normally unbeatable. It only becomes vulnerable if you play the fully broken-in standard dart (+50%) or have had at least 3 energy drinks – then it throws like a very strong pro. Every leg you win earns €50.',
     'bw.btn': 'Bowling alley', 'bw.card': 'To the bowling alley', 'bw.cardx': 'Ten pins against the regulars, with a stake if you like', 'bw.title': 'Heinz’s bowling alley',
-    'bw.sub0': 'Ten pins · ten frames', 'bw.sub': 'Ten frames · {opp}', 'bw.neon': 'HEINZ’S BOWLING',
+    'bw.sub0': 'Ten pins · ten frames', 'bw.sub': 'Ten frames · {opp}', 'bw.neon': 'HEINZ’S COSMIC BOWLING', 'bw.music.on': '♪ Music on', 'bw.music.off': '♪ Music off',
     'bw.setup': 'Who’s playing?', 'bw.setupx': 'Drag the ball sideways to place it, then swipe up: the direction sets the line, a faster swipe means a faster ball. A curve at the end of the swipe adds hook.',
     'bw.stake': 'Stake', 'bw.nostake': 'None', 'bw.solo': 'Alone', 'bw.start': 'Bowl', 'bw.resume': 'Keep playing', 'bw.new': 'New game', 'bw.leave': 'Back to the pub',
     'bw.tip': 'Drag the ball sideways = place · swipe up = bowl · curve at the end = hook', 'bw.total': 'Σ', 'bw.frame': 'Frame {f}',
@@ -1488,7 +1501,7 @@ const I18N = {
     'bw.q.spare': ['Cleaned up nicely.', 'Spare – saved like my pension, only fuller.', 'Rescued!'],
     'bw.q.gutter': ['The gutter is a line too.', 'The ball just wanted to clean the gutter.', 'Never mind, the pins only laughed a little.'],
     'bw.q.split': ['A split – good luck with that one.', 'That gap is wider than my dentist’s bill.'],
-    'rules.bowling': '<strong>Bowling alley:</strong> Ten pins, ten frames, real scoring: a strike counts 10 plus your next two balls, a spare 10 plus the next ball, and the tenth frame gives bonus balls after a strike or spare – 300 is a perfect game. Drag the ball sideways to place it, then swipe up: the direction sets the line, the swipe speed sets the ball speed and a curve at the end adds hook. The ball skids straight on the oiled part and hooks on the dry last third. Most pins fall when it enters the “pocket” between pins 1 and 3 at an angle. Against Aunt Gerda, Kalle or Otto you can play for €1, €5 or €10 from the arcade; the winner takes double the stake.',
+    'rules.bowling': '<strong>Bowling alley:</strong> Ten pins, ten frames, real scoring: a strike counts 10 plus your next two balls, a spare 10 plus the next ball, and the tenth frame gives bonus balls after a strike or spare – 300 is a perfect game. Drag the ball sideways to place it, then swipe up: the direction sets the line, the swipe speed sets the ball speed and a curve at the end adds hook. The ball skids straight on the oiled part and hooks on the dry last third. Most pins fall when it enters the “pocket” between pins 1 and 3 at an angle. Against Aunt Gerda, Kalle or Otto you can play for €1, €5 or €10 from the arcade; the winner takes double the stake. It’s always cosmic bowling here: LED strips, lasers and the disco ball move to the beat of the house music, and a strike sets off a light show. Turn the music on or off at the bottom.',
     'rules.classic': '<strong>Classic:</strong> pure darts against the regulars – no dart abilities, no adrenaline, no drinks, and the opponents play without tricks too. You throw the classic dart, which sits a little steadier in the hand than a bare dart. Prize money works as usual; the Phantom sits this one out.',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): every mug brings Pro Heinz flashback darts with the best aim in the game – 2 after the first, 5 after the second, 10 after the third mug – that you use with a button. Heinz’s special liqueur (€10, up to 5): when a checkout is on, doubles, trebles and the bull grow 20% per liqueur for you, twice the size with 5. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
@@ -1586,7 +1599,7 @@ function t(key, vars = {}) {
 
 /* ---------- Sound (Web Audio, alles synthetisch) ---------- */
 const sfx = (() => {
-  let ac = null, master = null, noise = null, muted = false, amb = null, style = 'classic';
+  let ac = null, master = null, noise = null, muted = false, amb = null, style = 'classic', beatFn = null;
   // Handy: iOS schaltet Web Audio mit dem Stumm-Schalter ab. Als Medien-Wiedergabe markieren
   // und ein stilles <audio> mitlaufen lassen, dann klingt es wie ein Video.
   let media = null;
@@ -1833,16 +1846,73 @@ const sfx = (() => {
       if (k >= 64) aulos.filter(x => x[0] === bar && x[1] === e).forEach(x => reedAulos(at, x[2] * AST * .95, x[3], .02));
     }
 
+    // Bowlingbahn: moderner House mit Disco-Einschlag, 124 BPM in Sechzehnteln, der Bass pumpt mit der Bassdrum
+    const DST = 60 / 124 / 4;
+    const DCHD = [[57, 60, 64, 67, 71], [53, 57, 60, 64, 67], [50, 53, 57, 60, 64], [52, 56, 59, 62, 64]];   // Am9 Fmaj7 Dm9 E7
+    const DROOT = [33, 29, 26, 28];
+    const DARP = [0, 2, 4, 3, 1, 3, 4, 2];
+    // Hook: [Takt im Vierer, Sechzehntel, Länge, MIDI-Note]
+    const hook = [
+      [0, 0, 3, 76], [0, 3, 3, 79], [0, 6, 2, 81], [0, 10, 2, 79], [0, 12, 4, 76],
+      [1, 0, 3, 77], [1, 3, 3, 76], [1, 6, 2, 72], [1, 10, 6, 74],
+      [2, 0, 3, 74], [2, 3, 3, 77], [2, 6, 2, 81], [2, 10, 2, 79], [2, 12, 4, 77],
+      [3, 0, 4, 80], [3, 4, 4, 76], [3, 8, 8, 71]
+    ];
+    const pump = ac.createGain(); pump.connect(out);
+    function dKick(t) {
+      const o = ac.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(46, t + .11);
+      const g = ac.createGain(); g.gain.setValueAtTime(.16, t); g.gain.exponentialRampToValueAtTime(.0001, t + .32);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t + .34);
+      nz(t, .012, 'highpass', 3000, .7, .05, .001, out);
+      // Sidechain: alles andere duckt sich kurz weg
+      pump.gain.setValueAtTime(.25, t); pump.gain.linearRampToValueAtTime(1, t + DST * 3.2);
+    }
+    function saw(t, dur, m, gain, cut, cutEnd, dest, voices = 2, type = 'sawtooth') {
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 2.5;
+      lp.frequency.setValueAtTime(cut, t); lp.frequency.exponentialRampToValueAtTime(cutEnd, t + dur);
+      const g = ac.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + .008);
+      g.gain.setValueAtTime(gain, t + dur * .7); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      lp.connect(g); g.connect(dest);
+      for (let v = 0; v < voices; v++) {
+        const o = ac.createOscillator(); o.type = type; o.frequency.value = hz(m); o.detune.value = voices > 1 ? (v / (voices - 1) - .5) * 22 : 0;
+        o.connect(lp); o.start(t); o.stop(t + dur + .03);
+      }
+    }
+    function disco(n, at) {
+      const k = n % 512, bar = Math.floor(k / 16), s = k % 16, c = bar % 4, ch = DCHD[c];
+      const intro = bar < 4, brk = bar >= 16 && bar < 20, drop = bar >= 20, full = !intro && !brk;
+      // Schlagzeug
+      if (!brk && s % 4 === 0) dKick(at);
+      if (full && (s === 4 || s === 12)) { nz(at, .14, 'bandpass', 1500, .9, .06, .002, out); nz(at + .012, .1, 'bandpass', 2600, 1.2, .04, .002, out); }
+      if (!brk) nz(at, .025, 'highpass', 9000, .7, s % 2 ? .012 : .006, .001, out);
+      if (!intro && !brk && s % 4 === 2) nz(at, .1, 'highpass', 7000, .6, .035, .002, out);
+      if ((bar === 4 || bar === 20) && s === 0) nz(at, 1.8, 'highpass', 5200, .5, .05, .003, out);   // Becken zum Einstieg
+      if (bar === 19) { const step = s < 8 ? 2 : 1; if (s % step === 0) nz(at, .07, 'bandpass', 1800, .9, .015 + s * .003, .002, out); }
+      if (bar === 18 && s === 0) { const f = nz(at, DST * 32, 'bandpass', 400, 2, .05, DST * 31, out); f.frequency.exponentialRampToValueAtTime(7000, at + DST * 32); }
+      // Bass: Disco-Oktaven auf den Achteln
+      if (full && s % 2 === 0) saw(at, DST * 1.7, DROOT[c] + (s % 4 === 2 ? 12 : 0) + 12, .06, 900, 220, pump, 1);
+      // Akkorde: kurze Stabs auf den Offbeats, im Intro gedämpft
+      if (!brk && (s % 4 === 2 || s === 7 || s === 15)) ch.slice(1).forEach(m => saw(at, DST * 1.6, m, intro ? .006 : .009, intro ? 700 : 2600, 500, pump));
+      // Fläche in der Pause
+      if (brk && s === 0) ch.forEach(m => saw(at, DST * 16, m + 12, .006, 1400, 600, out, 2));
+      // Arpeggio ab Takt 8
+      if (bar >= 8 && (s % 2 === 0 || brk || drop)) saw(at, DST * .9, ch[DARP[(s + bar) % 8]] + 24, brk ? .009 : .006, 4200, 1200, pump, 1, 'square');
+      // Hook in den vollen Teilen
+      if ((bar >= 8 && bar < 16) || drop) hook.filter(x => x[0] === c && x[1] === s).forEach(x => saw(at, x[2] * DST * .95, x[3], .012, 3600, 1800, out, 3));
+    }
+
     // Ein Taktgeber für alle Stile; beim Wechsel startet der neue Stil sauber neu
     let mode = null, t0 = 0, next = 0;
-    const stepLen = () => mode === 'digi' ? STEP : mode === 'antik' ? AST : BEAT;
+    const stepLen = () => mode === 'digi' ? STEP : mode === 'antik' ? AST : mode === 'disco' || mode === 'quiet' ? DST : BEAT;
+    beatFn = () => mode === 'disco' ? (ac.currentTime - t0) / (DST * 4) : null;
     setInterval(() => {
       if (!ac || document.hidden) return;
-      const want = style === 'automat' ? 'digi' : style === 'book' ? 'antik' : 'pub';
+      const want = style === 'automat' ? 'digi' : style === 'book' ? 'antik' : style === 'disco' ? 'disco' : style === 'quiet' ? 'quiet' : 'pub';
       if (want !== mode) { mode = want; t0 = ac.currentTime + (next ? .6 : 1); next = 0; }
       const until = (ac.currentTime - t0 + .5) / stepLen();
       while (next < until) {
-        if (!muted) (mode === 'digi' ? digi : mode === 'antik' ? antik : waltz)(next, t0 + next * stepLen());
+        if (!muted && mode !== 'quiet') (mode === 'digi' ? digi : mode === 'antik' ? antik : mode === 'disco' ? disco : waltz)(next, t0 + next * stepLen());
         next++;
       }
     }, 100);
@@ -1855,6 +1925,8 @@ const sfx = (() => {
     init,
     get state() { return ac ? ac.state : 'none'; },
     setStyle(k) { style = k; },
+    // Taktposition der Disco-Musik in Vierteln (null, wenn sie nicht läuft)
+    beat() { return beatFn ? beatFn() : null; },
     get muted() { return muted; },
     setMuted(m) { muted = m; if (master) master.gain.value = m ? 0 : .8; },
     // Pokertisch: Karte über den Filz schnippen, Chips klackern
@@ -7653,7 +7725,7 @@ const bowling = (() => {
     else if (fresh && isSplit(left)) key = 'bw.split';
     const word = t(key, { n });
     flash = { text: word, t: 0, big: key === 'bw.strike' || key === 'bw.spare' };
-    if (key === 'bw.strike') sfx.cheer(1.2); else if (key === 'bw.spare') sfx.cheer(.6); else if (key === 'bw.gutter') sfx.bust();
+    if (key === 'bw.strike') { sfx.cheer(1.2); sfx.whoosh(); party = 1; } else if (key === 'bw.spare') { sfx.cheer(.6); party = .55; } else if (key === 'bw.gutter') sfx.bust();
     let line = (you ? '' : nameOf(p.id) + ': ') + word + ' · ' + G.info;
     const q = { 'bw.strike': 'bw.q.strike', 'bw.spare': 'bw.q.spare', 'bw.gutter': 'bw.q.gutter', 'bw.split': 'bw.q.split' }[key];
     if (you && q && Math.random() < .6) line += ' – Heinz: „' + t(q) + '“';
@@ -7686,7 +7758,7 @@ const bowling = (() => {
     if (G.players.length < 2) line = t('bw.solodone', { a }) + rec;
     else {
       const b = tot[1], who = nameOf(G.players[1].id);
-      if (a > b) { line = t('bw.win', { a, b }); if (G.stake) { arcade.addCash(2 * G.stake); line += t('bw.winx', { v: fmt(2 * G.stake) }); sfx.coins(8); } sfx.cheer(1.4); }
+      if (a > b) { party = 1; line = t('bw.win', { a, b }); if (G.stake) { arcade.addCash(2 * G.stake); line += t('bw.winx', { v: fmt(2 * G.stake) }); sfx.coins(8); } sfx.cheer(1.4); }
       else if (a < b) { line = t('bw.lose', { name: who, a, b }); sfx.bust(); }
       else { line = t('bw.tie', { a }); if (G.stake) arcade.addCash(G.stake); }
       line += rec;
@@ -7732,171 +7804,315 @@ const bowling = (() => {
     const a = P(x0, y0, z), b = P(x1, y1, z);
     g.strokeStyle = col; g.lineWidth = w; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke();
   }
-  function drawLane(ox, dim) {
-    const L = BW.LANE, GW = BW.GUT, deck = BW.HEAD - .45, end = BW.PIT, y0 = Math.min(-3, nearY());
-    // Anlauf, Kappen zwischen den Bahnen
-    quad(ox - L - GW - .12, ox + L + GW + .12, y0, 0, 0, dim ? '#5a3b22' : '#7a5230');
-    quad(ox - L - GW - .12, ox - L - GW, 0, end, 0, '#1d120b'); quad(ox + L + GW, ox + L + GW + .12, 0, end, 0, '#1d120b');
-    // Rinnen
-    for (const sg of [-1, 1]) {
-      const xa = ox + sg * L, xb = ox + sg * (L + GW);
-      quad(Math.min(xa, xb), Math.max(xa, xb), 0, end, -.03, '#24272c');
-      line(ox + sg * (L + GW * .5), 0, ox + sg * (L + GW * .5), end, -.05, 'rgba(0,0,0,.45)', 2);
-    }
-    // Holz: vorne Ahorn, in der Mitte Kiefer, das Pin-Deck wieder heller
-    const a = P(0, Math.max(0, nearY()), 0), b = P(0, deck, 0);
-    const wood = g.createLinearGradient(0, a.y, 0, b.y);
-    wood.addColorStop(0, dim ? '#a07a4c' : '#d9b07a'); wood.addColorStop(.25, dim ? '#93683c' : '#c79559'); wood.addColorStop(1, dim ? '#6e4c2a' : '#a8743f');
-    quad(ox - L, ox + L, 0, deck, 0, wood);
-    quad(ox - L, ox + L, deck, end, 0, dim ? '#8c6a44' : '#d6b483');
-    if (!dim) {
-      // Ölfilm in der Mitte glänzt
-      const sh = g.createLinearGradient(0, a.y, 0, P(0, 10, 0).y); sh.addColorStop(0, 'rgba(255,240,210,.16)'); sh.addColorStop(1, 'rgba(255,240,210,0)');
-      quad(ox - L * .6, ox + L * .6, 0, 10, 0, sh);
-      const bw = 2 * L / 39;
-      for (let k = 1; k < 39; k++) line(ox - L + k * bw, 0, ox - L + k * bw, end, 0, k % 5 ? 'rgba(70,40,15,.12)' : 'rgba(70,40,15,.22)', 1);
-      line(ox - L, deck, ox + L, deck, 0, 'rgba(70,40,15,.35)', 1.5);
-      // Pfeile und Punkte als Zielhilfe
-      for (let k = 5; k <= 35; k += 5) {
-        const x = ox - L + (k - .5) * bw, y = 3.9 + .9 * (1 - Math.abs(k - 20) / 15);
-        const p1 = P(x, y + .2, 0), p2 = P(x - .022, y, 0), p3 = P(x + .022, y, 0);
-        if (y > nearY()) { g.fillStyle = '#5a2c12'; g.beginPath(); g.moveTo(p1.x, p1.y); g.lineTo(p2.x, p2.y); g.lineTo(p3.x, p3.y); g.closePath(); g.fill(); }
-      }
-      for (const k of [3, 5, 8, 11, 14, 25, 28, 31, 34, 36]) {
-        const d = P(ox - L + (k - .5) * bw, 2.13, 0);
-        if (2.13 > nearY()) { g.fillStyle = '#5a2c12'; g.beginPath(); g.ellipse(d.x, d.y, Math.max(1, .012 * d.s), Math.max(.6, .005 * d.s), 0, 0, Math.PI * 2); g.fill(); }
-      }
-      quad(ox - L - GW, ox + L + GW, -.012, .012, 0, '#8a1f1f');
-    }
-    // Seitenwände am Pin-Deck
-    wall(ox - BW.WALL, BW.HEAD - .9, end, 0, .5, dim ? '#21140c' : '#2c1c11');
-    wall(ox + BW.WALL, BW.HEAD - .9, end, 0, .5, dim ? '#21140c' : '#2c1c11');
+  /* ---------- Cosmic Bowling: Sternenhimmel, LED-Wand, Discokugel, Laser, alles im Takt der Musik ---------- */
+  const NEON = ['#ff2bd6', '#00e5ff', '#9d5cff', '#39ff88', '#ffe14d', '#ff6a3d'];
+  const STARS = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.3 + .3, ph: Math.random() * 6.3, sp: .6 + Math.random() * 2 }));
+  const SPOTS = Array.from({ length: 34 }, (_, i) => ({ a: Math.random() * 6.3, r: .8 + Math.random() * 4.2, y: 1 + Math.random() * 17, c: i % NEON.length, s: .6 + Math.random() * .8 }));
+  let T = 0, party = 0, bt = 0, pulse = 0, beatT0 = performance.now();
+  const hsl = (h, l = 60, a = 1) => `hsla(${(h % 360 + 360) % 360},100%,${l}%,${a})`;
+  function tickBeat() {
+    const b = sfx.beat();
+    bt = b != null ? Math.max(0, b) : (performance.now() - beatT0) / 1000 * 124 / 60;
+    pulse = Math.exp(-(bt - Math.floor(bt)) * 5);
   }
-  function drawBack() {
-    const sky = g.createLinearGradient(0, 0, 0, H);
-    sky.addColorStop(0, '#120b1c'); sky.addColorStop(.35, '#1d1226'); sky.addColorStop(1, '#0d0806');
-    g.fillStyle = sky; g.fillRect(0, 0, W, H);
-    // Grube und Rückwand
-    const pit = P(0, BW.PIT, 0), top = P(0, BW.PIT + .15, .58);
-    g.fillStyle = '#050403'; g.fillRect(0, top.y, W, pit.y - top.y + 2);
-    // Blende über den Pins mit Neon-Schrift
-    const m0 = P(0, BW.PIT + .15, 2.6), m1 = P(0, BW.PIT + .15, .58);
-    const mg = g.createLinearGradient(0, m0.y, 0, m1.y); mg.addColorStop(0, '#2a1838'); mg.addColorStop(1, '#3d2350');
-    g.fillStyle = mg; g.fillRect(0, m0.y, W, m1.y - m0.y);
-    g.fillStyle = 'rgba(0,0,0,.4)'; g.fillRect(0, m1.y - 3, W, 3);
-    const fs = Math.max(10, .16 * m1.s);
-    g.save(); g.font = `700 ${fs}px 'Cabin Sketch', cursive`; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.shadowColor = '#ff4fd8'; g.shadowBlur = fs * .6; g.fillStyle = '#ffd2f6';
-    g.fillText(t('bw.neon'), W / 2, m1.y - .2 * m1.s);
-    g.shadowColor = '#4fd8ff'; g.fillStyle = '#c8f4ff'; g.font = `700 ${fs * .6}px 'Barlow Condensed', sans-serif`;
-    for (const sg of [-1, 1]) g.fillText(sg < 0 ? '7' : '8', W / 2 + sg * 1.75 * m1.s, m1.y - .2 * m1.s);
+  const hue = () => Math.floor(bt / 4) * 52 + T * 9;   // jeder Takt eine neue Grundfarbe
+  function glowLine(x0, y0, x1, y1, z, col, w) {
+    y0 = Math.max(y0, nearY()); if (y1 <= y0) return;
+    const a = P(x0, y0, z), b = P(x1, y1, z);
+    g.save(); g.globalCompositeOperation = 'lighter'; g.strokeStyle = col; g.lineCap = 'round';
+    for (const [lw, al] of [[w * 5, .12], [w * 2.4, .28], [w, 1]]) { g.globalAlpha = al; g.lineWidth = lw; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke(); }
     g.restore();
   }
-  function drawPin(p) {
-    if (p.gone) return;
+  function drawLane(ox, dim, idx) {
+    const L = BW.LANE, GW = BW.GUT, deck = BW.HEAD - .45, end = BW.PIT, y0 = Math.min(-3, nearY()), h0 = hue() + idx * 70;
+    // Anlauf: dunkler Teppich mit Neon-Muster
+    quad(ox - L - GW - .12, ox + L + GW + .12, y0, 0, 0, '#0d0718');
+    if (!dim) for (let k = 0; k < 6; k++) glowLine(ox - .9 + k * .36, -2.6, ox - .72 + k * .36, -.4, 0, hsl(h0 + k * 40, 60, .5), 1);
+    quad(ox - L - GW - .12, ox - L - GW, 0, end, 0, '#05030a'); quad(ox + L + GW, ox + L + GW + .12, 0, end, 0, '#05030a');
+    for (const sg of [-1, 1]) {
+      const xa = ox + sg * L, xb = ox + sg * (L + GW);
+      quad(Math.min(xa, xb), Math.max(xa, xb), 0, end, -.03, '#07070f');
+    }
+    // Holz unter Schwarzlicht: dunkel violett, glänzend
+    const a = P(0, Math.max(0, nearY()), 0), b = P(0, deck, 0);
+    const wood = g.createLinearGradient(0, a.y, 0, b.y);
+    wood.addColorStop(0, dim ? '#2a1c36' : '#4a3158'); wood.addColorStop(.4, dim ? '#22162e' : '#3a2548'); wood.addColorStop(1, dim ? '#1a1024' : '#2c1b3a');
+    quad(ox - L, ox + L, 0, deck, 0, wood);
+    quad(ox - L, ox + L, deck, end, 0, dim ? '#2a1e3a' : '#463063');
+    if (!dim) {
+      const sh = g.createLinearGradient(0, a.y, 0, P(0, 14, 0).y); sh.addColorStop(0, hsl(h0 + 180, 70, .14)); sh.addColorStop(1, 'rgba(0,0,0,0)');
+      quad(ox - L * .5, ox + L * .5, 0, 14, 0, sh);
+      const bw = 2 * L / 39;
+      for (let k = 5; k < 39; k += 5) line(ox - L + k * bw, 0, ox - L + k * bw, end, 0, 'rgba(190,140,255,.08)', 1);
+      // leuchtende Pfeile und Punkte
+      g.save(); g.globalCompositeOperation = 'lighter';
+      for (let k = 5; k <= 35; k += 5) {
+        const x = ox - L + (k - .5) * bw, y = 3.9 + .9 * (1 - Math.abs(k - 20) / 15);
+        if (y <= nearY()) continue;
+        const p1 = P(x, y + .22, 0), p2 = P(x - .026, y, 0), p3 = P(x + .026, y, 0), c = hsl(h0 + k * 9, 60);
+        g.fillStyle = c; g.beginPath(); g.moveTo(p1.x, p1.y); g.lineTo(p2.x, p2.y); g.lineTo(p3.x, p3.y); g.closePath();
+        g.globalAlpha = 1; g.fill(); g.globalAlpha = .35; g.lineWidth = 5; g.strokeStyle = c; g.stroke(); g.globalAlpha = 1;
+      }
+      for (const k of [3, 5, 8, 11, 14, 25, 28, 31, 34, 36]) {
+        if (2.13 <= nearY()) break;
+        const d = P(ox - L + (k - .5) * bw, 2.13, 0); g.fillStyle = hsl(h0 + 180 + k * 6, 65, .9);
+        g.beginPath(); g.ellipse(d.x, d.y, Math.max(1.2, .014 * d.s), Math.max(.8, .006 * d.s), 0, 0, Math.PI * 2); g.fill();
+      }
+      g.restore();
+      glowLine(ox - L - GW, 0, ox + L + GW, 0, 0, hsl(h0 + 300, 60), 1.5 + pulse);   // Foul-Linie als LED-Leiste
+    }
+    // LED-Bänder an den Kappen und auf den Seitenwänden, sie pumpen mit dem Bass
+    const w = (dim ? 1.2 : 1.8) + pulse * (dim ? 1 : 2.2) + party * 2;
+    glowLine(ox - L - GW - .06, 0, ox - L - GW - .06, end, .02, hsl(h0, 60), w);
+    glowLine(ox + L + GW + .06, 0, ox + L + GW + .06, end, .02, hsl(h0 + 120, 60), w);
+    if (!dim) { glowLine(ox - L, 0, ox - L, deck, 0, hsl(h0 + 200, 70, .55), 1); glowLine(ox + L, 0, ox + L, deck, 0, hsl(h0 + 200, 70, .55), 1); }
+    wall(ox - BW.WALL, BW.HEAD - .9, end, 0, .5, '#0c0716'); wall(ox + BW.WALL, BW.HEAD - .9, end, 0, .5, '#0c0716');
+    glowLine(ox - BW.WALL, BW.HEAD - .9, ox - BW.WALL, end, .5, hsl(h0 + 60, 60), w * .8);
+    glowLine(ox + BW.WALL, BW.HEAD - .9, ox + BW.WALL, end, .5, hsl(h0 + 60, 60), w * .8);
+  }
+  // Nebel im All und Vignette: selten gezeichnet, in halber Auflösung, damit auch ältere Handys flüssig bleiben
+  const bg = { cv: null, at: -9, w: 0, h: 0 }, vig = { cv: null, w: 0, h: 0 };
+  function paintNebula() {
+    const c = bg.cv || (bg.cv = document.createElement('canvas')), w = Math.max(1, Math.round(W / 2)), h = Math.max(1, Math.round(H / 2)), x = c.getContext('2d');
+    c.width = w; c.height = h; bg.at = T; bg.w = W; bg.h = H;
+    x.fillStyle = '#04020a'; x.fillRect(0, 0, w, h); x.globalCompositeOperation = 'lighter';
+    [[.2, .18, 0], [.78, .12, 140], [.5, .3, 260]].forEach(([px, py, hh], i) => {
+      const cx = w * (px + .05 * Math.sin(T * .07 + i)), cy = h * (py + .03 * Math.cos(T * .05 + i * 2)), r = Math.max(w, h) * .45;
+      const gr = x.createRadialGradient(cx, cy, 0, cx, cy, r); gr.addColorStop(0, hsl(hue() * .3 + hh, 55, .16)); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      x.fillStyle = gr; x.fillRect(0, 0, w, h);
+    });
+  }
+  function vignette() {
+    if (!vig.cv || vig.w !== W || vig.h !== H) {
+      const c = vig.cv || (vig.cv = document.createElement('canvas')), w = Math.max(1, Math.round(W / 2)), h = Math.max(1, Math.round(H / 2)), x = c.getContext('2d');
+      c.width = w; c.height = h; vig.w = W; vig.h = H;
+      const vg = x.createRadialGradient(w / 2, h * .55, Math.min(w, h) * .3, w / 2, h * .55, Math.max(w, h) * .8);
+      vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.55)'); x.fillStyle = vg; x.fillRect(0, 0, w, h);
+    }
+    g.drawImage(vig.cv, 0, 0, W, H);
+  }
+  // Schwaches Gerät? Dann weniger Effekte
+  let lowFx = false, fpsN = 0, fpsT = 0;
+  function watchFps(dt) {
+    fpsN++; fpsT += dt;
+    if (fpsT > 2) { if (fpsN / fpsT < 32) lowFx = true; else if (fpsN / fpsT > 52) lowFx = false; fpsN = 0; fpsT = 0; }
+  }
+  function drawBack() {
+    if (!bg.cv || T - bg.at > 2 || bg.w !== W || bg.h !== H) paintNebula();
+    g.drawImage(bg.cv, 0, 0, W, H);
+    g.save(); g.globalCompositeOperation = 'lighter';
+    for (const s of (lowFx ? STARS.slice(0, 50) : STARS)) { g.globalAlpha = .35 + .65 * Math.abs(Math.sin(T * s.sp + s.ph)); g.fillStyle = '#e8f4ff'; g.fillRect(s.x * W, s.y * H * .55, s.r, s.r); }
+    g.restore();
+    // Grube
+    const pit = P(0, BW.PIT, 0), top = P(0, BW.PIT + .15, .58);
+    g.fillStyle = '#020104'; g.fillRect(0, top.y, W, pit.y - top.y + 2);
+    drawLedWall();
+  }
+  // LED-Wand über den Pins: Equalizer im Takt, darüber Neon-Schrift oder die letzte Ansage
+  let ledMask = null;
+  let wallH = 0;
+  function drawLedWall() {
+    const m0 = P(0, BW.PIT + .15, 2.4), m1 = P(0, BW.PIT + .15, .58), top = Math.max(0, m0.y), hgt = m1.y - top;
+    wallH = hgt;
+    if (hgt < 8) return;
+    g.fillStyle = '#06030c'; g.fillRect(0, top, W, hgt);
+    const pitch = Math.round(Math.max(6, Math.min(14, hgt / 12))), cols = Math.ceil(W / pitch), rows = Math.floor(hgt / pitch), h0 = hue();
+    const bars = g.createLinearGradient(0, m1.y, 0, m1.y - rows * pitch);
+    bars.addColorStop(0, hsl(h0, 60)); bars.addColorStop(.5, hsl(h0 + 60, 60)); bars.addColorStop(1, hsl(h0 + 140, 65));
+    g.fillStyle = 'rgba(120,80,200,.1)'; g.fillRect(0, m1.y - rows * pitch, W, rows * pitch);
+    g.fillStyle = bars;
+    for (let c = 0; c < cols; c++) {
+      const u = c / cols;
+      const lvl = Math.min(rows, Math.round((.35 + .35 * Math.sin(u * 9 + bt * 1.6) * Math.sin(u * 3.3 - T * .7) + .45 * pulse * (1 - Math.abs(u - .5)) + party * .4) * rows));
+      if (lvl > 0) g.fillRect(c * pitch, m1.y - lvl * pitch, pitch, lvl * pitch);
+    }
+    // Punktmaske macht daraus einzelne LEDs
+    if (!ledMask || ledMask.p !== pitch) {
+      const c = document.createElement('canvas'); c.width = c.height = pitch; const x = c.getContext('2d');
+      x.fillStyle = '#06030c'; x.fillRect(0, 0, pitch, pitch); x.globalCompositeOperation = 'destination-out';
+      x.beginPath(); x.arc(pitch / 2, pitch / 2, pitch * .36, 0, Math.PI * 2); x.fill();
+      ledMask = { p: pitch, pat: g.createPattern(c, 'repeat') };
+    }
+    g.save(); g.translate(0, m1.y); g.fillStyle = ledMask.pat; g.fillRect(0, -rows * pitch, W, rows * pitch); g.restore();
+    g.fillStyle = 'rgba(4,2,10,.55)'; g.fillRect(0, top, W, hgt);
+    const txt = flash && flash.t < 1.8 ? flash.text : t('bw.neon');
+    g.save(); g.font = `700 100px 'Cabin Sketch', cursive`;
+    const fs = Math.max(10, Math.min(hgt * .42, 100 * W * .88 / g.measureText(txt).width));
+    g.font = `700 ${fs}px 'Cabin Sketch', cursive`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const c1 = flash && flash.big ? hsl(T * 400, 60) : hsl(h0 + 300, 65);
+    g.shadowColor = c1; g.shadowBlur = fs * (.5 + .4 * pulse); g.fillStyle = '#fff3fd';
+    g.fillText(txt, W / 2, top + hgt * .52); g.fillText(txt, W / 2, top + hgt * .52);
+    g.restore();
+    glowLineScreen(0, m1.y, W, m1.y, hsl(h0 + 180, 60), 2 + pulse * 2);
+  }
+  function glowLineScreen(x0, y0, x1, y1, col, w) {
+    g.save(); g.globalCompositeOperation = 'lighter'; g.strokeStyle = col; g.lineCap = 'round';
+    for (const [lw, al] of [[w * 5, .12], [w * 2.4, .28], [w, 1]]) { g.globalAlpha = al; g.lineWidth = lw; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke(); }
+    g.restore();
+  }
+  // Lichtpunkte der Discokugel wandern über Bahnen und Boden
+  function drawSpots() {
+    g.save(); g.globalCompositeOperation = 'lighter';
+    const spin = T * (.35 + party * .8);
+    for (const s of SPOTS) {
+      const x = Math.cos(s.a + spin * s.s) * s.r, y = s.y + Math.sin(s.a * 1.7 + spin * s.s * .6) * 1.5;
+      if (y < nearY() + .3 || y > BW.PIT) continue;
+      const p = P(x, y, 0), rx = .05 * p.s, ry = .02 * p.s;
+      if (rx < .6) continue;
+      g.globalAlpha = .45 + .4 * pulse; g.fillStyle = NEON[s.c];
+      g.beginPath(); g.ellipse(p.x, p.y, rx, ry, 0, 0, Math.PI * 2); g.fill();
+    }
+    g.restore();
+  }
+  function drawDiscoBall() {
+    const r = Math.max(14, Math.min(W, H) * .055), cx = W / 2, cy = r * 1.25;
+    g.strokeStyle = 'rgba(200,200,220,.5)'; g.lineWidth = 1; g.beginPath(); g.moveTo(cx, 0); g.lineTo(cx, cy - r); g.stroke();
+    const halo = g.createRadialGradient(cx, cy, r * .6, cx, cy, r * 3.2);
+    halo.addColorStop(0, hsl(hue() + 200, 70, .25 + .25 * pulse)); halo.addColorStop(1, 'rgba(0,0,0,0)');
+    g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = halo; g.fillRect(cx - r * 3.2, cy - r * 3.2, r * 6.4, r * 6.4); g.restore();
+    g.save(); g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.clip();
+    g.fillStyle = '#3a3d4a'; g.fillRect(cx - r, cy - r, 2 * r, 2 * r);
+    const n = 9, rot = T * .8;
+    for (let i = 0; i < n; i++) for (let j = 0; j < 2 * n; j++) {
+      const lat = -Math.PI / 2 + (i + .5) * Math.PI / n, lon = j * Math.PI / n + rot, z = Math.cos(lat) * Math.cos(lon);
+      if (z <= 0) continue;
+      const x = cx + r * Math.cos(lat) * Math.sin(lon), y = cy + r * Math.sin(lat), s = r * .2 * Math.max(.3, z);
+      const tw = Math.sin(lon * 5 + i + T * 3) > .75 ? 95 : 35 + 45 * z;
+      g.fillStyle = tw > 90 ? '#ffffff' : hsl(hue() + j * 20, 30, tw / 100 * .7 + .2);
+      g.fillRect(x - s / 2, y - s / 2, s * .9, s * .9);
+    }
+    g.restore();
+  }
+  // Laser von der Decke, sie fächern im Takt auf
+  function drawLasers() {
+    const n = 6, k = .25 + .55 * pulse + party * .6;
+    g.save(); g.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < n; i++) {
+      const left = i % 2 === 0, sx = left ? W * .02 : W * .98, sy = H * .04;
+      const sw = Math.sin(T * (.6 + i * .13) + i * 1.7 + Math.floor(bt / 2) * .9);
+      const ex = W * (.5 + .55 * sw), ey = H * (.62 + .3 * Math.abs(Math.cos(T * .4 + i)));
+      const c = NEON[((i + Math.floor(bt / 4)) % NEON.length + NEON.length) % NEON.length];
+      const gr = g.createLinearGradient(sx, sy, ex, ey); gr.addColorStop(0, c); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      g.strokeStyle = gr;
+      for (const [lw, al] of [[6, .1 * k], [2, .5 * k]]) { g.globalAlpha = Math.min(1, al); g.lineWidth = lw; g.beginPath(); g.moveTo(sx, sy); g.lineTo(ex, ey); g.stroke(); }
+    }
+    g.restore();
+  }
+  function drawPin(p, dim) {
+    if (p.gone || p.y < nearY()) return;
     const phi = (p.up ? 0 : p.fall) * Math.PI / 2, ca = Math.cos(p.ang), sa = Math.sin(p.ang);
     const lift = .05 * Math.sin(phi);
     const b = P(p.x, p.y, lift), tp = P(p.x + Math.sin(phi) * .381 * ca, p.y + Math.sin(phi) * .381 * sa, Math.cos(phi) * .381 + lift);
-    if (p.y < nearY()) return;
     const ax = tp.x - b.x, ay = tp.y - b.y, len = Math.hypot(ax, ay), sw = (b.s + tp.s) / 2;
     if (len < .5) return;
-    // Schatten
-    g.fillStyle = 'rgba(0,0,0,.28)'; g.beginPath(); g.ellipse(b.x, b.y, .07 * b.s, .025 * b.s, 0, 0, Math.PI * 2); g.fill();
+    if (!dim) {
+      // Schwarzlicht: die Pins leuchten bläulich
+      const mx = (b.x + tp.x) / 2, my = (b.y + tp.y) / 2, gr = g.createRadialGradient(mx, my, 0, mx, my, len * .9);
+      gr.addColorStop(0, `rgba(150,170,255,${.35 + .2 * pulse})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = gr; g.fillRect(mx - len, my - len, len * 2, len * 2); g.restore();
+    }
     g.save(); g.translate(b.x, b.y); g.rotate(Math.atan2(ax, -ay));
-    const hk = len / .381;
-    const pts = PROF.map(([h, w]) => [w * sw, -h * hk]);
+    const hk = len / .381, pts = PROF.map(([h, w]) => [w * sw, -h * hk]);
     g.beginPath(); g.moveTo(-pts[0][0], 0);
     for (let i = 1; i < pts.length; i++) { const [w0, h0] = pts[i - 1], [w1, h1] = pts[i]; g.quadraticCurveTo(-w0, h0, -(w0 + w1) / 2, (h0 + h1) / 2); }
     g.lineTo(0, pts[pts.length - 1][1]);
     for (let i = pts.length - 1; i > 0; i--) { const [w0, h0] = pts[i], [w1, h1] = pts[i - 1]; g.quadraticCurveTo(w0, h0, (w0 + w1) / 2, (h0 + h1) / 2); }
     g.lineTo(pts[0][0], 0); g.closePath();
-    const wmax = .0605 * sw, gr = g.createLinearGradient(-wmax, 0, wmax, 0);
-    gr.addColorStop(0, '#b9b1a4'); gr.addColorStop(.38, '#ffffff'); gr.addColorStop(1, '#a9a091');
+    const wmax = .0605 * sw;
+    if (dim) { g.fillStyle = '#aab0e8'; g.fill(); g.restore(); return; }
+    const gr = g.createLinearGradient(-wmax, 0, wmax, 0);
+    gr.addColorStop(0, '#9aa6ff'); gr.addColorStop(.38, '#f6f8ff'); gr.addColorStop(1, '#8a90e0');
     g.fillStyle = gr; g.fill();
-    g.save(); g.clip();
-    g.fillStyle = '#c0262b';
+    g.save(); g.clip(); g.fillStyle = '#ff2b9a';
     for (const h of [.252, .28]) g.fillRect(-wmax, -h * hk - .006 * hk, wmax * 2, .011 * hk);
     g.restore(); g.restore();
   }
   function drawBall(x, y, gutter, spin, col) {
     if (y < nearY() || y > BW.PIT + .25) return;
     const R = BW.BALL_R, z = gutter ? R - .06 : R, c = P(x, y, z), r = R * c.s;
-    g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(c.x, c.y + r * .9, r * .95, r * .3, 0, 0, Math.PI * 2); g.fill();
+    // Neon-Schein unter der Kugel
+    g.save(); g.globalCompositeOperation = 'lighter';
+    const hl = g.createRadialGradient(c.x, c.y + r * .6, 0, c.x, c.y + r * .6, r * 2.6); hl.addColorStop(0, col[0]); hl.addColorStop(1, 'rgba(0,0,0,0)');
+    g.globalAlpha = .45 + .25 * pulse; g.fillStyle = hl; g.fillRect(c.x - r * 2.6, c.y - r * 2, r * 5.2, r * 5.2); g.restore();
     const gr = g.createRadialGradient(c.x - r * .35, c.y - r * .4, r * .1, c.x, c.y, r);
-    gr.addColorStop(0, col[0]); gr.addColorStop(.55, col[1]); gr.addColorStop(1, '#0a0606');
+    gr.addColorStop(0, col[0]); gr.addColorStop(.55, col[1]); gr.addColorStop(1, '#05030a');
     g.fillStyle = gr; g.beginPath(); g.arc(c.x, c.y, r, 0, Math.PI * 2); g.fill();
-    // Grifflöcher rollen mit
-    g.fillStyle = 'rgba(10,6,6,.85)';
+    g.fillStyle = 'rgba(5,3,10,.85)';
     [[0, -.2], [.32, -.12], [.32, .14]].forEach(([o, dx]) => {
       const lat = spin + o, cz = Math.cos(lat);
       if (cz < .15) return;
       g.beginPath(); g.ellipse(c.x + dx * r, c.y - Math.sin(lat) * r * .7, r * .1, r * .1 * cz, 0, 0, Math.PI * 2); g.fill();
     });
-    g.fillStyle = 'rgba(255,255,255,.35)'; g.beginPath(); g.ellipse(c.x - r * .38, c.y - r * .45, r * .22, r * .12, -.6, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = col[0]; g.globalAlpha = .7; g.lineWidth = Math.max(1, r * .08); g.beginPath(); g.arc(c.x, c.y, r * .96, Math.PI * 1.05, Math.PI * 1.6); g.stroke(); g.globalAlpha = 1;
+    g.fillStyle = 'rgba(255,255,255,.4)'; g.beginPath(); g.ellipse(c.x - r * .38, c.y - r * .45, r * .22, r * .12, -.6, 0, Math.PI * 2); g.fill();
   }
   function drawRake() {
     if (!sweepT) return;
-    const k = Math.sin(Math.PI * Math.min(1, sweepT));
-    const zb = .75 - k * .7, y = BW.HEAD - .5;
-    wall(0, y, y + .02, zb, zb + .1, '#2b2b30');
+    const k = Math.sin(Math.PI * Math.min(1, sweepT)), zb = .75 - k * .7, y = BW.HEAD - .5;
     const a = P(-BW.WALL, y, zb), b = P(BW.WALL, y, zb + .1);
-    g.fillStyle = '#3a3a40'; g.fillRect(a.x, b.y, b.x - a.x, a.y - b.y);
-    g.fillStyle = '#f2c94c'; for (let i = 0; i < 6; i++) { const x = a.x + (b.x - a.x) * (i + .25) / 6; g.fillRect(x, b.y, (b.x - a.x) / 12, a.y - b.y); }
+    g.fillStyle = '#14101e'; g.fillRect(a.x, b.y, b.x - a.x, a.y - b.y);
+    glowLineScreen(a.x, a.y, b.x, a.y, hsl(hue() + 40, 60), 2);
   }
   function drawHud() {
-    // Mini-Gestell oben rechts
     const pins = sim ? sim.pins : rackPins, r = Math.max(4, Math.min(7, W / 80)), bx = W - 8 - r * 8.6, by = 8 + r * 1.6;
-    g.fillStyle = 'rgba(10,6,3,.55)'; g.fillRect(bx - r * 1.6, by - r * 1.6, r * 10.2, r * 9);
+    g.fillStyle = 'rgba(6,3,14,.7)'; g.fillRect(bx - r * 1.6, by - r * 1.6, r * 10.2, r * 9);
     BW.SPOTS.forEach((s, i) => {
       const row = Math.round((s.y - BW.HEAD) / BW.ROW), x = bx + r * 3.6 + s.x / BW.SPACE * r * 2.4, y = by + (3 - row) * r * 2.1;
       const p = pins[i], up = p && !p.gone && p.up;
-      g.fillStyle = up ? '#fff6e6' : 'rgba(255,255,255,.12)'; g.beginPath(); g.arc(x, y, r * .8, 0, Math.PI * 2); g.fill();
+      g.fillStyle = up ? '#e9f0ff' : 'rgba(160,120,255,.18)'; g.beginPath(); g.arc(x, y, r * .8, 0, Math.PI * 2); g.fill();
     });
     if (G && !G.over && G.cur >= 0) {
       const p = cur(), s = bowlState(p.rolls);
       g.font = "600 15px 'Barlow Condensed', sans-serif"; g.textBaseline = 'top'; g.textAlign = 'left';
       const txt = nameOf(p.id) + ' · ' + t('bw.frame', { f: s.frame + 1 });
-      g.fillStyle = 'rgba(10,6,3,.55)'; g.fillRect(8, 8, g.measureText(txt).width + 16, 24);
-      g.fillStyle = '#f3d487'; g.fillText(txt, 16, 12);
+      g.fillStyle = 'rgba(6,3,14,.7)'; g.fillRect(8, 8, g.measureText(txt).width + 16, 24);
+      g.fillStyle = '#7ff6ff'; g.fillText(txt, 16, 12);
     }
-    if (flash) {
+    if (flash && (wallH < H * .2 || flash.t >= 1.8)) {
       const k = flash.t, a = k < 1.4 ? 1 : Math.max(0, 1 - (k - 1.4) / .5);
       if (a > 0) {
         const fs = (flash.big ? .13 : .085) * Math.min(W, H * 1.2) * (1 + .25 * Math.max(0, 1 - k * 4));
         g.save(); g.globalAlpha = a; g.font = `700 ${fs}px 'Cabin Sketch', cursive`; g.textAlign = 'center'; g.textBaseline = 'middle';
-        g.shadowColor = flash.big ? '#ff4fd8' : '#000'; g.shadowBlur = fs * .4; g.fillStyle = flash.big ? '#ffe9a8' : '#fff4dc';
+        g.shadowColor = flash.big ? hsl(T * 300, 60) : '#00e5ff'; g.shadowBlur = fs * .5; g.fillStyle = '#fff6ff';
         g.fillText(flash.text, W / 2, H * .5); g.restore();
       }
     }
     if (G && G.phase === 'aim' && !gest) {
-      // Wisch-Hinweis über der Kugel
       const c = P(myX, BALL_Y, BW.BALL_R), bob = Math.sin(performance.now() / 260) * 6;
-      g.save(); g.strokeStyle = 'rgba(255,233,168,.75)'; g.lineWidth = 3; g.lineCap = 'round';
+      g.save(); g.strokeStyle = hsl(hue() + 180, 70, .9); g.shadowColor = g.strokeStyle; g.shadowBlur = 8; g.lineWidth = 3; g.lineCap = 'round';
       const y = c.y - BW.BALL_R * c.s - 18 + bob;
       g.beginPath(); g.moveTo(c.x, y + 14); g.lineTo(c.x, y - 16); g.moveTo(c.x - 8, y - 8); g.lineTo(c.x, y - 16); g.lineTo(c.x + 8, y - 8); g.stroke(); g.restore();
     }
     if (guide) {
-      g.save(); g.strokeStyle = 'rgba(255,214,107,.85)'; g.lineWidth = 2.5; g.setLineDash([6, 7]); g.beginPath();
+      g.save(); g.strokeStyle = '#7ff6ff'; g.shadowColor = '#00e5ff'; g.shadowBlur = 8; g.lineWidth = 2.5; g.setLineDash([6, 7]); g.beginPath();
       guide.forEach((q, i) => i ? g.lineTo(q.x, q.y) : g.moveTo(q.x, q.y)); g.stroke(); g.restore();
     }
   }
   function draw() {
+    tickBeat();
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
     drawBack();
-    for (const ox of [-3.5, -1.75, 1.75, 3.5]) {
-      drawLane(ox, true);
-      BW.SPOTS.slice().reverse().forEach(s => drawPin({ x: s.x + ox, y: s.y, up: true, fall: 0, ang: 0 }));
-    }
-    drawLane(0, false);
-    // Pins und Kugel nach Entfernung sortiert
-    const items = (sim ? sim.pins : rackPins).filter(p => !p.gone).map(p => ({ y: p.y, f: () => drawPin(p) }));
+    (lowFx ? [-1.75, 1.75] : [-3.5, -1.75, 1.75, 3.5]).forEach((ox, i) => {
+      drawLane(ox, true, i + 1);
+      BW.SPOTS.slice().reverse().forEach(s => drawPin({ x: s.x + ox, y: s.y, up: true, fall: 0, ang: 0 }, true));
+    });
+    drawLane(0, false, 0);
+    if (!lowFx) drawSpots();
+    const items = (sim ? sim.pins : rackPins).filter(p => !p.gone).map(p => ({ y: p.y, f: () => drawPin(p, false) }));
     if (sim) items.push({ y: sim.ball.y, f: () => drawBall(sim.ball.x, sim.ball.y, sim.ball.gutter, sim.ball.spin, sim.color) });
     else if (G && G.phase === 'aim') items.push({ y: BALL_Y, f: () => drawBall(myX, BALL_Y, false, 0, MY_BALL) });
     else if (G && G.phase === 'cpu' && cpuShot) items.push({ y: BALL_Y, f: () => drawBall(cpuShot[0], BALL_Y, false, 0, cur().ball) });
     items.sort((a, b) => b.y - a.y).forEach(it => it.f());
     drawRake();
-    const vg = g.createRadialGradient(W / 2, H * .55, Math.min(W, H) * .3, W / 2, H * .55, Math.max(W, H) * .8);
-    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.5)'); g.fillStyle = vg; g.fillRect(0, 0, W, H);
+    if (!lowFx || party > .1) drawLasers();
+    drawDiscoBall();
+    // Nebel über dem Boden, in der Farbe des Takts
+    const fog = g.createLinearGradient(0, H * .55, 0, H);
+    fog.addColorStop(0, 'rgba(0,0,0,0)'); fog.addColorStop(1, hsl(hue() + 240, 55, .12 + .06 * pulse));
+    g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = fog; g.fillRect(0, H * .55, W, H * .45); g.restore();
+    // Stroboskop nach einem Strike
+    if (party > .05 && Math.floor(bt * 4) % 2 === 0) { g.fillStyle = `rgba(255,255,255,${.16 * party})`; g.fillRect(0, 0, W, H); }
+    vignette();
     drawHud();
   }
 
@@ -7917,6 +8133,7 @@ const bowling = (() => {
     }
     const target = sim && !sim.over ? Math.max(CAM0, Math.min(11.4, sim.ball.y - 7)) : hold ? cam : CAM0;
     cam += (target - cam) * Math.min(1, dt * (target > cam ? 7 : 2.4));
+    T += dt; party = Math.max(0, party - dt * .4);
     if (flash) { flash.t += dt; if (flash.t > 2.2) flash = null; }
     if (sweepT) {
       const was = sweepT; sweepT += dt / .9;
@@ -7928,7 +8145,7 @@ const bowling = (() => {
   function loop(now) {
     if (el.hidden) { running = false; return; }
     const dt = Math.min(.05, Math.max(0, (now - last) / 1000)); last = now;
-    update(dt); draw();
+    watchFps(dt); update(dt); draw();
     requestAnimationFrame(loop);
   }
   function kick() { if (!running && !el.hidden) { running = true; last = performance.now(); requestAnimationFrame(loop); } }
@@ -8020,14 +8237,20 @@ const bowling = (() => {
     if (stake > arcade.cash) { $('#bwWarn').textContent = t('bw.nocash'); sfx.bust(); return; }
     startGame(opp === 'solo' ? null : opp, stake);
   });
+  let musicOn = true; try { musicOn = localStorage.getItem('dk-bw-music') !== '0'; } catch (e) {}
+  function paintMusic() { const b = $('#bwMusic'); b.textContent = t(musicOn ? 'bw.music.on' : 'bw.music.off'); b.setAttribute('aria-pressed', String(musicOn)); }
+  $('#bwMusic').addEventListener('click', () => {
+    musicOn = !musicOn; try { localStorage.setItem('dk-bw-music', musicOn ? '1' : '0'); } catch (e) {}
+    sfx.init(); sfx.setStyle(musicOn ? 'disco' : 'quiet'); paintMusic();
+  });
   function open() {
-    sfx.init(); el.hidden = false; paintCash();
+    sfx.init(); el.hidden = false; paintCash(); paintMusic(); sfx.setStyle(musicOn ? 'disco' : 'quiet');
     $('#bwSub').textContent = G ? t('bw.sub', { opp: G.opp ? nameOf(G.opp) : t('bw.solo') }) : t('bw.sub0');
     if (!G || G.over) showSetup();
     renderSheet();
     requestAnimationFrame(() => { resize(); kick(); });
   }
-  function close() { el.hidden = true; gest = null; guide = null; }
+  function close() { el.hidden = true; gest = null; guide = null; sfx.setStyle(boardKey); }
   $('#bwNew').addEventListener('click', showSetup);
   $('#bwResume').addEventListener('click', () => { $('#bwSetup').hidden = true; });
   $('#bwLeave').addEventListener('click', close);
@@ -8044,7 +8267,7 @@ const bowling = (() => {
       if (el.hidden) return;
       $('#bwSub').textContent = G ? t('bw.sub', { opp: G.opp ? nameOf(G.opp) : t('bw.solo') }) : t('bw.sub0');
       if (!$('#bwSetup').hidden) showSetup();
-      renderSheet();
+      renderSheet(); paintMusic();
     }
   };
 })();
