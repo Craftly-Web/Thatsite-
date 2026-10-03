@@ -1,0 +1,841 @@
+/* =========================================================
+   LEICHTER. OHNE DIÄT. – E-Book-Layout (Druck/PDF)
+   Format 170 × 240 mm, gerendert mit Chromium
+   ========================================================= */
+
+:root {
+  --ink: #1E1B18;
+  --ink-soft: #4A443D;
+  --paper: #FFF9F0;
+  --paper-2: #FFF1DC;
+  --green: #1F7A55;
+  --green-deep: #134734;
+  --mint: #D5F2E2;
+  --lime: #9BE15D;
+  --tomato: #FF5A3C;
+  --tomato-soft: #FFE1D9;
+  --sun: #FFC93C;
+  --sun-soft: #FFF0C4;
+  --sky: #6EC3E8;
+  --sky-soft: #DDF2FB;
+  --berry: #8E5BD8;
+  --berry-soft: #EDE3FB;
+  --radius: 14px;
+}
+
+@page {
+  size: 170mm 240mm;
+  margin: 19mm 17mm 21mm 17mm;
+  background: var(--paper);
+  @bottom-left {
+    content: "Leichter. Ohne Diät.";
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: 7.5pt;
+    color: #9A8F82;
+    letter-spacing: .04em;
+  }
+  @bottom-right {
+    content: counter(page);
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-weight: 600;
+    font-size: 8.5pt;
+    color: var(--green);
+  }
+}
+@page bleed {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+@page plain {
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Nunito", sans-serif;
+  font-size: 10.2pt;
+  line-height: 1.58;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  font-variant-numeric: lining-nums;
+}
+
+p { margin: 0 0 .75em; orphans: 3; widows: 3; text-align: left; }
+strong { font-weight: 800; }
+em { font-style: italic; }
+a { color: inherit; text-decoration: none; }
+sup.ref {
+  font-size: .62em;
+  font-weight: 800;
+  color: var(--green);
+  margin-left: 1px;
+  vertical-align: super;
+  line-height: 0;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+h2 {
+  font-size: 19pt;
+  color: var(--green-deep);
+  margin: 1.1em 0 .45em;
+}
+h2 .tag {
+  display: inline-block;
+  font-size: 8pt;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: var(--sun);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 1px 9px 0;
+  margin-bottom: 6px;
+  vertical-align: middle;
+  color: var(--ink);
+}
+h3 {
+  font-size: 13pt;
+  color: var(--ink);
+  margin: 1.2em 0 .4em;
+}
+h3::before {
+  content: "";
+  display: inline-block;
+  width: 9px; height: 9px;
+  background: var(--tomato);
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  transform: rotate(45deg) translateY(-2px);
+  margin-right: 9px;
+}
+h4 {
+  font-size: 10.5pt;
+  margin: .9em 0 .3em;
+  color: var(--green-deep);
+}
+
+ul, ol { margin: 0 0 .8em; padding-left: 1.3em; }
+li { margin-bottom: .3em; }
+ul.check { list-style: none; padding-left: 0; }
+ul.check li { position: relative; padding-left: 1.7em; }
+ul.check li::before {
+  content: "";
+  position: absolute; left: 0; top: .28em;
+  width: 13px; height: 13px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: var(--lime);
+}
+ul.check li::after {
+  content: "";
+  position: absolute; left: 4px; top: .42em;
+  width: 5px; height: 8px;
+  border: solid var(--ink);
+  border-width: 0 2px 2px 0;
+  transform: rotate(40deg);
+}
+ul.cross { list-style: none; padding-left: 0; }
+ul.cross li { position: relative; padding-left: 1.7em; }
+ul.cross li::before {
+  content: "×";
+  position: absolute; left: 0; top: -.05em;
+  width: 17px; height: 17px;
+  font-family: "Fredoka", "Nunito"; font-weight: 700; font-size: 13px;
+  line-height: 15px; text-align: center;
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--tomato);
+}
+
+.lead {
+  font-size: 11.6pt;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 1em;
+}
+.lead::first-letter {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 700;
+  float: left;
+  font-size: 3.6em;
+  line-height: .85;
+  margin: .06em .1em 0 0;
+  color: var(--tomato);
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+
+.sfx {
+  font-family: "Bangers", "Fredoka", "Nunito", sans-serif;
+  letter-spacing: .04em;
+}
+
+/* ---------- Seitenumbrüche ---------- */
+.page-break { break-before: page; page-break-before: always; }
+.keep { break-inside: avoid; page-break-inside: avoid; }
+.chapter { break-before: page; }
+
+/* ---------- Comic-Panels / Boxen ---------- */
+.box {
+  position: relative;
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 0 15px 7px 15px;
+  margin: 16px 4px 18px 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  background: #fff;
+}
+.box .box-label {
+  position: relative;
+  transform: translateY(-50%);
+  margin: 0 0 -4px -2px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 8.4pt;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 2px 11px 1px 8px;
+  background: var(--sun);
+  color: var(--ink);
+  line-height: 1.4;
+}
+.box .box-label svg { width: 14px; height: 14px; }
+.box p:last-child, .box ul:last-child { margin-bottom: .5em; }
+.box h4 { margin-top: .5em; }
+
+.box.study { background: var(--sky-soft); }
+.box.study .box-label { background: var(--sky); }
+.box.tip { background: var(--mint); }
+.box.tip .box-label { background: var(--lime); }
+.box.warn { background: var(--tomato-soft); }
+.box.warn .box-label { background: var(--tomato); color: #fff; }
+.box.merke { background: var(--sun-soft); }
+.box.merke .box-label { background: var(--sun); }
+.box.mind { background: var(--berry-soft); }
+.box.mind .box-label { background: var(--berry); color: #fff; }
+
+.study-meta {
+  font-size: 8.3pt;
+  color: var(--ink-soft);
+  border-top: 1.5px dashed rgba(30,27,24,.35);
+  padding-top: 5px;
+  margin-top: 6px;
+}
+
+/* Wenn-Dann-Karte */
+.ifthen {
+  display: flex;
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--ink);
+  overflow: hidden;
+  margin: 14px 4px 18px 0;
+  break-inside: avoid;
+  background: #fff;
+}
+.ifthen > div { padding: 10px 13px; flex: 1; }
+.ifthen .if { background: var(--sun-soft); border-right: 2.4px dashed var(--ink); }
+.ifthen .then { background: var(--mint); }
+.ifthen b {
+  display: block;
+  font-family: "Bangers", sans-serif;
+  font-weight: 400;
+  font-size: 15pt;
+  letter-spacing: .05em;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.ifthen .if b { color: var(--tomato); }
+.ifthen .then b { color: var(--green); }
+
+/* Zitat */
+.quote {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-size: 14pt;
+  line-height: 1.3;
+  color: var(--green-deep);
+  margin: 18px 0 18px;
+  padding: 4px 0 4px 18px;
+  border-left: 6px solid var(--sun);
+  break-inside: avoid;
+}
+.quote small {
+  display: block;
+  font-family: "Nunito", sans-serif;
+  font-size: 8.5pt;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+/* Sprechblase */
+.bubble {
+  position: relative;
+  display: inline-block;
+  background: #fff;
+  border: 2.4px solid var(--ink);
+  border-radius: 18px;
+  padding: 9px 14px;
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-size: 11pt;
+  line-height: 1.3;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ---------- Tabellen ---------- */
+table.swap {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--ink);
+  overflow: hidden;
+  margin: 12px 0 18px;
+  font-size: 9pt;
+  line-height: 1.35;
+  background: #fff;
+  break-inside: avoid;
+}
+table.swap.long { break-inside: auto; }
+table.swap thead { display: table-header-group; }
+table.swap tr { break-inside: avoid; page-break-inside: avoid; }
+table.swap th {
+  background: var(--green-deep);
+  color: #fff;
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 500;
+  text-align: left;
+  padding: 7px 9px;
+  font-size: 8.8pt;
+  letter-spacing: .02em;
+}
+table.swap td {
+  padding: 6px 9px;
+  border-top: 1.4px solid #E9DFCF;
+  vertical-align: top;
+}
+table.swap tr:nth-child(even) td { background: #FFFBF4; }
+table.swap td.arrow {
+  width: 22px;
+  text-align: center;
+  font-family: "Fredoka", "Nunito"; font-weight: 700;
+  color: var(--tomato);
+  padding-left: 0; padding-right: 0;
+}
+table.swap td.save {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 600;
+  color: var(--green);
+  white-space: nowrap;
+  text-align: right;
+}
+table.swap td.old { color: var(--ink-soft); }
+table.swap td.new { font-weight: 700; }
+table.swap tr.total td {
+  background: var(--sun-soft);
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 600;
+  border-top: 2.4px solid var(--ink);
+}
+
+/* ---------- Abbildungen ---------- */
+figure {
+  margin: 14px 0 16px;
+  break-inside: avoid;
+  text-align: center;
+}
+figure svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+figcaption {
+  font-size: 8.3pt;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  font-style: italic;
+}
+.icon { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; }
+
+/* ---------- Kapitel-Eröffnung (vollflächig) ---------- */
+.opener {
+  page: bleed;
+  break-before: page;
+  height: 239.6mm;
+  width: 170mm;
+  position: relative;
+  overflow: hidden;
+  padding: 22mm 18mm 18mm;
+  color: var(--ink);
+  background: var(--sun);
+  display: flex;
+  flex-direction: column;
+}
+.opener::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(30,27,24,.13) 1.3px, transparent 1.5px);
+  background-size: 9px 9px;
+  pointer-events: none;
+}
+.opener > * { position: relative; }
+.opener .num {
+  font-family: "Bangers", sans-serif;
+  font-size: 30pt;
+  letter-spacing: .06em;
+  line-height: 1;
+  display: inline-block;
+  align-self: flex-start;
+  background: #fff;
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  border-radius: 12px;
+  padding: 7px 16px 3px;
+  transform: rotate(-3deg);
+  color: var(--tomato);
+}
+.opener h1 {
+  font-size: 32pt;
+  line-height: 1.02;
+  margin: 18px 0 10px;
+  color: var(--ink);
+  font-weight: 700;
+}
+.opener .teaser {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-size: 12.5pt;
+  line-height: 1.35;
+  max-width: 118mm;
+  color: var(--ink);
+}
+.opener .art {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+.opener .art svg { width: 100%; max-height: 118mm; }
+.opener.green { background: var(--lime); }
+.opener.mint { background: #8FDDB8; }
+.opener.sky { background: var(--sky); }
+.opener.tomato { background: #FF8A6B; }
+.opener.berry { background: #B99AF0; }
+.opener.deep { background: var(--green-deep); color: #fff; }
+.opener.deep h1, .opener.deep .teaser { color: #fff; }
+.opener.deep::before { background-image: radial-gradient(rgba(255,255,255,.10) 1.3px, transparent 1.5px); }
+
+/* Kapitel-Kicker nach dem Opener */
+.chapter-intro { margin-top: 0; }
+
+/* ---------- Cover ---------- */
+.cover {
+  page: bleed;
+  height: 239.6mm;
+  width: 170mm;
+  position: relative;
+  overflow: hidden;
+  background: var(--sun);
+  color: var(--ink);
+}
+.cover-dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(30,27,24,.14) 1.4px, transparent 1.6px);
+  background-size: 9px 9px;
+}
+.cover-top {
+  position: relative;
+  padding: 15mm 15mm 0;
+}
+.cover .kicker {
+  display: inline-block;
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 9pt;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--sun);
+  padding: 4px 12px 3px;
+  border-radius: 999px;
+}
+.cover h1 {
+  font-family: "Bangers", sans-serif;
+  font-weight: 400;
+  font-size: 66pt;
+  line-height: .86;
+  letter-spacing: .02em;
+  margin: 12px 0 0;
+  color: #fff;
+  -webkit-text-stroke: 3px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 5px 5px 0 var(--ink);
+}
+.cover h1 .l2 { color: var(--tomato); }
+.cover .sub {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 500;
+  font-size: 13.5pt;
+  line-height: 1.25;
+  margin-top: 12px;
+  max-width: 120mm;
+}
+.cover .art {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 30mm;
+  display: flex; justify-content: center;
+}
+.cover .art svg { width: 160mm; }
+.cover .band {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 30mm;
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 10mm;
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-size: 9.6pt;
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+.cover .band span { display: flex; align-items: center; gap: 7px; }
+.cover .band i {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--tomato);
+  border: 2px solid #fff;
+  position: relative;
+}
+.cover .band i::after {
+  content: ""; position: absolute; left: 5px; top: 1px;
+  width: 4px; height: 9px;
+  border: solid #fff; border-width: 0 2px 2px 0;
+  transform: rotate(40deg);
+}
+.cover .seal {
+  position: absolute;
+  right: 9mm; top: 74mm;
+  width: 33mm; height: 33mm;
+  transform: rotate(12deg);
+}
+.cover .author {
+  position: absolute;
+  left: 15mm; bottom: 34mm;
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 10pt;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ---------- Titelei ---------- */
+.titlepage {
+  page: plain;
+  break-before: page;
+  padding-top: 42mm;
+  text-align: center;
+}
+.titlepage .t1 {
+  font-family: "Bangers", sans-serif;
+  font-size: 44pt;
+  line-height: .9;
+  color: var(--green-deep);
+}
+.titlepage .t1 span { color: var(--tomato); }
+.titlepage .t2 {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-size: 12.5pt;
+  margin-top: 12px;
+  color: var(--ink-soft);
+}
+.titlepage svg { width: 46mm; margin: 14mm auto 0; display: inline-block; }
+
+.imprint {
+  page: plain;
+  break-before: page;
+  font-size: 8.2pt;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.imprint h3 { font-size: 10pt; }
+.imprint h3::before { display: none; }
+
+/* ---------- Inhaltsverzeichnis ---------- */
+.toc { break-before: page; }
+.toc h2 { margin-top: 0; }
+.toc ol { list-style: none; padding: 0; margin: 0; }
+.toc li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1.6px dashed rgba(30,27,24,.22);
+  margin: 0;
+  break-inside: avoid;
+}
+.toc li .n {
+  flex: 0 0 24px;
+  height: 24px;
+  font-family: "Bangers", sans-serif;
+  font-size: 13pt;
+  line-height: 25px;
+  text-align: center;
+  background: var(--sun);
+  border: 2px solid var(--ink);
+  border-radius: 7px;
+  transform: rotate(-4deg);
+  align-self: center;
+}
+.toc li .t { flex: 1; font-family: "Fredoka", "Nunito", sans-serif; font-size: 11pt; font-weight: 500; }
+.toc li .t small { display: block; font-family: "Nunito"; font-size: 8.3pt; color: var(--ink-soft); font-weight: 400; }
+.toc li .p { font-family: "Fredoka", "Nunito"; font-weight: 600; color: var(--green); font-size: 10.5pt; }
+.toc li.sub .n { background: var(--mint); }
+.toc li.special .n { background: var(--berry); color: #fff; }
+.toc li.special .t { color: var(--berry); }
+
+/* Seitenmarker für das Inhaltsverzeichnis (nur 1. Durchlauf) */
+.pm {
+  position: absolute;
+  font-size: 2px;
+  color: rgba(255,255,255,.02);
+  left: 0; top: 0;
+}
+
+/* ---------- Zahlen-Kacheln ---------- */
+.stats {
+  display: flex;
+  gap: 10px;
+  margin: 14px 4px 18px 0;
+  break-inside: avoid;
+}
+.stat {
+  flex: 1;
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 3px 3px 0 var(--ink);
+  background: #fff;
+  padding: 10px 10px 8px;
+  text-align: center;
+}
+.stat b {
+  display: block;
+  font-family: "Bangers", sans-serif;
+  font-weight: 400;
+  font-size: 25pt;
+  line-height: 1;
+  color: var(--tomato);
+  letter-spacing: .03em;
+}
+.stat span { display: block; font-size: 8.2pt; line-height: 1.3; margin-top: 4px; color: var(--ink-soft); }
+.stat.g b { color: var(--green); }
+.stat.b b { color: var(--berry); }
+
+/* ---------- Regel-Karten ---------- */
+.rules { counter-reset: rule; margin: 12px 0; }
+.rule {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--ink);
+  background: #fff;
+  padding: 10px 13px;
+  margin: 0 4px 12px 0;
+  break-inside: avoid;
+}
+.rule .rn {
+  flex: 0 0 38px;
+  height: 38px;
+  border: 2.4px solid var(--ink);
+  border-radius: 50%;
+  background: var(--tomato);
+  color: #fff;
+  font-family: "Bangers", sans-serif;
+  font-size: 20pt;
+  line-height: 38px;
+  text-align: center;
+  -webkit-text-stroke: .6px var(--ink);
+}
+.rule h4 { margin: 2px 0 2px; font-size: 11.5pt; color: var(--ink); }
+.rule p { margin: 0; font-size: 9.3pt; line-height: 1.45; }
+
+/* ---------- Akku-Karten ---------- */
+.akku-grid { display: flex; gap: 9px; margin: 14px 4px 18px 0; break-inside: avoid; }
+.akku {
+  flex: 1;
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 10px 10px 6px;
+  font-size: 8.6pt;
+  line-height: 1.4;
+  background: #fff;
+}
+.akku h4 { margin: 0 0 4px; font-size: 11pt; color: var(--ink); }
+.akku.red { background: #FFE3DC; }
+.akku.yellow { background: var(--sun-soft); }
+.akku.green { background: var(--mint); }
+.akku ul { padding-left: 1.1em; margin: 0 0 .4em; }
+.akku .lvl {
+  height: 12px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: #fff;
+  margin: 2px 0 8px;
+  position: relative;
+  overflow: hidden;
+}
+.akku .lvl i { position: absolute; left: 0; top: 0; bottom: 0; }
+.akku.red .lvl i { width: 22%; background: var(--tomato); }
+.akku.yellow .lvl i { width: 58%; background: var(--sun); }
+.akku.green .lvl i { width: 92%; background: var(--lime); }
+
+/* ---------- 12-Wochen-Plan ---------- */
+.week {
+  display: flex;
+  gap: 12px;
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--ink);
+  background: #fff;
+  margin: 0 4px 13px 0;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.week .wk {
+  flex: 0 0 25mm;
+  background: var(--green-deep);
+  color: #fff;
+  text-align: center;
+  padding: 10px 4px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.week .wk small { font-family: "Fredoka", "Nunito"; font-size: 7.5pt; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+.week .wk b { font-family: "Bangers"; font-weight: 400; font-size: 30pt; line-height: 1; color: var(--sun); }
+.week .wc { padding: 9px 12px 6px 0; flex: 1; }
+.week h4 { margin: 0 0 3px; font-size: 11.5pt; color: var(--ink); }
+.week p { margin: 0 0 4px; font-size: 9pt; line-height: 1.42; }
+.week .wd {
+  font-size: 8.6pt;
+  background: var(--sun-soft);
+  border: 1.6px dashed var(--ink);
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin: 5px 0 6px;
+}
+.week .days { display: flex; gap: 4px; margin: 4px 0 4px; align-items: center; font-size: 7.5pt; color: var(--ink-soft); }
+.week .days i {
+  display: inline-block; width: 15px; height: 15px;
+  border: 1.8px solid var(--ink); border-radius: 4px; background: #fff;
+}
+
+/* ---------- Rezepte ---------- */
+.recipe {
+  border: 2.4px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--ink);
+  background: #fff;
+  margin: 0 4px 15px 0;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.recipe header {
+  background: var(--tomato);
+  color: #fff;
+  padding: 8px 13px 6px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 2.4px solid var(--ink);
+}
+.recipe header h4 { margin: 0; color: #fff; font-size: 12.5pt; }
+.recipe header span { font-family: "Fredoka", "Nunito"; font-size: 8.5pt; font-weight: 500; }
+.recipe .rb { display: flex; gap: 14px; padding: 10px 13px 4px; font-size: 9pt; line-height: 1.45; }
+.recipe .rb .ing { flex: 0 0 40%; }
+.recipe .rb .ing ul { padding-left: 1.1em; margin: 0 0 .5em; }
+.recipe .rb ol { padding-left: 1.2em; margin: 0 0 .5em; }
+.recipe .swapnote {
+  font-size: 8.4pt;
+  background: var(--mint);
+  border-top: 1.6px dashed var(--ink);
+  padding: 5px 13px;
+}
+.recipe.sweet header { background: var(--berry); }
+.recipe.green header { background: var(--green); }
+.recipe.sun header { background: var(--sun); color: var(--ink); }
+.recipe.sun header h4 { color: var(--ink); }
+
+/* ---------- Tracker / Ausdrucke ---------- */
+table.tracker {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+  margin: 8px 0 12px;
+  background: #fff;
+}
+table.tracker th, table.tracker td {
+  border: 1.6px solid var(--ink);
+  padding: 4px 3px;
+  text-align: center;
+}
+table.tracker th { background: var(--green-deep); color: #fff; font-family: "Fredoka", "Nunito"; font-weight: 500; }
+table.tracker td.lbl { text-align: left; font-weight: 700; padding-left: 6px; width: 34%; }
+table.tracker tr:nth-child(even) td { background: #FFFBF4; }
+
+.cards { display: flex; flex-wrap: wrap; gap: 8px; }
+.cut {
+  flex: 0 0 calc(50% - 4px);
+  border: 2px dashed var(--ink);
+  border-radius: 12px;
+  padding: 9px 11px;
+  min-height: 34mm;
+  background: #fff;
+  font-size: 8.8pt;
+  line-height: 1.4;
+  break-inside: avoid;
+}
+.cut b { font-family: "Bangers"; font-weight: 400; font-size: 13pt; letter-spacing: .04em; color: var(--tomato); display: block; line-height: 1; }
+.cut .then { font-family: "Bangers"; color: var(--green); }
+.cut .line { border-bottom: 1.4px solid #bbb; height: 16px; }
+
+/* ---------- Quellen ---------- */
+ol.refs { font-size: 7.6pt; line-height: 1.42; padding-left: 2.2em; color: var(--ink-soft); }
+ol.refs li { margin-bottom: .45em; break-inside: avoid; }
+ol.refs li::marker { font-weight: 800; color: var(--green); }
+
+/* ---------- Diverses ---------- */
+.two { display: flex; gap: 12px; }
+.two > * { flex: 1; }
+.center { text-align: center; }
+.small { font-size: 8.6pt; }
+.muted { color: var(--ink-soft); }
+.hl { background: linear-gradient(transparent 55%, var(--sun) 55%, var(--sun) 92%, transparent 92%); padding: 0 2px; }
+.divider { text-align: center; margin: 14px 0; }
+.divider svg { width: 70px; }
+.endpage {
+  page: plain;
+  break-before: page;
+  padding-top: 50mm;
+  text-align: center;
+}
+.endpage svg { display: inline-block; }
+.endpage svg { width: 50mm; }
+svg.arr { width: 1.05em; height: .62em; vertical-align: .02em; display: inline-block; }
+svg.arr.star { width: .8em; height: .8em; vertical-align: -.05em; }
+.toc li .n svg.arr.star { width: 13px; height: 13px; vertical-align: -1px; }

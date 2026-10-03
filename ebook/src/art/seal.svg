@@ -1,0 +1,7 @@
+<svg class="seal" viewBox="-108 -108 216 216" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="94,0 56,15 87,51 41,41 49,85 16,58 0,89 -16,59 -44,77 -43,43 -77,45 -56,15 -96,0 -62,-16 -78,-45 -42,-42 -50,-87 -17,-62 -0,-100 16,-58 54,-93 41,-41 91,-53 57,-15" fill="#FF5A3C" stroke="#1E1B18" stroke-width="5" stroke-linejoin="round"/>
+  <circle r="54" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="5 5"/>
+  <text y="-18" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="17" fill="#fff" letter-spacing="1">MIT ÜBER</text>
+  <text y="24" text-anchor="middle" font-family="Bangers" font-size="50" fill="#FFC93C" stroke="#1E1B18" stroke-width="4" paint-order="stroke">{{STUDIEN}}</text>
+  <text y="46" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="16" fill="#fff" letter-spacing="1">STUDIEN</text>
+</svg>

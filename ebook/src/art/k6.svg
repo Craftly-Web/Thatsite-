@@ -1,0 +1,52 @@
+<svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="250" cy="300" rx="200" ry="9" fill="#1E1B18" opacity=".15"/>
+  <path d="M60,34 h250 a16,16 0 0 1 16,16 v24 a16,16 0 0 1 -16,16 h-196 l-30,22 l8,-22 h-32 a16,16 0 0 1 -16,-16 v-24 a16,16 0 0 1 16,-16 z" fill="#fff" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round"/>
+  <text x="185" y="60" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="17" fill="#1E1B18">Gleich viele Kalorien.</text>
+  <text x="185" y="81" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="17" fill="#FF5A3C">Was macht dich satter?</text>
+  <polygon points="250,222 222,292 278,292" fill="#FF5A3C" stroke="#1E1B18" stroke-width="5" stroke-linejoin="round"/>
+  <rect x="30" y="210" width="440" height="16" rx="8" fill="#E0A458" stroke="#1E1B18" stroke-width="5"/>
+  <!-- links: Riegel -->
+  <ellipse cx="110" cy="206" rx="46" ry="9" fill="#fff" stroke="#1E1B18" stroke-width="4"/>
+  <rect x="92" y="186" width="36" height="16" rx="3" fill="#7A4524" stroke="#1E1B18" stroke-width="3.5"/>
+  <path d="M104,186 v16 M116,186 v16" stroke="#5A3018" stroke-width="2"/>
+  <path d="M120,184 h10 v20 h-10 l4,-5 -4,-5 4,-5 z" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="58" y="238" width="104" height="30" rx="15" fill="#FFC93C" stroke="#1E1B18" stroke-width="3.5"/>
+  <text x="110" y="259" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="15" fill="#1E1B18">1 Riegel</text>
+  <!-- rechts: Schüssel mit Gemüse -->
+  <g>
+    <path d="M312,199 q-14,-14 -11,-20 q11,-6 22,0 q3,6 -11,20 z" fill="#E8436B" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/>
+    <g stroke="#1E1B18" stroke-width="2.6"><rect x="331" y="188" width="6" height="12" fill="#9BE15D"/><circle cx="328" cy="186" r="7" fill="#1F7A55"/><circle cx="340" cy="186" r="7" fill="#1F7A55"/><circle cx="334" cy="180" r="8" fill="#1F7A55"/></g>
+    <g transform="translate(353,186) rotate(32)"><path d="M-5,-11 h10 l-5,22 z" fill="#FF9F43" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/><path d="M-3,-11 l-3,-6 M0,-11 v-7 M3,-11 l3,-6" stroke="#1F7A55" stroke-width="2.4" stroke-linecap="round"/></g>
+    <g transform="translate(371,186) rotate(9)"><path d="M-5,-11 h10 l-5,22 z" fill="#FF9F43" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/><path d="M-3,-11 l-3,-6 M0,-11 v-7 M3,-11 l3,-6" stroke="#1F7A55" stroke-width="2.4" stroke-linecap="round"/></g>
+    <rect x="378" y="176" width="22" height="18" rx="7" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+    <rect x="396" y="174" width="28" height="22" rx="8" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+    <g stroke="#1E1B18" stroke-width="2.6"><rect x="429" y="183" width="6" height="12" fill="#9BE15D"/><circle cx="426" cy="181" r="7" fill="#1F7A55"/><circle cx="438" cy="181" r="7" fill="#1F7A55"/><circle cx="432" cy="175" r="8" fill="#1F7A55"/></g>
+    <path d="M452,200 q-12,-12 -10,-17 q10,-5 19,0 q2,5 -10,17 z" fill="#E8436B" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/>
+    <rect x="306" y="157" width="22" height="18" rx="7" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+    <g transform="translate(335,164) rotate(-22)"><path d="M-5,-11 h10 l-5,22 z" fill="#FF9F43" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/><path d="M-3,-11 l-3,-6 M0,-11 v-7 M3,-11 l3,-6" stroke="#1F7A55" stroke-width="2.4" stroke-linecap="round"/></g>
+    <circle cx="356" cy="168" r="14" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3"/><path d="M352,157 l4,3 4,-3" fill="none" stroke="#1F7A55" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="378" cy="165" r="12" fill="#C9F3A1" stroke="#1E1B18" stroke-width="3"/><circle cx="378" cy="165" r="8" fill="none" stroke="#1F7A55" stroke-width="2"/>
+    <g stroke="#1E1B18" stroke-width="2.6"><rect x="394" y="167" width="6" height="11" fill="#9BE15D"/><circle cx="391" cy="165" r="7" fill="#1F7A55"/><circle cx="403" cy="165" r="7" fill="#1F7A55"/><circle cx="397" cy="159" r="7" fill="#1F7A55"/></g>
+    <circle cx="415" cy="163" r="11" fill="#C9F3A1" stroke="#1E1B18" stroke-width="3"/><circle cx="415" cy="163" r="7" fill="none" stroke="#1F7A55" stroke-width="2"/>
+    <circle cx="436" cy="164" r="14" fill="#C9F3A1" stroke="#1E1B18" stroke-width="3"/><circle cx="436" cy="164" r="10" fill="none" stroke="#1F7A55" stroke-width="2"/>
+    <circle cx="328" cy="147" r="12" fill="#C9F3A1" stroke="#1E1B18" stroke-width="3"/><circle cx="328" cy="147" r="8" fill="none" stroke="#1F7A55" stroke-width="2"/>
+    <path d="M347,154 q-11,-11 -9,-15 q9,-4 18,0 q2,4 -9,15 z" fill="#E8436B" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/>
+    <g stroke="#1E1B18" stroke-width="2.6"><rect x="363" y="145" width="6" height="12" fill="#9BE15D"/><circle cx="360" cy="143" r="7" fill="#1F7A55"/><circle cx="372" cy="143" r="7" fill="#1F7A55"/><circle cx="366" cy="137" r="8" fill="#1F7A55"/></g>
+    <g stroke="#1E1B18" stroke-width="2.6"><rect x="382" y="146" width="6" height="11" fill="#9BE15D"/><circle cx="379" cy="144" r="7" fill="#1F7A55"/><circle cx="391" cy="144" r="7" fill="#1F7A55"/><circle cx="385" cy="138" r="7" fill="#1F7A55"/></g>
+    <path d="M403,155 q-11,-11 -9,-15 q9,-4 18,0 q2,4 -9,15 z" fill="#E8436B" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M424,163 q-14,-14 -11,-20 q11,-6 22,0 q3,6 -11,20 z" fill="#E8436B" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/>
+    <circle cx="344" cy="125" r="14" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3"/><path d="M340,114 l4,3 4,-3" fill="none" stroke="#1F7A55" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="354" y="118" width="22" height="18" rx="7" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+    <path d="M384,139 q-12,-12 -10,-17 q10,-5 19,0 q2,5 -10,17 z" fill="#E8436B" stroke="#1E1B18" stroke-width="2.6" stroke-linejoin="round"/>
+    <circle cx="403" cy="125" r="11" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3"/><path d="M399,117 l4,3 4,-3" fill="none" stroke="#1F7A55" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="410" y="115" width="24" height="19" rx="7" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+    <circle cx="357" cy="110" r="11" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3"/><path d="M353,102 l4,3 4,-3" fill="none" stroke="#1F7A55" stroke-width="2.5" stroke-linecap="round"/>
+    <g stroke="#1E1B18" stroke-width="2.6"><rect x="375" y="106" width="6" height="14" fill="#9BE15D"/><circle cx="372" cy="104" r="8" fill="#1F7A55"/><circle cx="384" cy="104" r="8" fill="#1F7A55"/><circle cx="378" cy="98" r="9" fill="#1F7A55"/></g>
+    <rect x="388" y="98" width="22" height="18" rx="7" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+  </g>
+  <path d="M290,192 h164 q-6,22 -40,24 h-84 q-34,-2 -40,-24 z" fill="#6EC3E8" stroke="#1E1B18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M300,198 h144" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/>
+  <rect x="300" y="238" width="144" height="30" rx="15" fill="#9BE15D" stroke="#1E1B18" stroke-width="3.5"/>
+  <text x="372" y="259" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="15" fill="#1E1B18">eine Riesenschüssel</text>
+  <text x="250" y="316" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="500" font-size="13" fill="#1E1B18">je ca. 250 kcal</text>
+</svg>

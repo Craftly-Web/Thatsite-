@@ -1,0 +1,50 @@
+<svg viewBox="0 0 500 330" xmlns="http://www.w3.org/2000/svg">
+  <!-- Oberschrank -->
+  <rect x="262" y="14" width="218" height="134" rx="10" fill="#E0A458" stroke="#1E1B18" stroke-width="5"/>
+  <path d="M371,14 V148" stroke="#1E1B18" stroke-width="4"/>
+  <rect x="274" y="26" width="86" height="110" rx="6" fill="none" stroke="#1E1B18" stroke-opacity=".35" stroke-width="3"/>
+  <rect x="382" y="26" width="86" height="110" rx="6" fill="none" stroke="#1E1B18" stroke-opacity=".35" stroke-width="3"/>
+  <circle cx="360" cy="82" r="6" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+  <circle cx="382" cy="82" r="6" fill="#FFC93C" stroke="#1E1B18" stroke-width="3"/>
+  <g transform="translate(372,100) rotate(-12)">
+    <rect x="-4" y="-8" width="26" height="14" rx="2" fill="#7A4524" stroke="#1E1B18" stroke-width="2.5"/>
+    <path d="M14,-10 h10 v18 h-10 l3,-4 -3,-5 3,-5 z" fill="#FF5A3C" stroke="#1E1B18" stroke-width="2.4" stroke-linejoin="round"/>
+  </g>
+  <path d="M40,30 h170 a14,14 0 0 1 14,14 v22 a14,14 0 0 1 -14,14 h-20 l44,22 -64,-22 h-130 a14,14 0 0 1 -14,-14 v-22 a14,14 0 0 1 14,-14 z" fill="#fff" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round"/>
+  <text x="125" y="54" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="15" fill="#1E1B18">Hallo …? Ist da jemand?</text>
+  <text x="125" y="72" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="500" font-size="12.5" fill="#4A443D">(die Schokolade, gut versteckt)</text>
+  <text x="371" y="172" text-anchor="middle" font-family="Bangers" font-size="19" fill="#1E1B18" letter-spacing="1">HINTEN &amp; ZU</text>
+  <!-- Arbeitsplatte -->
+  <rect x="10" y="246" width="480" height="18" rx="4" fill="#fff" stroke="#1E1B18" stroke-width="5"/>
+  <rect x="22" y="264" width="456" height="62" fill="#1F7A55" stroke="#1E1B18" stroke-width="5"/>
+  <path d="M174,264 V326 M326,264 V326" stroke="#1E1B18" stroke-width="4"/>
+  <g fill="#FFC93C" stroke="#1E1B18" stroke-width="3"><rect x="88" y="286" width="40" height="7" rx="3.5"/><rect x="230" y="286" width="40" height="7" rx="3.5"/><rect x="382" y="286" width="40" height="7" rx="3.5"/></g>
+  <!-- Obstschale -->
+  <path d="M150,170 q-6,-26 14,-30 q-4,18 -14,30 z" fill="#FFC93C" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round" transform="rotate(30 150 170)"/>
+  <path d="M120,170 C120,138 200,126 214,168 C190,150 146,152 120,170 Z" fill="#FFC93C" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="186" cy="190" r="22" fill="#FF9F43" stroke="#1E1B18" stroke-width="4"/>
+  <circle cx="146" cy="188" r="25" fill="#FF5A3C" stroke="#1E1B18" stroke-width="4"/>
+  <path d="M146,163 q2,-10 8,-14" fill="none" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M152,156 q10,-8 18,-2 q-8,8 -18,2 z" fill="#1F7A55" stroke="#1E1B18" stroke-width="2.5"/>
+  <circle cx="138" cy="184" r="4" fill="#1E1B18"/><circle cx="154" cy="184" r="4" fill="#1E1B18"/>
+  <path d="M138,194 q8,8 16,0" fill="none" stroke="#1E1B18" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="128" cy="192" rx="4" ry="2.5" fill="#fff" opacity=".6"/>
+  <path d="M96,200 h130 q-8,46 -65,46 q-57,0 -65,-46 z" fill="#6EC3E8" stroke="#1E1B18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M108,212 q50,10 106,0" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/>
+  <text x="160" y="140" text-anchor="middle" font-family="Bangers" font-size="19" fill="#1E1B18" letter-spacing="1" transform="rotate(-4 160 140)">VORNE &amp; SICHTBAR</text>
+  <!-- Wasserkaraffe -->
+  <path d="M262,170 h36 v10 q14,14 14,34 v20 q0,12 -12,12 h-40 q-12,0 -12,-12 v-20 q0,-20 14,-34 z" fill="#DDF2FB" stroke="#1E1B18" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M252,214 h56 v20 q0,8 -8,8 h-40 q-8,0 -8,-8 z" fill="#6EC3E8" opacity=".55"/>
+  <circle cx="272" cy="222" r="8" fill="#FFF3A8" stroke="#1E1B18" stroke-width="2.5"/>
+  <circle cx="292" cy="230" r="7" fill="#FFF3A8" stroke="#1E1B18" stroke-width="2.5"/>
+  <!-- Tauschi -->
+  <g transform="translate(412,212) scale(.6)">
+    <path d="M-40,-6 Q-70,-24 -92,-40" fill="none" stroke="#1E1B18" stroke-width="12" stroke-linecap="round"/>
+    <path d="M-40,-6 Q-70,-24 -92,-40" fill="none" stroke="#9BE15D" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="-95" cy="-42" r="9" fill="#9BE15D" stroke="#1E1B18" stroke-width="3.5"/>
+    <path d="M42,6 Q58,20 56,38" fill="none" stroke="#1E1B18" stroke-width="12" stroke-linecap="round"/>
+    <path d="M42,6 Q58,20 56,38" fill="none" stroke="#9BE15D" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="56" cy="42" r="9" fill="#9BE15D" stroke="#1E1B18" stroke-width="3.5"/>
+    <use href="#tauschi"/>
+  </g>
+</svg>

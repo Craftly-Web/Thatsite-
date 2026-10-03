@@ -1,0 +1,52 @@
+<svg viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="310" cy="314" rx="105" ry="10" fill="#1E1B18" opacity=".16"/>
+  <!-- Gedankenblase -->
+  <circle cx="372" cy="104" r="7" fill="#fff" stroke="#1E1B18" stroke-width="3.5"/>
+  <circle cx="388" cy="84" r="10" fill="#fff" stroke="#1E1B18" stroke-width="3.5"/>
+  <g fill="#1E1B18"><circle cx="420" cy="48" r="32"/><circle cx="455" cy="40" r="30"/><circle cx="470" cy="66" r="24"/><circle cx="430" cy="72" r="26"/><circle cx="398" cy="58" r="22"/></g>
+  <g fill="#fff"><circle cx="420" cy="48" r="28"/><circle cx="455" cy="40" r="26"/><circle cx="470" cy="66" r="20"/><circle cx="430" cy="72" r="22"/><circle cx="398" cy="58" r="18"/></g>
+  <g transform="translate(436,56) rotate(-14)">
+    <rect x="-34" y="-17" width="68" height="34" rx="4" fill="#7A4524" stroke="#1E1B18" stroke-width="3.5"/>
+    <path d="M-17,-17 V17 M0,-17 V17 M17,-17 V17 M-34,0 H34" stroke="#5A3018" stroke-width="2.5"/>
+    <path d="M10,-19 h28 v38 h-28 l6,-10 -6,-9 6,-10 z" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round"/>
+  </g>
+  <!-- Heißhunger-Monster -->
+  <path d="M262,294 l-6,18 h26 l-4,-18 M344,294 l4,18 h-26 l4,-18" fill="#6A3FB0" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M222,206 q-34,-12 -40,-46" fill="none" stroke="#1E1B18" stroke-width="18" stroke-linecap="round"/>
+  <path d="M222,206 q-34,-12 -40,-46" fill="none" stroke="#8E5BD8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M398,190 q34,-14 38,-50" fill="none" stroke="#1E1B18" stroke-width="18" stroke-linecap="round"/>
+  <path d="M398,190 q34,-14 38,-50" fill="none" stroke="#8E5BD8" stroke-width="10" stroke-linecap="round"/>
+  <g fill="#fff" stroke="#1E1B18" stroke-width="3" stroke-linejoin="round"><path d="M172,160 l4,-14 6,12 6,-12 2,15 z"/><path d="M428,140 l4,-14 6,12 6,-12 2,15 z"/></g>
+  <path d="M262,112 l-10,-32 30,22 z M354,110 l14,-30 -34,20 z" fill="#FFC93C" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round"/>
+  <polygon points="412,196 396,203 412,214 393,218 404,230 388,232 401,248 381,246 388,262 368,255 373,273 356,265 355,281 341,271 338,287 327,279 320,294 310,279 300,294 294,275 282,288 278,273 263,284 263,267 246,275 252,255 233,262 239,246 222,247 233,232 213,231 227,218 205,214 220,204 206,196 223,189 205,178 225,174 211,160 230,159 222,145 240,147 233,130 251,136 249,120 264,127 263,108 279,122 282,106 294,115 301,101 310,114 320,100 326,116 339,100 341,121 356,110 355,128 373,118 368,136 386,131 381,146 397,146 389,159 409,160 393,174 410,179 396,189" fill="#8E5BD8" stroke="#1E1B18" stroke-width="5" stroke-linejoin="round"/>
+  <ellipse cx="310" cy="236" rx="56" ry="38" fill="#B99AF0"/>
+  <ellipse cx="282" cy="166" rx="21" ry="25" fill="#fff" stroke="#1E1B18" stroke-width="4"/>
+  <ellipse cx="338" cy="166" rx="21" ry="25" fill="#fff" stroke="#1E1B18" stroke-width="4"/>
+  <circle cx="291" cy="158" r="10" fill="#1E1B18"/><circle cx="347" cy="158" r="10" fill="#1E1B18"/>
+  <circle cx="295" cy="154" r="3.5" fill="#fff"/><circle cx="351" cy="154" r="3.5" fill="#fff"/>
+  <path d="M262,134 l26,8 M358,134 l-26,8" stroke="#1E1B18" stroke-width="5" stroke-linecap="round"/>
+  <path d="M268,206 Q310,262 352,206 Z" fill="#5A1A2A" stroke="#1E1B18" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M278,208 l6,10 6,-9 6,10 6,-10 6,10 6,-10 6,10 6,-10 6,10 6,-9" fill="#fff" stroke="#1E1B18" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M296,236 q14,10 28,0 q-4,10 -14,10 q-10,0 -14,-10 z" fill="#FF8A6B"/>
+  <path d="M346,222 q6,16 0,26 q-7,-10 0,-26 z" fill="#6EC3E8" stroke="#1E1B18" stroke-width="3"/>
+  <text x="222" y="88" font-family="Bangers" font-size="32" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3" paint-order="stroke" transform="rotate(-10 222 88)">HUNGER!!</text>
+  <!-- Tauschi mit Küchenwecker -->
+  <g transform="translate(86,262) scale(.6)">
+    <path d="M40,-6 Q74,-24 96,-38" fill="none" stroke="#1E1B18" stroke-width="12" stroke-linecap="round"/>
+    <path d="M40,-6 Q74,-24 96,-38" fill="none" stroke="#9BE15D" stroke-width="5.5" stroke-linecap="round"/>
+    <path d="M-42,6 Q-58,20 -56,38" fill="none" stroke="#1E1B18" stroke-width="12" stroke-linecap="round"/>
+    <path d="M-42,6 Q-58,20 -56,38" fill="none" stroke="#9BE15D" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="-56" cy="42" r="9" fill="#9BE15D" stroke="#1E1B18" stroke-width="3.5"/>
+    <use href="#tauschi"/>
+  </g>
+  <g transform="translate(150,226)">
+    <rect x="-8" y="-46" width="16" height="12" rx="3" fill="#FF5A3C" stroke="#1E1B18" stroke-width="3.5"/>
+    <circle r="36" fill="#fff" stroke="#1E1B18" stroke-width="5"/>
+    <path d="M0,0 L0,-36 A36,36 0 0 1 31,-18 Z" fill="#FFC93C" stroke="#1E1B18" stroke-width="2.5"/>
+    <g stroke="#1E1B18" stroke-width="3" stroke-linecap="round"><path d="M0,-30 v6 M30,0 h-6 M0,30 v-6 M-30,0 h6"/></g>
+    <path d="M0,0 L0,-25 M0,0 L18,-11" stroke="#1E1B18" stroke-width="4" stroke-linecap="round"/>
+    <circle r="4" fill="#1E1B18"/>
+    <circle cx="-12" cy="40" r="9" fill="#9BE15D" stroke="#1E1B18" stroke-width="3.5"/>
+  </g>
+  <text x="168" y="326" text-anchor="middle" font-family="Bangers" font-size="22" fill="#1E1B18" letter-spacing="1">10 MINUTEN</text>
+</svg>

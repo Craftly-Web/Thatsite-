@@ -1,0 +1,44 @@
+<svg viewBox="0 0 500 330" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="300" cy="248" rx="120" ry="10" fill="#1E1B18" opacity=".15"/>
+  <path d="M292,222 q4,18 -6,28 h34 q-10,-10 -6,-28 z" fill="#F7A8C0" stroke="#1E1B18" stroke-width="5" stroke-linejoin="round"/>
+  <g fill="#1E1B18">
+    <circle cx="240" cy="140" r="60"/><circle cx="292" cy="102" r="63"/><circle cx="352" cy="118" r="60"/>
+    <circle cx="380" cy="170" r="50"/><circle cx="258" cy="190" r="55"/><circle cx="320" cy="196" r="57"/>
+  </g>
+  <g fill="#F7A8C0">
+    <circle cx="240" cy="140" r="55"/><circle cx="292" cy="102" r="58"/><circle cx="352" cy="118" r="55"/>
+    <circle cx="380" cy="170" r="45"/><circle cx="258" cy="190" r="50"/><circle cx="320" cy="196" r="52"/>
+  </g>
+  <g fill="none" stroke="#C2577A" stroke-width="4.5" stroke-linecap="round">
+    <path d="M212,118 q14,-16 30,-2 t26,-6"/><path d="M276,70 q16,-8 26,6 t28,2"/><path d="M350,82 q18,2 22,20"/>
+    <path d="M206,170 q10,14 26,6"/><path d="M392,140 q10,16 0,32"/><path d="M226,212 q16,12 34,2"/><path d="M340,226 q18,-2 28,-16"/>
+  </g>
+  <ellipse cx="282" cy="156" rx="14" ry="16" fill="#fff" stroke="#1E1B18" stroke-width="3.5"/>
+  <ellipse cx="328" cy="156" rx="14" ry="16" fill="#fff" stroke="#1E1B18" stroke-width="3.5"/>
+  <path d="M268,153 a14,10 0 0 1 28,0 z M314,153 a14,10 0 0 1 28,0 z" fill="#F7A8C0" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round"/>
+  <circle cx="284" cy="161" r="5.5" fill="#1E1B18"/><circle cx="330" cy="161" r="5.5" fill="#1E1B18"/>
+  <path d="M290,186 q16,10 30,0" fill="none" stroke="#1E1B18" stroke-width="4" stroke-linecap="round"/>
+  <text x="400" y="66" font-family="Bangers" font-size="24" fill="#1E1B18" transform="rotate(12 400 66)">Z</text>
+  <text x="424" y="44" font-family="Bangers" font-size="30" fill="#1E1B18" transform="rotate(12 424 44)">Z</text>
+  <!-- Autopilot-Schild -->
+  <g transform="translate(150,40) rotate(-8)">
+    <rect x="-62" y="-20" width="124" height="40" rx="10" fill="#FFC93C" stroke="#1E1B18" stroke-width="4.5"/>
+    <text x="0" y="9" text-anchor="middle" font-family="Bangers" font-size="24" fill="#1E1B18" letter-spacing="1.5">AUTOPILOT</text>
+  </g>
+  <path d="M168,62 L206,96" stroke="#1E1B18" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 9"/>
+  <!-- Ladebalken -->
+  <rect x="150" y="270" width="300" height="34" rx="17" fill="#fff" stroke="#1E1B18" stroke-width="4.5"/>
+  <rect x="156" y="276" width="190" height="22" rx="11" fill="#9BE15D" stroke="#1E1B18" stroke-width="2.5"/>
+  <g stroke="#1E1B18" stroke-opacity=".25" stroke-width="5"><path d="M176,278 l-12,18 M200,278 l-12,18 M224,278 l-12,18 M248,278 l-12,18 M272,278 l-12,18 M296,278 l-12,18 M320,278 l-12,18 M344,278 l-12,18"/></g>
+  <text x="300" y="322" text-anchor="middle" font-family="Fredoka, Nunito" font-weight="600" font-size="15" fill="#1E1B18">Neue Gewohnheit wird installiert … im Schnitt 66 Tage</text>
+  <!-- Tauschi -->
+  <g transform="translate(76,236) scale(.6)">
+    <path d="M40,-10 Q70,-36 96,-50" fill="none" stroke="#1E1B18" stroke-width="12" stroke-linecap="round"/>
+    <path d="M40,-10 Q70,-36 96,-50" fill="none" stroke="#9BE15D" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="99" cy="-52" r="9" fill="#9BE15D" stroke="#1E1B18" stroke-width="3.5"/>
+    <path d="M-42,6 Q-58,20 -56,38" fill="none" stroke="#1E1B18" stroke-width="12" stroke-linecap="round"/>
+    <path d="M-42,6 Q-58,20 -56,38" fill="none" stroke="#9BE15D" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="-56" cy="42" r="9" fill="#9BE15D" stroke="#1E1B18" stroke-width="3.5"/>
+    <use href="#tauschi"/>
+  </g>
+</svg>
