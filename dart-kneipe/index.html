@@ -333,6 +333,19 @@ body.flashback .flash-fx{opacity:1}
 .slot.book .slot-meters small,.slot.book .bet-val small,.slot.book .paytable summary{color:#d9c08a}
 .slot.book .btn.spin{background:linear-gradient(180deg,#f3d487,#b8862e);color:#2a170b;border-color:#5a3d0a;box-shadow:0 3px 0 #5a3d0a,0 8px 18px rgba(255,190,90,.3)}
 .slot.book .slot-note{color:rgba(243,212,135,.65)}
+#arcade .arc-tabs{grid-template-columns:repeat(3,1fr)}
+@media (max-width:620px){#arcade .arc-tabs button{font-size:12px;letter-spacing:.03em;padding:9px 4px}}
+.slot.fish{width:100%;background:linear-gradient(180deg,#0d5fa8,#063a7a 60%,#03204a);border-color:#ffe14d;box-shadow:0 0 0 3px #10223a,0 20px 40px rgba(0,0,0,.6)}
+.slot.fish .slot-top h2{font-family:'Arial Black',Impact,var(--ui);font-weight:900;color:#ffe14d;letter-spacing:.02em;text-shadow:0 3px 0 #10223a,0 0 16px rgba(80,200,255,.6);-webkit-text-stroke:1px #10223a}
+.slot.fish .slot-top small{color:#bfe9ff}
+.slot.fish .slot-window{background:linear-gradient(180deg,#ffe14d,#f2a900 50%,#ffe14d)}
+.slot.fish .slot-window canvas{background:#0a6fc2}
+.slot.fish .slot-msg{color:#ffe14d}
+.slot.fish .slot-meters div,.slot.fish .bet-val{background:#03204a;border-color:rgba(255,225,77,.45)}
+.slot.fish .slot-meters small,.slot.fish .bet-val small,.slot.fish .paytable summary{color:#bfe9ff}
+.slot.fish .btn.spin{background:linear-gradient(180deg,#ffe14d,#f29a00);color:#10223a;border-color:#10223a;box-shadow:0 3px 0 #10223a,0 8px 18px rgba(255,200,60,.35)}
+.slot.fish .slot-note{color:rgba(191,233,255,.7)}
+.fi-fs{text-align:center;font:900 16px/1.3 'Arial Black',Impact,var(--ui);color:#10223a;background:linear-gradient(90deg,#4fc3ff,#bff3ff,#4fc3ff);border-radius:8px;padding:6px 10px}
 .bk-fs{text-align:center;font:700 16px/1.3 'Cinzel',Georgia,serif;letter-spacing:.04em;color:#2a170b;background:linear-gradient(90deg,#b8862e,#f3d487,#b8862e);border-radius:8px;padding:6px 10px}
 .slot.book{position:relative}
 .bk-pick{position:absolute;top:10px;right:10px;bottom:10px;left:10px;z-index:2;justify-content:center;display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:6px;overflow:auto;
@@ -849,6 +862,7 @@ legend{padding:0;margin-bottom:8px}
   <div class="arc-tabs" role="tablist">
     <button type="button" role="tab" id="tabFruit" aria-selected="true" aria-controls="fruitSlot" data-i18n="arc.title">Heinz’ Früchteparade</button>
     <button type="button" role="tab" id="tabBook" aria-selected="false" aria-controls="bookSlot" data-i18n="bk.title">Buch der Weisen</button>
+    <button type="button" role="tab" id="tabFish" aria-selected="false" aria-controls="fishSlot" data-i18n="fi.title">Heinz’ Angelfieber</button>
   </div>
   <div class="slot" id="fruitSlot" role="tabpanel">
     <div class="slot-top">
@@ -911,6 +925,34 @@ legend{padding:0;margin-bottom:8px}
     </details>
     <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt. Jedes gewonnene Leg in der Kneipe bringt Preisgeld: 2,50 € gegen Tante Gerda bis 25 € gegen Die Maschine.</p>
     <div class="row"><button type="button" class="btn ghost" id="bkClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
+  </div>
+  <div class="slot fish" id="fishSlot" role="tabpanel" hidden>
+    <div class="slot-top">
+      <h2 data-i18n="fi.title">Heinz’ Angelfieber</h2>
+      <small data-i18n="fi.sub">5 Walzen · 10 Linien · Freispiele mit Fang-Bonus</small>
+    </div>
+    <div class="slot-window"><canvas id="fishCv" aria-label="Walzen" role="img"></canvas></div>
+    <div class="fi-fs" id="fshFs" hidden></div>
+    <div class="slot-msg" id="fshMsg" aria-live="polite"></div>
+    <div class="slot-meters">
+      <div><small data-i18n="arc.credit">Guthaben</small><b id="fshCredit">0,00 €</b></div>
+      <div><small data-i18n="arc.win">Gewinn</small><b id="fshWin">0,00 €</b></div>
+    </div>
+    <div class="slot-bet">
+      <button type="button" class="btn ghost icon-btn" id="fshDown" aria-label="Einsatz senken" data-i18n-aria="arc.less">−</button>
+      <div class="bet-val"><small data-i18n="arc.bet">Einsatz</small><b id="fshBet">0,10 €</b><small id="fshLine"></small></div>
+      <button type="button" class="btn ghost icon-btn" id="fshUp" aria-label="Einsatz erhöhen" data-i18n-aria="arc.more">+</button>
+      <button type="button" class="btn ghost auto" id="fshAuto">Auto</button>
+      <button type="button" class="btn spin" id="fshSpin" data-i18n="arc.spin">Drehen</button>
+    </div>
+    <div class="auto-pick" id="fshAutoPick" hidden></div>
+    <details class="paytable">
+      <summary data-i18n="arc.pay">Gewinnplan</summary>
+      <p class="rules" data-i18n="fi.payx"></p>
+      <div id="fshPayList"></div>
+    </details>
+    <p class="slot-note" data-i18n="arc.note">Spielgeld ohne Echtgeldwert – nichts wird ausgezahlt.</p>
+    <div class="row"><button type="button" class="btn ghost" id="fshClose" data-i18n="arc.back">Zurück in die Kneipe</button></div>
   </div>
   </div>
 </div>
@@ -1375,6 +1417,16 @@ const I18N = {
     'rps.q.win': ['Ich kenn dich doch, du nimmst immer dasselbe.', 'Gelernt ist gelernt.', 'Das nächste Bier zahlst du!'],
     'rps.q.lose': ['Glück gehabt – Revanche?', 'Na gut, die Runde geht auf mich.', 'Du hast in meinen Kopf geschaut!'],
     'rules.rps': '<strong>Schnick, Schnack, Schnuck:</strong> Schere schneidet Papier, Papier wickelt Stein ein, Stein schleift Schere. Bei „Schnick – Schnack – Schnuck“ pumpen beide Fäuste dreimal, beim dritten Mal zeigt jeder seine Hand. Gespielt wird bis 2, 3 oder 5 gewonnene Runden – gegen Heinz, der sich deine Gewohnheiten merkt, gegen Tante Gerda, die rein nach Gefühl spielt, und gegen Kalle, der gern den Stein nimmt. Zu zweit an einem Gerät wählt erst Spieler 1, dann Spieler 2, der andere schaut jeweils weg. Online erstellt einer einen Raum und schickt den Code oder Link; die Wahl wird erst verschickt, wenn beide gewählt haben, so kann keiner schummeln.',
+    'fi.title': 'Heinz’ Angelfieber', 'fi.sub': '5 Walzen · 10 Linien · Freispiele mit Fang-Bonus', 'fi.hello': 'Rute raus – Petri Heil!', 'fi.fsrun': 'Freispiele …',
+    'fi.fs': 'Freispiel {i} von {n} · Fang: {v}', 'fi.trigger': 'Ahoi! {n} Freispiele – jetzt beißen die Fische!', 'fi.go': 'Der Angler ist an Bord: Wo er landet, holt er alle Fische ein.',
+    'fi.retrigger': 'Drei Boote: +10 Freispiele!', 'fi.collect': 'Der Angler holt {n} Fische ein: {v}!', 'fi.collectx': '{k} Angler holen je {n} Fische ein: {v}!',
+    'fi.nofish': 'Der Angler wartet – kein Fisch in Sicht.', 'fi.noangler': 'Die Fische zappeln … aber kein Angler da.',
+    'fi.fsend': 'Freispiele vorbei – Fang des Tages: {v}!', 'fi.fsnone': 'Freispiele vorbei. Heute wollte nichts anbeißen.',
+    'fi.scatter': 'Irgendwo · × Gesamteinsatz · 3, 4, 5 Boote = 10, 15, 20 Freispiele',
+    'fi.wild': 'Nur in den Freispielen: Joker für alle Symbole außer dem Boot. Landet er, holt er den Geldwert aller sichtbaren Fische ein – jeder Angler einmal.',
+    'fi.payx': 'Gewinne zählen auf 10 Linien von links nach rechts, als Vielfaches des Linieneinsatzes. In den Freispielen tragen die Fische Geldwerte vom 2- bis 500-Fachen des Gesamteinsatzes, und drei Boote bringen 10 Freispiele dazu.',
+    'fsym.ten': 'Zehn', 'fsym.jack': 'Bube', 'fsym.queen': 'Dame', 'fsym.king': 'König', 'fsym.ace': 'Ass', 'fsym.ring': 'Rettungsring', 'fsym.box': 'Köderkiste',
+    'fsym.rod': 'Angelrute', 'fsym.fish': 'Fisch', 'fsym.boat': 'Boot', 'fsym.angler': 'Angler',
     'rules.classic': '<strong>Klassisch:</strong> Darts pur gegen die Gäste vom Tresen – keine Pfeil-Fähigkeiten, kein Adrenalin, keine Getränke, und auch die Gegner spielen ohne Tricks. Du wirfst mit dem Klassikpfeil, der etwas ruhiger in der Hand liegt als ein nackter Pfeil. Preisgeld gibt es wie sonst auch, das Phantom spielt hier nicht mit.',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Jeder Krug bringt Profi-Heinz-Flashback-Pfeile mit dem besten Aim im Spiel – 2 nach dem ersten, 5 nach dem zweiten, 10 nach dem dritten Krug –, die du per Knopf selbst einsetzt. Heinz’ Spezial-Likör (10 €, bis zu 5): Steht ein Checkout an, werden Doppel, Triple und Bull für dich je Likör 20 % größer, mit 5 Likören doppelt so groß. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
@@ -1436,7 +1488,7 @@ const I18N = {
     'bsym.ten': 'Zehn', 'bsym.jack': 'Bube', 'bsym.queen': 'Dame', 'bsym.king': 'König', 'bsym.ace': 'Ass', 'bsym.amphora': 'Skarabäus', 'bsym.owl': 'Horus',
     'bsym.helmet': 'Pharaonenmaske', 'bsym.bust': 'Abenteurer', 'bsym.book': 'Buch', 'bsym.chest': 'Schatztruhe',
     'sym.cherry': 'Kirsche', 'sym.lemon': 'Zitrone', 'sym.orange': 'Orange', 'sym.plum': 'Pflaume', 'sym.grape': 'Traube', 'sym.melon': 'Melone', 'sym.bell': 'Glocke', 'sym.seven': 'Sieben',
-    'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Daneben steht das „Buch der Weisen“: drei Bücher starten Freispiele, die Schatztruhe ist Joker, und du wählst selbst das Sondersymbol, das sich über ganze Walzen ausbreitet – im Freispiel liegt es auf den mittleren Walzen einmal mehr (rund 95 % Auszahlung, Freispiele etwa alle 140 Drehs). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu Preisgeld für jedes gewonnene Leg (2,50 € bis 25 €, je nach Gegner).',
+    'rules.arcade': '<strong>Spielhalle:</strong> Oben rechts oder hier im Menü geht’s an Heinz’ Früchteparade: 5 Walzen, 10 Linien, Einsatz von 10 Cent bis 50 €, 95 % Auszahlung und fünf Siebener als Hauptgewinn (1000-facher Linieneinsatz). Daneben steht das „Buch der Weisen“: drei Bücher starten Freispiele, die Schatztruhe ist Joker, und du wählst selbst das Sondersymbol, das sich über ganze Walzen ausbreitet – im Freispiel liegt es auf den mittleren Walzen einmal mehr (rund 95 % Auszahlung, Freispiele etwa alle 140 Drehs). Am dritten Automaten, Heinz’ Angelfieber, starten drei Boote Freispiele: Dann tragen die Fische Geldwerte, und landet der Angler, holt er sie alle ein (rund 95 % Auszahlung, Freispiele etwa alle 150 Drehs). Gespielt wird mit Spielgeld: 20 € Startguthaben, dazu Preisgeld für jedes gewonnene Leg (2,50 € bis 25 €, je nach Gegner).',
     'w.greet': ['Moin! Wirf ’ne Runde mit.', 'Die Scheibe ist frisch gebürstet. Blamier sie nicht.', 'Schuhe abputzen, Pfeile schärfen, rein da!'],
     'w.start': ['Oche frei! Und bitte nicht die Lampe treffen.', 'Gegen {name}? Ich hol schon mal den Verbandskasten.', 'Erst werfen, dann trinken. Andersrum hatten wir schon – wurde teuer.', 'Wer verliert, zahlt die Runde. Steht so im Grundgesetz.'],
     'w.bust': ['Überworfen! Mathe war wohl nicht dein Leistungskurs.', 'Zu viel des Guten – wie meine zweite Portion Schnitzel.', 'Erst rechnen, dann werfen! Soll ich dir ’nen Bierdeckel geben?', 'Überworfen. Die Scheibe lacht dich aus. Ich auch.'],
@@ -1593,6 +1645,16 @@ const I18N = {
     'rps.q.win': ['I know you, you always pick the same.', 'Experience pays.', 'Next beer’s on you!'],
     'rps.q.lose': ['Lucky you – rematch?', 'Fine, this round’s on me.', 'You read my mind!'],
     'rules.rps': '<strong>Rock, paper, scissors:</strong> Scissors cut paper, paper wraps rock, rock blunts scissors. On “Rock – paper – scissors” both fists pump three times and on the third everyone shows their hand. Play to 2, 3 or 5 won rounds – against Heinz, who remembers your habits, Aunt Gerda, who goes by gut feeling, and Kalle, who loves rock. With two players on one device, player 1 picks first, then player 2, while the other looks away. Online, one player creates a room and sends the code or link; picks are only sent once both have chosen, so nobody can cheat.',
+    'fi.title': 'Heinz’s Fishing Fever', 'fi.sub': '5 reels · 10 lines · free spins with catch bonus', 'fi.hello': 'Cast your line – tight lines!', 'fi.fsrun': 'Free spins …',
+    'fi.fs': 'Free spin {i} of {n} · catch: {v}', 'fi.trigger': 'Ahoy! {n} free spins – the fish are biting!', 'fi.go': 'The angler is on board: wherever he lands, he reels in every fish.',
+    'fi.retrigger': 'Three boats: +10 free spins!', 'fi.collect': 'The angler reels in {n} fish: {v}!', 'fi.collectx': '{k} anglers each reel in {n} fish: {v}!',
+    'fi.nofish': 'The angler waits – no fish in sight.', 'fi.noangler': 'The fish are wriggling… but no angler around.',
+    'fi.fsend': 'Free spins over – catch of the day: {v}!', 'fi.fsnone': 'Free spins over. Nothing was biting today.',
+    'fi.scatter': 'Anywhere · × total bet · 3, 4, 5 boats = 10, 15, 20 free spins',
+    'fi.wild': 'Free spins only: wild for every symbol except the boat. When he lands he collects the cash value of every fish in view – once per angler.',
+    'fi.payx': 'Wins count on 10 lines from left to right, as multiples of the line bet. During free spins fish carry cash values of 2 to 500 times the total bet, and three boats add 10 more free spins.',
+    'fsym.ten': 'Ten', 'fsym.jack': 'Jack', 'fsym.queen': 'Queen', 'fsym.king': 'King', 'fsym.ace': 'Ace', 'fsym.ring': 'Life ring', 'fsym.box': 'Tackle box',
+    'fsym.rod': 'Fishing rod', 'fsym.fish': 'Fish', 'fsym.boat': 'Boat', 'fsym.angler': 'Angler',
     'rules.classic': '<strong>Classic:</strong> pure darts against the regulars – no dart abilities, no adrenaline, no drinks, and the opponents play without tricks too. You throw the classic dart, which sits a little steadier in the hand than a bare dart. Prize money works as usual; the Phantom sits this one out.',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): every mug brings Pro Heinz flashback darts with the best aim in the game – 2 after the first, 5 after the second, 10 after the third mug – that you use with a button. Heinz’s special liqueur (€10, up to 5): when a checkout is on, doubles, trebles and the bull grow 20% per liqueur for you, twice the size with 5. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
@@ -1654,7 +1716,7 @@ const I18N = {
     'bsym.ten': 'Ten', 'bsym.jack': 'Jack', 'bsym.queen': 'Queen', 'bsym.king': 'King', 'bsym.ace': 'Ace', 'bsym.amphora': 'Scarab', 'bsym.owl': 'Horus',
     'bsym.helmet': 'Pharaoh mask', 'bsym.bust': 'Explorer', 'bsym.book': 'Book', 'bsym.chest': 'Treasure chest',
     'sym.cherry': 'cherry', 'sym.lemon': 'lemon', 'sym.orange': 'orange', 'sym.plum': 'plum', 'sym.grape': 'grapes', 'sym.melon': 'melon', 'sym.bell': 'bell', 'sym.seven': 'seven',
-    'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). Next to it stands the “Tome of the Sages”: three books start free spins, the treasure chest is wild, and you pick the special symbol that spreads over whole reels – during free spins it sits once more on the middle reels (about 95% payout, free spins roughly every 140 spins). It runs on play money: €20 to start, plus prize money for every leg you win (€2.50 to €25, depending on the opponent).',
+    'rules.arcade': '<strong>Arcade:</strong> Top right or here in the menu you’ll find Heinz’s Fruit Parade: 5 reels, 10 lines, bets from 10 cents to €50, 95% payout and five sevens as the jackpot (1000× the line bet). Next to it stands the “Tome of the Sages”: three books start free spins, the treasure chest is wild, and you pick the special symbol that spreads over whole reels – during free spins it sits once more on the middle reels (about 95% payout, free spins roughly every 140 spins). On the third machine, Heinz’s Fishing Fever, three boats start free spins: fish then carry cash values, and when the angler lands he reels them all in (about 95% payout, free spins roughly every 150 spins). It runs on play money: €20 to start, plus prize money for every leg you win (€2.50 to €25, depending on the opponent).',
     'w.greet': ['Evening! Fancy a game?', 'Board’s freshly brushed. Don’t embarrass it.', 'Wipe your feet, sharpen your darts, off you go!'],
     'w.start': ['Oche’s all yours. Please mind the lamp.', 'Against {name}? I’ll fetch the first-aid kit.', 'Throw first, drink later. The other way round got expensive.', 'Loser buys the round. It’s in the constitution.'],
     'w.bust': ['Bust! Maths wasn’t your strong subject, was it?', 'Too much of a good thing – like my second schnitzel.', 'Count first, then throw! Want a beer mat to do the sums?', 'Bust. The board’s laughing at you. So am I.'],
@@ -1993,17 +2055,46 @@ const sfx = (() => {
       if ((bar >= 8 && bar < 16) || drop) hook.filter(x => x[0] === c && x[1] === s).forEach(x => saw(at, x[2] * DST * .95, x[3], .012, 3600, 1800, out, 3));
     }
 
+    // Angel-Automat: Calypso mit Steeldrum, 112 BPM in Sechzehnteln
+    const CST = 60 / 112 / 4;
+    const CCH = [[48, 52, 55], [53, 57, 60], [55, 59, 62], [48, 52, 55]];   // C F G C
+    const cMel = [
+      [0, 0, 2, 76], [0, 3, 1, 79], [0, 6, 2, 81], [0, 10, 2, 79], [0, 12, 4, 76],
+      [1, 0, 3, 77], [1, 4, 2, 81], [1, 6, 2, 84], [1, 10, 6, 81],
+      [2, 0, 2, 79], [2, 3, 1, 77], [2, 6, 2, 74], [2, 10, 2, 77], [2, 12, 4, 79],
+      [3, 0, 4, 76], [3, 6, 2, 74], [3, 8, 8, 72]
+    ];
+    function pan(t, m, gain) {
+      // Steeldrum: Grundton mit Obertönen, kurz angeschlagen
+      const pg = ac.createGain(); pg.gain.setValueAtTime(.0001, t); pg.gain.exponentialRampToValueAtTime(gain, t + .005); pg.gain.exponentialRampToValueAtTime(.0001, t + .6); pg.connect(out);
+      for (const [mul, a] of [[1, 1], [2, .45], [3.01, .16]]) {
+        const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = hz(m) * mul;
+        const og = ac.createGain(); og.gain.value = a; o.connect(og); og.connect(pg); o.start(t); o.stop(t + .65);
+      }
+    }
+    function calypso(n, at) {
+      const k = n % 128, bar = Math.floor(k / 16) % 4, s = k % 16, ch = CCH[bar];
+      if (s === 0 || s === 8) kick(at);
+      nz(at, .03, 'highpass', 6500, .7, s % 2 ? .008 : .016, .002, out);                     // Shaker
+      if (s === 0 || s === 6 || s === 12) blip(at, .22, ch[0] - 12, .05, 'triangle', 700);    // Bass 3+3+2
+      if (s === 10) blip(at, .18, ch[2] - 12, .04, 'triangle', 700);
+      if (s === 0 || s === 3 || s === 6 || s === 10 || s === 12) tone(at, .03, 'square', 2300, 2300, .01, out);   // Clave
+      if (s % 4 === 2) ch.forEach(m => pan(at, m + 12, .008));
+      if (k >= 64) cMel.filter(x => x[0] === bar && x[1] === s).forEach(x => pan(at, x[3], .03));
+      else if (s % 2 === 0) pan(at, ch[(s / 2) % 3] + 24, .01);
+    }
+
     // Ein Taktgeber für alle Stile; beim Wechsel startet der neue Stil sauber neu
     let mode = null, t0 = 0, next = 0;
-    const stepLen = () => mode === 'digi' ? STEP : mode === 'antik' ? AST : mode === 'disco' || mode === 'quiet' ? DST : BEAT;
+    const stepLen = () => mode === 'digi' ? STEP : mode === 'antik' ? AST : mode === 'fish' ? CST : mode === 'disco' || mode === 'quiet' ? DST : BEAT;
     beatFn = () => mode === 'disco' ? (ac.currentTime - t0) / (DST * 4) : null;
     setInterval(() => {
       if (!ac || document.hidden) return;
-      const want = style === 'automat' ? 'digi' : style === 'book' ? 'antik' : style === 'disco' ? 'disco' : style === 'quiet' ? 'quiet' : 'pub';
+      const want = style === 'automat' ? 'digi' : style === 'book' ? 'antik' : style === 'fish' ? 'fish' : style === 'disco' ? 'disco' : style === 'quiet' ? 'quiet' : 'pub';
       if (want !== mode) { mode = want; t0 = ac.currentTime + (next ? .6 : 1); next = 0; }
       const until = (ac.currentTime - t0 + .5) / stepLen();
       while (next < until) {
-        if (!muted && mode !== 'quiet') (mode === 'digi' ? digi : mode === 'antik' ? antik : mode === 'disco' ? disco : waltz)(next, t0 + next * stepLen());
+        if (!muted && mode !== 'quiet') (mode === 'digi' ? digi : mode === 'antik' ? antik : mode === 'fish' ? calypso : mode === 'disco' ? disco : waltz)(next, t0 + next * stepLen());
         next++;
       }
     }, 100);
@@ -5062,27 +5153,28 @@ const arcade = (() => {
     btn: $('#autoBtn'), pick: $('#autoPick'), spin: () => spin(), changed: () => paint(),
     ready: () => el.hidden || fruitEl.hidden ? 'stop' : spinning ? 'busy' : cash < BETS[betIdx] * LINES.length ? 'poor' : 'ok'
   });
-  const fruitEl = $('#fruitSlot'), bookEl = $('#bookSlot');
+  const fruitEl = $('#fruitSlot'), bookEl = $('#bookSlot'), fishEl = $('#fishSlot');
   const listeners = [];   // andere Automaten wollen wissen, wann sich das Guthaben ändert
   function show(which) {
     if (arcadeBusy.some(f => f())) return;
     auto.stop();
-    const book = which === 'book';
-    fruitEl.hidden = book; bookEl.hidden = !book;
-    sfx.setStyle(book ? 'book' : 'automat');   // Bücher-Automat mit antiker Musik, Früchte mit Elektro
-    $('#tabFruit').setAttribute('aria-selected', String(!book)); $('#tabBook').setAttribute('aria-selected', String(book));
+    if (['fruit', 'book', 'fish'].indexOf(which) < 0) which = 'fruit';
+    fruitEl.hidden = which !== 'fruit'; bookEl.hidden = which !== 'book'; fishEl.hidden = which !== 'fish';
+    sfx.setStyle(which === 'book' ? 'book' : which === 'fish' ? 'fish' : 'automat');   // Bücher-Automat antik, Angler mit Calypso, Früchte mit Elektro
+    [['fruit', '#tabFruit'], ['book', '#tabBook'], ['fish', '#tabFish']].forEach(([k, id]) => $(id).setAttribute('aria-selected', String(k === which)));
     try { localStorage.setItem('dk-machine', which); } catch (e) {}
     listeners.forEach(f => f(which));
-    if (!book) requestAnimationFrame(() => { resize(); kick(); });
+    if (which === 'fruit') requestAnimationFrame(() => { resize(); kick(); });
   }
   function open() {
     sfx.init();
     el.hidden = false; sfx.setStyle('automat');
     if (!$('#payList').children.length) renderPays();
     paint(); msg(cash < BETS[0] * LINES.length ? t('arc.nocash') : t('arc.hello'));
-    let m = 'fruit'; try { m = localStorage.getItem('dk-machine') === 'book' ? 'book' : 'fruit'; } catch (e) {}
+    let m = 'fruit'; try { m = localStorage.getItem('dk-machine') || 'fruit'; } catch (e) {}
+    if (['fruit', 'book', 'fish'].indexOf(m) < 0) m = 'fruit';
     show(m);
-    requestAnimationFrame(() => { resize(); kick(); (m === 'book' ? $('#bkSpin') : $('#spinBtn')).focus({ preventScroll: true }); });
+    requestAnimationFrame(() => { resize(); kick(); (m === 'book' ? $('#bkSpin') : m === 'fish' ? $('#fshSpin') : $('#spinBtn')).focus({ preventScroll: true }); });
   }
   function close() { if (spinning || arcadeBusy.some(f => f())) return; auto.stop(); el.hidden = true; wins = []; sfx.setStyle(boardKey); listeners.forEach(f => f(null)); }
   arcadeBusy.push(() => spinning);
@@ -5094,6 +5186,8 @@ const arcade = (() => {
   $('#bkClose').addEventListener('click', close);
   $('#tabFruit').addEventListener('click', () => show('fruit'));
   $('#tabBook').addEventListener('click', () => show('book'));
+  $('#tabFish').addEventListener('click', () => show('fish'));
+  $('#fshClose').addEventListener('click', close);
   $('#arcadeBtn').addEventListener('click', open);
   $('#arcadeCard').addEventListener('click', open);
   document.addEventListener('keydown', e => {
@@ -5487,7 +5581,7 @@ const bookSlot = (() => {
     const bar = $('#bkFs');
     bar.hidden = !fs;
     if (fs) bar.textContent = t('bk.fs', { i: Math.min(fs.played, fs.total), n: fs.total, s: t('bsym.' + fs.sym) });
-    $('#tabFruit').disabled = busy; $('#bkClose').disabled = busy;
+    $('#tabFruit').disabled = busy; $('#tabFish').disabled = busy; $('#bkClose').disabled = busy;
   }
   function msg(text, big = false) { const m = $('#bkMsg'); m.textContent = text; m.classList.toggle('big', big); }
 
@@ -5635,6 +5729,434 @@ const bookSlot = (() => {
   });
   new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv);
   return { relang() { if ($('#bkPayList').children.length) renderPays(); auto.relang(); paint(); } };
+})();
+
+/* ---------- Spielhalle: Heinz’ Angelfieber (Freispiele mit Boot-Scatter, Fische mit Geldwert, der Angler sammelt ein) ---------- */
+const fishSlot = (() => {
+  const SYM = ['ten', 'jack', 'queen', 'king', 'ace', 'ring', 'box', 'rod', 'fish', 'boat', 'angler'];
+  const PAY = {   // Vielfaches des Linieneinsatzes für 2..5 gleiche von links; der Angler ersetzt alles außer dem Boot
+    ten: [0, 0, 0, 12, 45, 175], jack: [0, 0, 0, 12, 45, 175], queen: [0, 0, 0, 15, 60, 225], king: [0, 0, 0, 18, 75, 300], ace: [0, 0, 0, 18, 75, 300],
+    ring: [0, 0, 5, 45, 180, 900], box: [0, 0, 5, 45, 180, 900], rod: [0, 0, 10, 90, 350, 1800], fish: [0, 0, 12, 120, 600, 3000]
+  };
+  const SCAT = [0, 0, 0, 3, 20, 100];    // Boote irgendwo, × Gesamteinsatz
+  const FSN = [0, 0, 0, 10, 15, 20];     // Freispiele für 3, 4, 5 Boote; im Freispiel bringen drei Boote 10 dazu
+  // Walzen: im Grundspiel ohne Angler, in den Freispielen mehr Fische und ein Angler je Walze.
+  // Simuliert mit 30 Mio. Drehs: rund 95 % Auszahlung, Freispiele etwa alle 150 Drehs.
+  const COUNT = { ten: 8, jack: 8, queen: 7, king: 7, ace: 6, ring: 4, box: 4, rod: 3, fish: 3 };
+  const BOATS = [1, 2, 2, 2, 1];
+  const FSCOUNT = { ten: 5, jack: 5, queen: 5, king: 5, ace: 5, ring: 4, box: 4, rod: 3, fish: 4, angler: 1 };
+  const FSBOATS = [1, 1, 1, 1, 1];
+  // Fischwerte als Vielfaches des Gesamteinsatzes mit Gewicht
+  const VAL = [[2, 40], [5, 26], [10, 14], [15, 8], [20, 5], [25, 3.5], [50, 2.2], [100, .9], [250, .25], [500, .05]];
+  const LINES = SLOT_LINES, LINE_COL = SLOT_LINE_COL, BETS = SLOT_BETS;
+  let seed = 12345; const srnd = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x80000000);
+  function mkStrips(count, boats) {
+    return boats.map(b => {
+      const a = []; for (const k in count) for (let i = 0; i < count[k]; i++) a.push(k); for (let i = 0; i < b; i++) a.push('boat');
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(srnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      return a;
+    });
+  }
+  const BASE = mkStrips(COUNT, BOATS), FREE = mkStrips(FSCOUNT, FSBOATS);
+  let strips = BASE, vals = FREE.map(s => s.map(() => 0));
+  const VT = VAL.reduce((a, v) => a + v[1], 0);
+  const rollVal = () => { let r = Math.random() * VT; for (const [v, w] of VAL) if ((r -= w) <= 0) return v; return 2; };
+  const rollVals = () => { vals = FREE.map(s => s.map(v => v === 'fish' ? rollVal() : 0)); };
+  const mod = (n, L) => ((n % L) + L) % L;
+
+  const el = $('#fishSlot'), cv = $('#fishCv'), g = cv.getContext('2d');
+  let betIdx = 0, spinning = false, raf = 0, W = 0, H = 0, cw = 0, ch = 0, imgs = {}, wins = [], showWin = 0, lastTick = 0, water = null;
+  let fs = null, timer = 0, collect = null;
+  try { const b = +localStorage.getItem('dk-bet-fish'); if (b >= 0 && b < BETS.length) betIdx = b; } catch (e) {}
+  let reels = strips.map((st, i) => ({ p: (i * 7) % st.length, from: 0, to: 0, t0: 0, dur: 0, done: true, L: st.length }));
+  const fmt = c => arcade.fmt(c);
+
+  /* Symbole: fröhlich, bunt, wie aus einem Comic am Hafen */
+  function drawSym(k, s) {
+    const c = document.createElement('canvas'); c.width = c.height = s;
+    const x = c.getContext('2d'), TAU = Math.PI * 2;
+    x.translate(s / 2, s / 2); x.scale(s / 100, s / 100);
+    x.lineJoin = 'round'; x.lineCap = 'round';
+    const vg = (a, b, stops) => { const gr = x.createLinearGradient(0, a, 0, b); stops.forEach((cl, i) => gr.addColorStop(i / (stops.length - 1), cl)); return gr; };
+    const ink = (w = 3.5) => { x.strokeStyle = '#10223a'; x.lineWidth = w; x.stroke(); };
+    const shine = (cx, cy, rx, ry, a = .6, rot = -.5) => { x.fillStyle = `rgba(255,255,255,${a})`; x.beginPath(); x.ellipse(cx, cy, rx, ry, rot, 0, TAU); x.fill(); };
+    const LET = { ten: ['10', ['#bff3ff', '#22b8e8', '#0b4f8a']], jack: ['J', ['#d6ffb0', '#4fcf2a', '#1d6a0e']], queen: ['Q', ['#ffd0f0', '#ff4fb8', '#8a0f5a']], king: ['K', ['#fff0a0', '#ffb300', '#a04a00']], ace: ['A', ['#ffc4b0', '#ff4a2a', '#8a1004']] };
+    if (LET[k]) {
+      const [txt, [c0, c1, c2]] = LET[k];
+      x.font = `900 ${txt.length > 1 ? 66 : 86}px 'Arial Black', 'Barlow Condensed', Impact, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.save(); x.translate(4, 5); x.fillStyle = 'rgba(0,20,50,.5)'; x.fillText(txt, 0, 4); x.restore();
+      x.lineWidth = 12; x.strokeStyle = '#10223a'; x.strokeText(txt, 0, 4);
+      x.lineWidth = 5; x.strokeStyle = '#ffffff'; x.strokeText(txt, 0, 4);
+      x.fillStyle = vg(-38, 44, [c0, c1, c2]); x.fillText(txt, 0, 4);
+      x.save(); x.globalCompositeOperation = 'source-atop'; x.fillStyle = 'rgba(255,255,255,.45)'; x.beginPath(); x.ellipse(-10, -26, 30, 10, -.2, 0, TAU); x.fill(); x.restore();
+    } else if (k === 'ring') {
+      // Rettungsring rot-weiß mit Seil
+      x.save(); x.rotate(-.2);
+      for (let i = 0; i < 8; i++) {
+        x.fillStyle = i % 2 ? '#ffffff' : '#ff2d2d';
+        x.beginPath(); x.arc(0, 0, 40, i * TAU / 8, (i + 1) * TAU / 8); x.arc(0, 0, 20, (i + 1) * TAU / 8, i * TAU / 8, true); x.closePath(); x.fill();
+      }
+      x.beginPath(); x.arc(0, 0, 40, 0, TAU); x.moveTo(20, 0); x.arc(0, 0, 20, 0, TAU, true); ink(3.5);
+      x.strokeStyle = '#d9b26a'; x.lineWidth = 3.5;
+      for (let i = 0; i < 4; i++) { const a = i * TAU / 4 + TAU / 16; x.beginPath(); x.arc(Math.cos(a) * 30, Math.sin(a) * 30, 12, a - 1.4, a + 1.4); x.stroke(); }
+      const sh = x.createRadialGradient(-14, -18, 2, 0, 0, 44); sh.addColorStop(0, 'rgba(255,255,255,.45)'); sh.addColorStop(.6, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(0,0,40,.25)');
+      x.fillStyle = sh; x.beginPath(); x.arc(0, 0, 40, 0, TAU); x.arc(0, 0, 20, 0, TAU, true); x.fill('evenodd');
+      x.restore();
+    } else if (k === 'box') {
+      // Köderkiste, aufgeklappt, mit bunten Ködern
+      x.fillStyle = vg(-40, -12, ['#5fe07a', '#1f9a3c']); x.beginPath(); x.moveTo(-38, -14); x.lineTo(-30, -40); x.lineTo(30, -40); x.lineTo(38, -14); x.closePath(); x.fill(); ink();
+      x.fillStyle = '#0f5a22'; x.fillRect(-30, -30, 60, 14);
+      for (const [lx, col] of [[-22, '#ff3b3b'], [-8, '#ffd23f'], [6, '#3fa9ff'], [20, '#ff7ad9']]) {
+        x.fillStyle = col; x.beginPath(); x.ellipse(lx, -23, 5.5, 3.5, .3, 0, TAU); x.fill(); x.strokeStyle = '#10223a'; x.lineWidth = 1.5; x.stroke();
+        x.strokeStyle = '#c9d6e2'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(lx + 5, -21); x.quadraticCurveTo(lx + 9, -16, lx + 6, -14); x.stroke();
+      }
+      x.fillStyle = vg(-14, 38, ['#7af08e', '#26b04a', '#126b28']); x.beginPath(); x.moveTo(-40, -14); x.lineTo(40, -14); x.lineTo(36, 38); x.lineTo(-36, 38); x.closePath(); x.fill(); ink();
+      x.fillStyle = '#c9d6e2'; x.fillRect(-10, -8, 20, 9); x.strokeStyle = '#10223a'; x.lineWidth = 2; x.strokeRect(-10, -8, 20, 9);
+      x.strokeStyle = '#0f5a22'; x.lineWidth = 3; x.beginPath(); x.moveTo(-36, 12); x.lineTo(36, 12); x.stroke();
+      shine(-22, 0, 10, 4, .45);
+    } else if (k === 'rod') {
+      // Angelrute mit Rolle, Schnur und Pose
+      x.strokeStyle = '#10223a'; x.lineWidth = 9; x.beginPath(); x.moveTo(-36, 42); x.lineTo(30, -40); x.stroke();
+      x.strokeStyle = '#ffb000'; x.lineWidth = 5; x.beginPath(); x.moveTo(-36, 42); x.lineTo(30, -40); x.stroke();
+      x.strokeStyle = '#7a3b10'; x.lineWidth = 9; x.beginPath(); x.moveTo(-36, 42); x.lineTo(-22, 25); x.stroke();
+      x.fillStyle = vg(4, 30, ['#e8eef4', '#7d8a99']); x.beginPath(); x.arc(-16, 14, 11, 0, TAU); x.fill(); ink(3);
+      x.fillStyle = '#3a4a5c'; x.beginPath(); x.arc(-16, 14, 4, 0, TAU); x.fill();
+      x.strokeStyle = '#e8eef4'; x.lineWidth = 1.6; x.beginPath(); x.moveTo(30, -40); x.quadraticCurveTo(40, -10, 34, 18); x.stroke();
+      x.fillStyle = '#ff2d2d'; x.beginPath(); x.arc(34, 22, 6, Math.PI, 0); x.fill(); x.fillStyle = '#fff'; x.beginPath(); x.arc(34, 22, 6, 0, Math.PI); x.fill();
+      x.beginPath(); x.arc(34, 22, 6, 0, TAU); ink(2);
+      x.strokeStyle = '#10223a'; x.lineWidth = 2; x.beginPath(); x.moveTo(34, 16); x.lineTo(34, 10); x.stroke();
+      shine(4, -12, 4, 14, .4, .7);
+    } else if (k === 'fish') {
+      // Fisch mit großen Augen
+      x.save(); x.translate(-2, -4);
+      x.fillStyle = vg(-20, 20, ['#ffd23f', '#ff8a00']); x.beginPath(); x.moveTo(26, 0); x.lineTo(46, -20); x.quadraticCurveTo(40, 0, 46, 20); x.closePath(); x.fill(); ink(3);
+      const body = x.createLinearGradient(0, -30, 0, 30); body.addColorStop(0, '#5fd3ff'); body.addColorStop(.55, '#1e88e5'); body.addColorStop(1, '#0d47a1');
+      x.fillStyle = body; x.beginPath(); x.moveTo(-40, 0); x.bezierCurveTo(-36, -30, 18, -34, 30, 0); x.bezierCurveTo(18, 34, -36, 30, -40, 0); x.fill(); ink(3.5);
+      x.fillStyle = '#ffd23f'; x.beginPath(); x.moveTo(-8, -24); x.quadraticCurveTo(4, -40, 16, -22); x.closePath(); x.fill(); ink(2.5);
+      x.fillStyle = 'rgba(255,255,255,.25)'; for (let i = 0; i < 3; i++) { x.beginPath(); x.arc(-2 + i * 9, 6, 6, Math.PI * .2, Math.PI * .8); x.lineWidth = 2; x.strokeStyle = 'rgba(255,255,255,.35)'; x.stroke(); }
+      x.fillStyle = '#fff'; x.beginPath(); x.arc(-22, -6, 10, 0, TAU); x.fill(); ink(2.5);
+      x.fillStyle = '#10223a'; x.beginPath(); x.arc(-24, -5, 5, 0, TAU); x.fill();
+      x.fillStyle = '#fff'; x.beginPath(); x.arc(-26, -8, 1.8, 0, TAU); x.fill();
+      x.strokeStyle = '#10223a'; x.lineWidth = 2.5; x.beginPath(); x.arc(-34, 8, 5, -.4, 1.2); x.stroke();
+      shine(-6, -16, 12, 4, .45, -.2);
+      x.restore();
+    } else if (k === 'boat') {
+      // Fischerboot auf den Wellen: Scatter
+      x.fillStyle = '#ffffff'; x.beginPath(); x.moveTo(2, -42); x.lineTo(2, 0); x.lineTo(30, 0); x.closePath(); x.fill(); ink(2.5);
+      x.strokeStyle = '#7a3b10'; x.lineWidth = 4; x.beginPath(); x.moveTo(0, -44); x.lineTo(0, 6); x.stroke();
+      x.fillStyle = '#ff2d2d'; x.beginPath(); x.moveTo(0, -44); x.lineTo(-14, -38); x.lineTo(0, -32); x.closePath(); x.fill();
+      x.fillStyle = vg(0, 26, ['#ffb000', '#d96a00']); x.beginPath(); x.moveTo(-42, 4); x.lineTo(42, 4); x.quadraticCurveTo(34, 26, 24, 28); x.lineTo(-30, 28); x.quadraticCurveTo(-40, 18, -42, 4); x.fill(); ink(3.5);
+      x.fillStyle = '#fff'; x.fillRect(-36, 9, 72, 5);
+      x.fillStyle = '#7fd8ff'; for (const wx of [-20, 0, 20]) { x.beginPath(); x.arc(wx, 18, 3.5, 0, TAU); x.fill(); x.strokeStyle = '#10223a'; x.lineWidth = 1.5; x.stroke(); }
+      x.fillStyle = vg(24, 46, ['#4fc3ff', '#0b5fb0']); x.beginPath(); x.moveTo(-48, 30);
+      for (let i = 0; i <= 8; i++) x.quadraticCurveTo(-48 + i * 12 - 6, 24 + (i % 2) * 10, -48 + i * 12, 30);
+      x.lineTo(48, 46); x.lineTo(-48, 46); x.closePath(); x.fill();
+      x.font = "900 15px 'Arial Black', Impact, sans-serif"; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.lineWidth = 4; x.strokeStyle = '#10223a'; x.strokeText('BONUS', 0, 39); x.fillStyle = '#ffe14d'; x.fillText('BONUS', 0, 39);
+    } else if (k === 'angler') {
+      // Der Angler im Ölzeug: Joker in den Freispielen, sammelt alle Fische ein
+      const glow = x.createRadialGradient(0, 0, 10, 0, 0, 52); glow.addColorStop(0, 'rgba(255,240,140,.7)'); glow.addColorStop(1, 'rgba(255,240,140,0)');
+      x.fillStyle = glow; x.fillRect(-50, -50, 100, 100);
+      x.fillStyle = vg(10, 50, ['#ffe14d', '#f2a900']); x.beginPath(); x.moveTo(-40, 50); x.quadraticCurveTo(-36, 16, -14, 12); x.lineTo(14, 12); x.quadraticCurveTo(36, 16, 40, 50); x.closePath(); x.fill(); ink(3);
+      x.strokeStyle = '#10223a'; x.lineWidth = 2; x.beginPath(); x.moveTo(0, 14); x.lineTo(0, 48); x.stroke();
+      x.fillStyle = '#fff'; for (const by of [24, 34, 44]) { x.beginPath(); x.arc(4, by, 2, 0, TAU); x.fill(); }
+      // Gesicht mit grauem Vollbart
+      x.fillStyle = vg(-18, 12, ['#ffd2a8', '#e89a6a']); x.beginPath(); x.ellipse(0, -6, 16, 18, 0, 0, TAU); x.fill(); ink(2.5);
+      x.fillStyle = '#e6eaf0'; x.beginPath(); x.moveTo(-16, -4); x.quadraticCurveTo(-18, 18, 0, 22); x.quadraticCurveTo(18, 18, 16, -4); x.quadraticCurveTo(8, 6, 0, 4); x.quadraticCurveTo(-8, 6, -16, -4); x.fill(); ink(2);
+      x.fillStyle = '#ff9a8a'; x.beginPath(); x.ellipse(0, -2, 4.5, 3.5, 0, 0, TAU); x.fill();
+      x.fillStyle = '#10223a'; for (const ex of [-6, 6]) { x.beginPath(); x.arc(ex, -9, 2.4, 0, TAU); x.fill(); }
+      x.strokeStyle = '#10223a'; x.lineWidth = 2; x.beginPath(); x.moveTo(-5, 8); x.quadraticCurveTo(0, 12, 5, 8); x.stroke();
+      // Südwester
+      x.fillStyle = vg(-40, -14, ['#ffe14d', '#f2a900']); x.beginPath(); x.moveTo(-28, -14); x.quadraticCurveTo(-20, -44, 0, -42); x.quadraticCurveTo(20, -44, 28, -14); x.quadraticCurveTo(0, -20, -28, -14); x.fill(); ink(3);
+      x.beginPath(); x.moveTo(-32, -14); x.quadraticCurveTo(0, -22, 34, -12); x.quadraticCurveTo(38, -6, 30, -6); x.quadraticCurveTo(0, -14, -30, -8); x.closePath(); x.fill(); ink(2.5);
+      // Rute über der Schulter
+      x.strokeStyle = '#7a3b10'; x.lineWidth = 4; x.beginPath(); x.moveTo(30, 40); x.lineTo(44, -40); x.stroke();
+      x.font = "900 15px 'Arial Black', Impact, sans-serif"; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.lineWidth = 4; x.strokeStyle = '#10223a'; x.strokeText('WILD', -20, 38); x.fillStyle = '#ffffff'; x.fillText('WILD', -20, 38);
+    }
+    return c;
+  }
+  // Walzenhintergrund: Wasser mit Lichtstrahlen, Luftblasen und Seegras
+  function waterPattern(w, h) {
+    const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h));
+    const x = c.getContext('2d');
+    const bg = x.createLinearGradient(0, 0, 0, h); bg.addColorStop(0, '#2fb6f0'); bg.addColorStop(.55, '#0a6fc2'); bg.addColorStop(1, '#063a7a');
+    x.fillStyle = bg; x.fillRect(0, 0, w, h);
+    x.fillStyle = 'rgba(255,255,255,.08)';
+    for (let i = 0; i < 3; i++) { x.beginPath(); x.moveTo(w * (.1 + i * .35), 0); x.lineTo(w * (.25 + i * .35), 0); x.lineTo(w * (.05 + i * .3), h); x.lineTo(w * (-.1 + i * .3), h); x.closePath(); x.fill(); }
+    let seed = 3; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = Math.max(1, w / 140);
+    for (let i = 0; i < 14; i++) { const r = w * (.01 + rnd() * .03); x.beginPath(); x.arc(rnd() * w, rnd() * h, r, 0, Math.PI * 2); x.stroke(); }
+    x.fillStyle = 'rgba(20,120,60,.45)';
+    for (let i = 0; i < 4; i++) {
+      const bx = rnd() * w, hh = h * (.12 + rnd() * .14);
+      x.beginPath(); x.moveTo(bx - w * .03, h); x.quadraticCurveTo(bx + w * .06, h - hh * .5, bx, h - hh); x.quadraticCurveTo(bx + w * .02, h - hh * .5, bx + w * .03, h); x.closePath(); x.fill();
+    }
+    x.fillStyle = 'rgba(230,200,140,.35)'; x.fillRect(0, h * .97, w, h * .03);
+    return c;
+  }
+
+
+  function lineWins(grid) {
+    const out = [];
+    LINES.forEach((ln, i) => {
+      let best = null;
+      for (const sy of Object.keys(PAY)) {
+        let k = 0, real = false;
+        while (k < 5 && (grid[k][ln[k]] === sy || grid[k][ln[k]] === 'angler')) { if (grid[k][ln[k]] === sy) real = true; k++; }
+        if (!real) continue;
+        const m = PAY[sy][k];
+        if (m && (!best || m > best.mult)) best = { line: i, sym: sy, k, mult: m };
+      }
+      if (best) out.push(best);
+    });
+    return out;
+  }
+  const count = (gr, s) => gr.reduce((a, col) => a + col.filter(v => v === s).length, 0);
+  const cellVal = (r, row) => { const rl = reels[r]; return fs ? vals[r][mod(Math.round(rl.p) + row, rl.L)] : 0; };
+
+  function resize() {
+    const r = cv.getBoundingClientRect(); if (!r.width) return;
+    const d = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.width = Math.round(r.width * d); H = cv.height = Math.round(r.width * .6 * d);
+    cw = W / 5; ch = H / 3;
+    const sz = Math.round(Math.min(cw, ch) * .86);
+    for (const k of SYM) imgs[k] = drawSym(k, sz);
+    water = waterPattern(cw, H);
+    draw(performance.now());
+  }
+  const grid = () => reels.map((rl, r) => [0, 1, 2].map(k => strips[r][mod(Math.round(rl.p) + k, rl.L)]));
+  function valueTag(v, cx, cy, sc = 1) {
+    const txt = fmt(v * (fs ? fs.lineBet : BETS[betIdx]) * LINES.length), fsz = Math.round(ch * .17 * sc);
+    g.font = `900 ${fsz}px 'Arial Black', Impact, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const tw = g.measureText(txt).width + fsz * .6, th = fsz * 1.25;
+    g.fillStyle = 'rgba(16,34,58,.85)'; g.beginPath();
+    if (g.roundRect) g.roundRect(cx - tw / 2, cy - th / 2, tw, th, th / 2); else g.rect(cx - tw / 2, cy - th / 2, tw, th);
+    g.fill(); g.strokeStyle = '#ffe14d'; g.lineWidth = Math.max(1.5, fsz * .1); g.stroke();
+    g.fillStyle = '#ffe14d'; g.fillText(txt, cx, cy + fsz * .04);
+  }
+  function draw(now) {
+    if (!W) return;
+    g.clearRect(0, 0, W, H);
+    for (let r = 0; r < 5; r++) {
+      const x0 = r * cw, rl = reels[r], base = Math.floor(rl.p), fr = rl.p - base;
+      g.save(); g.beginPath(); g.rect(x0, 0, cw, H); g.clip();
+      if (water) g.drawImage(water, x0, 0, cw, H);
+      const fast = !rl.done;
+      for (let k = -1; k <= 3; k++) {
+        const idx = mod(base + k, rl.L), sym = strips[r][idx], img = imgs[sym], y = (k - fr) * ch;
+        if (!img) continue;
+        const ih = fast ? img.height * 1.2 : img.height;
+        g.globalAlpha = fast ? .85 : 1;
+        g.drawImage(img, x0 + (cw - img.width) / 2, y + (ch - ih) / 2, img.width, ih);
+        g.globalAlpha = 1;
+        if (fs && sym === 'fish' && vals[r][idx]) valueTag(vals[r][idx], x0 + cw / 2, y + ch * .84);
+      }
+      const sh = g.createLinearGradient(0, 0, 0, H);
+      sh.addColorStop(0, 'rgba(0,20,60,.45)'); sh.addColorStop(.16, 'rgba(0,0,0,0)'); sh.addColorStop(.84, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,20,60,.45)');
+      g.fillStyle = sh; g.fillRect(x0, 0, cw, H);
+      g.restore();
+      if (r) { g.fillStyle = '#ffe14d'; g.fillRect(x0 - 1.5, 0, 3, H); }
+    }
+    // Der Angler holt die Fische an Land: Schnüre zu jedem Fisch, die Werte wandern zu ihm
+    if (collect) {
+      const k = Math.min(1, (now - collect.t0) / 1300);
+      g.save(); g.lineWidth = Math.max(2, W / 260); g.strokeStyle = 'rgba(255,255,255,.9)'; g.shadowColor = '#ffffff'; g.shadowBlur = 6;
+      for (const a of collect.anglers) {
+        const ax = a.r * cw + cw * .7, ay = a.row * ch + ch * .1;
+        g.fillStyle = `rgba(255,240,140,${.25 + .2 * Math.sin(now / 90)})`; g.fillRect(a.r * cw, a.row * ch, cw, ch);
+        for (const f of collect.fish) {
+          const fx = f.r * cw + cw / 2, fy = f.row * ch + ch * .4, e = Math.min(1, k * 1.6);
+          g.beginPath(); g.moveTo(ax, ay); g.quadraticCurveTo((ax + fx) / 2, Math.min(ay, fy) - ch * .4, ax + (fx - ax) * e, ay + (fy - ay) * e); g.stroke();
+        }
+      }
+      g.shadowBlur = 0;
+      for (const f of collect.fish) {
+        const t = Math.max(0, (k - .55) / .45), a = collect.anglers[0], tx = a.r * cw + cw / 2, ty = a.row * ch + ch / 2;
+        if (t >= 1) continue;
+        valueTag(f.v, f.r * cw + cw / 2 + (tx - f.r * cw - cw / 2) * t, f.row * ch + ch * .84 + (ty - f.row * ch - ch * .84) * t, 1 + .3 * Math.sin(now / 100));
+      }
+      g.restore();
+      if (k >= 1) {
+        const fsz = Math.round(H * .14);
+        g.font = `900 ${fsz}px 'Arial Black', Impact, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.lineWidth = fsz * .16; g.strokeStyle = '#10223a'; g.strokeText(fmt(collect.pay), W / 2, H / 2);
+        g.fillStyle = '#ffe14d'; g.fillText(fmt(collect.pay), W / 2, H / 2);
+      }
+    }
+    if (wins.length && !spinning && !collect) {
+      const w = wins[Math.floor(Math.max(0, now - showWin) / 1300) % wins.length], ln = LINES[w.line];
+      g.lineWidth = Math.max(3, W / 180); g.lineJoin = 'round'; g.strokeStyle = LINE_COL[w.line];
+      g.shadowColor = LINE_COL[w.line]; g.shadowBlur = 10;
+      g.beginPath(); ln.forEach((row, r) => { const px = r * cw + cw / 2, py = row * ch + ch / 2; r ? g.lineTo(px, py) : g.moveTo(px, py); }); g.stroke();
+      for (let r = 0; r < w.k; r++) { const pad = W / 120; g.strokeRect(r * cw + pad, ln[r] * ch + pad, cw - pad * 2, ch - pad * 2); }
+      g.shadowBlur = 0;
+    }
+  }
+
+  function loop(now) {
+    raf = 0;
+    if (el.hidden || $('#arcade').hidden) return;
+    let moving = false;
+    reels.forEach((rl, r) => {
+      if (rl.done) return;
+      const k = Math.min(1, (now - rl.t0) / rl.dur);
+      const e = 1 - Math.pow(1 - k, 3), over = k > .92 ? Math.sin((k - .92) / .08 * Math.PI) * .08 : 0;
+      const before = Math.floor(rl.p);
+      rl.p = rl.from + (rl.to - rl.from) * e - over;
+      if (Math.floor(rl.p) !== before && now - lastTick > 45) { lastTick = now; sfx.tick(); }
+      if (k >= 1) {
+        rl.done = true; rl.p = mod(rl.to, rl.L); sfx.reelStop();
+        const col = [0, 1, 2].map(q => strips[r][mod(rl.p + q, rl.L)]);
+        if (col.includes('boat')) sfx.charge();
+        if (col.includes('angler')) sfx.powerup();
+      } else moving = true;
+    });
+    draw(now);
+    if (spinning && !moving) settle();
+    if (moving || wins.length || collect) raf = requestAnimationFrame(loop);
+  }
+  const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+
+  function paint() {
+    const lineBet = fs ? fs.lineBet : BETS[betIdx], busy = spinning || !!fs || !!collect;
+    $('#fshCredit').textContent = fmt(arcade.cash);
+    $('#fshBet').textContent = fmt(lineBet * LINES.length);
+    $('#fshLine').textContent = t('arc.perline', { v: fmt(lineBet) });
+    $('#fshDown').disabled = busy || auto.on || betIdx === 0;
+    $('#fshUp').disabled = busy || auto.on || betIdx === BETS.length - 1;
+    $('#fshSpin').disabled = busy || auto.on;
+    $('#fshSpin').textContent = fs ? t('fi.fsrun') : t('arc.spin');
+    const bar = $('#fshFs');
+    bar.hidden = !fs;
+    if (fs) bar.textContent = t('fi.fs', { i: Math.min(fs.played, fs.total), n: fs.total, v: fmt(fs.win) });
+    $('#tabFruit').disabled = busy; $('#tabBook').disabled = busy; $('#fshClose').disabled = busy;
+  }
+  function msg(text, big = false) { const m = $('#fshMsg'); m.textContent = text; m.classList.toggle('big', big); }
+
+  function startSpin() {
+    spinning = true; wins = []; collect = null;
+    if (fs) rollVals();
+    const now = performance.now();
+    reels.forEach((rl, r) => {
+      const stop = Math.floor(Math.random() * rl.L), from = Math.round(rl.p);
+      rl.from = from; rl.to = from - (rl.L * (2 + r) + mod(from - stop, rl.L)); rl.t0 = now; rl.dur = 900 + r * 320; rl.done = false;
+    });
+    paint(); kick();
+  }
+  function spin() {
+    if (spinning || fs || collect) return;
+    sfx.init();
+    const bet = BETS[betIdx] * LINES.length;
+    if (arcade.cash < bet) { msg(t('arc.nocash')); sfx.bust(); return; }
+    arcade.addCash(-bet);
+    $('#fshWin').textContent = fmt(0); msg(t('fi.hello'));
+    startSpin();
+  }
+  function useStrips(st) {
+    strips = st;
+    reels = st.map((s, i) => ({ p: Math.floor(Math.random() * s.length), from: 0, to: 0, t0: 0, dur: 0, done: true, L: s.length }));
+  }
+  function settle() {
+    spinning = false; msg('');
+    const gr = grid(), lineBet = fs ? fs.lineBet : BETS[betIdx], tb = lineBet * LINES.length;
+    wins = lineWins(gr);
+    const boats = Math.min(5, count(gr, 'boat'));
+    const lineTotal = wins.reduce((a, w) => a + w.mult * lineBet, 0) + SCAT[boats] * tb;
+    if (lineTotal) arcade.addCash(lineTotal);
+    if (fs) fs.win += lineTotal;
+    $('#fshWin').textContent = fmt(lineTotal);
+    showWin = performance.now();
+    if (lineTotal) {
+      const best = wins.slice().sort((a, b) => b.mult - a.mult)[0];
+      msg(t('arc.won', { v: fmt(lineTotal) }) + (best ? ' · ' + t('arc.line', { n: best.line + 1, k: best.k, s: t('fsym.' + best.sym) }) : ''), lineTotal >= tb * 10);
+      sfx.coins(Math.min(14, 3 + Math.round(Math.log2(1 + lineTotal / tb) * 3)));
+    } else if (!fs && boats < 3) msg(t('arc.lose'));
+    let delay = lineTotal ? 1300 : 450;
+    // In den Freispielen: jeder Angler holt alle Fische mit ihrem Wert
+    if (fs) {
+      const anglers = [], fish = [];
+      gr.forEach((col, r) => col.forEach((v, row) => { if (v === 'angler') anglers.push({ r, row }); else if (v === 'fish') fish.push({ r, row, v: cellVal(r, row) }); }));
+      if (anglers.length && fish.length) {
+        const pay = fish.reduce((a, f) => a + f.v, 0) * anglers.length * tb;
+        timer = setTimeout(() => {
+          collect = { anglers, fish, pay, t0: performance.now() }; sfx.whoosh(); paint(); kick();
+          setTimeout(() => {
+            arcade.addCash(pay); fs.win += pay;
+            $('#fshWin').textContent = fmt(lineTotal + pay);
+            msg(t(anglers.length > 1 ? 'fi.collectx' : 'fi.collect', { n: fish.length, k: anglers.length, v: fmt(pay) }), true);
+            sfx.coins(12); if (pay >= tb * 50) { sfx.jackpot(); sfx.cheer(2); }
+            paint();
+          }, 1350);
+        }, delay);
+        delay += 3000;
+      } else if (anglers.length) msg(t('fi.nofish'));
+      else if (fish.length && !lineTotal) msg(t('fi.noangler'));
+    }
+    if (boats >= 3) {
+      sfx.jackpot();
+      if (fs) { fs.left += 10; fs.total += 10; msg(t('fi.retrigger'), true); }
+      else {
+        msg(t('fi.trigger', { n: FSN[boats] }), true);
+        fs = { left: FSN[boats], total: FSN[boats], played: 0, win: lineTotal, lineBet };
+        paint();
+        timer = setTimeout(() => { useStrips(FREE); sfx.powerup(); msg(t('fi.go'), true); draw(performance.now()); timer = setTimeout(freeSpin, 1100); }, delay + 1200);
+        return;
+      }
+    }
+    if (fs) {
+      if (fs.left > 0) timer = setTimeout(freeSpin, delay + 700);
+      else timer = setTimeout(endFree, delay + 600);
+    } else auto.next(lineTotal ? 1600 : 550);
+    paint(); kick();
+  }
+  function freeSpin() {
+    if (!fs || spinning) return;
+    collect = null; fs.left--; fs.played++; msg('');
+    startSpin();
+  }
+  function endFree() {
+    const w = fs.win; fs = null; collect = null;
+    useStrips(BASE);
+    msg(w ? t('fi.fsend', { v: fmt(w) }) : t('fi.fsnone'), !!w);
+    if (w) sfx.cheer(1.4);
+    $('#fshWin').textContent = fmt(w);
+    auto.next(2200);
+    paint(); draw(performance.now()); kick();
+  }
+
+  function renderPays() {
+    const img = k => drawSym(k, 68).toDataURL();
+    const rows = ['fish', 'rod', 'box', 'ring', 'ace', 'king', 'queen', 'jack', 'ten'].map(k => {
+      const p = PAY[k], parts = [2, 3, 4, 5].filter(n => p[n]).map(n => `${n}× <b>${p[n]}</b>`).join(' · ');
+      return `<div class="pay-row"><img src="${img(k)}" alt="${t('fsym.' + k)}"><span>${parts}</span></div>`;
+    });
+    rows.unshift(`<div class="pay-row"><img src="${img('boat')}" alt="${t('fsym.boat')}"><span>3× <b>3</b> · 4× <b>20</b> · 5× <b>100</b><br><small>${t('fi.scatter')}</small></span></div>`,
+      `<div class="pay-row"><img src="${img('angler')}" alt="${t('fsym.angler')}"><span><small>${t('fi.wild')}</small></span></div>`);
+    $('#fshPayList').innerHTML = rows.join('');
+  }
+
+  const auto = autoSpin({
+    btn: $('#fshAuto'), pick: $('#fshAutoPick'), spin: () => spin(), changed: () => paint(),
+    ready: () => $('#arcade').hidden || el.hidden ? 'stop' : spinning || fs || collect ? 'busy' : arcade.cash < BETS[betIdx] * LINES.length ? 'poor' : 'ok'
+  });
+  $('#fshSpin').addEventListener('click', spin);
+  $('#fshDown').addEventListener('click', () => { if (!spinning && !fs && betIdx > 0) { betIdx--; save(); paint(); sfx.tick(); } });
+  $('#fshUp').addEventListener('click', () => { if (!spinning && !fs && betIdx < BETS.length - 1) { betIdx++; save(); paint(); sfx.tick(); } });
+  const save = () => { try { localStorage.setItem('dk-bet-fish', String(betIdx)); } catch (e) {} };
+  document.addEventListener('keydown', e => {
+    if ($('#arcade').hidden || el.hidden) return;
+    if (!auto.on && (e.key === ' ' || e.code === 'Space') && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLElement && e.target.closest('summary'))) { e.preventDefault(); spin(); }
+  });
+  arcadeBusy.push(() => spinning || !!fs || !!collect);
+  arcade.onShow(which => {
+    if (which !== 'fish') { auto.stop(); if (which === null) clearTimeout(timer); return; }
+    if (!$('#fshPayList').children.length) renderPays();
+    paint(); if (!fs) msg(arcade.cash < BETS[0] * LINES.length ? t('arc.nocash') : t('fi.hello'));
+    requestAnimationFrame(() => { resize(); kick(); });
+  });
+  new ResizeObserver(() => { if (!el.hidden) resize(); }).observe(cv);
+  return { relang() { if ($('#fshPayList').children.length) renderPays(); auto.relang(); paint(); } };
 })();
 
 /* ---------- Tischzeichnungen für Poker und Blackjack: Karten, Chips, Arme, Figuren ---------- */
@@ -9248,7 +9770,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', t(el.dataset.i18nPh)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang(); bowling.relang(); rps.relang();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); fishSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang(); bowling.relang(); rps.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
