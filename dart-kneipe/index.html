@@ -676,8 +676,12 @@ legend{padding:0;margin-bottom:8px}
       <legend data-i18n="lg.mode">Spielmodus</legend>
       <div class="chips" id="modeChips">
         <label class="chip"><input type="radio" name="mode" id="modeCpu" value="cpu" checked><span data-i18n="mode.cpu">Gegen die Kneipe</span></label>
+        <label class="chip"><input type="radio" name="mode" id="modeClassic" value="classic"><span data-i18n="mode.classic">Klassisch</span></label>
         <label class="chip"><input type="radio" name="mode" id="modeLocal" value="local"><span data-i18n="mode.local">Zu zweit, ein Gerät</span></label>
         <label class="chip"><input type="radio" name="mode" id="modeOnline" value="online"><span data-i18n="mode.online">Online mit Freunden</span></label>
+      </div>
+      <div class="mp-panel" id="classicPanel" hidden>
+        <p class="mp-note" data-i18n="mp.noteclassic">Klassisch: echtes Darts ohne Fähigkeiten, Adrenalin und Getränke. Du wirfst mit dem Klassikpfeil, die Gegner ganz ohne Tricks.</p>
       </div>
       <div class="mp-panel" id="localPanel" hidden>
         <div class="mp-row"><input class="mp-input" id="p1Name" maxlength="16" autocomplete="off" data-i18n-ph="mp.p1" placeholder="Spieler 1"><input class="mp-input" id="p2Name" maxlength="16" autocomplete="off" data-i18n-ph="mp.p2" placeholder="Spieler 2"></div>
@@ -714,7 +718,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="legs" id="legs6x" value="6"><span>6</span></label>
       </div>
     </fieldset>
-    <fieldset>
+    <fieldset id="dartSet">
       <legend data-i18n="lg.darts">Pfeile</legend>
       <div class="chips boards" id="dartChips"></div>
     </fieldset>
@@ -729,7 +733,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="level" id="lvlB" value="stammgast" checked><span><span data-i18n="lvl.stammgast">Kalle</span><small data-i18n="lvl.stammgast.l">Stammgast</small></span></label>
         <label class="chip"><input type="radio" name="level" id="lvlC" value="verein"><span><span data-i18n="lvl.verein">Otto</span><small data-i18n="lvl.verein.l">Vereinsspieler</small></span></label>
         <label class="chip"><input type="radio" name="level" id="lvlD" value="profi"><span><span data-i18n="lvl.profi">Die Maschine</span><small data-i18n="lvl.profi.l">Profi</small></span></label>
-        <label class="chip"><input type="radio" name="level" id="lvlE" value="phantom"><span><span data-i18n="lvl.phantom">Das Phantom</span><small data-i18n="lvl.phantom.l">Legende</small></span></label>
+        <label class="chip" id="lvlEChip"><input type="radio" name="level" id="lvlE" value="phantom"><span><span data-i18n="lvl.phantom">Das Phantom</span><small data-i18n="lvl.phantom.l">Legende</small></span></label>
       </div>
       <p class="prize-note" id="prizeNote"></p>
     </fieldset>
@@ -760,6 +764,7 @@ legend{padding:0;margin-bottom:8px}
       <p class="rules" data-i18n-html="rules.cards"></p>
       <p class="rules" data-i18n-html="rules.drinks"></p>
       <p class="rules" data-i18n-html="rules.phantom"></p>
+      <p class="rules" data-i18n-html="rules.classic"></p>
       <p class="rules" data-i18n-html="rules.legs"><strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.</p>
     </details>
     </div>
@@ -1214,6 +1219,7 @@ const I18N = {
     'w.phantom': 'Das Phantom … Gegen den gewinnst du nur mit voll eingeworfenem Standardpfeil oder drei Energys intus.',
     'w.phopen': 'Drei Energys! Jetzt ist das Phantom angreifbar.',
     'rules.phantom': '<strong>Das Phantom:</strong> Die Legende der Kneipe. Es punktet selten über die Triple 20, sondern wählt je nach Lage die 19, 18, 17, 16 oder das Bull: Es meidet Reste ohne Checkout, stellt sich Finishes zurecht und weicht aus, wenn eigene Pfeile das Feld verdecken. Ganz fehlerfrei ist es nicht: In jedem Leg verpasst es seinen ersten Checkout-Dart, und meist rutscht ihm beim Punkten ein Pfeil ins Single. Trotzdem ist es normalerweise unschlagbar. Angreifbar wird es nur, wenn du mit dem voll eingeworfenen Standardpfeil (+50 %) spielst oder mindestens 3 Energys getrunken hast – dann wirft es nur noch wie ein sehr starker Profi. Jedes gewonnene Leg bringt 50 €.',
+    'rules.classic': '<strong>Klassisch:</strong> Darts pur gegen die Gäste vom Tresen – keine Pfeil-Fähigkeiten, kein Adrenalin, keine Getränke, und auch die Gegner spielen ohne Tricks. Du wirfst mit dem Klassikpfeil, der etwas ruhiger in der Hand liegt als ein nackter Pfeil. Preisgeld gibt es wie sonst auch, das Phantom spielt hier nicht mit.',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Jeder Krug bringt Profi-Heinz-Flashback-Pfeile mit dem besten Aim im Spiel – 2 nach dem ersten, 5 nach dem zweiten, 10 nach dem dritten Krug –, die du per Knopf selbst einsetzt. Heinz’ Spezial-Likör (10 €, bis zu 5): Steht ein Checkout an, werden Doppel, Triple und Bull für dich je Likör 20 % größer, mit 5 Likören doppelt so groß. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
     'dr.liqueur': 'Heinz’ Spezial-Likör', 'dr.liqueur.d': 'Ein Gläschen fürs Finish: Mit jedem Likör werden Doppel, Triple und Bull im Finish für dich 20 % größer – auf der Scheibe und für deine Pfeile. Bei 5 Likören sind die Felder doppelt so groß.',
@@ -1222,7 +1228,9 @@ const I18N = {
     'w.liqhit': ['Siehste, der Likör wirkt!', 'Scheunentor getroffen!', 'Da war das Doppel wohl etwas größer.'],
     'hint.liqueur': 'Likör-Glück! Das vergrößerte Feld hat gehalten: {l}.',
     'avg.short': 'Leg-Ø', 'avg.title': 'Durchschnitt pro Aufnahme (3 Darts) in diesem Leg', 'avg.leg': 'Leg-Ø: du {a}, {name} {b}.',
-    'lg.mode': 'Spielmodus', 'mode.cpu': 'Gegen die Kneipe', 'mode.local': 'Zu zweit, ein Gerät', 'mode.online': 'Online mit Freunden',
+    'lg.mode': 'Spielmodus', 'mode.cpu': 'Gegen die Kneipe', 'mode.classic': 'Klassisch',
+    'mp.noteclassic': 'Klassisch: echtes Darts ohne Fähigkeiten, Adrenalin und Getränke. Du wirfst mit dem Klassikpfeil, die Gegner ganz ohne Tricks.',
+    'dart.klassik': 'Klassikpfeil', 'dart.klassik.s': 'Klassisch', 'dart.klassik.d': 'Ausgewogen, ohne Effekte', 'mode.local': 'Zu zweit, ein Gerät', 'mode.online': 'Online mit Freunden',
     'mp.p1': 'Spieler 1', 'mp.p2': 'Spieler 2', 'mp.yourname': 'Dein Name', 'mp.host': 'Raum erstellen', 'mp.code': 'Raum-Code', 'mp.join': 'Beitreten',
     'mp.yourcode': 'Dein Raum-Code', 'mp.copy': 'Einladungslink teilen', 'mp.copied': 'Link kopiert – schick ihn deinem Gegner.',
     'mp.note': 'Zu zweit an einem Gerät gibt es keine Pfeil-Fähigkeiten, kein Adrenalin und keine Getränke – nur euer Können zählt.',
@@ -1401,6 +1409,7 @@ const I18N = {
     'w.phantom': 'The Phantom… You only beat him with a fully broken-in standard dart or three energy drinks inside you.',
     'w.phopen': 'Three energy drinks! Now the Phantom is vulnerable.',
     'rules.phantom': '<strong>The Phantom:</strong> The pub’s legend. It rarely scores on treble 20 and instead picks 19, 18, 17, 16 or the bull depending on the situation: it avoids leaves without a checkout, sets up finishes and switches when its own darts cover the bed. It isn’t flawless: every leg it misses its first checkout dart, and usually one scoring dart slips into a single. Still, it is normally unbeatable. It only becomes vulnerable if you play the fully broken-in standard dart (+50%) or have had at least 3 energy drinks – then it throws like a very strong pro. Every leg you win earns €50.',
+    'rules.classic': '<strong>Classic:</strong> pure darts against the regulars – no dart abilities, no adrenaline, no drinks, and the opponents play without tricks too. You throw the classic dart, which sits a little steadier in the hand than a bare dart. Prize money works as usual; the Phantom sits this one out.',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): every mug brings Pro Heinz flashback darts with the best aim in the game – 2 after the first, 5 after the second, 10 after the third mug – that you use with a button. Heinz’s special liqueur (€10, up to 5): when a checkout is on, doubles, trebles and the bull grow 20% per liqueur for you, twice the size with 5. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
     'dr.liqueur': 'Heinz’s special liqueur', 'dr.liqueur.d': 'A little glass for the checkout: every liqueur makes doubles, trebles and the bull 20% bigger for you on a finish – on the board and for your darts. With 5 liqueurs the fields are twice the size.',
@@ -1409,7 +1418,9 @@ const I18N = {
     'w.liqhit': ['See, the liqueur works!', 'Hit the barn door!', 'That double was a little bigger, I reckon.'],
     'hint.liqueur': 'Liqueur luck! The enlarged field held: {l}.',
     'avg.short': 'Leg avg', 'avg.title': 'Average per visit (3 darts) in this leg', 'avg.leg': 'Leg avg: you {a}, {name} {b}.',
-    'lg.mode': 'Game mode', 'mode.cpu': 'Against the pub', 'mode.local': 'Two players, one device', 'mode.online': 'Online with friends',
+    'lg.mode': 'Game mode', 'mode.cpu': 'Against the pub', 'mode.classic': 'Classic',
+    'mp.noteclassic': 'Classic: pure darts without abilities, adrenaline or drinks. You throw the classic dart, the opponents play without any tricks.',
+    'dart.klassik': 'Classic dart', 'dart.klassik.s': 'Classic', 'dart.klassik.d': 'Balanced, no effects', 'mode.local': 'Two players, one device', 'mode.online': 'Online with friends',
     'mp.p1': 'Player 1', 'mp.p2': 'Player 2', 'mp.yourname': 'Your name', 'mp.host': 'Create room', 'mp.code': 'Room code', 'mp.join': 'Join',
     'mp.yourcode': 'Your room code', 'mp.copy': 'Share invite link', 'mp.copied': 'Link copied – send it to your opponent.',
     'mp.note': 'With two players on one device there are no dart abilities, no adrenaline and no drinks – only skill counts.',
@@ -2549,6 +2560,7 @@ const DART_INFO = {
   anfaenger: { name: 'Anfängerpfeil', skill: 'Viel Glück', desc: 'Ruhige Hand · 33 % Glückspfeil', need: 3, stat: 'legs', flight: '#f4f1e6', edge: '#1d5a24', stripe: '#3fae49', barrel: '#c3c8cf' },
   kneipe: { name: 'Kneipenpfeil', skill: 'Präzision', desc: 'Präzision · jeder 3. Dart', need: 10, stat: 'tons', flight: '#c9302c', edge: '#6e1310', stripe: '#f4efe4', barrel: '#7d828a' },
   blitz:  { name: 'Blitzpfeil', skill: 'Schnellwurf', desc: 'Schnell werfen = perfekt', need: 15, stat: 't20', flight: '#f2c230', edge: '#6b5200', stripe: '#141414', barrel: '#4d5158' },
+  klassik: { name: 'Klassikpfeil', skill: 'Klassisch', desc: 'Ausgewogen, ohne Effekte', only: 'classic', flight: '#1f3f7a', edge: '#0d1d3d', stripe: '#e9e1cc', barrel: '#b5a27a' },
   tp12:   { name: 'TP12 OG', skill: 'Volltreffer', desc: 'Knapp daneben zählt: T20 · T19 · T17 · Bull', flight: '#111111', edge: '#d4af37', stripe: '#d4af37', barrel: '#3a3a3a' },
   alt:    { name: 'Stammtischpfeil', skill: 'Alt eingesessen', desc: 'Dauerhaft ruhige Hand', flight: '#1f6b45', edge: '#0c3320', stripe: '#e2b457', barrel: '#b8893a' }
 };
@@ -2558,6 +2570,7 @@ const DART_LOOK = {
   anfaenger: { barrel: '#c3c8cf', groove: '#6b7078', accent: '#3fae49', shaft: '#f2f2f2', cap: '#3fae49', flight: '#f4f1e6', border: '#3fae49', motif: 'clover' },
   kneipe: { barrel: '#8d929a', groove: '#3b3e44', accent: '#c9302c', shaft: '#161616', cap: '#c9302c', flight: '#c9302c', border: '#f4efe4', motif: 'dk' },
   blitz:  { barrel: '#2b2d33', groove: '#0c0d10', accent: '#f2c230', shaft: '#f2c230', cap: '#141414', flight: '#161616', border: '#f2c230', motif: 'bolt' },
+  klassik: { barrel: '#b5a27a', groove: '#5e4c2a', accent: '#1f3f7a', shaft: '#1f3f7a', cap: '#e9e1cc', flight: '#1f3f7a', border: '#e9e1cc', motif: 'classic' },
   tp12:   { barrel: '#3a3a3a', groove: '#0c0c0c', accent: '#d4af37', shaft: '#111111', cap: '#d4af37', flight: '#111111', border: '#d4af37', motif: 'tp12' },
   alt:    { barrel: '#c99a45', groove: '#5a3d12', accent: '#1f6b45', shaft: '#1f6b45', cap: '#e2b457', flight: '#1f6b45', border: '#e2b457', motif: 'oak' },
   cpu:    { barrel: '#8d929a', groove: '#3b3e44', accent: '#2d63b8', shaft: '#122c58', cap: '#f2c94c', flight: '#2d63b8', border: '#f4efe4', motif: 'stars' }
@@ -2600,6 +2613,9 @@ function drawFlightArt(g, key, w, h) {
     }
     g.restore();
     g.lineWidth = w * .03; g.lineCap = 'round'; g.beginPath(); g.moveTo(cx, cy + r * .6); g.quadraticCurveTo(cx + w * .06, cy + h * .16, cx + w * .02, cy + h * .26); g.stroke();
+  } else if (L.motif === 'classic') {
+    // Klassikpfeil: drei schlichte Streifen
+    for (const v of [.32, .45, .58]) g.fillRect(w * .26, h * v, w * .48, h * .045);
   } else if (L.motif === 'tp12') {
     // Schwarz-goldener Profi-Flight mit Schriftzug
     g.textAlign = 'center'; g.textBaseline = 'middle';
@@ -3501,7 +3517,8 @@ const BOOSTS = {
   adr:  { amp: .3, tremor: .2, scatter: .25 },
   alt:  { amp: .62, tremor: .55, scatter: .58 },  // Stammtischpfeil: dauerhaft ruhigere Hand
   anf:  { amp: 1, tremor: 1, scatter: 1 },         // Anfängerpfeil: zielt wie jeder andere, nur das Glück ist anders
-  tp12: { amp: 1, tremor: 1, scatter: 1 },         // TP12 OG: zielt normal, hält aber knapp verfehlte Lieblingsfelder
+  tp12: { amp: 1, tremor: 1, scatter: 1 },
+  klassik: { amp: .85, tremor: .8, scatter: .85 },   // Klassikpfeil: etwas ruhiger als ein nackter Pfeil, damit das Spiel ohne Effekte rund läuft         // TP12 OG: zielt normal, hält aber knapp verfehlte Lieblingsfelder
   flash: { amp: .04, tremor: .05, scatter: .08 }   // Profi-Heinz-Flashback: das beste Aim im Spiel
 };
 
@@ -3525,7 +3542,7 @@ const focusLevel = () => drinks.focusOn ? drinks.energy : 0;
 // Pils macht wackelig, Konzentration ruhig; der Flashback ignoriert beides
 function drinkMods(kind, b, t, w) {
   const d = drunk(), e = focusLevel();
-  if (kind === 'flash' || (!d && !e) || (S && S.mode === 'local')) return b;
+  if (kind === 'flash' || (!d && !e) || (S && (S.mode === 'local' || S.classic))) return b;
   const steady = 1 - FOCUS_STEADY * e, k = (1 + PILS_SWAY * d) * steady;
   const sx = d * 7 * Math.sin(t * .83 + w.ph[1]), sy = d * 5 * Math.sin(t * .61 + w.ph[3]);   // langsames Schwanken im Rausch
   return Object.assign({}, b, { x: (b.x + sx) * k, y: (b.y + sy) * k, scatter: b.scatter * (1 + PILS_SCATTER * d) * (1 - FOCUS_SCATTER * e) });
@@ -3533,7 +3550,7 @@ function drinkMods(kind, b, t, w) {
 
 // Spezial-Likör: Steht ein Checkout an, sind Doppel, Triple und Bull für deine Pfeile größer
 const liqueurFactor = () => 1 + LIQ_STEP * drinks.liqueur;
-const liqueurActive = () => drinks.liqueur > 0 && !!S && S.mode !== 'local' && !S.over && S.turn === S.me && !!finish(S.scores[S.me], 3 - S.visit.length);
+const liqueurActive = () => drinks.liqueur > 0 && !!S && S.mode !== 'local' && !S.classic && !S.over && S.turn === S.me && !!finish(S.scores[S.me], 3 - S.visit.length);
 function liqueurSnap(ax, ay, lx, ly) {
   const want = hit(ax, ay), got = hit(lx, ly), f = liqueurFactor();
   if (got.n === want.n && got.m === want.m) return null;
@@ -3612,6 +3629,7 @@ const pct = v => (v * 100).toLocaleString(lang === 'de' ? 'de-DE' : 'en-GB', { m
 const LUCK = 1 / 3;      // Anfängerpfeil: jeder Dart hat ein Drittel Chance, so präzise wie mit Adrenalin zu fliegen
 const boostKind = () => {
   if (!S || S.mode === 'local') return 'none';
+  if (S.classic) return 'klassik';
   if (drinks.armed && drinks.flash > 0) return 'flash';
   if (S.adrLeft > 0) return 'adr';
   if (S.dartSet === 'kneipe' && S.precArmed) return 'prec';
@@ -3748,7 +3766,7 @@ canvas.addEventListener('pointerup', e => {
   aim.active = false;
   if (!canThrow()) return;
   // Anfängerpfeil: mit etwas Glück fliegt der Dart so ruhig und genau wie mit Adrenalin (Fähigkeiten nur gegen die Kneipe)
-  const solo = S.mode !== 'local';   // eigene Fähigkeiten: gegen die Kneipe und online
+  const solo = S.mode !== 'local' && !S.classic;   // eigene Fähigkeiten: gegen die Kneipe und online, nicht klassisch
   const flashing = boostKind() === 'flash';
   const lucky = solo && !flashing && S.dartSet === 'anfaenger' && S.adrLeft === 0 && Math.random() < LUCK;
   // Der Pfeil fliegt dorthin, wo das Fadenkreuz gerade steht; ein Glückspfeil streut nur so wenig wie mit Adrenalin
@@ -3800,23 +3818,23 @@ const isMe = (g, p) => g.mode !== 'local' && p === g.me;          // „du“ au
 const seatName = (g, p) => g.mode === 'cpu' ? (p === 0 ? t('you') : g.opp.name) : g.mode === 'online' && p === g.me ? t('you') : g.names[p];
 function newGame(o) {
   const mode = o.mode || 'cpu';
-  if (mode !== 'local') {
+  if (mode !== 'local' && !o.classic) {
     // Der Trunk gilt genau ein Match: Was schon zu einem Match gehörte, ist jetzt verflogen
     if (drinks.bound) resetDrinks();
     if (anyDrink()) { drinks.bound = true; saveDrinks(); }
   }
   const me = o.me || 0, names = o.names || ['', ''];
   const opp = mode === 'cpu' ? LEVELS[o.level] : { name: names[mode === 'online' ? 1 - me : 1], label: t('mp.label.' + mode), sigma: 0 };
-  document.body.classList.toggle('mp', mode === 'local');
+  document.body.classList.toggle('mp', mode === 'local' || !!o.classic);   // ohne Fähigkeiten: Anzeige ausblenden
   S = {
-    mode, me, names,
+    mode, me, names, classic: !!o.classic,
     start: o.start, level: mode === 'cpu' ? o.level : 'mp', opp,
     legsToWin: o.legs, legs: [0, 0], starter: o.starter, legStarter: o.starter,
     pts: [0, 0], dartsN: [0, 0],   // für Points per Dart über das ganze Match
     legPts: [0, 0], legDarts: [0, 0],   // für den Schnitt pro Aufnahme im laufenden Leg
     dartSet: o.dart || 'kneipe', precStock: 0, precProgress: 0, precArmed: false,
     blitzStock: 0, blitzProgress: 0, blitzLeft: 0, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0,
-    cpuSet: Object.keys(DART_INFO)[Math.floor(Math.random() * Object.keys(DART_INFO).length)],
+    cpuSet: 'standard',
     cpu: { precStock: 0, precProgress: 0, blitzStock: 0, blitzProgress: 0, blitzLeft: 0, adrGapUsed: false, adrFinishUsed: false, adrLeft: 0 },
     scores: [o.start, o.start], hist: [[], []], turn: o.starter,
     visit: [], visitState: 'open', turnStart: o.start,
@@ -3879,7 +3897,7 @@ function beginTurn() {
 
 // Adrenalin für dich: bei 150 Punkten Rückstand von selbst, steht der Gegner auf einem Finish auf Knopfdruck
 function offerAdrenaline(g) {
-  if (g.adrLeft !== 0) return;
+  if (g.adrLeft !== 0 || g.classic) return;
   const mine = g.scores[g.me], theirs = g.scores[1 - g.me];
   if (!g.adrGapUsed && mine - theirs >= ADR_GAP) triggerAdrenaline(g, 'gap');
   else if (!g.adrFinishUsed && finish(theirs, 3)) {
@@ -3896,7 +3914,7 @@ const cpuMult = kind => kind === 'none' ? 1 : kind === 'std' ? 1 - STD_MAX * CPU
 // Die gilt nur für diese Aufnahme: Präzision = ein präziser Dart, Schnellwurf = alle drei Darts.
 const cpuSet = g => g.cpuSet;
 function cpuShuffle(g) {
-  const c = g.cpu, sets = Object.keys(DART_INFO).filter(k => k !== g.cpuSet);
+  const c = g.cpu, sets = Object.keys(DART_INFO).filter(k => k !== g.cpuSet && !DART_INFO[k].only);
   g.cpuSet = sets[Math.floor(Math.random() * sets.length)];
   c.precStock = g.cpuSet === 'kneipe' ? 1 : 0;
   c.blitzLeft = g.cpuSet === 'blitz' ? ABILITY_DARTS : 0;
@@ -3907,6 +3925,7 @@ function cpuShuffle(g) {
 function cpuBoostStart(g) {
   const c = g.cpu, name = g.opp.name;
   if (g.level === LEGEND) { hint(t(legendOpen() ? 'hint.phopen' : 'hint.phlock')); renderTafel(); return; }   // das Phantom braucht keine Fähigkeiten
+  if (g.classic) { renderTafel(); return; }   // klassisch: Gegner ohne Fähigkeiten und ohne Tricks
   cpuShuffle(g);   // Adrenalin bekommt der Gegner nicht – das bleibt dir vorbehalten
   if (cpuSet(g) === 'blitz' && c.blitzLeft === 0 && c.blitzStock > 0) {
     c.blitzStock--; c.blitzLeft = ABILITY_DARTS;
@@ -3917,6 +3936,7 @@ function cpuBoostStart(g) {
 }
 
 function cpuBoostKind(g, onDouble) {
+  if (g.classic) return 'none';
   const c = g.cpu, set = cpuSet(g);
   if (c.adrLeft > 0) return 'adr';
   if (set === 'blitz' && c.blitzLeft > 0) return 'blitz';
@@ -3981,7 +4001,7 @@ function throwAt(p, x, y) {
   V.onThrow(d);
   g.darts.push(d);
   sfx.whoosh();
-  if (p === g.me && g.mode !== 'local') {
+  if (p === g.me && g.mode !== 'local' && !g.classic) {
     // Fähigkeiten verbrauchen; normale Darts laden die Präzision auf
     // Ein Flashback-Pfeil geht vor allem anderen und verbraucht sonst nichts
     const flashed = drinks.armed && drinks.flash > 0;
@@ -4080,7 +4100,7 @@ function win(g, p, h) {
   if (matchWon && p === 0 && g.mode === 'cpu') {
     bumpStat('wins'); unlock('wood'); if (g.level === 'verein' || g.level === 'profi' || g.level === LEGEND) unlock('pro');
   }
-  if (matchWon && drinks.bound && g.mode !== 'local') {
+  if (matchWon && drinks.bound && g.mode !== 'local' && !g.classic) {
     resetDrinks();
     setTimeout(() => toast(t('dr.title'), ' ' + t('dr.gone')), 8200);
   }
@@ -4129,7 +4149,7 @@ function renderTafel() {
   if (!S) return;
   $('#modeLabel').textContent = S.legsToWin > 1 ? `${S.start} · First to ${S.legsToWin}` : `${S.start} · Double Out`;
   $('#levelLabel').textContent = S.opp.label;
-  $('#tag1').textContent = S.mode === 'cpu' ? cpuBoostTag(S) : '';
+  $('#tag1').textContent = S.mode === 'cpu' && !S.classic ? cpuBoostTag(S) : '';
   $('#name0').textContent = seatName(S, 0);
   $('#name1').textContent = seatName(S, 1);
   for (const p of [0, 1]) {
@@ -4184,7 +4204,7 @@ function renderSkills() {
   const adrLeft = g ? g.adrLeft : 0, set = g ? g.dartSet : dartKey;
   const btn = $('#precBtn');
   btn.classList.remove('prec', 'blitz', 'alt', 'anfaenger', 'standard', 'tp12'); btn.classList.add(set === 'kneipe' ? 'prec' : set);
-  $('#skillName').textContent = DART_INFO[set].skill;
+  $('#skillName').textContent = (DART_INFO[set] || DART_INFO.standard).skill;
   const myTurn = !!g && !g.over && g.turn === g.me && adrLeft === 0;
   let canUse = false, on = false, fill = 0, state = '';
   if (set === 'kneipe') {
@@ -4449,12 +4469,17 @@ function startFromMenu() {
   const mode = val('mode'), cfg = { start: +val('start'), starter: +val('starter'), legs: +val('legs'), dart: dartKey };
   if (mode === 'local') newGame({ ...cfg, mode, names: [$('#p1Name').value.trim() || t('mp.p1'), $('#p2Name').value.trim() || t('mp.p2')] });
   else if (mode === 'online') mp.start(cfg);
+  else if (mode === 'classic') newGame({ ...cfg, level: val('level') === LEGEND ? 'stammgast' : val('level'), classic: true, dart: 'klassik' });
   else newGame({ ...cfg, level: val('level') });
 }
 // Spielmodus im Menü: Gegnerwahl nur gegen die Kneipe, sonst Namen bzw. Online-Raum
 function syncModeUI() {
   const mode = document.querySelector('#menuForm input[name="mode"]:checked').value;
-  $('#oppSet').hidden = mode !== 'cpu';
+  $('#oppSet').hidden = mode !== 'cpu' && mode !== 'classic';
+  $('#dartSet').hidden = mode === 'classic';         // klassisch gibt es nur den Klassikpfeil
+  $('#classicPanel').hidden = mode !== 'classic';
+  $('#lvlEChip').hidden = mode === 'classic';        // das Phantom gibt es nur mit Effekten
+  if (mode === 'classic' && $('#lvlE').checked) { $('#lvlB').checked = true; $('#lvlB').dispatchEvent(new Event('change', { bubbles: true })); }
   $('#localPanel').hidden = mode !== 'local';
   $('#onlinePanel').hidden = mode !== 'online';
 }
@@ -7324,7 +7349,7 @@ const drinkShop = (() => {
     sfx.init();
     arcade.addCash(-D.price);
     drinks[k]++;
-    if (S && !S.over) drinks.bound = true;   // im laufenden Match gekauft: wirkt sofort, verfliegt an dessen Ende
+    if (S && !S.over && !S.classic && S.mode !== 'local') drinks.bound = true;   // im laufenden Match gekauft: wirkt sofort, verfliegt an dessen Ende
     let text = t('dr.got.' + k, { n: drinks[k] }), say = t('w.' + k);
     if (k === 'energy' && !drinks.focusOn) {
       // Je mehr Energy, desto eher: 33 %, 67 %, beim dritten sicher
@@ -7382,7 +7407,7 @@ function dartIcon(k) {
 }
 const dartIcons = {};
 function renderDartChips() {
-  $('#dartChips').innerHTML = Object.entries(DART_INFO).map(([k, d]) => {
+  $('#dartChips').innerHTML = Object.entries(DART_INFO).filter(([, d]) => !d.only).map(([k, d]) => {
     const locked = !dartUnlocked(k);
     if (!dartIcons[k]) dartIcons[k] = dartIcon(k);
     const prog = locked ? `${LOCK}${d.req}: ${Math.min(stats[d.stat] || 0, d.need)}/${d.need}` : d.desc;
@@ -7431,7 +7456,7 @@ $('#rematch').addEventListener('click', () => {
   sfx.init();
   const cfg = { start: S.start, starter: 1 - S.starter, legs: S.legsToWin, dart: S.dartSet };
   if (S.mode === 'online') mp.rematch(cfg);
-  else newGame({ ...cfg, level: S.level, mode: S.mode, names: S.names });
+  else newGame({ ...cfg, level: S.level, mode: S.mode, names: S.names, classic: S.classic });
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !menu.hidden && S && !S.over) menu.hidden = true;
