@@ -10256,7 +10256,7 @@ const gruft = (() => {
     const type = SAVE.type, ang = Math.atan2(ty - pl.y, tx - pl.x);
     pl.atkCd = ST.fire; pl.throwT = 1; pl.face = isoX(Math.cos(ang), Math.sin(ang)) >= 0 ? 1 : -1;
     const base = ST.weapon * rnd(.85, 1.15);
-    const fire = (a, mul) => shots.push({ x: pl.x, y: pl.y, z: 1.1, vx: Math.cos(a) * 15, vy: Math.sin(a) * 15, life: .75, type, dmg: base * mul, pierce: type === 'schatten' ? 1 + (rk('s3') ? Math.floor((rk('s3') + 1) / 2) : 0) : 0, hits: new Set(), kind: 'dart' });
+    const fire = (a, mul) => shots.push({ x: pl.x, y: pl.y, z: 1.1, vx: Math.cos(a) * 18, vy: Math.sin(a) * 18, life: .9, type, dmg: base * mul, pierce: type === 'schatten' ? 1 + (rk('s3') ? Math.floor((rk('s3') + 1) / 2) : 0) : 0, hits: new Set(), kind: 'dart' });
     fire(ang, 1);
     if (type === 'gift') { const ex = SV.g4(rk('g4')).a; for (let i = 1; i <= ex; i++) fire(ang + Math.ceil(i / 2) * .16 * (i % 2 ? 1 : -1), .6); }
     sfx.whoosh();
@@ -10269,7 +10269,7 @@ const gruft = (() => {
     if ((pl.cds[key] || 0) > 0) { say(T('cooldown')); return; }
     if (pl.mana < cost) { say(T('nomana')); return; }
     pl.mana -= cost; pl.cds[key] = cd; pl.throwT = 1;
-    const reach = Math.min(10, Math.hypot(tx - pl.x, ty - pl.y)), a = Math.atan2(ty - pl.y, tx - pl.x), px = pl.x + Math.cos(a) * reach, py = pl.y + Math.sin(a) * reach;
+    const reach = Math.min(13, Math.hypot(tx - pl.x, ty - pl.y)), a = Math.atan2(ty - pl.y, tx - pl.x), px = pl.x + Math.cos(a) * reach, py = pl.y + Math.sin(a) * reach;
     if (key === 'g2') { zones.push({ kind: 'cloud', x: px, y: py, r: 1.6 + .15 * r, dps: (4 + 3 * r) * (1 + SAVE.lvl * .12) * (1 + aff('gift') / 100), t: 0, dur: 4 }); sfx.whoosh(); }
     if (key === 's2') {
       zones.push({ kind: 'shadow', x: px, y: py, t: 0, dur: .6, r: 2.2 });
@@ -10277,7 +10277,7 @@ const gruft = (() => {
       sfx.thud('wall');
     }
     if (key === 'h2') {
-      zones.push({ kind: 'nova', x: pl.x, y: pl.y, t: 0, dur: .7, R: 4.2, dmg: ST.weapon * (1 + .25 * r), hit: new Set() });
+      zones.push({ kind: 'nova', x: pl.x, y: pl.y, t: 0, dur: .7, R: 5, dmg: ST.weapon * (1 + .25 * r), hit: new Set() });
       heal(ST.maxHp * (6 + 2 * r) / 100); sfx.powerup();
     }
   }
@@ -10289,7 +10289,7 @@ const gruft = (() => {
     if ((pl.cds[key] || 0) > 0) { say(T('cooldown')); return; }
     if (pl.mana < v.m) { say(T('nomana')); return; }
     pl.mana -= v.m; pl.cds[key] = v.c; pl.throwT = 1;
-    const reach = Math.min(10, Math.hypot(tx - pl.x, ty - pl.y)), a = Math.atan2(ty - pl.y, tx - pl.x), px = pl.x + Math.cos(a) * reach, py = pl.y + Math.sin(a) * reach;
+    const reach = Math.min(13, Math.hypot(tx - pl.x, ty - pl.y)), a = Math.atan2(ty - pl.y, tx - pl.x), px = pl.x + Math.cos(a) * reach, py = pl.y + Math.sin(a) * reach;
     if (key === 'g5') zones.push({ kind: 'rain', x: px, y: py, n: v.a, t: 0, next: 0, dur: 2.2 });
     if (key === 's5') { for (let i = 0; i < v.a; i++) shots.push({ x: pl.x, y: pl.y, z: 1.3, vx: Math.cos(i * TAU / v.a) * 6, vy: Math.sin(i * TAU / v.a) * 6, life: 4, type: 'schatten', dmg: ST.weapon * 1.1, pierce: 0, hits: new Set(), kind: 'bat', target: null }); }
     if (key === 'h5') zones.push({ kind: 'beam', x: px, y: py, t: 0, dur: 1.3, dmg: ST.weapon * (6 + 1.5 * r), done: false });
@@ -10357,7 +10357,7 @@ const gruft = (() => {
     }
     return best;
   }
-  function nearestMon(range = 11) {
+  function nearestMon(range = 16) {
     let best = null, bd = range;
     for (const m of mons) if (!m.dead && m.born > .3) { const d = dist(m, pl); if (d < bd) { bd = d; best = m; } }
     return best;
@@ -10516,7 +10516,7 @@ const gruft = (() => {
       if (Math.random() < dt * 30) parts.push({ x: s.x, y: s.y, z: s.z, vx: 0, vy: 0, vz: 0, t: .25, col: TCOL[s.type], r: 2, glow: true });
       for (const m of mons) {
         if (m.dead || m.born < .3 || s.hits.has(m.id) || s.life <= 0) continue;
-        if (Math.hypot(m.x - s.x, m.y - s.y) > m.d.r + .2) continue;
+        if (Math.hypot(m.x - s.x, m.y - s.y) > m.d.r + .38) continue;
         s.hits.add(m.id);
         const ls = s.type === 'schatten' ? (3 + rk('s1')) / 100 + aff('ls') / 100 : 0;
         const dd = hitMon(m, s.dmg, s.type, { ls, ult: s.kind === 'rain' });
@@ -10908,7 +10908,7 @@ const gruft = (() => {
     const vw = window.innerWidth, vh = window.innerHeight;
     dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     W = vw; H = vh; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-    TW = Math.round(Math.max(44, Math.min(110, Math.min(W / (W > H ? 15 : 7), H / 7.5)))); THt = TW / 2;
+    TW = Math.round(Math.max(40, Math.min(100, Math.min(W / (W > H ? 17 : 8), H / 8.5)))); THt = TW / 2;
     FL = null;
   }
   /* ===== Fenster: Aktauswahl, Fähigkeiten, Inventar, Wellenende ===== */
