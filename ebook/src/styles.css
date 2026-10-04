@@ -114,12 +114,10 @@ h3 {
 h3::before {
   content: "";
   display: inline-block;
-  width: 9px; height: 9px;
-  background: var(--tomato);
-  border: 2px solid var(--ink);
-  border-radius: 3px;
-  transform: rotate(45deg) translateY(-2px);
-  margin-right: 9px;
+  width: 14px; height: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M7 1.2 12.8 7 7 12.8 1.2 7z' fill='%23FF5A3C' stroke='%231E1B18' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+  vertical-align: -1px;
+  margin-right: 8px;
 }
 h4 {
   font-size: 10.5pt;
@@ -191,20 +189,28 @@ ul.cross li::before {
 /* ---------- Comic-Panels / Boxen ---------- */
 .box {
   position: relative;
+  isolation: isolate;
+  --bg: #fff;
+  padding: 0 15px 7px 15px;
+  margin: 8px 4px 18px 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.box::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 11px; bottom: 0;
+  z-index: -1;
+  background: var(--bg);
   border: 2.4px solid var(--ink);
   border-radius: var(--radius);
   box-shadow: 4px 4px 0 var(--ink);
-  padding: 0 15px 7px 15px;
-  margin: 16px 4px 18px 0;
-  break-inside: avoid;
-  page-break-inside: avoid;
-  background: #fff;
 }
 .box .box-label {
   position: relative;
-  transform: translateY(-50%);
-  margin: 0 0 -4px -2px;
-  display: inline-flex; align-items: center; gap: 6px;
+  margin: 0 0 3px -2px;
+  display: inline-flex;
+  align-items: center; gap: 6px;
   font-family: "Fredoka", "Nunito", sans-serif;
   font-weight: 600;
   font-size: 8.4pt;
@@ -221,15 +227,15 @@ ul.cross li::before {
 .box p:last-child, .box ul:last-child { margin-bottom: .5em; }
 .box h4 { margin-top: .5em; }
 
-.box.study { background: var(--sky-soft); }
+.box.study { --bg: var(--sky-soft); }
 .box.study .box-label { background: var(--sky); }
-.box.tip { background: var(--mint); }
+.box.tip { --bg: var(--mint); }
 .box.tip .box-label { background: var(--lime); }
-.box.warn { background: var(--tomato-soft); }
+.box.warn { --bg: var(--tomato-soft); }
 .box.warn .box-label { background: var(--tomato); color: #fff; }
-.box.merke { background: var(--sun-soft); }
+.box.merke { --bg: var(--sun-soft); }
 .box.merke .box-label { background: var(--sun); }
-.box.mind { background: var(--berry-soft); }
+.box.mind { --bg: var(--berry-soft); }
 .box.mind .box-label { background: var(--berry); color: #fff; }
 
 .study-meta {
@@ -507,14 +513,14 @@ figcaption {
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 0 10mm;
+  justify-content: space-between;
+  padding: 0 9mm;
   font-family: "Fredoka", "Nunito", sans-serif;
   font-size: 9.6pt;
   font-weight: 500;
   letter-spacing: .02em;
 }
-.cover .band span { display: flex; align-items: center; gap: 7px; }
+.cover .band span { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
 .cover .band i {
   display: inline-block;
   width: 18px; height: 18px;
@@ -585,7 +591,7 @@ figcaption {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding: 6px 0;
+  padding: 4px 0;
   border-bottom: 1.6px dashed rgba(30,27,24,.22);
   margin: 0;
   break-inside: avoid;
@@ -839,3 +845,8 @@ ol.refs li::marker { font-weight: 800; color: var(--green); }
 svg.arr { width: 1.05em; height: .62em; vertical-align: .02em; display: inline-block; }
 svg.arr.star { width: .8em; height: .8em; vertical-align: -.05em; }
 .toc li .n svg.arr.star { width: 13px; height: 13px; vertical-align: -1px; }
+
+.tw { break-inside: avoid; page-break-inside: avoid; }
+.tw > table.swap { margin-bottom: 18px; }
+
+ul.check li, ul.cross li { break-inside: avoid; page-break-inside: avoid; }

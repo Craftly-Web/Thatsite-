@@ -40,7 +40,9 @@ html = html.replace(/\[\[([\w,\s-]+)\]\]/g, (m, keys) => {
 });
 const refsHtml = order.map(k => `<li>${QUELLEN[k]}</li>`).join('\n');
 html = html.replace('<!--QUELLEN-->', refsHtml);
-cfg.STUDIEN = String(Math.floor((order.length - 1) / 10) * 10);
+// Siegel „Mit über X Studien“: nur Studien zählen, keine Leitlinien/Gesetze
+const studien = order.filter(k => !/^(who|dge|eu)\d/.test(k)).length;
+cfg.STUDIEN = String(Math.floor((studien - 1) / 10) * 10);
 cfg.ANZAHL_QUELLEN = String(order.length);
 
 // --- Zeichen, die in den Schriften fehlen, als Vektor-Glyphen (nur im Text, nicht in Tags) ---
@@ -52,6 +54,8 @@ const glyphs = s => s.split(/(<[^>]+>)/).map(part => part.startsWith('<') ? part
 html = html.replace(/\{\{(\w+)\}\}/g, (m, k) => (k in cfg ? cfg[k] : m));
 html = html.replace(/<span class="author">\s*<\/span>/, '');
 html = glyphs(html);
+// Kurze Tabellen in einen Block packen, damit Chromium sie sauber komplett umbricht
+html = html.replace(/<table class="swap">[\s\S]*?<\/table>/g, t => `<div class="tw">${t}</div>`);
 
 // --- Inhaltsverzeichnis vorbereiten ---
 const tocEntries = [];
