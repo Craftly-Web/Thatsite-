@@ -21,7 +21,7 @@ Stand: 10.10.2026. Grundlage für den Website-Entwurf unter `/traktor90/`.
 | Vorstand | Jan Franze, G. Häntsch-Wißner, Maik Ketzler (Bekanntmachung 03.05.2023) | Northdata |
 | Mitglieder | ca. 150 | Vereinsseite alt |
 | Slogan | „Sportlich aktiv seit 1863“ | Vereinsseite alt |
-| Farben | Blau/Weiß; Logo-Blau #2E3192 | Logo, fussball.de |
+| Farben | Blau/Weiß; Logo-Navy ca. #032B6C, Website-Blau #0B3A8C | Logo, fussball.de |
 | Fußball Herren | SpG, Kreisklasse (2025/26: Staffel 3, im März 2026 Tabellenplatz 1) · Training Do 19:00–20:30, Sportzentrum | fussball.de, Herrenseite alt |
 | Fußball Ansprechpartner | Marcel Müller (Trainer), Gerold Vorbach | Herrenseite alt |
 | Nachwuchs | C-, D-, E-Junioren in Spielgemeinschaften, u. a. mit ESV Lok Zittau | fussball.de, Chronik |
