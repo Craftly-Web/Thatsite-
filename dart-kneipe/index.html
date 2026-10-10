@@ -154,6 +154,20 @@ body::after{
 /* Heinz’ Kneipentrunk */
 .arc-card.dr-card{background:linear-gradient(90deg,rgba(150,95,10,.6),rgba(60,35,5,.6));border-color:rgba(255,200,90,.5)}
 .arc-card.dr-card svg,.arc-card.dr-card i{color:#ffcf5a}
+/* Heinz’ Laden */
+.arc-card.shop-card{background:linear-gradient(90deg,rgba(20,110,90,.6),rgba(8,40,34,.65));border-color:rgba(110,230,190,.5)}
+.arc-card.shop-card svg,.arc-card.shop-card i{color:#7ff0c8}
+.pk.shop{width:min(100%,820px)}
+.shop-sec{margin:8px 0 4px;font:700 13px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:#cdb68a}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.shop-item{display:grid;grid-template-columns:64px 1fr;grid-template-rows:auto auto auto;column-gap:10px;row-gap:2px;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(180deg,rgba(60,38,18,.85),rgba(24,14,7,.92));border:1px solid rgba(233,201,140,.3)}
+.shop-item.hl{border-color:#ffd66b;box-shadow:0 0 0 2px rgba(255,214,107,.45)}
+.shop-item img,.shop-item .coin{grid-row:1/4;width:64px;height:64px;object-fit:contain;border-radius:8px}
+.shop-item .coin{display:grid;place-items:center;font:800 18px/1 'Courier New',monospace;color:#2a170b;background:radial-gradient(circle at 35% 30%,#fff3b0,#e8b030 60%,#8a5a10);border-radius:50%}
+.shop-item b{font-size:16px;color:#f3d487}
+.shop-item small{font-size:12px;color:#d9c8a4}
+.shop-item .btn{padding:8px 10px;font-size:15px}
+.shop-item .btn:disabled{opacity:.55}
 /* Die Gruft */
 .arc-card.gr-card{background:linear-gradient(90deg,rgba(110,14,10,.65),rgba(30,6,4,.7));border-color:rgba(220,70,40,.5)}
 .arc-card.gr-card svg,.arc-card.gr-card i{color:#ff8a5a}
@@ -513,7 +527,7 @@ button.skill:disabled{color:var(--ink);opacity:1}
 .board-chip b{font-weight:400;min-width:0}
 .board-chip small{min-width:0}
 .board-chip small svg{width:10px;height:10px;vertical-align:-1px;margin-right:3px}
-.board-chip.locked,.board-chip.locked input{cursor:not-allowed}
+.board-chip.locked,.board-chip.locked input{cursor:pointer}
 .board-chip.locked span{opacity:.6;border-style:dashed}
 .board-chip.locked img{filter:grayscale(1) brightness(.6)}
 /* 3D-Halle: breite Bühne mit Kamerafahrten */
@@ -658,7 +672,7 @@ legend{padding:0;margin-bottom:8px}
   .actions .btn{padding:9px 12px;font-size:14px}
   .actions .icon-btn{width:40px;height:40px;padding:0}
   /* Auf schmalen Handys nur ein Spiele-Knopf im Kopf; Poker und Blackjack gibt es über die Karten im Menü */
-  #pokerBtn,#blackjackBtn,#cardroomBtn,#drinksBtn,#bowlBtn,#rpsBtn,#gruftBtn{display:none}
+  #pokerBtn,#blackjackBtn,#cardroomBtn,#drinksBtn,#bowlBtn,#rpsBtn,#gruftBtn,#shopBtn{display:none}
   #menuBtn .long{display:none}
   #menuBtn .short{display:inline}
   .bar-frame{width:min(100%, 340px)}
@@ -713,6 +727,7 @@ legend{padding:0;margin-bottom:8px}
       <button class="btn ghost icon-btn" id="bowlBtn" type="button" aria-label="Bowlingbahn" data-i18n-aria="bw.btn" data-i18n-title="bw.btn" title="Bowlingbahn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="14.5" r="6.5"/><circle cx="6.6" cy="12.2" r=".9" fill="currentColor" stroke="none"/><circle cx="9.4" cy="11.4" r=".9" fill="currentColor" stroke="none"/><circle cx="8.6" cy="14.4" r=".9" fill="currentColor" stroke="none"/><path d="M18.6 2.8c-1.3 0-2 1-1.8 2.2.2 1 .7 1.6.5 2.6-.4 1.6-1.8 3-1.8 6.1 0 3.1.9 5.6 1.3 7.3h3.6c.4-1.7 1.3-4.2 1.3-7.3 0-3.1-1.4-4.5-1.8-6.1-.2-1 .3-1.6.5-2.6.2-1.2-.5-2.2-1.8-2.2z"/><path d="M16.9 6.6h3.4"/></svg></button>
       <button class="btn ghost icon-btn" id="rpsBtn" type="button" aria-label="Schnick, Schnack, Schnuck" data-i18n-aria="rps.btn" data-i18n-title="rps.btn" title="Schnick, Schnack, Schnuck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.2 12.6 6.4 4.9a1.5 1.5 0 0 1 2.9-.7l1.9 7"/><path d="M11.2 11.2l1.1-7.1a1.5 1.5 0 0 1 3 .4l-.8 7.3"/><path d="M14.5 11.8c.9-.6 2.6-.5 3 .8.3 1-.4 1.9-.4 1.9"/><path d="M8.2 12.6c-1.4-.6-3.1.2-2.8 1.7.6 3 3 6.7 7 6.7 3.5 0 5.3-2.5 4.8-6.6"/><path d="M11.4 14.6c-.6-1.1-.1-2.4 1.1-2.7l2-.5"/></svg></button>
       <button class="btn ghost icon-btn" id="gruftBtn" type="button" aria-label="Die Gruft" title="Die Gruft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-4.4 0-7.5 3-7.5 7 0 2.4 1.2 4 2.5 5v3h10v-3c1.3-1 2.5-2.6 2.5-5 0-4-3.1-7-7.5-7z"/><circle cx="9" cy="10.5" r="1.6" fill="currentColor"/><circle cx="15" cy="10.5" r="1.6" fill="currentColor"/><path d="M10 18v3M14 18v3M12 13.5l-1 2h2z"/></svg></button>
+      <button class="btn ghost icon-btn" id="shopBtn" type="button" aria-label="Shop" data-i18n-aria="shop.title" data-i18n-title="shop.title" title="Shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.2l2.3 11h10.4l2.1-8H7"/><circle cx="9.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg></button>
       <button class="btn ghost icon-btn" id="arcadeBtn" type="button" aria-label="Spielhalle" data-i18n-aria="arc.btn" data-i18n-title="arc.btn" title="Spielhalle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg></button>
       <button class="btn ghost icon-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ton ausschalten"></button>
       <button class="btn ghost" id="menuBtn" type="button"><span class="long" data-i18n="menu.long">Neues Spiel</span><span class="short" data-i18n="menu.short">Menü</span></button>
@@ -874,6 +889,7 @@ legend{padding:0;margin-bottom:8px}
         <label class="chip"><input type="radio" name="starter" id="startCpu" value="1"><span data-i18n="starter.opp">Gegner</span></label>
       </div>
     </fieldset>
+    <button type="button" class="arc-card shop-card" id="shopCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.2l2.3 11h10.4l2.1-8H7"/><circle cx="9.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg><span><b data-i18n="shop.title">Heinz’ Laden</b><small data-i18n="shop.cardx">Pfeile, Scheiben und Spielhallen-Guthaben</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card dr-card" id="drinksCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 8h11v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M16 11h2.5a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H16"/><path d="M4.5 8c0-2.2 1.8-3.5 3.6-2.9C8.9 3.5 11.8 3.3 13 5c1.6-.6 3.4.6 3.2 3"/><path d="M8.5 11v6M12.5 11v6"/></svg><span><b data-i18n="dr.title">Heinz’ Kneipentrunk</b><small data-i18n="dr.cardx">Pils, Energy, Eigenbräu und Likör – wirkt ein ganzes Match</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card cr-card" id="cardroomCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="9" height="13" rx="1.6" transform="rotate(-18 7 13.5)"/><rect x="7.5" y="4" width="9" height="13" rx="1.6"/><rect x="12.5" y="7" width="9" height="13" rx="1.6" transform="rotate(18 17 13.5)"/></svg><span><b data-i18n="cr.btn">Kartentisch</b><small data-i18n="cr.cardx">Skat und Rommé mit den Stammgästen</small></span><i aria-hidden="true">›</i></button>
     <button type="button" class="arc-card bj-card" id="blackjackCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M7.5 9.2c0-1.4 2.6-1.6 2.6.1 0 1.2-2.6 2.4-2.6 3.7h2.8M12.2 13v-5.5l-1.3 1" stroke-linecap="round"/><path d="M19.5 7.5v12a1.5 1.5 0 0 1-1.5 1.5H8.5"/></svg><span><b data-i18n="bj.btn">Blackjack</b><small data-i18n="bj.cardx">Gegen Heinz als Bank · Blackjack zahlt 3:2</small></span><i aria-hidden="true">›</i></button>
@@ -884,12 +900,12 @@ legend{padding:0;margin-bottom:8px}
     <button type="button" class="arc-card" id="arcadeCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="15" rx="2"/><path d="M6 9h9M6 16h9"/><path d="M8.5 11.2h2.2l-1.4 3.3"/><path d="M18 9h1.5a1 1 0 0 1 1 1v3"/><circle cx="20.5" cy="6.5" r="1.5"/><path d="M20.5 8v5"/></svg><span><b data-i18n="arc.btn">Spielhalle</b><small id="arcadeCardCash"></small></span><i aria-hidden="true">›</i></button>
     <details class="howto">
       <summary data-i18n="howto">So wird gespielt</summary>
-      <p class="rules" data-i18n-html="rules.aim"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Die Hand beruhigt sich schnell: Schon in der ersten Atempause ist das Fadenkreuz klein und du triffst recht genau; wer länger hält, wird nur noch ein wenig ruhiger. Am Handy sitzt das Fadenkreuz über deinem Finger. Mit der Maus zielt es sich genauer, darum ist die Hand dort unruhiger: etwas mehr Zittern und Streuung, sie beruhigt sich langsamer, und wer beim Klick noch schiebt, verreißt den Wurf.</p>
+      <p class="rules" data-i18n-html="rules.aim"><strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Die Hand beruhigt sich schnell: Schon in der ersten Atempause ist das Fadenkreuz klein und du triffst recht genau; wer länger hält, wird nur noch ein wenig ruhiger. Am Handy sitzt das Fadenkreuz über deinem Finger. Willst du doch nicht werfen, zieh weit neben die Scheibe, bis ein rotes X erscheint, und lass dort los. Mit der Maus zielt es sich genauer, darum ist die Hand dort unruhiger: etwas mehr Zittern und Streuung, sie beruhigt sich langsamer, und wer beim Klick noch schiebt, verreißt den Wurf.</p>
       <p class="rules" data-i18n-html="rules.do"><strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.</p>
       <p class="rules" data-i18n-html="rules.prec"><strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.</p>
       <p class="rules" data-i18n-html="rules.adr"><strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.</p>
-      <p class="rules" data-i18n-html="rules.darts"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Der TP12 OG hat „Volltreffer“: Wer auf T20, T19, T17 oder das Bullseye zielt und knapp danebenwirft – bis etwa ein halbes Feld –, trifft trotzdem. Alle Pfeile sind von Anfang an frei – nimm den, der zu dir passt.</p>
-      <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Alle Scheiben sind von Anfang an frei: Klassik, Holz, Dartautomat und Top Liga.</p>
+      <p class="rules" data-i18n-html="rules.darts"><strong>Pfeile:</strong> Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Der Triple-Chance-Pfeil hat „Triple-Chance“: Wer auf T20, T19, T17 oder das Bullseye zielt und knapp danebenwirft – bis etwa ein halbes Feld –, trifft trotzdem. Blitzpfeil, Stammtischpfeil und Triple-Chance-Pfeil gibt es in Heinz’ Laden für je 0,99 €, alle anderen sind frei.</p>
+      <p class="rules" data-i18n-html="rules.boards"><strong>Scheiben:</strong> Klassik und Holz sind frei. Den Dartautomaten und die Top-Liga-Scheibe – mit Fans im Hintergrund – gibt es in Heinz’ Laden für je 0,99 €.</p>
       <p class="rules" data-i18n-html="rules.cpu"></p>
       <p class="rules" data-i18n-html="rules.arcade"></p>
       <p class="rules" data-i18n-html="rules.poker"></p>
@@ -1166,6 +1182,19 @@ legend{padding:0;margin-bottom:8px}
   <div class="gr-panel" id="grPanel" hidden></div>
 </div>
 
+<div class="overlay" id="shop" role="dialog" aria-modal="true" aria-labelledby="shopTitle" hidden>
+  <div class="pk shop">
+    <div class="pk-head">
+      <div><h2 id="shopTitle" data-i18n="shop.title">Heinz’ Laden</h2><small data-i18n="shop.sub">Sichere Bezahlung über Stripe</small></div>
+      <div class="pk-cash"><small data-i18n="arc.credit">Guthaben</small><b id="shopCash">0,00 €</b></div>
+    </div>
+    <div id="shopList"></div>
+    <p class="pk-msg" id="shopMsg" aria-live="polite"></p>
+    <p class="pk-tip" data-i18n="shop.note"></p>
+    <div class="row"><button type="button" class="btn ghost" id="shopClose" data-i18n="bw.leave">Zurück in die Kneipe</button></div>
+  </div>
+</div>
+
 <div class="overlay" id="poker" role="dialog" aria-modal="true" aria-labelledby="pkTitle" hidden>
   <div class="pk">
     <div class="pk-head">
@@ -1220,6 +1249,7 @@ const R = { IB: 6.35, OB: 15.9, TI: 99, TO: 107, DI: 162, DO: 170, EDGE: 226 };
 const ORDER = [20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5];
 const FLY = 190;            // Flugzeit eines Darts in ms
 const TOUCH_OFFSET = 72;    // Fadenkreuz über dem Finger (px)
+const CANCEL_R = 270;      // wer beim Loslassen weiter als 27 cm neben die Mitte zielt, wirft nicht (Wurf abbrechen)
 
 function hit(x, y) {
   const r = Math.hypot(x, y);
@@ -1367,12 +1397,12 @@ const I18N = {
     'menu.intro': 'Ein Leg gegen einen Gast vom Tresen. Wer zuerst genau auf null kommt, gewinnt. Heinz ruft die Punkte, also Ton an!',
     'lg.start': 'Startwert', 'lg.legs': 'Legs zum Sieg', 'lg.darts': 'Pfeile', 'lg.board': 'Scheibe', 'lg.opp': 'Gegner', 'lg.throw': 'Anwurf',
     'starter.me': 'Du', 'starter.opp': 'Gegner', 'howto': 'So wird gespielt',
-    'rules.aim': '<strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Die Hand beruhigt sich schnell: Schon in der ersten Atempause ist das Fadenkreuz klein und du triffst recht genau; wer länger hält, wird nur noch ein wenig ruhiger. Am Handy sitzt das Fadenkreuz über deinem Finger. Mit der Maus zielt es sich genauer, darum ist die Hand dort unruhiger: etwas mehr Zittern und Streuung, sie beruhigt sich langsamer, und wer beim Klick noch schiebt, verreißt den Wurf.',
+    'rules.aim': '<strong>So wirfst du:</strong> Auf die Scheibe drücken und halten. Das Fadenkreuz atmet mit: Beim Einatmen steigt es und wird größer, beim Ausatmen sinkt es. In der kurzen Atempause leuchtet es golden und steht fast still, dann loslassen. Die Hand beruhigt sich schnell: Schon in der ersten Atempause ist das Fadenkreuz klein und du triffst recht genau; wer länger hält, wird nur noch ein wenig ruhiger. Am Handy sitzt das Fadenkreuz über deinem Finger. Willst du doch nicht werfen, zieh weit neben die Scheibe, bis ein rotes X erscheint, und lass dort los. Mit der Maus zielt es sich genauer, darum ist die Hand dort unruhiger: etwas mehr Zittern und Streuung, sie beruhigt sich langsamer, und wer beim Klick noch schiebt, verreißt den Wurf.',
     'rules.do': '<strong>Double Out:</strong> Der letzte Dart muss ein Doppel treffen, das Bull zählt als Doppel. Wer unter null, auf eins oder ohne Doppel auf null kommt, hat sich überworfen, und die ganze Aufnahme zählt nicht.',
     'rules.prec': '<strong>Präzision:</strong> Jeder 3. Dart, den du wirfst, bringt dir einen präzisen Pfeil. Die Pfeile werden gespeichert, du kannst sie also bis zum Ende des Matches aufheben, etwa fürs Checkout. Knopf antippen, dann ist dein nächster Dart präzise; nochmal antippen bricht ab.',
     'rules.adr': '<strong>Adrenalin:</strong> Deine nächsten 3 Darts werden sehr präzise. Liegst du zu Beginn deiner Aufnahme mindestens 150 Punkte zurück, springt es von selbst an. Steht dein Gegner auf einem Finish, kann er also mit höchstens drei Darts auschecken, leuchtet der Adrenalin-Knopf rot, und du setzt es selbst ein, wann du willst. Beides gibt es je einmal pro Leg.',
-    'rules.darts': '<strong>Pfeile:</strong> Der Standardpfeil ist von Anfang an frei und lernt mit: Jeder Wurf macht ihn um 0,05 % ruhiger und genauer, Zielkreis eingeschlossen, bis zu +50 % nach 1000 Würfen. Der Fortschritt bleibt gespeichert. Der Anfängerpfeil zielt wie jeder andere, aber mit „Viel Glück“ fliegt jeder Dart mit 33 % Wahrscheinlichkeit so präzise wie mit Adrenalin. Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Der TP12 OG hat „Volltreffer“: Wer auf T20, T19, T17 oder das Bullseye zielt und knapp danebenwirft – bis etwa ein halbes Feld –, trifft trotzdem. Alle Pfeile sind von Anfang an frei – nimm den, der zu dir passt.',
-    'rules.boards': '<strong>Scheiben:</strong> Alle Scheiben sind von Anfang an frei: Klassik, Holz, Dartautomat und Top Liga.',
+    'rules.darts': '<strong>Pfeile:</strong> Der Standardpfeil ist von Anfang an frei und lernt mit: Jeder Wurf macht ihn um 0,05 % ruhiger und genauer, Zielkreis eingeschlossen, bis zu +50 % nach 1000 Würfen. Der Fortschritt bleibt gespeichert. Der Anfängerpfeil zielt wie jeder andere, aber mit „Viel Glück“ fliegt jeder Dart mit 33 % Wahrscheinlichkeit so präzise wie mit Adrenalin. Der Kneipenpfeil hat Präzision. Der Blitzpfeil hat den Schnellwurf: Nach 6 normalen Würfen wird ein Boost gespeichert; aktiviert gilt er für 3 Darts, und wer innerhalb einer Sekunde loslässt, zielt perfekt. Der Stammtischpfeil ist „alt eingesessen“: Die Hand ist dauerhaft ruhiger. Der Triple-Chance-Pfeil hat „Triple-Chance“: Wer auf T20, T19, T17 oder das Bullseye zielt und knapp danebenwirft – bis etwa ein halbes Feld –, trifft trotzdem. Blitzpfeil, Stammtischpfeil und Triple-Chance-Pfeil gibt es in Heinz’ Laden für je 0,99 €, alle anderen sind frei.',
+    'rules.boards': '<strong>Scheiben:</strong> Klassik und Holz sind frei. Den Dartautomaten und die Top-Liga-Scheibe – mit Fans im Hintergrund – gibt es in Heinz’ Laden für je 0,99 €.',
     'rules.cpu': '<strong>Gegner:</strong> Jeder Gegner wählt jede Aufnahme zufällig eine der Pfeil-Fähigkeiten – Präzision, Schnellwurf, ruhige Hand, Glück oder Übung – und hat sie mit voller Wirkung, nur für diese Aufnahme. Präzision heißt ein präziser Dart, Schnellwurf alle drei Darts, Übung ein voll eingeworfener Standardpfeil (+50 %). Adrenalin bekommt er nicht. Was er gerade hat, steht an der Tafel unter seinem Namen.',
     'rules.legs': '<strong>Legs:</strong> Wer zuerst die eingestellte Zahl an Legs gewinnt, holt das Match. Der Anwurf wechselt jedes Leg.',
     'btn.resume': 'Zurück zum Spiel', 'btn.start': 'Anwerfen', 'btn.settings': 'Einstellungen', 'btn.rematch': 'Revanche',
@@ -1381,11 +1411,11 @@ const I18N = {
     'board.classic': 'Klassik', 'board.classic.d': 'Sisal im Kneipenlicht',
     'board.wood': 'Holz', 'board.wood.d': 'Eiche mit Brandzahlen', 'board.wood.r': 'Gewinne ein Match',
     'board.automat': 'Dartautomat', 'board.automat.d': 'Soft-Tip mit Lauflicht', 'board.automat.r': 'Wirf 100+ in einer Aufnahme',
-    'board.pro': 'Top Liga', 'board.pro.d': 'Turnierscheibe mit Ringlicht', 'board.pro.r': 'Besiege Otto oder Die Maschine',
+    'board.pro': 'Top Liga', 'board.pro.d': 'Turnierscheibe mit Ringlicht und Fans', 'board.pro.r': 'Besiege Otto oder Die Maschine',
     'dart.standard': 'Standardpfeil', 'dart.standard.s': 'Übung', 'dart.standard.d': 'Wird mit jedem Wurf genauer',
     'std.state': '+{p} % · {n} Würfe', 'std.max': 'Ausgelernt: +50 %', 'cpu.std': 'Übung: +{p} %',
     'w.std': ['Dein Standardpfeil ist jetzt {p} % genauer. Übung macht den Meister!', '{p} % besser als am ersten Tag. Ich seh’s an deiner Hand.', 'Schon {p} % genauer – bald brauchst du keinen Wirt mehr, der zuguckt.'],
-    'dart.anfaenger': 'Anfängerpfeil', 'dart.anfaenger.s': 'Viel Glück', 'dart.anfaenger.d': '33 % Glückspfeil', 'dart.tp12': 'TP12 OG', 'dart.tp12.s': 'Volltreffer', 'dart.tp12.d': 'Knapp daneben zählt: T20 · T19 · T17 · Bull', 'dart.tp12.r': 'Matchsiege', 'tp12.on': 'T20 · T19 · T17 · Bull halten', 'cpu.tp12': 'TP12 OG', 'hint.tp12': 'TP12 OG! Knapp daneben – und trotzdem {l}.',
+    'dart.anfaenger': 'Anfängerpfeil', 'dart.anfaenger.s': 'Viel Glück', 'dart.anfaenger.d': '33 % Glückspfeil', 'dart.tp12': 'Triple-Chance-Pfeil', 'dart.tp12.s': 'Triple-Chance', 'dart.tp12.d': 'Knapp daneben zählt: T20 · T19 · T17 · Bull', 'dart.tp12.r': 'Matchsiege', 'tp12.on': 'T20 · T19 · T17 · Bull halten', 'cpu.tp12': 'Triple-Chance', 'hint.tp12': 'Triple-Chance! Knapp daneben – und trotzdem {l}.',
     'luck.state': '33 % Glück pro Dart', 'luck.hit': 'Glückspfeil!', 'hint.luck': 'Glückspfeil! Der flog präzise wie mit Adrenalin.', 'cpu.luck': 'Glück',
     'w.luck': ['Anfängerglück! Zählt trotzdem.', 'Glück gehabt – ich sag’s keinem.', 'Da hat wohl einer ein Kleeblatt in der Tasche.'],
     'dart.kneipe': 'Kneipenpfeil', 'dart.kneipe.s': 'Präzision', 'dart.kneipe.d': 'Präzision · jeder 3. Dart',
@@ -1504,6 +1534,13 @@ const I18N = {
     'fsym.rod': 'Angelrute', 'fsym.fish': 'Fisch', 'fsym.boat': 'Boot', 'fsym.angler': 'Angler',
     'gr.card': 'Die Gruft unter der Kneipe', 'gr.cardx': 'Wellen von Monstern, nur mit deinen Pfeilen',
     'rules.gruft': '<strong>Die Gruft unter der Kneipe:</strong> Unter Heinz’ Weinkeller hat sich ein Höllentor geöffnet. In vier Akten mit je fünf Wellen kämpfst du nur mit deinen Dartpfeilen gegen Ratten, Skelette, Spinnen, Kultisten und Dämonen; jede fünfte Welle wartet ein Boss, und jeder Boss bringt Preisgeld für die Spielhalle. Drei Pfeilarten wechselst du jederzeit: Gift (Schaden über Zeit), Schatten (durchbohrt, Lebensraub) und Heilig (stark gegen Untote und Dämonen, heilt). Jede Stufe bringt einen Waffenpunkt für die Fähigkeiten der Pfeile und einen Talentpunkt für deine eigenen Fähigkeiten wie Leben, Ausweichrolle oder Heiltränke. Gegner lassen Gold, Tränke und magische Ringe, Amulette und Köcher fallen. Nach der Kampagne warten Albtraum und Hölle.',
+    'shop.title': 'Heinz’ Laden', 'shop.cardx': 'Pfeile, Scheiben und Spielhallen-Guthaben', 'shop.sub': 'Sichere Bezahlung über Stripe', 'shop.buy': 'Kaufen',
+    'shop.darts': 'Pfeile', 'shop.boards': 'Scheiben', 'shop.cash': 'Spielhallen-Guthaben', 'shop.owned': 'Gekauft ✓', 'shop.soon': 'Bald verfügbar',
+    'shop.cashname': '{v} Guthaben', 'shop.cashd': 'Spielgeld für Spielhalle, Bowling und Tische',
+    'shop.go': 'Weiter zur Bezahlung …', 'shop.thanks': 'Danke für deinen Kauf!', 'shop.gotcash': '{v} Guthaben gutgeschrieben.', 'shop.gotitem': '{name} ist jetzt freigeschaltet.',
+    'shop.note': 'Bezahlt wird sicher bei Stripe, danach kommst du automatisch zurück. Spielhallen-Guthaben ist Spielgeld ohne Echtgeldwert und wird nicht ausgezahlt. Käufe gelten für dieses Gerät und diesen Browser.',
+    'board.pro.fans': 'Turnierscheibe mit Ringlicht und Fans',
+    'hint.cancel': 'Wurf abgebrochen – kein Pfeil verbraucht.', 'hint.cancelaim': 'Loslassen = Wurf abbrechen',
     'rules.classic': '<strong>Klassisch:</strong> Darts pur gegen die Gäste vom Tresen – keine Pfeil-Fähigkeiten, kein Adrenalin, keine Getränke, und auch die Gegner spielen ohne Tricks. Du wirfst mit dem Klassikpfeil, der etwas ruhiger in der Hand liegt als ein nackter Pfeil. Preisgeld gibt es wie sonst auch, das Phantom spielt hier nicht mit.',
     'rules.drinks': '<strong>Heinz’ Kneipentrunk:</strong> An der Theke kaufst du mit deinem Spielhallen-Guthaben Getränke, die ein ganzes Match lang wirken – im Match gekauft sofort, sonst im nächsten Match. Frisches Pils (5 €, bis zu 5): Je betrunkener, desto ungenauer, aber ein knapp verfehlter Dart rutscht öfter ins anvisierte Doppel oder Triple (bis 60 %). Energy Drink (10 €, bis zu 3): 33, 67 oder 100 % Chance auf „Volle Konzentration“, eine ruhige Hand fürs ganze Match, die mit jedem Energy ruhiger wird. Heinz’ Eigenbräu (10 €, bis zu 3): Jeder Krug bringt Profi-Heinz-Flashback-Pfeile mit dem besten Aim im Spiel – 2 nach dem ersten, 5 nach dem zweiten, 10 nach dem dritten Krug –, die du per Knopf selbst einsetzt. Heinz’ Spezial-Likör (10 €, bis zu 5): Steht ein Checkout an, werden Doppel, Triple und Bull für dich je Likör 20 % größer, mit 5 Likören doppelt so groß. Preisgeld gibt es für jedes gewonnene Leg: 2,50 € gegen Tante Gerda, 5 € gegen Kalle, 10 € gegen Otto und 25 € gegen Die Maschine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stopp · {n}', 'auto.pick': 'Automatisch drehen:',
@@ -1598,12 +1635,12 @@ const I18N = {
     'menu.intro': 'One leg against a regular from the bar. First to hit exactly zero wins. Heinz calls the scores, so turn the sound on!',
     'lg.start': 'Starting score', 'lg.legs': 'Legs to win', 'lg.darts': 'Darts', 'lg.board': 'Board', 'lg.opp': 'Opponent', 'lg.throw': 'First throw',
     'starter.me': 'You', 'starter.opp': 'Opponent', 'howto': 'How to play',
-    'rules.aim': '<strong>Throwing:</strong> Press and hold on the board. The crosshair breathes with you: it rises and grows as you breathe in and sinks as you breathe out. In the short pause between breaths it glows gold and nearly stands still – release then. Your hand settles quickly: by the first pause the crosshair is already small and fairly accurate; holding longer only steadies it a little more. On phones the crosshair sits above your finger. With a mouse you can point more precisely, so your hand is shakier there: a little more tremor and scatter, it settles more slowly, and moving the mouse as you release pulls the throw off line.',
+    'rules.aim': '<strong>Throwing:</strong> Press and hold on the board. The crosshair breathes with you: it rises and grows as you breathe in and sinks as you breathe out. In the short pause between breaths it glows gold and nearly stands still – release then. Your hand settles quickly: by the first pause the crosshair is already small and fairly accurate; holding longer only steadies it a little more. On phones the crosshair sits above your finger. Changed your mind? Drag well off the board until a red X appears and release there. With a mouse you can point more precisely, so your hand is shakier there: a little more tremor and scatter, it settles more slowly, and moving the mouse as you release pulls the throw off line.',
     'rules.do': '<strong>Double out:</strong> Your last dart must hit a double; the bull counts as a double. Going below zero, to one, or to zero without a double is a bust, and the whole visit doesn’t count.',
     'rules.prec': '<strong>Precision:</strong> Every 3rd dart you throw earns you a precise dart. They are saved, so you can keep them until the end of the match, for a checkout for example. Tap the button and your next dart is precise; tap again to cancel.',
     'rules.adr': '<strong>Adrenaline:</strong> Your next 3 darts become very precise. If you start a visit at least 150 points behind, it kicks in by itself. When your opponent is on a finish – able to check out with three darts – the adrenaline button glows red and you trigger it whenever you like. Each happens once per leg.',
-    'rules.darts': '<strong>Darts:</strong> The standard dart is free from the start and learns with you: every throw makes it 0.05% steadier and more accurate, aim circle included, up to +50% after 1000 throws. The progress is saved. The rookie dart aims like any other, but with “good luck” every dart has a 33% chance to fly as true as with adrenaline. The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. The TP12 OG is “dead on”: aim at T20, T19, T17 or the bullseye and a near miss – up to about half a field – still counts. All darts are free from the start – pick whichever suits you.',
-    'rules.boards': '<strong>Boards:</strong> All boards are available from the start: classic, wood, dart machine and top league.',
+    'rules.darts': '<strong>Darts:</strong> The standard dart is free from the start and learns with you: every throw makes it 0.05% steadier and more accurate, aim circle included, up to +50% after 1000 throws. The progress is saved. The rookie dart aims like any other, but with “good luck” every dart has a 33% chance to fly as true as with adrenaline. The pub dart has precision. The lightning dart has the quick throw: every 6 normal throws store a boost; activated, it lasts 3 darts, and releasing within one second gives perfect aim. The regulars’ dart is an “old hand”: your hand is always steadier. The Triple Chance dart gives you a “triple chance”: aim at T20, T19, T17 or the bullseye and a near miss – up to about half a field – still counts. The lightning dart, regulars’ dart and Triple Chance dart cost €0.99 each in Heinz’s shop; all others are free.',
+    'rules.boards': '<strong>Boards:</strong> Classic and wood are free. The dart machine and the top league board – with fans in the background – cost €0.99 each in Heinz’s shop.',
     'rules.cpu': '<strong>Opponent:</strong> Every opponent picks one of the dart abilities at random each visit – precision, quick throw, steady hand, luck or practice – at full strength, valid for that visit only. Precision means one precise dart, quick throw all three darts, practice a fully broken-in standard dart (+50%). They never get adrenaline. Whatever they have right now shows on the scoreboard under their name.',
     'rules.legs': '<strong>Legs:</strong> First to win the chosen number of legs takes the match. The first throw alternates every leg.',
     'btn.resume': 'Back to game', 'btn.start': 'Game on', 'btn.settings': 'Settings', 'btn.rematch': 'Rematch',
@@ -1612,11 +1649,11 @@ const I18N = {
     'board.classic': 'Classic', 'board.classic.d': 'Sisal in pub light',
     'board.wood': 'Wood', 'board.wood.d': 'Oak with burnt numbers', 'board.wood.r': 'Win a match',
     'board.automat': 'Dart machine', 'board.automat.d': 'Soft tip with chaser lights', 'board.automat.r': 'Score 100+ in one visit',
-    'board.pro': 'Top League', 'board.pro.d': 'Tournament board with ring light', 'board.pro.r': 'Beat Otto or The Machine',
+    'board.pro': 'Top League', 'board.pro.d': 'Tournament board with ring light and fans', 'board.pro.r': 'Beat Otto or The Machine',
     'dart.standard': 'Standard dart', 'dart.standard.s': 'Practice', 'dart.standard.d': 'Gets more accurate with every throw',
     'std.state': '+{p}% · {n} throws', 'std.max': 'Fully trained: +50%', 'cpu.std': 'Practice: +{p}%',
     'w.std': ['Your standard dart is now {p}% more accurate. Practice makes perfect!', '{p}% better than on day one. I can see it in your hand.', 'Already {p}% more accurate – soon you won’t need a landlord watching.'],
-    'dart.anfaenger': 'Rookie dart', 'dart.anfaenger.s': 'Good luck', 'dart.anfaenger.d': '33% lucky dart', 'dart.tp12': 'TP12 OG', 'dart.tp12.s': 'Dead on', 'dart.tp12.d': 'Near misses count: T20 · T19 · T17 · Bull', 'dart.tp12.r': 'Match wins', 'tp12.on': 'Holds T20 · T19 · T17 · Bull', 'cpu.tp12': 'TP12 OG', 'hint.tp12': 'TP12 OG! A near miss – and still {l}.',
+    'dart.anfaenger': 'Rookie dart', 'dart.anfaenger.s': 'Good luck', 'dart.anfaenger.d': '33% lucky dart', 'dart.tp12': 'Triple Chance dart', 'dart.tp12.s': 'Triple chance', 'dart.tp12.d': 'Near misses count: T20 · T19 · T17 · Bull', 'dart.tp12.r': 'Match wins', 'tp12.on': 'Holds T20 · T19 · T17 · Bull', 'cpu.tp12': 'Triple chance', 'hint.tp12': 'Triple chance! A near miss – and still {l}.',
     'luck.state': '33% luck per dart', 'luck.hit': 'Lucky dart!', 'hint.luck': 'Lucky dart! That one flew true, like adrenaline.', 'cpu.luck': 'Luck',
     'w.luck': ['Beginner’s luck! Still counts.', 'Lucky! I won’t tell a soul.', 'Someone’s got a four-leaf clover in their pocket.'],
     'dart.kneipe': 'Pub dart', 'dart.kneipe.s': 'Precision', 'dart.kneipe.d': 'Precision · every 3rd dart',
@@ -1734,6 +1771,13 @@ const I18N = {
     'fsym.rod': 'Fishing rod', 'fsym.fish': 'Fish', 'fsym.boat': 'Boat', 'fsym.angler': 'Angler',
     'gr.card': 'The Crypt Beneath the Pub', 'gr.cardx': 'Waves of monsters, armed only with your darts',
     'rules.gruft': '<strong>The Crypt Beneath the Pub:</strong> A gate to hell has opened beneath Heinz’s wine cellar. Across four acts of five waves each you fight rats, skeletons, spiders, cultists and demons with nothing but your darts; every fifth wave holds a boss, and every boss pays prize money for the arcade. Switch between three dart types at any time: poison (damage over time), shadow (pierces, life steal) and holy (strong against undead and demons, heals). Every level grants a weapon point for your dart skills and a talent point for your own abilities such as life, dodge roll or healing potions. Enemies drop gold, potions and magic rings, amulets and quivers. After the campaign, Nightmare and Hell await.',
+    'shop.title': 'Heinz’s Shop', 'shop.cardx': 'Darts, boards and arcade credit', 'shop.sub': 'Secure payment via Stripe', 'shop.buy': 'Buy',
+    'shop.darts': 'Darts', 'shop.boards': 'Boards', 'shop.cash': 'Arcade credit', 'shop.owned': 'Owned ✓', 'shop.soon': 'Coming soon',
+    'shop.cashname': '{v} credit', 'shop.cashd': 'Play money for the arcade, bowling and tables',
+    'shop.go': 'On to payment…', 'shop.thanks': 'Thanks for your purchase!', 'shop.gotcash': '{v} credit added.', 'shop.gotitem': '{name} is now unlocked.',
+    'shop.note': 'Payment is handled securely by Stripe, then you return automatically. Arcade credit is play money with no real-money value and is never paid out. Purchases apply to this device and browser.',
+    'board.pro.fans': 'Tournament board with ring light and fans',
+    'hint.cancel': 'Throw cancelled – no dart used.', 'hint.cancelaim': 'Release = cancel throw',
     'rules.classic': '<strong>Classic:</strong> pure darts against the regulars – no dart abilities, no adrenaline, no drinks, and the opponents play without tricks too. You throw the classic dart, which sits a little steadier in the hand than a bare dart. Prize money works as usual; the Phantom sits this one out.',
     'rules.drinks': '<strong>Heinz’s pub drinks:</strong> At the bar you buy drinks with your arcade credit; they last a whole match – right away if bought during a match, otherwise for the next one. Fresh lager (€5, up to 5): the drunker, the less accurate, but a near miss slips into the double or treble you aimed at more often (up to 60%). Energy drink (€10, up to 3): 33, 67 or 100% chance of “full focus”, a steady hand for the whole match that gets steadier with every can. Heinz’s home brew (€10, up to 3): every mug brings Pro Heinz flashback darts with the best aim in the game – 2 after the first, 5 after the second, 10 after the third mug – that you use with a button. Heinz’s special liqueur (€10, up to 5): when a checkout is on, doubles, trebles and the bull grow 20% per liqueur for you, twice the size with 5. Prize money comes for every leg you win: €2.50 against Auntie Gerda, €5 against Kalle, €10 against Otto and €25 against The Machine.',
     'auto.btn': 'Auto', 'auto.stop': 'Stop · {n}', 'auto.pick': 'Spin automatically:',
@@ -2181,17 +2225,49 @@ const sfx = (() => {
       if (k === 0) { const f = nz(at, GST * 30, 'bandpass', 300, .6, .025, 4, out); f.frequency.exponentialRampToValueAtTime(900, at + GST * 15); }
     }
 
+    // Top-Liga-Scheibe: Fans in der Halle – Raunen, Klatsch-Rhythmen, Pfiffe und ab und zu ein Gesang
+    const ARS = .25;
+    function crowdBed(t, dur, gain) {
+      for (let i = 0; i < 5; i++) {
+        const s = loopNoise(t), f = ac.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 300 + Math.random() * 1400; f.Q.value = .7;
+        const g2 = ac.createGain(); g2.gain.setValueAtTime(.0001, t); g2.gain.exponentialRampToValueAtTime(gain, t + 1.2); g2.gain.setValueAtTime(gain, t + dur - 1.2); g2.gain.exponentialRampToValueAtTime(.0001, t + dur);
+        const lfo = ac.createOscillator(); lfo.frequency.value = .3 + Math.random() * .8; const lg = ac.createGain(); lg.gain.value = gain * .4; lfo.connect(lg); lg.connect(g2.gain);
+        s.connect(f); f.connect(g2); g2.connect(out); s.stop(t + dur + .1); lfo.start(t); lfo.stop(t + dur + .1);
+      }
+    }
+    function crowdClap(t, gain) { for (let i = 0; i < 7; i++) nz(t + Math.random() * .035, .05, 'bandpass', 1100 + Math.random() * 1400, 1.2, gain, .002, out); }
+    function chant(t, notes) {
+      // viele Stimmen singen grob dieselbe Melodie (z. B. „Oh-oh-oh-oh“)
+      notes.forEach(([d, m, len]) => {
+        for (let v = 0; v < 6; v++) {
+          const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = hz(m) * (1 + (Math.random() - .5) * .025);
+          const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 700 + v * 90; f.Q.value = 2;
+          const g2 = ac.createGain(); const st = t + d * ARS + Math.random() * .05;
+          g2.gain.setValueAtTime(.0001, st); g2.gain.exponentialRampToValueAtTime(.006, st + .08); g2.gain.setValueAtTime(.006, st + len * ARS * .8); g2.gain.exponentialRampToValueAtTime(.0001, st + len * ARS);
+          o.connect(f); f.connect(g2); g2.connect(out); o.start(st); o.stop(st + len * ARS + .05);
+        }
+      });
+    }
+    function arena(n, at) {
+      const k = n % 128;
+      if (k % 32 === 0) crowdBed(at, ARS * 32 + 1.6, .045);
+      if (k >= 64 && k < 96) { const s = (k - 64) % 8; if (s === 0 || s === 2 || s === 4 || s === 5 || s === 6) crowdClap(at, .03); }   // Klatschen: 1 – 2 – 3-4-5
+      if (k === 100) chant(at, [[0, 57, 2], [2, 57, 2], [4, 60, 2], [6, 62, 3], [10, 60, 2], [12, 57, 4]]);
+      if (Math.random() < .025) tone(at, .4, 'sine', 1800, 2900, .012, out);   // Pfiff
+      if (Math.random() < .012) { const f = nz(at, 1.6, 'bandpass', 700, .7, .05, .5, out); f.frequency.exponentialRampToValueAtTime(1400, at + 1.2); }   // Raunen
+    }
+
     // Ein Taktgeber für alle Stile; beim Wechsel startet der neue Stil sauber neu
     let mode = null, t0 = 0, next = 0;
-    const stepLen = () => mode === 'digi' ? STEP : mode === 'antik' ? AST : mode === 'fish' ? CST : mode === 'crypt' ? GST : mode === 'disco' || mode === 'quiet' ? DST : BEAT;
+    const stepLen = () => mode === 'digi' ? STEP : mode === 'antik' ? AST : mode === 'fish' ? CST : mode === 'crypt' ? GST : mode === 'arena' ? ARS : mode === 'disco' || mode === 'quiet' ? DST : BEAT;
     beatFn = () => mode === 'disco' ? (ac.currentTime - t0) / (DST * 4) : null;
     setInterval(() => {
       if (!ac || document.hidden) return;
-      const want = style === 'automat' ? 'digi' : style === 'book' ? 'antik' : style === 'fish' ? 'fish' : style === 'crypt' ? 'crypt' : style === 'disco' ? 'disco' : style === 'quiet' ? 'quiet' : 'pub';
+      const want = style === 'automat' ? 'digi' : style === 'book' ? 'antik' : style === 'fish' ? 'fish' : style === 'crypt' ? 'crypt' : style === 'pro' ? 'arena' : style === 'disco' ? 'disco' : style === 'quiet' ? 'quiet' : 'pub';
       if (want !== mode) { mode = want; t0 = ac.currentTime + (next ? .6 : 1); next = 0; }
       const until = (ac.currentTime - t0 + .5) / stepLen();
       while (next < until) {
-        if (!muted && mode !== 'quiet') (mode === 'digi' ? digi : mode === 'antik' ? antik : mode === 'fish' ? calypso : mode === 'crypt' ? crypt : mode === 'disco' ? disco : waltz)(next, t0 + next * stepLen());
+        if (!muted && mode !== 'quiet') (mode === 'digi' ? digi : mode === 'antik' ? antik : mode === 'fish' ? calypso : mode === 'crypt' ? crypt : mode === 'arena' ? arena : mode === 'disco' ? disco : waltz)(next, t0 + next * stepLen());
         next++;
       }
     }, 100);
@@ -3012,7 +3088,7 @@ const DART_INFO = {
   kneipe: { name: 'Kneipenpfeil', skill: 'Präzision', desc: 'Präzision · jeder 3. Dart', flight: '#c9302c', edge: '#6e1310', stripe: '#f4efe4', barrel: '#7d828a' },
   blitz:  { name: 'Blitzpfeil', skill: 'Schnellwurf', desc: 'Schnell werfen = perfekt', flight: '#f2c230', edge: '#6b5200', stripe: '#141414', barrel: '#4d5158' },
   klassik: { name: 'Klassikpfeil', skill: 'Klassisch', desc: 'Ausgewogen, ohne Effekte', only: 'classic', flight: '#1f3f7a', edge: '#0d1d3d', stripe: '#e9e1cc', barrel: '#b5a27a' },
-  tp12:   { name: 'TP12 OG', skill: 'Volltreffer', desc: 'Knapp daneben zählt: T20 · T19 · T17 · Bull', flight: '#111111', edge: '#d4af37', stripe: '#d4af37', barrel: '#3a3a3a' },
+  tp12:   { name: 'Triple-Chance-Pfeil', skill: 'Triple-Chance', desc: 'Knapp daneben zählt: T20 · T19 · T17 · Bull', flight: '#111111', edge: '#d4af37', stripe: '#d4af37', barrel: '#3a3a3a' },
   alt:    { name: 'Stammtischpfeil', skill: 'Alt eingesessen', desc: 'Dauerhaft ruhige Hand', flight: '#1f6b45', edge: '#0c3320', stripe: '#e2b457', barrel: '#b8893a' }
 };
 // Aussehen der Pfeile: Barrel, farbige Ringe, Schaft und Flight-Aufdruck; 'cpu' ist der Gegner
@@ -3070,8 +3146,8 @@ function drawFlightArt(g, key, w, h) {
   } else if (L.motif === 'tp12') {
     // Schwarz-goldener Profi-Flight mit Schriftzug
     g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.font = `800 ${w * .27}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; g.fillText('TP12', cx, cy - h * .04);
-    g.font = `700 ${w * .17}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; g.fillText('OG', cx, cy + h * .13);
+    g.font = `800 ${w * .2}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; g.fillText('TRIPLE', cx, cy - h * .04);
+    g.font = `700 ${w * .15}px 'Barlow Condensed', 'Arial Narrow', sans-serif`; g.fillText('CHANCE', cx, cy + h * .13);
     g.lineWidth = w * .02; g.beginPath(); g.moveTo(w * .28, cy + h * .04); g.lineTo(w * .72, cy + h * .04); g.stroke();
   } else if (L.motif === 'stars') {
     const star = (x, y, r) => { g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; g.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } g.closePath(); g.fill(); };
@@ -3085,8 +3161,36 @@ function drawFlightArt(g, key, w, h) {
 
 let stats = { t20: 0, wins: 0 };
 try { Object.assign(stats, JSON.parse(localStorage.getItem('dk-stats') || '{}')); } catch (e) {}
-// Standardpfeil, TP12 OG und Stammtischpfeil sind frei, die anderen gibt es für Herausforderungen gegen die Kneipe
-const dartUnlocked = k => !DART_INFO[k].need || (stats[DART_INFO[k].stat] || 0) >= DART_INFO[k].need;
+/* ---------- Shop: Blitzpfeil, Stammtischpfeil, Triple-Chance-Pfeil, Dartautomat, Top-Liga-Scheibe und Spielhallen-Guthaben ---------- */
+// Bezahlt wird über Stripe-Zahlungslinks. Je Artikel einen Link anlegen und hier eintragen.
+// In Stripe beim Link unter „Nach der Zahlung“ → „Auf deine Website weiterleiten“ diese Adresse angeben (Artikelname anpassen):
+//   https://dartkneipespiel.vercel.app/?kauf=blitz&session_id={CHECKOUT_SESSION_ID}
+const SHOP_LINKS = {
+  blitz: '', alt: '', tp12: '', automat: '', pro: '',
+  cash500: '', cash2500: '', cash10000: ''
+};
+const SHOP_ITEMS = {
+  blitz: { kind: 'dart', price: 99 }, alt: { kind: 'dart', price: 99 }, tp12: { kind: 'dart', price: 99 },
+  automat: { kind: 'board', price: 99 }, pro: { kind: 'board', price: 99 },
+  cash500: { kind: 'cash', price: 99, cash: 50000 }, cash2500: { kind: 'cash', price: 199, cash: 250000 }, cash10000: { kind: 'cash', price: 299, cash: 1000000 }
+};
+const owned = new Set();
+try { JSON.parse(localStorage.getItem('dk-owned') || '[]').forEach(k => { if (SHOP_ITEMS[k]) owned.add(k); }); } catch (e) {}
+const saveOwned = () => { try { localStorage.setItem('dk-owned', JSON.stringify([...owned])); } catch (e) {} };
+// Rückkehr von Stripe: ?kauf=…&session_id=cs_… – jede Zahlung zählt nur einmal
+const purchase = (() => {
+  const q = new URLSearchParams(location.search), k = q.get('kauf'), sid = q.get('session_id') || '';
+  if (!k) return null;
+  try { q.delete('kauf'); q.delete('session_id'); const rest = q.toString(); history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash); } catch (e) {}
+  if (!SHOP_ITEMS[k] || !/^cs_[A-Za-z0-9_]{8,}$/.test(sid)) return null;
+  let used = []; try { used = JSON.parse(localStorage.getItem('dk-paid') || '[]'); } catch (e) {}
+  if (used.indexOf(sid) >= 0) return null;
+  used.push(sid); try { localStorage.setItem('dk-paid', JSON.stringify(used.slice(-200))); } catch (e) {}
+  if (SHOP_ITEMS[k].kind !== 'cash') { owned.add(k); saveOwned(); }
+  return k;
+})();
+const forSale = k => !!SHOP_ITEMS[k] && SHOP_ITEMS[k].kind !== 'cash' && !owned.has(k);
+const dartUnlocked = k => !forSale(k);
 // Namen und Texte der Scheiben und Pfeile kommen aus dem Wörterbuch
 for (const k of Object.keys(BOARD_INFO)) Object.defineProperties(BOARD_INFO[k], {
   name: { get: () => t('board.' + k) }, desc: { get: () => t('board.' + k + '.d') }, req: { get: () => t('board.' + k + '.r') }
@@ -3098,18 +3202,8 @@ for (const k of Object.keys(DART_INFO)) Object.defineProperties(DART_INFO[k], {
 let dartKey = 'standard';
 try { const k = localStorage.getItem('dk-dart'); if (k && DART_INFO[k] && dartUnlocked(k)) dartKey = k; } catch (e) {}
 
-let unlocked = new Set(Object.keys(BOARD_INFO));   // alle Scheiben sind von Anfang an frei
-try { JSON.parse(localStorage.getItem('dk-boards') || '[]').forEach(k => { if (BOARD_INFO[k]) unlocked.add(k); }); } catch (e) {}
+let unlocked = new Set(Object.keys(BOARD_INFO).filter(k => !forSale(k)));   // Klassik und Holz sind frei, die anderen gibt es im Shop
 // Testzugang: Link mit #allesfrei schaltet alle Scheiben und Pfeile frei (bleibt im Browser gespeichert)
-const TEST_ALL = location.hash === '#allesfrei';
-if (TEST_ALL) {
-  Object.keys(BOARD_INFO).forEach(k => unlocked.add(k));
-  for (const d of Object.values(DART_INFO)) if (d.need) stats[d.stat] = Math.max(stats[d.stat] || 0, d.need);
-  try {
-    localStorage.setItem('dk-boards', JSON.stringify([...unlocked]));
-    localStorage.setItem('dk-stats', JSON.stringify(stats));
-  } catch (e) {}
-}
 let boardKey = 'classic';
 try { const k = localStorage.getItem('dk-board'); if (k && unlocked.has(k)) boardKey = k; } catch (e) {}
 
@@ -3972,7 +4066,7 @@ const BOOSTS = {
   alt:  { amp: .62, tremor: .55, scatter: .58 },  // Stammtischpfeil: dauerhaft ruhigere Hand
   anf:  { amp: 1, tremor: 1, scatter: 1 },         // Anfängerpfeil: zielt wie jeder andere, nur das Glück ist anders
   tp12: { amp: 1, tremor: 1, scatter: 1 },
-  klassik: { amp: .85, tremor: .8, scatter: .85 },   // Klassikpfeil: etwas ruhiger als ein nackter Pfeil, damit das Spiel ohne Effekte rund läuft         // TP12 OG: zielt normal, hält aber knapp verfehlte Lieblingsfelder
+  klassik: { amp: .85, tremor: .8, scatter: .85 },   // Klassikpfeil: etwas ruhiger als ein nackter Pfeil, damit das Spiel ohne Effekte rund läuft         // Triple-Chance-Pfeil: zielt normal, hält aber knapp verfehlte Lieblingsfelder
   flash: { amp: .04, tremor: .05, scatter: .08 }   // Profi-Heinz-Flashback: das beste Aim im Spiel
 };
 
@@ -4037,7 +4131,7 @@ function drawBigField(tg, f) {
   ctx.strokeStyle = 'rgba(255,214,107,.95)'; ctx.lineWidth = 1.8; ctx.stroke();
 }
 
-// TP12 OG: Wer auf T20, T19, T17 oder das Bullseye zielt und knapp danebenwirft (bis etwa ein halbes
+// Triple-Chance-Pfeil: Wer auf T20, T19, T17 oder das Bullseye zielt und knapp danebenwirft (bis etwa ein halbes
 // Triple- bzw. Doppelfeld, rund 4 mm), trifft trotzdem – immer.
 const TP12_FIELDS = [{ n: 20, m: 3 }, { n: 19, m: 3 }, { n: 17, m: 3 }, { n: 25, m: 2 }], TP12_REACH = 4;
 function fieldDist(f, x, y) {
@@ -4121,6 +4215,19 @@ function breathBase(t, w, kind) {
   };
 }
 
+// Weit neben der Scheibe: rotes X – loslassen bricht den Wurf ab
+function drawCancel(x, y) {
+  let [X, Y] = P(x, y); const r = 14, w = canvas.clientWidth, h = canvas.clientHeight;
+  // immer sichtbar: höchstens bis kurz vor den Rand der (runden) Zeichenfläche, in Richtung des Zielpunkts
+  const cx = w / 2, cy = h / 2, dx = X - cx, dy = Y - cy, lim = Math.min(w, h) * .4, l = Math.hypot(dx, dy);
+  if (l > lim) { X = cx + dx / l * lim; Y = cy + dy / l * lim; }
+  if (!aim.cancelHint) { aim.cancelHint = true; hint(t('hint.cancelaim')); }
+  for (const pass of [0, 1]) {
+    ctx.strokeStyle = pass ? '#ff5a4a' : 'rgba(0,0,0,.75)'; ctx.lineWidth = pass ? 3 : 6; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(X - r, Y - r); ctx.lineTo(X + r, Y + r); ctx.moveTo(X + r, Y - r); ctx.lineTo(X - r, Y + r); ctx.stroke();
+  }
+  overlayDirty = true;
+}
 function drawCross(x, y, steady, lift, unrest, kind, quick, ring) {
   const [X, Y] = P(x, y);
   const r = Math.max(8, V.pxPerMm() * R.EDGE * 2 / 60) * (1 + .35 * lift) * (.7 + .6 * unrest) * (kind === 'std' ? 1 - stdLevel() : 1) * (ring || 1);
@@ -4177,7 +4284,8 @@ function frame(now) {
   if (aim.active && !(S && !S.over && humanTurn(S))) aim.active = false;
   if (aim.active) {
     const b = breath((now - aim.t0) / 1000, aim.w);
-    drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind(), b.quick || 0, aim.w.m ? aim.w.m.ring : 1);
+    if (Math.hypot(aim.pos.x, aim.pos.y) > CANCEL_R) drawCancel(aim.pos.x, aim.pos.y);
+    else { if (aim.cancelHint) { aim.cancelHint = false; hint(''); } drawCross(aim.pos.x + b.x, aim.pos.y + b.y, b.pause, b.lift, b.unrest, boostKind(), b.quick || 0, aim.w.m ? aim.w.m.ring : 1); }
     overlayDirty = true;
   } else if (hover && canThrow()) {
     const [X, Y] = P(hover.x, hover.y);
@@ -4225,6 +4333,7 @@ canvas.addEventListener('pointerup', e => {
   aim.pos = evToMm(e);
   aim.active = false;
   if (!canThrow()) return;
+  if (Math.hypot(aim.pos.x, aim.pos.y) > CANCEL_R) { hint(t('hint.cancel')); sfx.tick(); return; }   // weit daneben gezielt: Wurf abgebrochen
   // Anfängerpfeil: mit etwas Glück fliegt der Dart so ruhig und genau wie mit Adrenalin (Fähigkeiten nur gegen die Kneipe)
   const solo = S.mode !== 'local' && !S.classic;   // eigene Fähigkeiten: gegen die Kneipe und online, nicht klassisch
   const flashing = boostKind() === 'flash';
@@ -4444,7 +4553,7 @@ function cpuBoostTag(g) {
 function cpuDart() {
   const g = S;
   if (!g || g.over || g.turn !== 1 || g.mode !== 'cpu') return;
-  if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open || drinkShop.open || bowling.open || rps.open || gruft.open) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
+  if (!menu.hidden || arcade.open || poker.open || blackjack.open || cardroom.open || drinkShop.open || bowling.open || rps.open || gruft.open || shop.isOpen) { setTimeout(() => { if (S === g) cpuDart(); }, 400); return; }
   const left = 3 - g.visit.length, f = finish(g.scores[1], left);
   const legend = g.level === LEGEND;
   const kind = legend ? 'none' : cpuBoostKind(g, !!f && f.seq.length === 1);
@@ -4961,7 +5070,7 @@ function renderBoardChips() {
   $('#boardChips').innerHTML = Object.entries(BOARD_INFO).map(([k, b]) => {
     const locked = !unlocked.has(k);
     const pic = previews[k] ? `<img src="${previews[k]}" alt="" class="${k}">` : '<i class="ph"></i>';
-    return `<label class="chip board-chip${locked ? ' locked' : ''}"><input type="radio" name="board" id="board-${k}" value="${k}"${locked ? ' disabled' : ''}${k === boardKey ? ' checked' : ''}><span>${pic}<b>${b.name}</b><small>${locked ? LOCK + b.req : b.desc}</small></span></label>`;
+    return `<label class="chip board-chip${locked ? ' locked' : ''}"${locked ? ` data-buy="${k}"` : ''}><input type="radio" name="board" id="board-${k}" value="${k}"${locked ? ' disabled' : ''}${k === boardKey ? ' checked' : ''}><span>${pic}<b>${b.name}</b><small>${locked ? LOCK + arcade.fmt(SHOP_ITEMS[k].price) + ' · ' + t('shop.buy') : b.desc}</small></span></label>`;
   }).join('');
 }
 function setBoard(k) {
@@ -4977,6 +5086,7 @@ function makePreviews() {
   renderBoardChips();
 }
 $('#boardChips').addEventListener('change', e => { if (e.target.name === 'board') setBoard(e.target.value); });
+$('#boardChips').addEventListener('click', e => { const l = e.target.closest('[data-buy]'); if (l) { e.preventDefault(); shop.open(l.dataset.buy); } });
 
 let toastTimer = 0;
 function toast(title, text) {
@@ -11065,6 +11175,49 @@ const gruft = (() => {
   };
 })();
 
+/* ---------- Heinz’ Laden: Kaufen über Stripe-Zahlungslinks ---------- */
+const shop = (() => {
+  const el = $('#shop'), fmt = c => arcade.fmt(c);
+  let focus = null;
+  function itemHtml(k) {
+    const it = SHOP_ITEMS[k], has = it.kind !== 'cash' && owned.has(k), link = SHOP_LINKS[k];
+    let pic, name, desc;
+    if (it.kind === 'dart') { if (!dartIcons[k]) dartIcons[k] = dartIcon(k); pic = `<img src="${dartIcons[k]}" alt="">`; name = DART_INFO[k].name; desc = DART_INFO[k].skill + ' · ' + DART_INFO[k].desc; }
+    else if (it.kind === 'board') { pic = previews[k] ? `<img src="${previews[k]}" alt="">` : '<i class="coin"></i>'; name = BOARD_INFO[k].name; desc = BOARD_INFO[k].desc; }
+    else { pic = `<i class="coin">€</i>`; name = t('shop.cashname', { v: fmt(it.cash) }); desc = t('shop.cashd'); }
+    const label = has ? t('shop.owned') : link ? fmt(it.price) + ' · ' + t('shop.buy') : t('shop.soon');
+    return `<div class="shop-item${focus === k ? ' hl' : ''}" id="shop-${k}">${pic}<b>${name}</b><small>${desc}</small><button type="button" class="btn${has ? ' ghost' : ''}" data-k="${k}"${has || !link ? ' disabled' : ''}>${label}</button></div>`;
+  }
+  function render() {
+    $('#shopCash').textContent = fmt(arcade.cash);
+    const sec = (title, keys) => `<h3 class="shop-sec">${title}</h3><div class="shop-grid">${keys.map(itemHtml).join('')}</div>`;
+    $('#shopList').innerHTML = sec(t('shop.darts'), ['blitz', 'alt', 'tp12']) + sec(t('shop.boards'), ['automat', 'pro']) + sec(t('shop.cash'), ['cash500', 'cash2500', 'cash10000']);
+  }
+  function open(k) {
+    sfx.init(); focus = k || null; aim.active = false; $('#shopMsg').textContent = ''; render(); el.hidden = false;
+    const f = k && $('#shop-' + k); if (f) f.scrollIntoView({ block: 'center' });
+  }
+  function close() { el.hidden = true; }
+  $('#shopList').addEventListener('click', e => {
+    const b = e.target.closest('button[data-k]'); if (!b || b.disabled) return;
+    const link = SHOP_LINKS[b.dataset.k]; if (!link) return;
+    $('#shopMsg').textContent = t('shop.go'); sfx.coins(2);
+    location.href = link;
+  });
+  $('#shopClose').addEventListener('click', close);
+  $('#shopBtn').addEventListener('click', () => open());
+  $('#shopCard').addEventListener('click', () => open());
+  document.addEventListener('keydown', e => { if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); close(); } }, true);
+  // Zurück von Stripe: gutschreiben und bedanken
+  if (purchase) setTimeout(() => {
+    const it = SHOP_ITEMS[purchase];
+    if (it.kind === 'cash') { arcade.addCash(it.cash); toast(t('shop.thanks'), t('shop.gotcash', { v: fmt(it.cash) })); }
+    else { renderDartChips(); renderBoardChips(); toast(t('shop.thanks'), t('shop.gotitem', { name: it.kind === 'dart' ? DART_INFO[purchase].name : BOARD_INFO[purchase].name })); }
+    sfx.init(); sfx.jackpot();
+  }, 700);
+  return { open, get isOpen() { return !el.hidden; }, relang() { if (!el.hidden) render(); } };
+})();
+
 /* ---------- Heinz’ Kneipentrunk: Getränke für Spielhallen-Guthaben, sie wirken ein ganzes Match ---------- */
 const drinkShop = (() => {
   const el = $('#drinks'), fmt = c => arcade.fmt(c);
@@ -11185,8 +11338,8 @@ function renderDartChips() {
   $('#dartChips').innerHTML = Object.entries(DART_INFO).filter(([, d]) => !d.only).map(([k, d]) => {
     const locked = !dartUnlocked(k);
     if (!dartIcons[k]) dartIcons[k] = dartIcon(k);
-    const prog = locked ? `${LOCK}${d.req}: ${Math.min(stats[d.stat] || 0, d.need)}/${d.need}` : d.desc;
-    return `<label class="chip board-chip dart-chip${locked ? ' locked' : ''}"><input type="radio" name="dart" id="dart-${k}" value="${k}"${locked ? ' disabled' : ''}${k === dartKey ? ' checked' : ''}><span><img src="${dartIcons[k]}" alt="" class="dart"><b>${d.name}</b><small>${prog}</small></span></label>`;
+    const prog = locked ? `${LOCK}${arcade.fmt(SHOP_ITEMS[k].price)} · ${t('shop.buy')}` : d.desc;
+    return `<label class="chip board-chip dart-chip${locked ? ' locked' : ''}"${locked ? ` data-buy="${k}"` : ''}><input type="radio" name="dart" id="dart-${k}" value="${k}"${locked ? ' disabled' : ''}${k === dartKey ? ' checked' : ''}><span><img src="${dartIcons[k]}" alt="" class="dart"><b>${d.name}</b><small>${prog}</small></span></label>`;
   }).join('');
 }
 function setDart(k) {
@@ -11197,6 +11350,7 @@ function setDart(k) {
   if (!S) renderSkills();
 }
 $('#dartChips').addEventListener('change', e => { if (e.target.name === 'dart') setDart(e.target.value); });
+$('#dartChips').addEventListener('click', e => { const l = e.target.closest('[data-buy]'); if (l) { e.preventDefault(); shop.open(l.dataset.buy); } });
 // Statistik zählen und neue Pfeile freischalten
 function bumpStat(key) {
   const before = Object.keys(DART_INFO).filter(dartUnlocked);
@@ -11212,7 +11366,7 @@ function bumpStat(key) {
 }
 
 function unlock(k) {
-  if (unlocked.has(k)) return;
+  if (unlocked.has(k) || forSale(k)) return;   // gekaufte Scheiben gibt es nicht als Belohnung
   unlocked.add(k);
   try { localStorage.setItem('dk-boards', JSON.stringify([...unlocked])); } catch (e) {}
   renderBoardChips();
@@ -11247,7 +11401,7 @@ function applyLang() {
   document.querySelectorAll('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', t(el.dataset.i18nPh)));
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.dataset.i18nTitle); });
   $('#langDe').checked = lang === 'de'; $('#langEn').checked = lang === 'en';
-  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); fishSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang(); bowling.relang(); rps.relang(); gruft.relang();
+  paintMute(); renderBoardChips(); renderDartChips(); arcade.relang(); bookSlot.relang(); fishSlot.relang(); poker.relang(); blackjack.relang(); cardroom.relang(); drinkShop.relang(); bowling.relang(); rps.relang(); gruft.relang(); shop.relang();
   if (S) renderTafel(); else { renderSkills(); V.setScores(null); }
   hint(S && S.turn === 1 && !S.over ? t('hint.oche', { name: S.opp.name }) : t('hint.aim'));
 }
@@ -11259,7 +11413,6 @@ $('#langChips').addEventListener('change', e => {
 });
 applyLang();
 setTimeout(() => wirt.say(t('w.greet')), 1200);
-if (TEST_ALL) setTimeout(() => toast(t('toast.test'), t('toast.testx')), 600);
 requestAnimationFrame(frame);
 })();
 </script>
