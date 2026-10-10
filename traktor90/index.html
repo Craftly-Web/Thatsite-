@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SV 90 Traktor Mittelherwigsdorf e. V. – Fußball, Volleyball &amp; Gymnastik</title>
+<meta name="description" content="SV 90 Traktor Mittelherwigsdorf e. V. – Sportverein in der südlichen Oberlausitz bei Zittau. Fußball, Volleyball und Gymnastik im Sportzentrum Mittelherwigsdorf. Sportlich aktiv seit 1863.">
+<!-- Entwurf: erst indexieren, wenn die Seite auf der Vereinsdomain live ist -->
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#2e3192">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="SV 90 Traktor Mittelherwigsdorf">
+<meta property="og:title" content="SV 90 Traktor Mittelherwigsdorf e. V.">
+<meta property="og:description" content="Fußball, Volleyball und Gymnastik in Mittelherwigsdorf – sportlich aktiv seit 1863.">
+<meta property="og:image" content="assets/og-image.jpg">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "SportsClub",
+ "name": "SV 90 Traktor Mittelherwigsdorf e. V.",
+ "alternateName": "Sportverein 90 Traktor Mittelherwigsdorf e. V.",
+ "logo": "assets/logo.png",
+ "email": "kontakt@sv90traktor.de",
+ "telephone": "+49 176 56950879",
+ "sport": ["Fußball", "Volleyball", "Gymnastik"],
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "Sportzentrum 1",
+  "postalCode": "02763",
+  "addressLocality": "Mittelherwigsdorf",
+  "addressRegion": "Sachsen",
+  "addressCountry": "DE"
+ }
+}
+</script>
+<style>
+:root{
+  --blau:#2e3192;--blau-dunkel:#1c1e63;--blau-tief:#121443;--blau-hell:#e9eaf7;--blau-mittel:#5558c4;
+  --weiss:#fff;--grau:#5d6070;--linie:#d9dbe8;--text:#16182e;--bg:#f6f7fb;
+  --radius:14px;--max:1180px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--blau)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+h1,h2,h3{line-height:1.15;letter-spacing:-.01em}
+h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:900;text-transform:uppercase;color:var(--blau-dunkel)}
+h3{font-size:1.25rem;font-weight:800}
+.eyebrow{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blau-mittel);margin-bottom:10px}
+.lead{font-size:1.1rem;color:var(--grau);max-width:640px;margin-top:14px}
+section{padding:88px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:800;text-decoration:none;font-size:.98rem;transition:transform .15s,background .15s,color .15s;border:2px solid transparent}
+.btn:hover{transform:translateY(-2px)}
+.btn-weiss{background:#fff;color:var(--blau)}
+.btn-weiss:hover{background:var(--blau-hell)}
+.btn-rand{border-color:rgba(255,255,255,.55);color:#fff}
+.btn-rand:hover{background:rgba(255,255,255,.12)}
+.btn-blau{background:var(--blau);color:#fff}
+.btn-blau:hover{background:var(--blau-dunkel)}
+/* Platzhalter: gut sichtbar markiert, damit nichts Unbestätigtes online geht */
+.ph{background:#fff4c2;color:#6b5400;border-radius:4px;padding:0 4px;font-style:normal;white-space:nowrap}
+
+/* Kopfzeile */
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--linie)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.marke{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--blau-dunkel)}
+.marke img{height:52px;width:auto}
+.marke b{display:block;font-size:1rem;font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1.1}
+.marke span{font-size:.78rem;color:var(--grau);font-weight:600}
+.menu{display:flex;gap:4px;list-style:none;align-items:center}
+.menu a{display:block;padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--text);font-weight:700;font-size:.93rem}
+.menu a:hover{background:var(--blau-hell);color:var(--blau)}
+.menu .btn{padding:9px 18px;margin-left:6px;color:#fff}
+.menu .btn:hover{background:var(--blau-dunkel);color:#fff}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;border-radius:8px}
+.burger span{display:block;width:24px;height:2.5px;background:var(--blau-dunkel);margin:5px auto;border-radius:2px;transition:.2s}
+@media (max-width:1020px){
+  .burger{display:block}
+  .menu{position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;padding:10px 16px 18px;border-bottom:1px solid var(--linie);display:none}
+  .menu.offen{display:flex}
+  .menu a{padding:12px}
+  .menu .btn{margin:8px 0 0;justify-content:center}
+}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:radial-gradient(1200px 600px at 85% 20%,#3d41b0 0%,var(--blau) 40%,var(--blau-tief) 100%);color:#fff;padding:90px 0 110px}
+.hero::before{content:"";position:absolute;inset:0;opacity:.09;background:
+  linear-gradient(90deg,transparent calc(50% - 1px),#fff calc(50% - 1px),#fff calc(50% + 1px),transparent calc(50% + 1px)),
+  radial-gradient(circle at 50% 50%,transparent 150px,#fff 151px,#fff 153px,transparent 154px);}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,7vw,5.2rem);font-weight:900;text-transform:uppercase;line-height:.98;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:#b9bcff}
+.hero p{font-size:1.15rem;opacity:.9;max-width:560px;margin:22px 0 32px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero-logo{justify-self:center;background:#fff;border-radius:50%;width:min(360px,80vw);aspect-ratio:1;display:grid;place-items:center;box-shadow:0 30px 80px rgba(0,0,0,.35),0 0 0 12px rgba(255,255,255,.08),0 0 0 26px rgba(255,255,255,.04)}
+.hero-logo img{width:62%}
+.fakten{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.18);border-radius:var(--radius);overflow:hidden;margin-top:64px}
+.fakt{background:rgba(18,20,67,.55);padding:22px 20px}
+.fakt b{display:block;font-size:2rem;font-weight:900;line-height:1}
+.fakt span{font-size:.88rem;opacity:.8}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.hero-logo{order:-1;width:200px}.fakten{grid-template-columns:repeat(2,1fr)}}
+
+/* Spieltag-Leiste */
+.spieltag{background:#fff;margin-top:-56px;position:relative;z-index:2;border-radius:var(--radius);box-shadow:0 18px 50px rgba(28,30,99,.14);display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;padding:26px 30px}
+.spieltag .label{font-size:.75rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--blau);padding:8px 12px;border-radius:8px}
+.paarung{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-weight:800;font-size:1.1rem}
+.paarung .vs{color:var(--grau);font-weight:600}
+.paarung small{display:block;font-weight:600;color:var(--grau);font-size:.88rem}
+@media (max-width:760px){.spieltag{grid-template-columns:1fr;gap:14px;padding:22px}}
+
+/* Karten */
+.karten{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+@media (max-width:900px){.karten{grid-template-columns:1fr}}
+.karte{background:#fff;border:1px solid var(--linie);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.karte .bild{aspect-ratio:16/9;background:linear-gradient(135deg,var(--blau) 0%,var(--blau-tief) 100%);position:relative;display:grid;place-items:center;color:rgba(255,255,255,.75);font-size:.85rem;font-weight:700}
+.karte .bild svg{width:64px;height:64px;opacity:.9}
+.karte .inhalt{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.karte time,.karte .kat{font-size:.8rem;font-weight:800;color:var(--blau-mittel);text-transform:uppercase;letter-spacing:.08em}
+.karte p{color:var(--grau);font-size:.96rem}
+.karte .mehr{margin-top:auto;font-weight:800;text-decoration:none}
+
+/* Abteilungen */
+.abteilungen{background:#fff}
+.abt{display:grid;grid-template-columns:.9fr 1.1fr;gap:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--linie);margin-top:28px;background:var(--bg)}
+.abt:nth-of-type(even){grid-template-columns:1.1fr .9fr}
+.abt:nth-of-type(even) .abt-kopf{order:2}
+.abt-kopf{background:var(--blau);color:#fff;padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;position:relative;overflow:hidden}
+.abt-kopf::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;border:2px solid rgba(255,255,255,.14)}
+.abt-kopf svg{width:70px;height:70px}
+.abt-kopf h3{font-size:2.2rem;font-weight:900;text-transform:uppercase}
+.abt-kopf p{opacity:.88}
+.abt-inhalt{padding:36px 40px;display:grid;gap:22px}
+.zeiten{display:grid;gap:10px}
+.zeit{display:grid;grid-template-columns:150px 1fr;gap:12px;background:#fff;border:1px solid var(--linie);border-radius:10px;padding:12px 16px;font-size:.95rem}
+.zeit b{color:var(--blau-dunkel)}
+.abt-inhalt h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blau-mittel);margin-bottom:8px}
+.abt-inhalt ul{list-style:none;display:grid;gap:6px}
+.abt-inhalt li{padding-left:22px;position:relative}
+.abt-inhalt li::before{content:"";position:absolute;left:0;top:.55em;width:10px;height:10px;border-radius:50%;background:var(--blau)}
+@media (max-width:860px){.abt,.abt:nth-of-type(even){grid-template-columns:1fr}.abt:nth-of-type(even) .abt-kopf{order:0}.abt-kopf,.abt-inhalt{padding:28px 22px}.zeit{grid-template-columns:1fr;gap:2px}}
+
+/* Verein */
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+@media (max-width:900px){.zwei{grid-template-columns:1fr;gap:36px}}
+.vorstand{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+@media (max-width:600px){.vorstand{grid-template-columns:1fr}}
+.person{background:#fff;border:1px solid var(--linie);border-radius:var(--radius);padding:20px;text-align:center}
+.person .av{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;background:var(--blau-hell);color:var(--blau);display:grid;place-items:center;font-weight:900;font-size:1.2rem}
+.person b{display:block}
+.person span{font-size:.88rem;color:var(--grau)}
+.mitmachen{background:var(--blau-dunkel);color:#fff;border-radius:var(--radius);padding:36px}
+.mitmachen h3{font-size:1.7rem;font-weight:900;text-transform:uppercase;margin-bottom:8px}
+.mitmachen p{opacity:.88}
+.schritte{list-style:none;counter-reset:s;display:grid;gap:14px;margin:24px 0 28px}
+.schritte li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start}
+.schritte li::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:#fff;color:var(--blau);display:grid;place-items:center;font-weight:900}
+.schritte b{display:block}
+.schritte span{opacity:.82;font-size:.94rem}
+.beitraege{width:100%;border-collapse:collapse;margin:6px 0 26px;font-size:.95rem}
+.beitraege td{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+.beitraege td:last-child{text-align:right;font-weight:800}
+
+/* Chronik */
+.chronik{background:linear-gradient(180deg,var(--blau-tief),var(--blau-dunkel));color:#fff}
+.chronik h2{color:#fff}
+.chronik .lead{color:rgba(255,255,255,.8)}
+.zeitstrahl{list-style:none;margin-top:48px;position:relative;display:grid;gap:26px}
+.zeitstrahl::before{content:"";position:absolute;left:118px;top:6px;bottom:6px;width:2px;background:rgba(255,255,255,.22)}
+.zeitstrahl li{display:grid;grid-template-columns:100px 1fr;gap:40px;position:relative}
+.zeitstrahl li::after{content:"";position:absolute;left:111px;top:8px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.18)}
+.zeitstrahl .jahr{font-size:1.5rem;font-weight:900;text-align:right;color:#c9cbff}
+.zeitstrahl h3{font-size:1.15rem;margin-bottom:4px}
+.zeitstrahl p{opacity:.8;max-width:640px}
+@media (max-width:600px){.zeitstrahl::before{left:8px}.zeitstrahl li{grid-template-columns:1fr;gap:4px;padding-left:34px}.zeitstrahl li::after{left:1px}.zeitstrahl .jahr{text-align:left}}
+
+/* Sportzentrum */
+.platz{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+@media (max-width:900px){.platz{grid-template-columns:1fr}}
+.feld{background:#2f7d3a;border-radius:var(--radius);aspect-ratio:105/68;position:relative;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.15)}
+.feld svg{position:absolute;inset:0;width:100%;height:100%}
+.ausstattung{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0}
+.ausstattung div{background:#fff;border:1px solid var(--linie);border-radius:12px;padding:16px}
+.ausstattung b{display:block;font-size:1.3rem;color:var(--blau-dunkel)}
+.ausstattung span{font-size:.88rem;color:var(--grau)}
+
+/* Sponsoren */
+.sponsoren{background:#fff}
+.logos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+@media (max-width:760px){.logos{grid-template-columns:repeat(2,1fr)}}
+.logos div{aspect-ratio:3/2;border:2px dashed var(--linie);border-radius:12px;display:grid;place-items:center;color:var(--grau);font-weight:700;font-size:.9rem;text-align:center;padding:10px}
+.sponsor-cta{margin-top:32px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;background:var(--blau-hell);border-radius:var(--radius);padding:24px 28px}
+.sponsor-cta p{font-weight:700;color:var(--blau-dunkel)}
+
+/* Kontakt */
+.kontakt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+@media (max-width:860px){.kontakt-grid{grid-template-columns:1fr}}
+.kk{background:#fff;border:1px solid var(--linie);border-radius:var(--radius);padding:26px}
+.kk svg{width:34px;height:34px;color:var(--blau);margin-bottom:12px}
+.kk h3{margin-bottom:6px}
+.kk p{color:var(--grau)}
+.kk a{font-weight:800;text-decoration:none;word-break:break-word}
+
+/* Fußzeile */
+footer{background:var(--blau-tief);color:rgba(255,255,255,.75);padding:56px 0 30px;font-size:.93rem}
+.fuss{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:36px}
+@media (max-width:760px){.fuss{grid-template-columns:1fr}}
+.fuss .marke{color:#fff}
+.fuss .marke img{background:#fff;border-radius:50%;padding:6px;height:60px;width:60px;object-fit:contain}
+.fuss .marke span{color:rgba(255,255,255,.65)}
+.fuss h4{color:#fff;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.fuss ul{list-style:none;display:grid;gap:6px}
+.fuss a{color:rgba(255,255,255,.8);text-decoration:none}
+.fuss a:hover,.unten a:hover{color:#fff}
+.unten a{color:rgba(255,255,255,.85)}
+.unten{border-top:1px solid rgba(255,255,255,.14);margin-top:40px;padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="marke" href="#start" aria-label="SV 90 Traktor Mittelherwigsdorf – zur Startseite">
+      <img src="assets/logo.png" alt="Vereinswappen SV 90 Traktor Mittelherwigsdorf" width="255" height="300">
+      <div><b>SV 90 Traktor</b><span>Mittelherwigsdorf e. V.</span></div>
+    </a>
+    <button class="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="#aktuelles">Aktuelles</a></li>
+      <li><a href="#abteilungen">Abteilungen</a></li>
+      <li><a href="#verein">Verein</a></li>
+      <li><a href="#chronik">Chronik</a></li>
+      <li><a href="#sportzentrum">Sportzentrum</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a class="btn btn-blau" href="#mitmachen">Mitmachen</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="start">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow" style="color:#b9bcff">Sportverein in der südlichen Oberlausitz</span>
+        <h1>Sportlich<br>aktiv seit <em>1863.</em></h1>
+        <p>Fußball, Volleyball und Gymnastik im Sportzentrum Mittelherwigsdorf: für Kinder, Frauen und Männer, ob im Ligabetrieb oder einfach aus Spaß an der Bewegung.</p>
+        <div class="hero-btns">
+          <a class="btn btn-weiss" href="#abteilungen">Unsere Abteilungen</a>
+          <a class="btn btn-rand" href="#mitmachen">Probetraining</a>
+        </div>
+      </div>
+      <div class="hero-logo"><img src="assets/logo.png" alt="" width="255" height="300"></div>
+    </div>
+    <div class="fakten">
+      <div class="fakt"><b>1863</b><span>Beginn des Sports in Mittelherwigsdorf</span></div>
+      <div class="fakt"><b>~150</b><span>Mitglieder</span></div>
+      <div class="fakt"><b>3</b><span>Abteilungen</span></div>
+      <div class="fakt"><b>500</b><span>Plätze im Sportzentrum</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="spieltag" aria-label="Nächstes Heimspiel">
+    <span class="label">Nächstes Heimspiel</span>
+    <div class="paarung">
+      <div>SV 90 Traktor<small>Herren · <i class="ph">Liga 2026/27</i></small></div>
+      <span class="vs">gegen</span>
+      <div><i class="ph">Gegner</i><small><i class="ph">Sa, TT.MM. · 14:00 Uhr</i> · Sportzentrum</small></div>
+    </div>
+    <a class="btn btn-blau" href="https://www.fussball.de/verein/sv-90-traktor-mittelherwigsdo-sachsen/-/id/00ES8GNBSK00000DVV0AG08LVUPGND5I" target="_blank" rel="noopener">Spielplan auf fussball.de</a>
+  </div>
+</div>
+
+<section id="aktuelles">
+  <div class="wrap">
+    <span class="eyebrow">Aktuelles</span>
+    <h2>Neues vom Traktor</h2>
+    <p class="lead">Spielberichte, Termine und Neuigkeiten aus allen Abteilungen.</p>
+    <div class="karten">
+      <article class="karte">
+        <div class="bild"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="32" cy="32" r="26"/><path d="M32 18l10 7-4 12H26l-4-12z"/><path d="M32 6v12M42 25l12-4M38 37l7 10M26 37l-7 10M22 25l-12-4"/></svg></div>
+        <div class="inhalt">
+          <time><i class="ph">TT.MM.2026</i> · Fußball</time>
+          <h3><i class="ph">Spielbericht: Herren</i></h3>
+          <p>Platzhalter für den ersten Spielbericht der neuen Saison. Hier steht später eine kurze Zusammenfassung mit Ergebnis und Torschützen.</p>
+          <a class="mehr" href="#aktuelles">Weiterlesen →</a>
+        </div>
+      </article>
+      <article class="karte">
+        <div class="bild"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="32" cy="32" r="26"/><path d="M32 6c-6 10-6 22 0 26 8 4 20 2 26-6M32 32c-10 4-16 14-14 24M32 32c6 8 18 10 26 4"/></svg></div>
+        <div class="inhalt">
+          <time><i class="ph">TT.MM.2026</i> · Volleyball</time>
+          <h3><i class="ph">Saisonstart in der Bezirksliga</i></h3>
+          <p>Platzhalter für Neuigkeiten der Volleyballer, zum Beispiel Spieltagsergebnisse oder den aktuellen Tabellenplatz.</p>
+          <a class="mehr" href="#aktuelles">Weiterlesen →</a>
+        </div>
+      </article>
+      <article class="karte">
+        <div class="bild"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="8" y="12" width="48" height="44" rx="5"/><path d="M8 24h48M20 6v12M44 6v12M18 34h8M28 34h8M38 34h8M18 44h8M28 44h8"/></svg></div>
+        <div class="inhalt">
+          <time><i class="ph">TT.MM.2026</i> · Verein</time>
+          <h3><i class="ph">Termin: Mitgliederversammlung</i></h3>
+          <p>Platzhalter für Vereinstermine wie Mitgliederversammlung, Sportfest, Arbeitseinsatz im Sportzentrum oder Weihnachtsfeier.</p>
+          <a class="mehr" href="#aktuelles">Weiterlesen →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="abteilungen" id="abteilungen">
+  <div class="wrap">
+    <span class="eyebrow">Abteilungen</span>
+    <h2>Drei Sportarten, ein Verein</h2>
+    <p class="lead">Wer mitmachen möchte, kommt einfach zum Training der jeweiligen Abteilung vorbei. Ein Probetraining ist jederzeit möglich.</p>
+
+    <article class="abt" id="fussball">
+      <div class="abt-kopf">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="32" cy="32" r="26"/><path d="M32 18l10 7-4 12H26l-4-12z"/><path d="M32 6v12M42 25l12-4M38 37l7 10M26 37l-7 10M22 25l-12-4"/></svg>
+        <div>
+          <h3>Fußball</h3>
+          <p>Herrenmannschaft in der Kreisklasse, Nachwuchs in Spielgemeinschaften mit Nachbarvereinen. Heimspiele im Sportzentrum Mittelherwigsdorf.</p>
+        </div>
+      </div>
+      <div class="abt-inhalt">
+        <div>
+          <h4>Training</h4>
+          <div class="zeiten">
+            <div class="zeit"><b>Herren</b><span>Donnerstag, 19:00–20:30 Uhr · Sportzentrum</span></div>
+            <div class="zeit"><b>Nachwuchs</b><span><i class="ph">Tag/Uhrzeit je Altersklasse</i></span></div>
+          </div>
+        </div>
+        <div>
+          <h4>Mannschaften</h4>
+          <ul>
+            <li>Herren (SpG) · Kreisklasse <i class="ph">Staffel 2026/27</i></li>
+            <li>Nachwuchs (C-, D- und E-Junioren) in Spielgemeinschaften, u. a. mit dem ESV Lok Zittau</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ansprechpartner</h4>
+          <ul>
+            <li>Marcel Müller (Trainer Herren)</li>
+            <li>Gerold Vorbach</li>
+            <li>Nachwuchs: <i class="ph">Name</i></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="abt" id="volleyball">
+      <div class="abt-kopf">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="32" cy="32" r="26"/><path d="M32 6c-6 10-6 22 0 26 8 4 20 2 26-6M32 32c-10 4-16 14-14 24M32 32c6 8 18 10 26 4"/></svg>
+        <div>
+          <h3>Volleyball</h3>
+          <p>Seit 2002 im Verein: eine Herrenmannschaft im Ligabetrieb und eine Hobbymannschaft für alle, die einfach gern spielen.</p>
+        </div>
+      </div>
+      <div class="abt-inhalt">
+        <div>
+          <h4>Training</h4>
+          <div class="zeiten">
+            <div class="zeit"><b>Herren</b><span><i class="ph">Tag, Uhrzeit</i> · <i class="ph">Halle</i></span></div>
+            <div class="zeit"><b>Hobbymannschaft</b><span><i class="ph">Tag, Uhrzeit</i> · <i class="ph">Halle</i></span></div>
+          </div>
+        </div>
+        <div>
+          <h4>Mannschaften</h4>
+          <ul>
+            <li>Herren · Bezirksliga Ost <i class="ph">bitte prüfen</i></li>
+            <li>Hobbymannschaft · regelmäßiges Training, kein Ligabetrieb</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ansprechpartner</h4>
+          <ul><li>Maik Ketzler (Gründer der Abteilung)</li></ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="abt" id="gymnastik">
+      <div class="abt-kopf">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="32" cy="12" r="6"/><path d="M32 18v20M18 26l14 4 14-4M32 38l-10 18M32 38l10 18"/></svg>
+        <div>
+          <h3>Gymnastik</h3>
+          <p>Fit bleiben in netter Runde: Zirkeltraining mit Elementen aus Callanetics, Pilates und Yoga für Frauen jeden Alters.</p>
+        </div>
+      </div>
+      <div class="abt-inhalt">
+        <div>
+          <h4>Training</h4>
+          <div class="zeiten">
+            <div class="zeit"><b>Frauen</b><span>Montag, 19:00–20:00 Uhr · Turnhalle Mittelherwigsdorf</span></div>
+          </div>
+        </div>
+        <div>
+          <h4>Gut zu wissen</h4>
+          <ul>
+            <li>Rund 15 bis 24 Frauen trainieren regelmäßig mit.</li>
+            <li>Gymnastikmatten sind in der Halle vorhanden.</li>
+            <li>Bitte mitbringen: Theraband und eine gefüllte Wasserflasche.</li>
+            <li>Eine Schnupperstunde ist jederzeit möglich.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ansprechpartnerin</h4>
+          <ul><li><i class="ph">Name</i></li></ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="verein">
+  <div class="wrap zwei">
+    <div>
+      <span class="eyebrow">Verein</span>
+      <h2>Ein Dorfverein mit langer Geschichte</h2>
+      <p class="lead">Der SV 90 Traktor Mittelherwigsdorf e. V. ist ein Sportverein mit rund 150 Mitgliedern in der südlichen Oberlausitz, direkt vor den Toren Zittaus. Zu Hause sind wir im Sportzentrum Mittelherwigsdorf. Hier wird trainiert, gespielt und gefeiert.</p>
+      <div class="vorstand">
+        <div class="person"><div class="av">JF</div><b>Jan Franze</b><span>Vorsitzender</span></div>
+        <div class="person"><div class="av">GH</div><b>G. Häntsch-Wißner</b><span>Vorstand · <i class="ph">Funktion</i></span></div>
+        <div class="person"><div class="av">MK</div><b>Maik Ketzler</b><span>Vorstand · <i class="ph">Funktion</i></span></div>
+      </div>
+    </div>
+
+    <div class="mitmachen" id="mitmachen">
+      <h3>Mitmachen</h3>
+      <p>Egal ob Anfänger, Wiedereinsteiger oder erfahrener Spieler: Bei uns ist jeder willkommen.</p>
+      <ol class="schritte">
+        <li><div><b>Probetraining</b><span>Einfach zu den Trainingszeiten vorbeikommen oder vorher kurz melden.</span></div></li>
+        <li><div><b>Kennenlernen</b><span>Ein paar Mal mittrainieren, ganz unverbindlich.</span></div></li>
+        <li><div><b>Mitglied werden</b><span>Aufnahmeantrag ausfüllen und beim Training abgeben.</span></div></li>
+      </ol>
+      <table class="beitraege" aria-label="Mitgliedsbeiträge">
+        <tr><td>Erwachsene</td><td><i class="ph">€ / Monat</i></td></tr>
+        <tr><td>Kinder &amp; Jugendliche</td><td><i class="ph">€ / Monat</i></td></tr>
+        <tr><td>Familien / Ermäßigt</td><td><i class="ph">€ / Monat</i></td></tr>
+      </table>
+      <div class="hero-btns">
+        <a class="btn btn-weiss" href="#kontakt">Probetraining anfragen</a>
+        <a class="btn btn-rand" href="#mitmachen" aria-disabled="true">Aufnahmeantrag (PDF) <i class="ph">folgt</i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chronik" id="chronik">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#b9bcff">Chronik</span>
+    <h2>Von 1863 bis heute</h2>
+    <p class="lead">Über 160 Jahre Sport in Mittelherwigsdorf, vom Kunstradfahren und Turnen bis zum Ligabetrieb in Fußball und Volleyball.</p>
+    <ol class="zeitstrahl">
+      <li><span class="jahr">1863</span><div><h3>Die Anfänge</h3><p>Der Sport in Mittelherwigsdorf beginnt. Die ersten hundert Jahre sind vor allem vom damals beliebten Kunstradfahren und vom Turnen geprägt.</p></div></li>
+      <li><span class="jahr">1960er</span><div><h3>Fußball kommt ins Dorf</h3><p>Unter dem Dach der BSG Traktor Mittelherwigsdorf wird eine Fußballsektion gegründet. Umkleiden und Waschräume stellt vorübergehend das Feierabendheim zur Verfügung.</p></div></li>
+      <li><span class="jahr">1965</span><div><h3>Erste Punktspiele</h3><p>Am 5. September 1965 startet die erste Fußballmannschaft von Mittelherwigsdorf in der 2. Kreisklasse in den Punktspielbetrieb.</p></div></li>
+      <li><span class="jahr">1970</span><div><h3>Ein eigenes Sportzentrum</h3><p>Nach dem Bau von Sportplatz, Umkleideräumen und Vereinsraum werden der Sportplatz und die neue Turnhalle an der Schule Mittelherwigsdorf feierlich eingeweiht.</p></div></li>
+      <li><span class="jahr">1990</span><div><h3>Neubeginn als SV 90 Traktor</h3><p>Nach der Wende gründet sich der Verein als SV 90 Traktor Mittelherwigsdorf neu. Der Name „Traktor“ bleibt als Erbe der BSG erhalten.</p></div></li>
+      <li><span class="jahr">2000</span><div><h3>Gemeinsam stärker</h3><p>Weil es immer weniger Kinder und Jugendliche gibt, beginnt die Zusammenarbeit mit dem ESV Lok Zittau. Im selben Jahr entsteht auch eine Spielgemeinschaft bei den Herren.</p></div></li>
+      <li><span class="jahr">2002</span><div><h3>Volleyball wird Abteilung</h3><p>Maik Ketzler gründet die Volleyballabteilung. Die bestehende Hobby-Volleyballgruppe wird dabei integriert.</p></div></li>
+      <li><span class="jahr">Heute</span><div><h3>Drei Abteilungen, ein Verein</h3><p>Fußball, Volleyball und Gymnastik mit rund 150 Mitgliedern. Und der Traktor rollt weiter.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="sportzentrum">
+  <div class="wrap platz">
+    <div class="feld" role="img" aria-label="Illustration eines Fußballfelds">
+      <svg viewBox="0 0 105 68" fill="none" stroke="rgba(255,255,255,.85)" stroke-width=".5">
+        <defs><pattern id="streifen" width="15" height="68" patternUnits="userSpaceOnUse"><rect width="7.5" height="68" fill="rgba(255,255,255,.06)" stroke="none"/></pattern></defs>
+        <rect width="105" height="68" fill="url(#streifen)" stroke="none"/>
+        <rect x="3" y="3" width="99" height="62"/><line x1="52.5" y1="3" x2="52.5" y2="65"/><circle cx="52.5" cy="34" r="9.15"/><circle cx="52.5" cy="34" r=".6" fill="#fff"/>
+        <rect x="3" y="13.85" width="16.5" height="40.3"/><rect x="3" y="24.85" width="5.5" height="18.3"/><rect x="85.5" y="13.85" width="16.5" height="40.3"/><rect x="96.5" y="24.85" width="5.5" height="18.3"/>
+        <path d="M19.5 26.7a9.15 9.15 0 0 1 0 14.6M85.5 26.7a9.15 9.15 0 0 0 0 14.6"/>
+      </svg>
+    </div>
+    <div>
+      <span class="eyebrow">Sportzentrum</span>
+      <h2>Unser Zuhause</h2>
+      <p class="lead">Das Sportzentrum Mittelherwigsdorf ist seit 1970 die Heimat des Vereins, mit Rasenplatz, Flutlicht und Vereinsraum.</p>
+      <div class="ausstattung">
+        <div><b>Naturrasen</b><span>Hauptplatz</span></div>
+        <div><b>Flutlicht</b><span>für Training &amp; Abendspiele</span></div>
+        <div><b>ca. 500</b><span>Zuschauerplätze</span></div>
+        <div><b>2. Platz</b><span>Unterer Rasenplatz</span></div>
+      </div>
+      <p><b>Sportzentrum 1, 02763 Mittelherwigsdorf</b></p>
+      <p style="margin-top:16px"><a class="btn btn-blau" href="https://www.openstreetmap.org/search?query=Sportzentrum%201%2C%2002763%20Mittelherwigsdorf" target="_blank" rel="noopener">Route planen</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="sponsoren" id="sponsoren">
+  <div class="wrap">
+    <span class="eyebrow">Partner</span>
+    <h2>Unsere Sponsoren</h2>
+    <p class="lead">Ohne die Unterstützung von Unternehmen aus der Region wären Trikots, Spielbetrieb und Nachwuchsarbeit nicht möglich. Danke!</p>
+    <div class="logos">
+      <div>Sponsor-Logo</div><div>Sponsor-Logo</div><div>Sponsor-Logo</div><div>Sponsor-Logo</div>
+    </div>
+    <div class="sponsor-cta">
+      <p>Sie möchten den Sport in Mittelherwigsdorf unterstützen?</p>
+      <a class="btn btn-blau" href="mailto:kontakt@sv90traktor.de?subject=Sponsoring%20SV%2090%20Traktor">Sponsor werden</a>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt">
+  <div class="wrap">
+    <span class="eyebrow">Kontakt</span>
+    <h2>Schreib uns</h2>
+    <p class="lead">Fragen zum Training, zur Mitgliedschaft oder zum Sponsoring? Wir melden uns.</p>
+    <div class="kontakt-grid">
+      <div class="kk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <h3>E-Mail</h3>
+        <p><a href="mailto:kontakt@sv90traktor.de">kontakt@sv90traktor.de</a></p>
+      </div>
+      <div class="kk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg>
+        <h3>Telefon</h3>
+        <p><a href="tel:+4917656950879">0176 56950879</a></p>
+      </div>
+      <div class="kk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <h3>Anschrift</h3>
+        <p>SV 90 Traktor Mittelherwigsdorf e. V.<br>Sportzentrum 1<br>02763 Mittelherwigsdorf</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fuss">
+      <div>
+        <a class="marke" href="#start"><img src="assets/logo.png" alt="" width="60" height="60"><div><b>SV 90 Traktor</b><span>Mittelherwigsdorf e. V.</span></div></a>
+        <p style="margin-top:16px">Fußball, Volleyball und Gymnastik in der südlichen Oberlausitz. Sportlich aktiv seit 1863.</p>
+      </div>
+      <div>
+        <h4>Verein</h4>
+        <ul>
+          <li><a href="#abteilungen">Abteilungen</a></li>
+          <li><a href="#chronik">Chronik</a></li>
+          <li><a href="#mitmachen">Mitglied werden</a></li>
+          <li><a href="#sponsoren">Sponsoren</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://www.fussball.de/verein/sv-90-traktor-mittelherwigsdo-sachsen/-/id/00ES8GNBSK00000DVV0AG08LVUPGND5I" target="_blank" rel="noopener">Spielpläne auf fussball.de</a></li>
+          <li><a href="https://www.mittelherwigsdorf.de" target="_blank" rel="noopener">Gemeinde Mittelherwigsdorf</a></li>
+          <li><a href="impressum/">Impressum</a></li>
+          <li><a href="datenschutz/">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="unten">
+      <span>© <span id="jahr">2026</span> SV 90 Traktor Mittelherwigsdorf e. V.</span>
+      <span>Website: <a href="https://www.thatsite.de" target="_blank" rel="noopener">Thatsite!</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const burger=document.querySelector('.burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>{const offen=menu.classList.toggle('offen');burger.setAttribute('aria-expanded',offen);burger.setAttribute('aria-label',offen?'Menü schließen':'Menü öffnen')});
+menu.addEventListener('click',e=>{if(e.target.closest('a')){menu.classList.remove('offen');burger.setAttribute('aria-expanded','false')}});
+document.getElementById('jahr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
