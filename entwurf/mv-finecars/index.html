@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M.V.FineCars Görlitz – Fahrzeuge, Werkstatt &amp; Ankauf</title>
+<meta name="description" content="M.V.FineCars – Matthias Volprich GmbH in Görlitz: EU-Neuwagen bis Top-Gebrauchtwagen, Fahrzeugsuche, Inzahlungnahme und typenfreie Meisterwerkstatt.">
+<!-- Entwurf von Thatsite! – nicht indexieren, bis der Kunde freigibt -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0c0d0f">
+<!--
+  Entwurf: M.V.FineCars – Showroom-Website
+  • Fahrzeuge anpassen  → FAHRZEUGE (im <script> ganz unten). Aktuell PLATZHALTER,
+    der echte Bestand kommt von https://home.mobile.de/VOLPRICH.
+  • Fahrzeugformen      → KAROSSEN (limousine, kombi, suv, coupe, cabrio, kompakt)
+  • Farben              → :root
+  Vor Livegang prüfen: Hausnummer (Verzeichnisse nennen 32c und 27f), Öffnungszeiten,
+  Impressum/Datenschutz verlinken.
+-->
+<style>
+:root{
+  --bg:#0c0d0f;
+  --bg-2:#131518;
+  --line:#2a2d32;
+  --text:#ece8e1;
+  --muted:#8f8c86;
+  --gold:#c9a66b;
+  --gold-2:#e2c793;
+  --paper:#f3f0ea;
+  --paper-2:#e8e3da;
+  --ink:#16171a;
+  --ink-muted:#5f5c57;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,.9,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;overflow-x:hidden}
+a{color:inherit}
+img,svg{display:block}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;transition:transform .3s var(--ease),background .3s,color .3s,border-color .3s}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:var(--gold);color:#111}
+.btn-gold:hover{background:var(--gold-2)}
+.btn-line{border:1px solid currentColor;color:inherit}
+.btn-line:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ===== Header ===== */
+.top{position:fixed;inset:0 0 auto;z-index:50;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+.top.solid{background:rgba(12,13,15,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.logo{display:flex;align-items:baseline;gap:8px;text-decoration:none;white-space:nowrap}
+.logo small{font:700 11px/1 var(--mono);letter-spacing:.18em;color:var(--gold)}
+.logo b{font:400 24px/1 var(--serif);font-style:italic;letter-spacing:-.01em}
+.logo b span{font:700 22px/1 var(--sans);font-style:normal;letter-spacing:.02em}
+.nav{display:flex;gap:28px;font-size:14px}
+.nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+.nav a:hover{color:var(--text)}
+.top .call{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;text-decoration:none;padding:10px 16px;border:1px solid var(--line);border-radius:999px}
+.top .call:hover{border-color:var(--gold);color:var(--gold-2)}
+@media (max-width:900px){.nav{display:none}}
+@media (max-width:420px){.top .call span{display:none}}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:120px 0 72px;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(60% 50% at 70% 30%,rgba(201,166,107,.16),transparent 70%),
+  linear-gradient(transparent 0 calc(100% - 1px),var(--line) 0) 0 0/100% 80px,
+  linear-gradient(90deg,transparent 0 calc(100% - 1px),var(--line) 0) 0 0/80px 100%;
+  mask-image:radial-gradient(90% 80% at 60% 40%,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(90% 80% at 60% 40%,#000 30%,transparent 80%)}
+.hero-giant{position:absolute;z-index:-1;right:-2vw;top:14vh;font:italic 400 clamp(120px,24vw,380px)/.8 var(--serif);color:transparent;-webkit-text-stroke:1px rgba(236,232,225,.09);letter-spacing:-.04em;pointer-events:none;user-select:none}
+.hero h1{font-size:clamp(44px,8.4vw,124px);line-height:.92;letter-spacing:-.035em;font-weight:800;text-transform:uppercase;margin:18px 0 28px}
+.hero h1 em{font-family:var(--serif);font-weight:400;text-transform:none;color:var(--gold-2);letter-spacing:-.02em}
+.hero-row{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end;justify-content:space-between}
+.hero p.lead{max-width:520px;color:#bdb8b0;font-size:clamp(16px,1.6vw,19px)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.facts{display:grid;grid-template-columns:repeat(3,auto);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(19,21,24,.6)}
+.facts div{padding:18px 22px;border-left:1px solid var(--line)}
+.facts div:first-child{border-left:0}
+.facts b{display:block;font-size:26px;letter-spacing:-.02em}
+.facts b i{font-style:normal;color:var(--gold)}
+.facts span{font-size:12px;color:var(--muted)}
+@media (max-width:640px){.facts{grid-template-columns:1fr 1fr}.facts div:nth-child(3){grid-column:span 2;border-left:0;border-top:1px solid var(--line)}}
+.scrollcue{display:flex;align-items:center;gap:12px;margin-top:44px;font:11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.scrollcue i{width:44px;height:1px;background:var(--muted);position:relative;overflow:hidden}
+.scrollcue i::after{content:"";position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{to{transform:translateX(100%)}}
+
+/* ===== Showroom: Fahrzeuge fahren seitlich auf die gezeichnete Bühne ===== */
+.showroom{position:relative;background:var(--bg)}
+.sr-sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:minmax(0,1fr);padding:88px 0 28px}
+.sr-sticky::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(42% 60% at 50% 46%,rgba(201,166,107,var(--spot,.05)),transparent 70%);transition:background .2s}
+.sr-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;position:relative;z-index:2}
+.sr-head h2{font-size:clamp(22px,3vw,36px);letter-spacing:-.02em;font-weight:700;margin-top:8px}
+.sr-count{font:12px/1 var(--mono);letter-spacing:.14em;color:var(--muted);text-align:right}
+.sr-count b{display:block;font:400 clamp(28px,4vw,44px)/1 var(--serif);font-style:italic;color:var(--text);letter-spacing:0;margin-bottom:6px}
+.sr-dots{display:flex;gap:6px;justify-content:flex-end;margin-top:10px}
+.sr-dots i{width:18px;height:2px;background:var(--line);transition:background .3s,width .3s}
+.sr-dots i.on{background:var(--gold);width:30px}
+
+.sr-stagebox{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;min-width:0}
+.stage{position:relative;flex:none;width:min(1100px,96vw,calc((100svh - 330px) * 2.27));aspect-ratio:1000/440}
+.stage-floor{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.stage-floor text{font:600 9px var(--mono);letter-spacing:.2em;fill:#5d5a55}
+.car{position:absolute;left:14%;top:20.45%;width:72%;will-change:transform;visibility:hidden}
+.car.on{visibility:visible}
+.car svg{width:100%;height:auto;overflow:visible}
+.car .dim{transition:opacity .3s}
+
+.sr-info{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;transition:opacity .2s}
+.sr-title .sr-make{font:12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.sr-title h3{font-size:clamp(26px,4vw,52px);line-height:1;letter-spacing:-.03em;font-weight:800;margin:10px 0 14px}
+.sr-specs{display:flex;flex-wrap:wrap;gap:8px}
+.sr-specs span{font-size:13px;color:#cfcac2;border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:rgba(19,21,24,.7)}
+.sr-buy{text-align:right}
+.sr-price{font:400 clamp(30px,4.2vw,54px)/1 var(--serif);letter-spacing:-.01em}
+.sr-price small{display:block;font:12px/1.4 var(--sans);color:var(--muted);margin-top:8px}
+.sr-buy .btn{margin-top:16px}
+.sr-hint{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font:11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);transition:opacity .3s;white-space:nowrap}
+@media (max-width:760px){
+  .sr-sticky{padding:84px 0 20px}
+  /* Podest darf seitlich angeschnitten sein, damit das Fahrzeug fast die volle Breite nutzt */
+  .stage{width:min(128vw,calc((100svh - 380px) * 2.27))}
+  .sr-info{grid-template-columns:1fr;gap:14px}
+  .sr-buy{text-align:left;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .sr-buy .btn{margin-top:0;padding:12px 18px}
+  .sr-specs span{font-size:12px;padding:5px 10px}
+  .stage-floor text{display:none}
+  .sr-dots{display:none}
+  .sr-hint{display:none}
+}
+
+/* ===== Bestand (Übersicht) ===== */
+.fleet{padding:110px 0;background:var(--bg-2);border-top:1px solid var(--line)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+.sec-head h2{font-size:clamp(32px,5vw,64px);line-height:.98;letter-spacing:-.03em;font-weight:800;text-transform:uppercase;margin-top:14px}
+.sec-head h2 em{font-family:var(--serif);font-weight:400;text-transform:none}
+.sec-head p{max-width:420px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:20px;padding:22px;background:var(--bg);display:flex;flex-direction:column;transition:border-color .3s,transform .4s var(--ease)}
+.card:hover{border-color:#4a4740;transform:translateY(-4px)}
+.card .pic{border-radius:14px;background:radial-gradient(70% 60% at 50% 70%,#1d2024,#121417);padding:22px 8px 6px;margin-bottom:18px;border:1px solid #1d1f23}
+.card .make{font:11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.card h3{font-size:21px;letter-spacing:-.02em;margin:8px 0 12px;line-height:1.15}
+.card ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:13px;color:#bdb8b0;margin-bottom:18px}
+.card ul li::before{content:"— ";color:#4a4740}
+.card .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:16px}
+.card .price{font:400 26px/1 var(--serif)}
+.card button{all:unset;cursor:pointer;font-size:13px;font-weight:600;color:var(--gold-2);border-bottom:1px solid transparent}
+.card button:hover{border-color:currentColor}
+.card button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.fleet-more{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:36px;padding:26px 28px;border:1px dashed #3a3c40;border-radius:20px}
+.fleet-more p{color:var(--muted);max-width:640px}
+.fleet-more strong{color:var(--text)}
+
+/* ===== Leistungen (hell) ===== */
+.light{background:var(--paper);color:var(--ink)}
+.light .sec-head p{color:var(--ink-muted)}
+.light .eyebrow{color:#9a7639}
+.services{padding:120px 0}
+.svc{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #d6d0c5}
+.svc article{padding:34px 30px 38px 0;border-bottom:1px solid #d6d0c5}
+.svc article:not(:nth-child(3n+1)){padding-left:30px;border-left:1px solid #d6d0c5}
+.svc .ico{width:44px;height:44px;margin-bottom:22px;color:#9a7639}
+.svc h3{font-size:22px;letter-spacing:-.02em;margin-bottom:10px}
+.svc p{color:var(--ink-muted);font-size:15px}
+.svc .no{font:11px/1 var(--mono);letter-spacing:.15em;color:#a9a296;float:right}
+@media (max-width:900px){
+  .svc{grid-template-columns:1fr 1fr}
+  .svc article{padding:30px 20px 32px 0!important;border-left:0!important}
+  .svc article:nth-child(2n){padding-left:20px!important;border-left:1px solid #d6d0c5!important}
+}
+@media (max-width:600px){.svc{grid-template-columns:1fr}.svc article:nth-child(2n){padding-left:0!important;border-left:0!important}}
+
+.trade{margin-top:70px;border-radius:26px;background:var(--ink);color:var(--text);padding:48px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.trade::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:1px solid rgba(201,166,107,.25);box-shadow:0 0 0 60px rgba(201,166,107,.04),0 0 0 120px rgba(201,166,107,.03)}
+.trade h3{font-size:clamp(28px,3.6vw,44px);letter-spacing:-.03em;line-height:1.02}
+.trade h3 em{font-family:var(--serif);font-weight:400;color:var(--gold-2)}
+.trade p{color:#bdb8b0;margin-top:14px}
+.trade ol{list-style:none;counter-reset:s;display:grid;gap:14px;position:relative;z-index:1}
+.trade li{counter-increment:s;display:flex;gap:14px;align-items:baseline;font-size:15px}
+.trade li::before{content:"0" counter(s);font:12px/1 var(--mono);color:var(--gold)}
+.trade .btn{margin-top:26px}
+@media (max-width:800px){.trade{grid-template-columns:1fr;padding:32px 24px}}
+
+/* ===== Bewertungen ===== */
+.reviews{padding:120px 0;border-top:1px solid var(--line);position:relative;overflow:hidden}
+.rv{display:grid;grid-template-columns:auto 1fr;gap:70px;align-items:center}
+.rv-score{font:400 clamp(110px,16vw,210px)/.8 var(--serif);letter-spacing:-.04em}
+.rv-score sup{font-size:.25em;vertical-align:top;color:var(--muted);margin-left:6px}
+.stars{display:flex;gap:6px;margin:22px 0 10px;color:var(--gold)}
+.stars svg{width:24px;height:24px}
+.rv-meta{color:var(--muted);font-size:14px}
+.rv h2{font-size:clamp(30px,4.4vw,56px);line-height:1;letter-spacing:-.03em;font-weight:800;text-transform:uppercase;margin:14px 0 20px}
+.rv h2 em{font-family:var(--serif);font-weight:400;text-transform:none;color:var(--gold-2)}
+.rv p{color:#bdb8b0;max-width:560px}
+.rv-tags{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 30px}
+.rv-tags span{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;color:#cfcac2}
+@media (max-width:800px){.rv{grid-template-columns:1fr;gap:30px}}
+
+/* ===== Kontakt ===== */
+.contact{padding:120px 0}
+.ct{display:grid;grid-template-columns:1.1fr 1fr;gap:28px}
+.ct-card{border:1px solid #d6d0c5;border-radius:24px;padding:36px;background:#fbf9f5}
+.ct-card h3{font-size:13px;font-family:var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#9a7639;margin-bottom:16px;font-weight:600}
+.ct-big{font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;font-weight:700;line-height:1.15;text-decoration:none;display:inline-block}
+.ct-big:hover{color:#9a7639}
+.ct-row{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:30px;padding-top:26px;border-top:1px solid #e3ddd2}
+.ct-row div span{display:block;font-size:12px;color:var(--ink-muted);margin-bottom:4px}
+.ct-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.light .btn-line:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.hours{width:100%;border-collapse:collapse;font-size:15px}
+.hours td{padding:12px 0;border-bottom:1px solid #e3ddd2}
+.hours td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.hours tr.today td{font-weight:700}
+.hours tr.today td:first-child::after{content:"  · heute";font-weight:400;color:#9a7639;font-size:13px}
+.ct-note{font-size:12px;color:var(--ink-muted);margin-top:14px}
+.map{margin-top:22px;border-radius:16px;overflow:hidden;border:1px solid #e3ddd2;background:#efebe3}
+.map svg{width:100%;height:auto}
+@media (max-width:860px){.ct{grid-template-columns:1fr}.ct-card{padding:26px}.ct-row{grid-template-columns:1fr}}
+
+/* ===== Footer ===== */
+footer{padding:56px 0 90px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+footer nav{display:flex;gap:22px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--text)}
+
+.draft{position:fixed;left:16px;bottom:16px;z-index:60;font:11px/1.35 var(--mono);letter-spacing:.06em;background:#1b1d21;border:1px solid #3a3c40;color:#cfcac2;padding:10px 14px;border-radius:12px;max-width:min(320px,calc(100% - 32px));box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.draft b{color:var(--gold-2)}
+.draft button{all:unset;cursor:pointer;margin-left:8px;color:var(--muted)}
+@media (max-width:760px){.draft{left:auto;right:12px;bottom:12px;padding:7px 10px}.draft span{display:none}}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scrollcue i::after{animation:none}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<!-- Gemeinsame Verläufe für alle Fahrzeugzeichnungen -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="g-shade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".38"/>
+    <stop offset=".32" stop-color="#fff" stop-opacity=".06"/>
+    <stop offset=".55" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".5"/>
+  </linearGradient>
+  <linearGradient id="g-glass" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#3b4450"/>
+    <stop offset=".45" stop-color="#151a20"/>
+    <stop offset=".55" stop-color="#2a313a"/>
+    <stop offset="1" stop-color="#0b0d10"/>
+  </linearGradient>
+  <radialGradient id="g-rim" cx=".4" cy=".35" r=".8">
+    <stop offset="0" stop-color="#f4f4f2"/>
+    <stop offset=".6" stop-color="#a9abad"/>
+    <stop offset="1" stop-color="#5d6064"/>
+  </radialGradient>
+  <radialGradient id="g-shadow" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#000" stop-opacity=".85"/>
+    <stop offset=".7" stop-color="#000" stop-opacity=".35"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="g-head" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#cfd6dc"/>
+    <stop offset="1" stop-color="#ffffff"/>
+  </linearGradient>
+  <linearGradient id="g-plate" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#1a1c20"/>
+    <stop offset="1" stop-color="#0f1013"/>
+  </linearGradient>
+  <linearGradient id="g-edge" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#c9a66b" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#c9a66b" stop-opacity=".9"/>
+    <stop offset="1" stop-color="#c9a66b" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="g-lane" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#3a3c40" stop-opacity="0"/>
+    <stop offset=".2" stop-color="#3a3c40"/>
+    <stop offset=".8" stop-color="#3a3c40"/>
+    <stop offset="1" stop-color="#3a3c40" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#start" aria-label="M.V.FineCars – zum Seitenanfang"><small>M.V.</small><b>Fine<span>Cars</span></b></a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="#showroom">Showroom</a>
+      <a href="#bestand">Bestand</a>
+      <a href="#leistungen">Werkstatt &amp; Service</a>
+      <a href="#ankauf">Ankauf</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="call" href="tel:+493581311715">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      <span>03581 311715</span>
+    </a>
+  </div>
+</header>
+
+<main id="start">
+
+<section class="hero">
+  <div class="hero-giant" aria-hidden="true">Fine</div>
+  <div class="wrap">
+    <div class="eyebrow">Autohaus &amp; Meisterwerkstatt · Görlitz</div>
+    <h1>Gute Autos.<br><em>Ehrlich</em> verkauft.</h1>
+    <div class="hero-row">
+      <div>
+        <p class="lead">Von EU-Neuwagen bis zum geprüften Gebrauchten: Bei M.V.FineCars in Görlitz finden Sie Ihr nächstes Auto – und eine typenfreie Meisterwerkstatt, die sich auch danach darum kümmert.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" href="#showroom">Showroom betreten →</a>
+          <a class="btn btn-line" href="tel:+493581311715">Jetzt anrufen</a>
+        </div>
+      </div>
+      <div class="facts" role="list">
+        <div role="listitem"><b>4,9<i>★</i></b><span>auf mobile.de</span></div>
+        <div role="listitem"><b>431</b><span>Kundenbewertungen</span></div>
+        <div role="listitem"><b>Meister</b><span>Werkstatt, typenfrei</span></div>
+      </div>
+    </div>
+    <div class="scrollcue" aria-hidden="true"><i></i>Scrollen – die Fahrzeuge fahren vor</div>
+  </div>
+</section>
+
+<section class="showroom" id="showroom" aria-labelledby="sr-heading">
+  <div class="sr-sticky">
+    <div class="wrap sr-head">
+      <div>
+        <div class="eyebrow">Showroom</div>
+        <h2 id="sr-heading">Bitte vorfahren.</h2>
+      </div>
+      <div class="sr-count" aria-hidden="true"><b id="sr-num">01</b>von <span id="sr-total">06</span> Fahrzeugen<div class="sr-dots" id="sr-dots"></div></div>
+    </div>
+
+    <div class="sr-stagebox">
+      <div class="stage" id="stage">
+        <!-- Die gezeichnete Bühne: Fahrbahn, Podest, Skala, Maßlinien -->
+        <svg class="stage-floor" viewBox="0 0 1000 440" aria-hidden="true" focusable="false">
+          <!-- Fahrbahn (reicht über den Bildrand hinaus) -->
+          <path d="M-2600,304 H3600 M-2600,358 H3600" stroke="url(#g-lane)" stroke-width="1" fill="none"/>
+          <path d="M-2600,331 H3600" stroke="#2a2d32" stroke-width="1" stroke-dasharray="14 18" fill="none"/>
+          <text x="-20" y="296" text-anchor="end">← EINFAHRT</text>
+          <text x="1020" y="296">AUSFAHRT →</text>
+          <!-- Podest -->
+          <ellipse cx="500" cy="338" rx="452" ry="70" fill="#0a0b0d"/>
+          <path d="M48,330 v8 a452,70 0 0 0 904,0 v-8" fill="#121317" stroke="#2a2d32"/>
+          <ellipse cx="500" cy="330" rx="452" ry="70" fill="url(#g-plate)" stroke="#3a3c40"/>
+          <ellipse cx="500" cy="330" rx="452" ry="70" fill="none" stroke="url(#g-edge)" stroke-width="1.4" id="plate-glow" opacity=".3"/>
+          <ellipse cx="500" cy="330" rx="370" ry="57" fill="none" stroke="#25282d"/>
+          <ellipse cx="500" cy="330" rx="270" ry="41" fill="none" stroke="#25282d" stroke-dasharray="3 7"/>
+          <ellipse cx="500" cy="330" rx="140" ry="21" fill="none" stroke="#25282d"/>
+          <path id="ticks" d="" stroke="#55534e" stroke-width="1" fill="none"/>
+          <path d="M500,252 v14 M500,394 v14" stroke="#55534e"/>
+          <text x="512" y="420">PODEST Ø 9 m · M.V. FINECARS</text>
+          <!-- Lichtkegel -->
+          <path id="beam" d="M455,-120 L545,-120 L860,330 L140,330 Z" fill="url(#g-beam)" opacity=".0"/>
+          <defs>
+            <linearGradient id="g-beam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#e2c793" stop-opacity=".22"/>
+              <stop offset="1" stop-color="#e2c793" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div id="cars"></div>
+      </div>
+    </div>
+
+    <div class="wrap sr-info" id="sr-info" aria-live="polite">
+      <div class="sr-title">
+        <div class="sr-make" id="sr-make"></div>
+        <h3 id="sr-model"></h3>
+        <div class="sr-specs" id="sr-specs"></div>
+      </div>
+      <div class="sr-buy">
+        <div class="sr-price" id="sr-price"></div>
+        <a class="btn btn-gold" id="sr-cta" href="tel:+493581311715">Probefahrt anfragen →</a>
+      </div>
+    </div>
+    <div class="sr-hint" id="sr-hint" aria-hidden="true">Weiterscrollen für das nächste Fahrzeug</div>
+  </div>
+</section>
+
+<section class="fleet" id="bestand" aria-labelledby="fleet-heading">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Aktueller Bestand</div><h2 id="fleet-heading">Alle Fahrzeuge<br><em>auf einen Blick.</em></h2></div>
+      <p>Jedes Fahrzeug ist bei uns vor Ort in Görlitz. Sie möchten etwas Bestimmtes? Wir suchen es für Sie – auch als EU-Neuwagen.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="fleet-more reveal">
+      <p><strong>Noch mehr Auswahl:</strong> Unser vollständiger, tagesaktueller Bestand mit allen Bildern und Details steht auf mobile.de.</p>
+      <a class="btn btn-line" href="https://home.mobile.de/VOLPRICH" target="_blank" rel="noopener">Bestand auf mobile.de ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="services light" id="leistungen" aria-labelledby="svc-heading">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Werkstatt &amp; Service</div><h2 id="svc-heading">Alles rund<br>ums <em>Auto.</em></h2></div>
+      <p>Kauf, Finanzierung, Wartung, Reifen: Bei uns bekommen Sie alles aus einer Hand – mit kurzen Wegen und festen Ansprechpartnern.</p>
+    </div>
+    <div class="svc">
+      <article class="reveal"><span class="no">01</span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 30l4-10c1-3 3-4 6-4h16c3 0 5 1 6 4l4 10v8H6z"/><circle cx="14" cy="36" r="4"/><circle cx="34" cy="36" r="4"/><path d="M12 22h24"/></svg>
+        <h3>Neu- &amp; Gebrauchtwagen</h3><p>Von EU-Neuwagen bis zu ausgewählten Top-Gebrauchtwagen – geprüft, gepflegt und mit transparenter Historie.</p></article>
+      <article class="reveal"><span class="no">02</span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="21" cy="21" r="12"/><path d="M30 30l11 11"/><path d="M15 22l4 4 8-8"/></svg>
+        <h3>Fahrzeugsuche</h3><p>Ihr Wunschauto ist nicht im Bestand? Nennen Sie uns Modell, Ausstattung und Budget – wir finden es für Sie.</p></article>
+      <article class="reveal"><span class="no">03</span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 18h28l-6-6M40 30H12l6 6"/></svg>
+        <h3>Inzahlungnahme</h3><p>Ihr bisheriges Fahrzeug nehmen wir in Zahlung oder kaufen es direkt an – nach kostenloser Bewertung vor Ort.</p></article>
+      <article class="reveal"><span class="no">04</span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="6" y="12" width="36" height="24" rx="3"/><path d="M6 19h36M12 29h8"/></svg>
+        <h3>Finanzierung</h3><p>Flexible Finanzierung passend zu Ihrem Budget – wir erstellen Ihnen gern ein unverbindliches Angebot.</p></article>
+      <article class="reveal"><span class="no">05</span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M29 8a9 9 0 0 0-8 12L8 33a3 3 0 0 0 4 4l13-13a9 9 0 0 0 12-8l-5 3-4-1-1-4z"/></svg>
+        <h3>Typenfreie Meisterwerkstatt</h3><p>Inspektion, Reparatur, Diagnose und Vorbereitung zur HU – für alle Marken, ausgeführt von Meisterhand.</p></article>
+      <article class="reveal"><span class="no">06</span>
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="7"/><path d="M24 8v9M24 31v9M8 24h9M31 24h9"/></svg>
+        <h3>Reifenservice</h3><p>Reifenverkauf, Montage und saisonaler Radwechsel – schnell erledigt, auch als Schnellservice.</p></article>
+    </div>
+
+    <div class="trade reveal" id="ankauf">
+      <div>
+        <div class="eyebrow">Ankauf &amp; Inzahlungnahme</div>
+        <h3 style="margin-top:14px">Ihr Auto ist uns<br><em>etwas wert.</em></h3>
+        <p>Kommen Sie vorbei oder rufen Sie an: Wir bewerten Ihr Fahrzeug kostenlos und machen Ihnen ein faires Angebot – ob als Anzahlung für Ihr nächstes Auto oder als direkter Ankauf.</p>
+        <a class="btn btn-gold" href="tel:+493581311715">Bewertung vereinbaren →</a>
+      </div>
+      <ol>
+        <li>Termin per Telefon vereinbaren</li>
+        <li>Fahrzeug kostenlos bewerten lassen</li>
+        <li>Angebot erhalten – unverbindlich</li>
+        <li>Verrechnen oder auszahlen lassen</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" aria-labelledby="rv-heading">
+  <div class="wrap rv">
+    <div class="reveal">
+      <div class="rv-score">4,9<sup>/5</sup></div>
+      <div class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.4 4.7L18.3 22 12 18l-6.3 4 1.7-7.7L2 9.6 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.4 4.7L18.3 22 12 18l-6.3 4 1.7-7.7L2 9.6 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.4 4.7L18.3 22 12 18l-6.3 4 1.7-7.7L2 9.6 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.4 4.7L18.3 22 12 18l-6.3 4 1.7-7.7L2 9.6 9 9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.4 4.7L18.3 22 12 18l-6.3 4 1.7-7.7L2 9.6 9 9z"/></svg></div>
+      <div class="rv-meta">431 Bewertungen auf mobile.de</div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">Kundenstimmen</div>
+      <h2 id="rv-heading">Zufriedene Kunden<br>kommen <em>wieder.</em></h2>
+      <p>Viele unserer Kundinnen und Kunden kaufen nicht ihr erstes Auto bei uns. Was sie in ihren Bewertungen besonders hervorheben:</p>
+      <div class="rv-tags"><span>Geduldige Beratung</span><span>Unkomplizierte Probefahrt</span><span>Einfacher Kaufablauf</span><span>Zulassung inklusive</span><span>Eigene Werkstatt</span></div>
+      <a class="btn btn-line" href="https://www.mobile.de/bewertungen/VOLPRICH" target="_blank" rel="noopener">Alle Bewertungen lesen ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="contact light" id="kontakt" aria-labelledby="ct-heading">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Kontakt &amp; Anfahrt</div><h2 id="ct-heading">Kommen Sie<br><em>vorbei.</em></h2></div>
+      <p>Probefahrt, Werkstatttermin oder einfach eine Frage – rufen Sie uns an oder besuchen Sie uns in Görlitz-Klingewalde.</p>
+    </div>
+    <div class="ct">
+      <div class="ct-card reveal">
+        <h3>Telefon</h3>
+        <a class="ct-big" href="tel:+493581311715">03581 311715</a>
+        <div class="ct-row">
+          <div><span>Adresse</span>M.V.FineCars – Matthias Volprich GmbH<br>Rothenburger Str. 32c<br>02828 Görlitz</div>
+          <div><span>Fax</span>03581 311760</div>
+        </div>
+        <div class="ct-btns">
+          <a class="btn btn-gold" href="tel:+493581311715">Anrufen</a>
+          <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=M.V.FineCars+Rothenburger+Str.+32c+02828+G%C3%B6rlitz" target="_blank" rel="noopener">Route planen ↗</a>
+        </div>
+        <div class="map" aria-hidden="true">
+          <!-- Gezeichnete Lageskizze statt eingebetteter Karte (keine Drittanbieter-Cookies) -->
+          <svg viewBox="0 0 600 220">
+            <rect width="600" height="220" fill="#efebe3"/>
+            <path d="M-10,170 C120,150 220,120 300,112 C380,104 470,70 610,30" stroke="#fff" stroke-width="16" fill="none"/>
+            <path d="M-10,170 C120,150 220,120 300,112 C380,104 470,70 610,30" stroke="#d9d2c4" stroke-width="1" fill="none" stroke-dasharray="8 8"/>
+            <path d="M330,230 C320,170 305,140 300,112 C296,80 300,40 310,-10" stroke="#fff" stroke-width="9" fill="none"/>
+            <path d="M120,-10 C140,60 150,120 140,230" stroke="#f8f6f1" stroke-width="6" fill="none"/>
+            <path d="M440,-10 C430,60 470,150 520,230" stroke="#f8f6f1" stroke-width="6" fill="none"/>
+            <rect x="350" y="122" width="70" height="40" rx="4" fill="#ddd6c9"/>
+            <rect x="200" y="40" width="80" height="44" rx="4" fill="#e3ddd1"/>
+            <rect x="470" y="110" width="60" height="50" rx="4" fill="#e3ddd1"/>
+            <text x="40" y="146" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#8b8478" transform="rotate(-8 40 146)">Rothenburger Straße</text>
+            <circle cx="385" cy="142" r="22" fill="#c9a66b" opacity=".22"/>
+            <circle cx="385" cy="142" r="8" fill="#16171a"/>
+            <circle cx="385" cy="142" r="3" fill="#c9a66b"/>
+            <text x="403" y="118" font-family="Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#16171a">M.V.FineCars</text>
+            <text x="560" y="205" font-family="Helvetica,Arial,sans-serif" font-size="10" fill="#8b8478">N ↑</text>
+          </svg>
+        </div>
+      </div>
+      <div class="ct-card reveal">
+        <h3>Öffnungszeiten</h3>
+        <table class="hours" id="hours">
+          <tr data-d="1"><td>Montag</td><td>08:00 – 18:00</td></tr>
+          <tr data-d="2"><td>Dienstag</td><td>07:00 – 19:00</td></tr>
+          <tr data-d="3"><td>Mittwoch</td><td>07:00 – 19:00</td></tr>
+          <tr data-d="4"><td>Donnerstag</td><td>07:00 – 19:00</td></tr>
+          <tr data-d="5"><td>Freitag</td><td>07:00 – 19:00</td></tr>
+          <tr data-d="6"><td>Samstag</td><td>08:00 – 17:00</td></tr>
+          <tr data-d="0"><td>Sonntag</td><td>geschlossen</td></tr>
+        </table>
+        <p class="ct-note">Werkstatttermine und Probefahrten bitte vorab telefonisch vereinbaren.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>© <span id="year">2026</span> M.V.FineCars – Matthias Volprich GmbH · Görlitz</div>
+    <nav aria-label="Rechtliches"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#kontakt">Kontakt</a></nav>
+  </div>
+</footer>
+
+<div class="draft" id="draft" role="note"><b>Entwurf<span> von Thatsite!</span></b><span> – Fahrzeugdaten sind Platzhalter, der Bestand wird von mobile.de übernommen.</span><button type="button" aria-label="Hinweis schließen" id="draft-x">✕</button></div>
+
+<script>
+/* =====================================================================
+   FAHRZEUGE – PLATZHALTER für den Entwurf.
+   Vor Livegang durch den echten Bestand ersetzen (mobile.de-Export/API).
+   karosse: limousine | kombi | suv | coupe | cabrio | kompakt
+   ===================================================================== */
+const FAHRZEUGE = [
+  {marke:"BMW", modell:"520d Limousine M Sport", karosse:"limousine", farbe:"#1f3a5f", farbname:"Phytonicblau metallic",
+   ez:"03/2021", km:"68.400 km", leistung:"140 kW (190 PS)", kraftstoff:"Diesel", getriebe:"Automatik", preis:"31.900 €", laenge:4963},
+  {marke:"Audi", modell:"A6 Avant 40 TDI quattro", karosse:"kombi", farbe:"#e9e7e2", farbname:"Gletscherweiß metallic",
+   ez:"06/2020", km:"89.150 km", leistung:"150 kW (204 PS)", kraftstoff:"Diesel", getriebe:"S tronic", preis:"29.490 €", laenge:4939},
+  {marke:"Volvo", modell:"XC60 B4 AWD Plus Bright", karosse:"suv", farbe:"#4a4f55", farbname:"Thunder Grey metallic",
+   ez:"09/2022", km:"41.200 km", leistung:"145 kW (197 PS)", kraftstoff:"Diesel Mild-Hybrid", getriebe:"Automatik", preis:"39.900 €", laenge:4708},
+  {marke:"Mercedes-Benz", modell:"C 300 Coupé AMG Line", karosse:"coupe", farbe:"#8e1b24", farbname:"Hyazinthrot metallic",
+   ez:"05/2021", km:"35.700 km", leistung:"190 kW (258 PS)", kraftstoff:"Benzin", getriebe:"9G-Tronic", preis:"38.750 €", laenge:4696},
+  {marke:"BMW", modell:"420i Cabrio Sport Line", karosse:"cabrio", farbe:"#b9bcc0", farbname:"Glaciersilber metallic",
+   ez:"04/2019", km:"52.300 km", leistung:"135 kW (184 PS)", kraftstoff:"Benzin", getriebe:"Automatik", preis:"27.900 €", laenge:4640},
+  {marke:"Volkswagen", modell:"Golf 1.5 eTSI Life", karosse:"kompakt", farbe:"#28473a", farbname:"Dark Moss Green",
+   ez:"07/2022", km:"24.300 km", leistung:"110 kW (150 PS)", kraftstoff:"Benzin Mild-Hybrid", getriebe:"DSG", preis:"23.990 €", laenge:4284}
+];
+
+/* =====================================================================
+   KAROSSEN – gezeichnete Seitenansichten (Front rechts), viewBox 0 0 420 160,
+   Boden bei y=140. r = Radradius, cy = Radmitte, wr/wf = Hinter-/Vorderrad,
+   R = Radlauf, sill = Unterkante Schweller.
+   ===================================================================== */
+const FRONT_STD = {
+  head:'M372,80 C383,82 391,85 396,91 L386,92 C380,90 375,86 370,82 Z',
+  mirror:'M292,67 L304,62 L309,66 L306,70 L295,71 Z'
+};
+const KAROSSEN = {
+  limousine:{r:25,cy:115,sill:122,wr:95,wf:320,R:30,x0:16,x1:400,
+    top:'M24,120 C18,116 16,104 18,94 L22,82 C26,76 40,73 70,72 L112,70 C130,56 150,44 182,40 C205,37 235,37 255,40 C272,44 290,56 306,68 C336,71 366,74 386,80 C396,84 400,96 398,108 C397,116 392,121 384,122',
+    glass:'M120,70 C136,58 154,48 184,45 C205,43 232,43 252,45 C266,48 282,58 296,69 Z',
+    pillars:[[202,8]], doors:['M288,70 C289,90 289,108 287,121','M206,70 L206,121','M128,72 C127,90 127,108 126,121'],
+    handles:[[244,80],[160,80]], tail:'M19,85 L36,82 L36,89 L18,92 Z', shoulder:'M24,87 C120,85 260,83 388,85', ...FRONT_STD},
+  kombi:{r:25,cy:115,sill:122,wr:95,wf:320,R:30,x0:16,x1:400,
+    top:'M24,120 C18,116 16,104 18,94 L20,80 C22,62 28,49 40,44 C70,40 150,37 190,37 L250,38 C270,42 290,55 306,68 C336,71 366,74 386,80 C396,84 400,96 398,108 C397,116 392,121 384,122',
+    glass:'M44,70 C46,58 52,50 64,48 C120,45 200,43 248,44 C264,47 282,58 296,69 Z',
+    pillars:[[202,8],[116,10]], doors:['M288,70 C289,90 289,108 287,121','M206,70 L206,121','M128,72 C127,90 127,108 126,121'],
+    handles:[[244,80],[160,80]], tail:'M18,80 L32,79 L32,92 L17,94 Z', shoulder:'M22,87 C120,85 260,83 388,85',
+    rails:'M56,39 C120,35 200,34 240,35', ...FRONT_STD},
+  suv:{r:29,cy:111,sill:117,wr:98,wf:322,R:34,x0:14,x1:402,
+    top:'M22,118 C16,113 14,100 16,88 L18,70 C20,56 26,44 38,38 C80,32 160,30 200,30 L252,31 C272,34 292,48 306,62 C336,62 372,63 390,67 C400,71 403,86 402,100 C401,112 396,117 386,117',
+    glass:'M44,64 C46,52 52,44 62,42 C120,38 200,37 250,38 C266,41 282,52 294,63 Z',
+    pillars:[[203,9],[122,11]], doors:['M284,64 L283,117','M207,64 L207,117','M134,64 L134,117'],
+    handles:[[244,76],[166,76]], tail:'M17,72 L30,70 L30,86 L16,88 Z', shoulder:'M18,80 C120,78 260,76 392,78',
+    rails:'M54,31 C120,26 200,25 246,27', cladding:true,
+    head:'M378,66 C389,68 397,72 401,78 L390,80 C384,78 379,74 375,69 Z',
+    mirror:'M290,60 L303,55 L308,60 L304,64 L293,65 Z'},
+  coupe:{r:25,cy:115,sill:121,wr:100,wf:318,R:30,x0:18,x1:400,
+    top:'M26,118 C20,114 18,104 20,96 L24,86 C30,80 50,76 80,72 C120,58 160,42 200,38 L236,38 C256,40 274,52 290,64 C330,68 366,72 388,80 C398,84 400,98 398,108 C397,116 392,120 384,121',
+    glass:'M98,70 C132,57 166,45 202,43 L234,43 C250,45 266,55 280,65 Z',
+    pillars:[[174,6]], doors:['M282,66 C283,90 283,108 281,121','M166,70 C164,90 164,108 165,121'],
+    handles:[[188,79]], tail:'M21,88 L40,84 L40,90 L20,94 Z', shoulder:'M26,89 C120,85 260,83 388,85',
+    spoiler:'M24,86 L36,82 L38,84 L26,88 Z',
+    head:'M372,80 C384,82 393,86 397,92 L386,93 C379,91 375,87 370,82 Z',
+    mirror:'M284,64 L296,59 L301,63 L298,67 L287,68 Z'},
+  cabrio:{r:25,cy:115,sill:121,wr:100,wf:318,R:30,x0:18,x1:400,
+    top:'M26,118 C20,114 18,104 20,96 L24,86 C30,80 50,76 80,74 L250,72 C266,70 278,68 290,66 C330,68 366,72 388,80 C398,84 400,98 398,108 C397,116 392,120 384,121',
+    glass:null, open:true,
+    pillars:[], doors:['M282,68 C283,90 283,108 281,121','M168,73 C166,90 166,108 167,121'],
+    handles:[[190,80]], tail:'M21,88 L40,84 L40,90 L20,94 Z', shoulder:'M26,89 C120,85 260,83 388,85',
+    head:'M372,80 C384,82 393,86 397,92 L386,93 C379,91 375,87 370,82 Z',
+    mirror:'M282,64 L294,59 L299,63 L296,67 L285,68 Z'},
+  kompakt:{r:24,cy:116,sill:122,wr:104,wf:312,R:29,x0:40,x1:380,
+    top:'M48,120 C42,116 40,104 42,94 L44,78 C46,60 54,46 68,42 C100,38 160,36 200,36 L238,38 C258,42 278,56 292,68 C320,71 350,74 366,80 C376,84 380,96 378,108 C377,116 372,121 364,122',
+    glass:'M72,68 C74,56 80,48 92,46 C140,43 200,42 236,44 C252,47 268,58 280,68 Z',
+    pillars:[[183,8],[110,16]], doors:['M279,69 L278,122','M187,69 L187,122','M137,69 L137,122'],
+    handles:[[230,80],[154,80]], tail:'M43,80 L56,79 L56,90 L42,92 Z', shoulder:'M46,87 C130,85 260,83 368,85',
+    head:'M352,80 C364,82 372,86 376,92 L366,93 C360,91 355,87 350,82 Z',
+    mirror:'M282,66 L294,61 L299,65 L296,69 L285,70 Z'}
+};
+
+function archPoints(k, wx, R){
+  const dx = Math.sqrt(R*R - Math.pow(k.sill - k.cy, 2));
+  return [wx + dx, wx - dx];
+}
+function bodyPath(k){
+  const [fA, fB] = archPoints(k, k.wf, k.R), [rA, rB] = archPoints(k, k.wr, k.R);
+  const start = k.top.match(/^M\s*([\d.]+)/)[1];
+  return `${k.top} L${fA.toFixed(1)},${k.sill} A${k.R},${k.R} 0 1 0 ${fB.toFixed(1)},${k.sill} L${rA.toFixed(1)},${k.sill} A${k.R},${k.R} 0 1 0 ${rB.toFixed(1)},${k.sill} L${start},${k.sill} Z`;
+}
+function wellPath(k, wx){
+  const R = k.R - .5, [a, b] = archPoints({...k, R}, wx, R);
+  return `M${a.toFixed(1)},${k.sill} A${R},${R} 0 1 0 ${b.toFixed(1)},${k.sill} Z`;
+}
+function wheel(k, wx){
+  const r = k.r, ro = r*.64, ri = r*.17;
+  let spokes = '';
+  for(let i=0;i<5;i++){
+    const a = i*72*Math.PI/180, p = (ang, rad) => `${(Math.cos(a+ang*Math.PI/180)*rad).toFixed(2)},${(Math.sin(a+ang*Math.PI/180)*rad).toFixed(2)}`;
+    spokes += `M${p(-15,ri)} L${p(-6,ro)} L${p(6,ro)} L${p(15,ri)} Z `;
+  }
+  return `<g transform="translate(${wx} ${k.cy})">
+    <circle r="${r}" fill="#121212"/>
+    <circle r="${r-2.5}" fill="none" stroke="#262626" stroke-width="1.4"/>
+    <circle r="${(r*.68).toFixed(1)}" fill="#2a2c2f"/>
+    <rect x="${(-r*.52).toFixed(1)}" y="${(-r*.28).toFixed(1)}" width="${(r*.2).toFixed(1)}" height="${(r*.5).toFixed(1)}" rx="2" fill="#7a1f1f"/>
+    <g class="spin">
+      <path d="${spokes}" fill="url(#g-rim)"/>
+      <circle r="${(r*.66).toFixed(1)}" fill="none" stroke="#c8cacc" stroke-width="1.6"/>
+      <circle r="${(r*.15).toFixed(1)}" fill="#8d9094"/>
+      <circle cx="${(r*.07).toFixed(1)}" r="${(r*.04).toFixed(1)}" fill="#2a2c2f"/>
+    </g>
+  </g>`;
+}
+function carSVG(f, withDim){
+  const k = KAROSSEN[f.karosse], body = bodyPath(k), mid = (k.x0 + k.x1)/2;
+  const len = (f.laenge/1000).toLocaleString('de-DE',{minimumFractionDigits:3}).replace(',', '.') ;
+  let s = `<svg viewBox="0 0 420 160" role="img" aria-label="${f.marke} ${f.modell}, Zeichnung in ${f.farbname}">`;
+  s += `<ellipse cx="${mid}" cy="140" rx="${(k.x1-k.x0)/2+8}" ry="7" fill="url(#g-shadow)"/>`;
+  s += `<g class="body">`;
+  s += `<path d="${wellPath(k,k.wr)}" fill="#08090a"/><path d="${wellPath(k,k.wf)}" fill="#08090a"/>`;
+  s += `<path d="${body}" fill="${f.farbe}"/>`;
+  s += `<path d="${body}" fill="url(#g-shade)"/>`;
+  if(k.cladding){
+    const [fA,fB]=archPoints(k,k.wf,k.R),[rA,rB]=archPoints(k,k.wr,k.R);
+    s += `<path d="M${fA},${k.sill} A${k.R},${k.R} 0 1 0 ${fB},${k.sill} M${rA},${k.sill} A${k.R},${k.R} 0 1 0 ${rB},${k.sill}" fill="none" stroke="#1c1d1f" stroke-width="5"/>`;
+    s += `<path d="M${rA},${k.sill} L${fB},${k.sill} L${fB},${k.sill-6} L${rA},${k.sill-6} Z" fill="#1c1d1f"/>`;
+  } else {
+    const [, fB] = archPoints(k,k.wf,k.R), [rA] = archPoints(k,k.wr,k.R);
+    s += `<path d="M${rA},${k.sill} L${fB},${k.sill} L${fB},${k.sill-4} L${rA},${k.sill-5} Z" fill="#000" opacity=".28"/>`;
+  }
+  if(k.rails) s += `<path d="${k.rails}" stroke="#1d1e20" stroke-width="3" stroke-linecap="round" fill="none"/>`;
+  if(k.glass){
+    s += `<path d="${k.glass}" fill="url(#g-glass)" stroke="#0b0c0e" stroke-width="1.2"/>`;
+    k.pillars.forEach(([x,w]) => s += `<rect x="${x}" y="30" width="${w}" height="44" fill="${f.farbe}"/><rect x="${x}" y="30" width="${w}" height="44" fill="#000" opacity=".55"/>`);
+    // Glas außerhalb der Fensterfläche wieder abdecken (Säulen nur im Fenster sichtbar)
+    s = s.replace(/<rect x="(\d+)" y="30"/g, '<rect clip-path="url(#clip-'+f.karosse+')" x="$1" y="30"');
+    s += `<clipPath id="clip-${f.karosse}"><path d="${k.glass}"/></clipPath>`;
+  }
+  if(k.open){
+    s += `<path d="M86,74 C120,69 230,67 252,71 L250,73 L82,75 Z" fill="#0b0c0e"/>`;
+    s += `<rect x="150" y="52" width="13" height="22" rx="5" fill="#1a1b1d"/><rect x="214" y="52" width="13" height="22" rx="5" fill="#1a1b1d"/>`;
+    s += `<path d="M292,66 L256,43 L249,45 L281,68 Z" fill="url(#g-glass)" stroke="#0b0c0e" stroke-width="1.2"/>`;
+    s += `<path d="M44,80 C60,74 90,72 120,73" stroke="#141516" stroke-width="5" stroke-linecap="round" fill="none"/>`;
+  }
+  if(k.spoiler) s += `<path d="${k.spoiler}" fill="#141516"/>`;
+  s += `<path d="${k.shoulder}" stroke="#fff" stroke-opacity=".22" stroke-width="1" fill="none"/>`;
+  k.doors.forEach(d => s += `<path d="${d}" stroke="#000" stroke-opacity=".38" stroke-width="1" fill="none"/>`);
+  k.handles.forEach(([x,y]) => s += `<rect x="${x}" y="${y}" width="15" height="3.2" rx="1.6" fill="#000" opacity=".35"/><rect x="${x}" y="${y}" width="15" height="1.2" rx=".6" fill="#fff" opacity=".35"/>`);
+  s += `<path d="${k.head}" fill="url(#g-head)"/>`;
+  s += `<path d="${k.tail}" fill="#b3161b"/><path d="${k.tail}" fill="#ff5a4f" opacity=".35" transform="translate(1 -1)"/>`;
+  s += `<path d="${k.mirror}" fill="${f.farbe}"/><path d="${k.mirror}" fill="#000" opacity=".25"/>`;
+  s += `</g>`;
+  s += wheel(k, k.wr) + wheel(k, k.wf);
+  if(withDim){
+    s += `<g class="speed" opacity="0" stroke="#ece8e1" stroke-opacity=".4" stroke-linecap="round">${[[52,150,1.2],[68,90,1],[84,190,1.4],[98,120,1],[110,160,1.2],[126,80,1]].map(([y,l,w]) => `<path d="M${k.x0-12-l},${y} H${k.x0-8}" stroke-width="${w}"/>`).join('')}</g>`;
+    s += `<g class="dim" opacity="0" stroke="#c9a66b" stroke-width=".7" fill="none">
+      <path d="M${k.x0},147 v10 M${k.x1},147 v10 M${k.x0},152 H${mid-30} M${mid+30},152 H${k.x1}"/>
+      <path d="M${k.x0},152 l5,-2.2 v4.4 Z M${k.x1},152 l-5,-2.2 v4.4 Z" fill="#c9a66b" stroke="none"/>
+      <text x="${mid}" y="155" text-anchor="middle" fill="#c9a66b" stroke="none" style="font:600 8px ui-monospace,Menlo,Consolas,monospace;letter-spacing:.1em">${len} mm</text>
+    </g>`;
+  }
+  return s + `</svg>`;
+}
+
+/* ===== Showroom aufbauen ===== */
+const N = FAHRZEUGE.length;
+const carsEl = document.getElementById('cars');
+const cars = FAHRZEUGE.map((f, i) => {
+  const el = document.createElement('div');
+  el.className = 'car';
+  el.innerHTML = carSVG(f, true);
+  el.querySelector('svg').setAttribute('aria-hidden', 'true');
+  carsEl.appendChild(el);
+  return {el, f, k: KAROSSEN[f.karosse], spins: el.querySelectorAll('.spin'), body: el.querySelector('.body'),
+          dim: el.querySelector('.dim'), streaks: el.querySelector('.speed')};
+});
+const pad2 = n => String(n).padStart(2, '0');
+document.getElementById('sr-total').textContent = pad2(N);
+const dotsEl = document.getElementById('sr-dots');
+dotsEl.innerHTML = FAHRZEUGE.map(() => '<i></i>').join('');
+const dots = [...dotsEl.children];
+
+/* ===== Bestandsliste ===== */
+document.getElementById('grid').innerHTML = FAHRZEUGE.map((f, i) => `
+  <article class="card reveal">
+    <div class="pic">${carSVG(f, false)}</div>
+    <div class="make">${f.marke}</div>
+    <h3>${f.modell}</h3>
+    <ul><li>EZ ${f.ez}</li><li>${f.km}</li><li>${f.leistung}</li><li>${f.kraftstoff}</li><li>${f.getriebe}</li><li>${f.farbname.replace(' metallic','')}</li></ul>
+    <div class="foot"><span class="price">${f.preis}</span><button type="button" data-goto="${i}">Im Showroom ansehen →</button></div>
+  </article>`).join('');
+
+/* ===== Scroll-Steuerung =====
+   Jedes Fahrzeug hat einen Scroll-Abschnitt t ∈ [0,1):
+   0 – .30  fährt von links auf die Bühne (bremst ab)
+   .30 – .75 steht im Licht, Daten werden eingeblendet
+   .75 – 1  fährt nach rechts hinaus (beschleunigt)                        */
+const ENTER = .30, LEAVE = .75;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const showroom = document.getElementById('showroom');
+const stage = document.getElementById('stage');
+const sticky = showroom.querySelector('.sr-sticky');
+const info = document.getElementById('sr-info');
+const hint = document.getElementById('sr-hint');
+const ticks = document.getElementById('ticks');
+const beam = document.getElementById('beam');
+const glow = document.getElementById('plate-glow');
+const $ = id => document.getElementById(id);
+const SEG = 1.0;          // Scrollhöhe pro Fahrzeug in Bildschirmhöhen
+const MAXT = N - 1 + (LEAVE - .02);
+
+function sizeShowroom(){ showroom.style.height = `${(N * SEG + 0.25) * innerHeight + 0}px`; }
+sizeShowroom();
+
+let cur = 0, target = 0, shown = -1, raf = 0;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+
+function readTarget(){
+  const r = showroom.getBoundingClientRect();
+  const total = showroom.offsetHeight - innerHeight;
+  target = clamp(-r.top / total, 0, 1) * MAXT;
+}
+
+function drawTicks(rot){
+  let d = '';
+  for(let i = 0; i < 96; i++){
+    const a = (i / 96) * Math.PI * 2 + rot;
+    const s = Math.sin(a);
+    if(s < -.15) continue;                       // Rückseite weglassen, wirkt räumlicher
+    const major = i % 8 === 0, c = Math.cos(a);
+    const o = major ? .93 : .965;
+    d += `M${(500 + 452*c).toFixed(1)},${(330 + 70*s).toFixed(1)} L${(500 + 452*o*c).toFixed(1)},${(330 + 70*o*s).toFixed(1)}`;
+  }
+  ticks.setAttribute('d', d);
+}
+
+function setInfo(i){
+  const f = FAHRZEUGE[i];
+  $('sr-make').textContent = f.marke;
+  $('sr-model').textContent = f.modell;
+  $('sr-specs').innerHTML = [`EZ ${f.ez}`, f.km, f.leistung, f.kraftstoff, f.getriebe].map(x => `<span>${x}</span>`).join('');
+  $('sr-price').innerHTML = `${f.preis}<small>${f.farbname} · inkl. MwSt.</small>`;
+  $('sr-cta').setAttribute('aria-label', `Probefahrt für ${f.marke} ${f.modell} telefonisch anfragen`);
+  $('sr-num').textContent = pad2(i + 1);
+  dots.forEach((d, j) => d.classList.toggle('on', j === i));
+}
+
+function render(){
+  const i = clamp(Math.floor(cur), 0, N - 1);
+  const t = cur - i;
+  if(i !== shown){
+    cars.forEach((c, j) => c.el.classList.toggle('on', j === i));
+    setInfo(i); shown = i;
+  }
+  const c = cars[i];
+  const W = stage.clientWidth * .72;                 // Fahrzeugbreite in px
+  const off = innerWidth / 2 + W / 2 + 40;           // Weg bis aus dem Bild
+  let x = 0, speed = 0, pitch = 0;
+  if(t < ENTER){
+    const u = t / ENTER;
+    x = -off * Math.pow(1 - u, 3);
+    speed = 3 * Math.pow(1 - u, 2);
+    if(u > .55) pitch = Math.sin((u - .55) / .45 * Math.PI) * .9;   // Bremsnicken
+  } else if(t > LEAVE){
+    const u = (t - LEAVE) / (1 - LEAVE);
+    x = off * u * u * u;
+    speed = 3 * u * u;
+    if(u < .45) pitch = -Math.sin(u / .45 * Math.PI) * .7;          // Anfahren, Heck geht runter
+  }
+  const park = smooth(ENTER - .06, ENTER + .02, t) * (1 - smooth(LEAVE - .02, LEAVE + .06, t));
+
+  if(reduce){
+    c.el.style.transform = 'none';
+    c.el.style.opacity = park.toFixed(3);
+  } else {
+    c.el.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+    c.el.style.opacity = 1;
+    const rpx = c.k.r * W / 420;
+    const deg = (x / rpx) * 180 / Math.PI;
+    c.spins.forEach(s => s.setAttribute('transform', `rotate(${deg.toFixed(1)})`));
+    c.body.setAttribute('transform', `rotate(${pitch.toFixed(2)} ${c.k.wr} ${c.k.cy})`);
+    c.streaks.setAttribute('opacity', clamp(speed * .4, 0, .85).toFixed(2));
+  }
+  if(c.dim) c.dim.setAttribute('opacity', park.toFixed(2));
+  info.style.opacity = (.12 + .88 * park).toFixed(2);
+  info.style.transform = `translateY(${((1 - park) * 10).toFixed(1)}px)`;
+  hint.style.opacity = (i < N - 1 ? park : 0).toFixed(2);
+  beam.setAttribute('opacity', (park * .9).toFixed(2));
+  glow.setAttribute('opacity', (.25 + park * .75).toFixed(2));
+  sticky.style.setProperty('--spot', (.04 + park * .1).toFixed(3));
+  drawTicks(reduce ? 0 : cur * 0.9);
+}
+
+function loop(){
+  readTarget();
+  const d = target - cur;
+  cur = Math.abs(d) < .0004 ? target : cur + d * (reduce ? 1 : .13);
+  render();
+  raf = Math.abs(target - cur) > .0004 ? requestAnimationFrame(loop) : 0;
+}
+const kick = () => { if(!raf) raf = requestAnimationFrame(loop); };
+addEventListener('scroll', kick, {passive: true});
+addEventListener('resize', () => { sizeShowroom(); kick(); });
+readTarget(); cur = target; render();
+
+/* Aus der Bestandsliste direkt zum Fahrzeug im Showroom springen */
+document.getElementById('grid').addEventListener('click', e => {
+  const b = e.target.closest('[data-goto]'); if(!b) return;
+  const i = +b.dataset.goto;
+  const total = showroom.offsetHeight - innerHeight;
+  const tPark = (i + (ENTER + LEAVE) / 2) / MAXT;
+  scrollTo({top: showroom.offsetTop + clamp(tPark, 0, 1) * total, behavior: reduce ? 'auto' : 'smooth'});
+});
+
+/* ===== Header, Einblendungen, Öffnungszeiten ===== */
+const headerEl = document.getElementById('top');
+const onScroll = () => headerEl.classList.toggle('solid', scrollY > 40);
+addEventListener('scroll', onScroll, {passive: true}); onScroll();
+
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const today = document.querySelector(`#hours tr[data-d="${new Date().getDay()}"]`);
+if(today) today.classList.add('today');
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('draft-x').addEventListener('click', () => document.getElementById('draft').remove());
+</script>
+</body>
+</html>

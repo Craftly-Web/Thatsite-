@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /entwurf/
 
 Sitemap: https://www.thatsite.de/sitemap.xml
