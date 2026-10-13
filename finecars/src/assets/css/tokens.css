@@ -1,0 +1,75 @@
+/* Design-Tokens – FineCars Görlitz */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/assets/fonts/inter-latin-wght.woff2') format('woff2-variations'), url('/assets/fonts/inter-latin-wght.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/assets/fonts/manrope-latin-wght.woff2') format('woff2-variations'), url('/assets/fonts/manrope-latin-wght.woff2') format('woff2');
+}
+
+:root {
+  /* Farben */
+  --ink: #111315;
+  --graphite: #1b1e21;
+  --graphite-2: #23272b;
+  --graphite-3: #2e3338;
+  --paper: #f5f5f2;
+  --white: #ffffff;
+  --mute: #8d9399;
+  --mute-dark: #5f666c; /* Fließtext-Grau auf hellem Grund (AA) */
+  --silver: #c3c8cc;
+  --silver-2: #dfe2e4;
+  --line: #e3e4e0;
+  --line-dark: rgba(255, 255, 255, 0.1);
+  --brand: #1e8ae5; /* Logofarbe */
+  --danger: #b3261e;
+  --success: #1f6f43;
+  --warn-bg: #fff6df;
+  --warn-line: #e7c768;
+
+  /* Typografie */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-head: 'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --fs-xl: clamp(1.75rem, 1.4rem + 1.3vw, 2.5rem);
+  --fs-2xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
+  --fs-hero: clamp(2.5rem, 1.5rem + 4.4vw, 5.25rem);
+
+  /* Abstände */
+  --gutter: clamp(1rem, 0.6rem + 1.8vw, 2rem);
+  --section: clamp(4rem, 2.8rem + 5vw, 8rem);
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  /* Effekte */
+  --shadow-sm: 0 1px 2px rgba(17, 19, 21, 0.06);
+  --shadow: 0 10px 30px -12px rgba(17, 19, 21, 0.18);
+  --shadow-lg: 0 30px 60px -24px rgba(17, 19, 21, 0.35);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --header-h: 76px;
+  --demo-h: 0px;
+}
+
+.is-demo {
+  --demo-h: 34px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --header-h: 64px;
+  }
+}
