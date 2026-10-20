@@ -13,6 +13,7 @@
     "start": "node scripts/serve.js",
     "test": "node --test tests/*.test.js",
     "check": "node build.js && node scripts/check.js",
-    "release": "FINECARS_RELEASE=1 node build.js && node scripts/check.js"
+    "release": "FINECARS_RELEASE=1 node build.js && node scripts/check.js",
+    "export": "node scripts/export-static.js"
   }
 }

@@ -17,7 +17,12 @@ npm run dev        # wie start, plus automatischer Neuaufbau bei Änderungen
 npm test           # Unit- und Integrationstests (node:test)
 npm run check      # Build + Prüfung von Links, Überschriften, Alt-Texten, IDs, CSP
 npm run release    # Build mit Release-Sperre (bricht ab, solange Demo-Daten/Platzhalter aktiv sind)
+npm run export     # fertige HTML-Dateien mit relativen Pfaden → export/finecars-website/ (+ .zip)
 ```
+
+### Fertige HTML-Dateien (ohne Server)
+
+`npm run export` erzeugt in `export/finecars-website/` eine eigenständige Fassung: `index.html` lässt sich per Doppelklick öffnen oder der Ordnerinhalt bei jedem Webhoster hochladen (z. B. per FTP). Links zeigen dort direkt auf `…/index.html`, Schriften sind ins CSS eingebettet, Skripte ohne ES-Module gebündelt. Das Kontaktformular hat in dieser Fassung keinen Server-Endpunkt; dafür die Vercel-Version verwenden.
 
 Es müssen keine Pakete installiert werden (`npm install` ist nicht nötig).
 
