@@ -49,6 +49,20 @@ Bitte beim Verein erfragen:
 12. **Termine:** Sportfest, Mitgliederversammlung, Heimspieltermine für die News.
 13. **Weitere Angebote?** Alte Herren, Frauenfußball, Kinderturnen? Auf der alten Seite war nichts davon dokumentiert.
 
+## Fanshop (`/traktor90/fanshop/`)
+
+Aufbau: Warenkorb im Browser, Bestellung als **E-Mail-Anfrage** an kontakt@sv90traktor.de, Abholung im Sportzentrum, Bezahlung bar oder per Überweisung. Keine Online-Zahlung, daher kein Zahlungsanbieter und keine Widerrufsbelehrung für Fernabsatz im Shop nötig. Bei echtem Versand mit Vorkasse rechtlich prüfen lassen.
+
+Sortiment und Preise sind **Beispiele**. Das Sortiment wird im Array `PRODUKTE` am Anfang des Skripts in `fanshop/index.html` gepflegt. Bitte beim Verein klären:
+
+1. Welche Fanartikel gibt es wirklich (Trikot, Schal, Hoodie, Mütze, Tasse, Aufkleber …)? Gibt es noch Restbestände?
+2. Preise, Größen, Kindergrößen, Mitgliederrabatt?
+3. Trikot-Beflockung (Name/Nummer) möglich, zu welchem Aufpreis?
+4. Wer bearbeitet Anfragen, und wo wird abgeholt?
+5. Versand ja/nein, Versandkosten?
+6. Produktfotos statt der Illustrationen (quadratisch, heller Hintergrund).
+7. Größentabelle.
+
 ## Technische Hinweise
 
 - Spielplan und Tabelle lassen sich über die **fussball.de-Widgets** live einbinden (Widget-ID im Vereins-Login bei fussball.de erzeugen). Vorher klären, ob dafür ein Einwilligungsbanner nötig ist (Drittanbieter-Einbindung).

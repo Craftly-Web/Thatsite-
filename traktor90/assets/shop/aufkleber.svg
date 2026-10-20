@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <ellipse cx="200" cy="346" rx="130" ry="12" fill="#0b3a8c" opacity=".12"/>
+  <g transform="rotate(-14 120 150)"><rect x="40" y="90" width="170" height="120" rx="14" fill="#0b3a8c"/><text x="125" y="160" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-weight="900" font-size="26" fill="#fff">TRAKTOR</text><text x="125" y="186" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-weight="700" font-size="14" fill="#a9c6ff">SEIT 1863</text></g>
+  <circle cx="225" cy="210" r="122" fill="#fff" stroke="#d9dbe8" stroke-width="3"/>
+  <path d="M310 290q20-20 30-44l-10 10z" fill="#e8eef9"/>
+</svg>

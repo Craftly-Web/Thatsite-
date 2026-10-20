@@ -80,7 +80,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdro
 .menu .btn:hover{background:var(--blau-dunkel);color:#fff}
 .burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;border-radius:8px}
 .burger span{display:block;width:24px;height:2.5px;background:var(--blau-dunkel);margin:5px auto;border-radius:2px;transition:.2s}
-@media (max-width:1020px){
+@media (max-width:1100px){
   .burger{display:block}
   .menu{position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;padding:10px 16px 18px;border-bottom:1px solid var(--linie);display:none}
   .menu.offen{display:flex}
@@ -189,6 +189,18 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdro
 .ausstattung b{display:block;font-size:1.3rem;color:var(--blau-dunkel)}
 .ausstattung span{font-size:.88rem;color:var(--grau)}
 
+/* Fanshop-Teaser */
+.fs-kopf{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.fs-raster{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+@media (max-width:900px){.fs-raster{grid-template-columns:repeat(2,1fr)}}
+.fs-karte{background:#fff;border:1px solid var(--linie);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.fs-karte:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(6,42,102,.12)}
+.fs-karte .pb{position:relative;aspect-ratio:1;background:linear-gradient(160deg,#f1f5fc,#dfe7f6)}
+.fs-karte .pb>img{position:absolute;inset:0;width:100%;height:100%}
+.fs-karte .pb .wappen{inset:auto;left:var(--x);top:var(--y);width:var(--w);height:auto}
+.fs-karte b{padding:14px 16px 0;font-size:1rem}
+.fs-karte span{padding:2px 16px 16px;color:var(--grau);font-size:.9rem}
+
 /* Sponsoren */
 .sponsoren{background:#fff}
 .logos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
@@ -238,6 +250,7 @@ footer{background:var(--blau-tief);color:rgba(255,255,255,.75);padding:56px 0 30
       <li><a href="#verein">Verein</a></li>
       <li><a href="#chronik">Chronik</a></li>
       <li><a href="#sportzentrum">Sportzentrum</a></li>
+      <li><a href="fanshop/">Fanshop</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
       <li><a class="btn btn-blau" href="#mitmachen">Mitmachen</a></li>
     </ul>
@@ -500,6 +513,25 @@ footer{background:var(--blau-tief);color:rgba(255,255,255,.75);padding:56px 0 30
   </div>
 </section>
 
+<section class="fanshop-teaser" id="fanshop">
+  <div class="wrap">
+    <div class="fs-kopf">
+      <div>
+        <span class="eyebrow">Fanshop</span>
+        <h2>Zeig Farbe: Blau-Weiß</h2>
+        <p class="lead">Trikot, Schal, Hoodie und mehr mit dem Traktor-Wappen. Online anfragen, beim Heimspiel abholen. Jeder Kauf unterstützt den Verein.</p>
+      </div>
+      <a class="btn btn-blau" href="fanshop/">Zum Fanshop</a>
+    </div>
+    <div class="fs-raster">
+      <a class="fs-karte" href="fanshop/"><div class="pb"><img src="assets/shop/trikot.svg" alt="Illustration Heimtrikot" loading="lazy"><img class="wappen" src="assets/logo.png" alt="" style="--x:57%;--y:26%;--w:11%"></div><b>Heimtrikot</b><span>39,90 € <i class="ph">Beispiel</i></span></a>
+      <a class="fs-karte" href="fanshop/"><div class="pb"><img src="assets/shop/schal.svg" alt="Illustration Fanschal" loading="lazy"></div><b>Fanschal „Traktor 90“</b><span>14,90 € <i class="ph">Beispiel</i></span></a>
+      <a class="fs-karte" href="fanshop/"><div class="pb"><img src="assets/shop/hoodie.svg" alt="Illustration Kapuzenpullover" loading="lazy"><img class="wappen" src="assets/logo.png" alt="" style="--x:42.5%;--y:45%;--w:15%"></div><b>Kapuzenpullover</b><span>44,90 € <i class="ph">Beispiel</i></span></a>
+      <a class="fs-karte" href="fanshop/"><div class="pb"><img src="assets/shop/tasse.svg" alt="Illustration Vereinstasse" loading="lazy"><img class="wappen" src="assets/logo.png" alt="" style="--x:36.5%;--y:40%;--w:22%"></div><b>Vereinstasse</b><span>9,90 € <i class="ph">Beispiel</i></span></a>
+    </div>
+  </div>
+</section>
+
 <section class="sponsoren" id="sponsoren">
   <div class="wrap">
     <span class="eyebrow">Partner</span>
@@ -555,6 +587,7 @@ footer{background:var(--blau-tief);color:rgba(255,255,255,.75);padding:56px 0 30
           <li><a href="#abteilungen">Abteilungen</a></li>
           <li><a href="#chronik">Chronik</a></li>
           <li><a href="#mitmachen">Mitglied werden</a></li>
+          <li><a href="fanshop/">Fanshop</a></li>
           <li><a href="#sponsoren">Sponsoren</a></li>
         </ul>
       </div>

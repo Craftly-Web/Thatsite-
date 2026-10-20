@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a4fae"/><stop offset="1" stop-color="#062a66"/></linearGradient></defs>
+  <ellipse cx="200" cy="360" rx="120" ry="12" fill="#0b3a8c" opacity=".12"/>
+  <path d="M128 64 165 48q35 30 70 0l37 16 66 58-36 50-30-20v190q-78 14-156 0V152l-30 20-36-50z" fill="url(#g)"/>
+  <path d="M157 157h6v188h-6zM237 157h6v188h-6z" fill="#fff" opacity=".1"/>
+  <path d="M165 48q35 46 70 0" fill="none" stroke="#fff" stroke-width="9" stroke-linejoin="round"/>
+  <path d="m62 122 36 50M338 122l-36 50" stroke="#fff" stroke-width="8"/>
+  <path d="m74 112 36 50M326 112l-36 50" stroke="#2f62c4" stroke-width="5"/>
+  <path d="M122 334q78 14 156 0" fill="none" stroke="#fff" stroke-width="5" opacity=".5"/>
+  <text x="200" y="250" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-weight="900" font-size="22" fill="#fff" opacity=".9" letter-spacing="2">TRAKTOR</text>
+</svg>

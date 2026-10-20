@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <ellipse cx="200" cy="330" rx="160" ry="12" fill="#0b3a8c" opacity=".12"/>
+  <g transform="rotate(-10 200 200)">
+    <rect x="30" y="150" width="340" height="96" rx="6" fill="#0b3a8c"/>
+    <g fill="#fff"><rect x="30" y="150" width="34" height="96"/><rect x="82" y="150" width="14" height="96"/><rect x="304" y="150" width="14" height="96"/><rect x="336" y="150" width="34" height="96"/></g>
+    <rect x="96" y="150" width="208" height="96" fill="#062a66"/>
+    <text x="200" y="209" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-weight="900" font-size="29" fill="#fff" letter-spacing="2">TRAKTOR 90</text>
+    <g stroke="#0b3a8c" stroke-width="5" stroke-linecap="round">
+      <path d="M36 246v24M48 246v28M60 246v22M72 246v26M84 246v24M340 246v24M352 246v28M364 246v22M328 246v26M316 246v24"/>
+      <path d="M36 150v-24M48 150v-28M60 150v-22M72 150v-26M84 150v-24M340 150v-24M352 150v-28M364 150v-22M328 150v-26M316 150v-24"/>
+    </g>
+  </g>
+</svg>
